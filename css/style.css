@@ -1,0 +1,63 @@
+* {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.main-panel {
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6, p, span, li {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Color */
+
+.coralview-blue {
+    color: #47A9DF;
+}
+
+.coralview-orange {
+    color: #F7CF32;
+}
+
+li.nav-item > a.nav-li {
+    font-family: 'Montserrat', sans-serif; font-size: .9em; color: #47A9DF;
+}
+
+/**
+  Default Markup
+**/
+
+  /**
+    Component
+  **/
+  /* #step-3 */
+
+#step-3 label {
+    width: 100%;
+}
+
+#step-3 .card-input-element {
+    display: none;
+}
+
+#step-3 .card-input {
+    margin: 10px;
+    padding: 00px;
+}
+
+#step-3 .card-input:hover {
+    cursor: pointer;
+}
+
+#step-3 .card-input-element:checked + .card-input {
+    box-shadow: 0 0 1px 1px #2ecc71;
+}
+
+  /**
+  Override
+**/
+
+.card {
+    border-radius: 0px;
+}
