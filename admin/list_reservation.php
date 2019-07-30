@@ -65,7 +65,7 @@ $db = connect_to_db();
                                                         <td>' . $reservation["date_created"] . '</td>               
                                                         <td>
                                                             <a style="width: 48%;" href="accept.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-success">Accept</a>
-                                                            <a style="width: 48%;" href="#" class="btn btn-danger">Reject</a>
+                                                            <a style="width: 48%;" href="reject.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-danger">Reject</a>
                                                         </td>                        
                                                     </tr>
                                                 ';

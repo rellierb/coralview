@@ -1,7 +1,12 @@
 <?php
 
 session_start();
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 require('../assets/connection.php');
+require('../../composer/vendor/autoload.php');
 
 $db = connect_to_db();
 
@@ -36,43 +41,90 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $room_status_query = "UPDATE reservation SET status='FOR CHECK IN' WHERE reference_no='$dp_reference_no'";
         $room_status_result = mysqli_query($db, $room_status_query);
 
+        if($room_status_result) {
+
+            // GET EMAIL OF THE CLIENT
+            $find_guestid_query = "SELECT guest_id FROM reservation WHERE reference_no='$dp_reference_no'";
+            $find_guestid_result = mysqli_query($db, $find_guestid_query);
+
+            if(mysqli_num_rows($find_guestid_result) == 1) {
+
+                while($guest = mysqli_fetch_assoc($find_guestid_result)) {
+
+                    $guest_id = $guest["guest_id"];
+
+                    $find_email_query = "SELECT email FROM guest WHERE id=$guest_id";
+                    $find_email_result = mysqli_query($db, $find_email_query);
+
+                    if(mysqli_num_rows($find_email_result) == 1) {
+
+                        while($email = mysqli_fetch_assoc($find_email_result)) {
+                            
+                            $guest_email = $email["email"];
+
+                            // SEND EMAIL TO CLIENT
+                            $reservationMessage = '
+                                <style>
+
+                                    h1, p {
+                                        font-family: \'Segoe UI\', sans-serif;
+                                    }
+
+                                    p {
+                                        font-size: 16px;
+                                    }
+
+                                </style>
+
+                                <div style="width: 100%;">
+                                    <h1>CORALVIEW  RESORT</h1>
+                                    <p>This is to inform you that your reservation has been accepted. Please be reminded of the date of your check in.</p>
+                                </div>
+                            ';
+
+                            $mail = new PHPMailer(true);
+                            try {
+                                $message = $reservationMessage;
+                                $mail->SMTPDebug = 1;
+                                $mail->isSMTP();
+                                $mail->Host = 'smtp.gmail.com';
+                                $mail->SMTPAuth = true;
+                                $mail->Username = 'relliebalagat@gmail.com';  // Fill this up
+                                $mail->Password = 'r31113b@l@g@T';  // Fill this up
+                                $mail->SMTPSecure = 'tls';
+                                $mail->Port = 587;
+                                $mail->setFrom('relliebalagat@gmail.com');
+                                $mail->isHTML(true);
+                                $mail->addAddress($guest_email);
+                                $mail->Subject = 'Coralview Reservation Accepted';
+                                $mail->Body = $message;
+                                $mail->send();
+                                $_SESSION['msg'] = "Reservation is successfully tag as Accepted";
+                                $_SESSION['alert'] = "alert alert-success";
+                                header('location: ../../admin/accept.php?reference_no='. $dp_reference_no . '');
+                            } catch (Exception $e) {
+                                $_SESSION['msg'] = "There\'s an error processing your request";
+                                $_SESSION['alert'] = "alert alert-success";
+                                echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                            }
+
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        } 
+
 
     } else {
 
         echo 'cannot insert';
 
     }
-    /*
-     *  // Insert to billing
-     * reference_no
-     * amount paid
-     * total amount
-     * description
-     * time_stamp
-     *   
-     * /
-
-
-
-
-    /*
-     * 
-     * insert to transaction 
-     * 
-     *  
-     * /
     
-     /*
-      *
-      * // update reservation status
-      *
-    */
-
-    // send email to client
-
-
-
-
-    //header("location: ../../admin/maintenance/room_number.php");
 
 }
