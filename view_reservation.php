@@ -22,11 +22,7 @@ if(isset($_REQUEST["reference_no"])) {
         $isCancelled = true;
     }
 
-    
-    
 }
-
-
 
 ?>
     <!-- CRLVW-E909936 -->

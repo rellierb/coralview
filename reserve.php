@@ -207,35 +207,35 @@ $db = connect_to_db();
                                 <br />
                                 <br />
 
-                                <div class="form-group row">
+                                <div class="form-group row" id="fnFormGroup">
                                     <label for="fieldFirstName" class="col-sm-3 col-form-label text-right">First Name:</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="fieldFirstName" name="first_name" required>
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
+                                <div class="form-group row" id="lnFormGroup">
                                     <label for="fieldLastName" class="col-sm-3 col-form-label text-right">Last Name:</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="fieldLastName" name="last_name" required>
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
+                                <div class="form-group row" id="contactFormGroup">
                                     <label for="fieldContactNumber" class="col-sm-3 col-form-label text-right">Contact Number:</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="fieldContactNumber" name="contact_number" required>
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
+                                <div class="form-group row" id="emailFormGroup">
                                     <label for="fieldEmail" class="col-sm-3 col-form-label text-right">Email:</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="fieldEmail" name="email" required>
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
+                                <div class="form-group row" id="addressFormGroup">
                                     <label for="fieldAddress" class="col-sm-3 col-form-label text-right">Address:</label>
                                     <div class="col-sm-9">
                                         <textarea type="text" class="form-control" id="fieldAddress" name="address" required></textarea>
@@ -248,7 +248,7 @@ $db = connect_to_db();
                                     </div>
                                     <div class="col-sm-9">
                                         <br />
-                                        <button type="submit" class="btn btn-primary btn-block">Submit</button>    
+                                        <button id="submitReservationBtn" type="submit" class="btn btn-primary btn-block">Submit</button>    
                                     </div>
                                 </div>
 

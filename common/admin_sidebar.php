@@ -24,6 +24,12 @@
                 </a>
             </li>
             <li>
+                <a href="../maintenance/room_number.php">
+                    <!-- <i class="nc-icon nc-bell-55"></i> -->
+                    <p>Room Availability</p>
+                </a>
+            </li>
+            <li>
                 <a href="../maintenance/room.php">
                     <!-- <i class="nc-icon nc-diamond"></i> -->
                     <p>Room Maintenance</p>
@@ -35,13 +41,8 @@
                     <p>User Maintenance</p>
                 </a>
             </li>
-            <!-- <li>
-                <a href="./notifications.html">
-                    <i class="nc-icon nc-bell-55"></i>
-                    <p>Notifications</p>
-                </a>
-            </li>
-            <li>
+             
+            <!--<li>
                 <a href="./user.html">
                     <i class="nc-icon nc-single-02"></i>
                     <p>User Profile</p>

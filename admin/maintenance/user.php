@@ -127,7 +127,7 @@ if(isset($_GET['edit'])) {
                                                 <td class="text-center" style="width: 17%;">
                                                     
                                                     <form action="../../functions/admin/user.php" method="POST">
-                                                    <a href="/coralview/admin/maintenance/user.php?edit=' . $user['id'] . '"class="btn btn-info" value="' . $user['id'] . '" >Edit</a>
+                                                        <a href="/coralview/admin/maintenance/user.php?edit=' . $user['id'] . '"class="btn btn-info" value="' . $user['id'] . '" >Edit</a>
                                                         <button class="btn btn-danger" value="' . $user['id'] . '" name="delete_user">Delete</button>
                                                     </form>
                                                 </td>

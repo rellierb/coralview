@@ -17,7 +17,7 @@
     
     <link rel="stylesheet" href="/coralview/resources/air-datepicker/dist/css/datepicker.min.css" type="text/css" /> 
     <link rel="stylesheet" href="/coralview/resources/toastr/toastr.css" type="text/css" /> 
-
+    <link rel="stylesheet" href="/coralview/resources/datatables/datatable.css" type="text/css" /> 
 
     <link rel="stylesheet" href="/coralview/css/style.css" />
     <script src="https://kit.fontawesome.com/7bbfe16282.js"></script>

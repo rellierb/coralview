@@ -92,9 +92,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $room_image = $file_path; 
     }
 
-    echo $file_path;
-    echo 'room image --- ' . $room_image;
-
     /*
         CREATE ROOM
     */

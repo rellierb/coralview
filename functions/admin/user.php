@@ -5,28 +5,7 @@ require('../assets/connection.php');
 
 $db = connect_to_db();
 
-    /*
-        FullName
-        UserName
-        Password
-        Email
-        Type
-        PhoneNumber
-    */
-
-    /*
-        user_id
-        user_full_name
-        user_name
-        user_password
-        user_email
-        user_type
-        user_phone_number
-    */
-
-
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-
 
     /*
         DECLARE VARIABLES
