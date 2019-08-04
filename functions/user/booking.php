@@ -119,13 +119,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $mail->isSMTP();
                     $mail->Host = 'smtp.gmail.com';
                     $mail->SMTPAuth = true;
-                    $mail->Username = '';  // Fill this up
-                    $mail->Password = '';  // Fill this up
+                    $mail->Username = 'coralviewthesis@gmail.com';  // Fill this up
+                    $mail->Password = 'Qwerty1234%';  // Fill this up
                     $mail->SMTPSecure = 'tls';
                     $mail->Port = 587;
-                    $mail->setFrom('relliebalagat@gmail.com');
+                    $mail->setFrom('coralviewthesis@gmail.com');
                     $mail->isHTML(true);
-                    $mail->addAddress('relliebalagat@gmail.com');
+                    $mail->addAddress($email);
                     $mail->Subject = 'Coralview Reservation';
                     $mail->Body = $message;
                     $mail->send();

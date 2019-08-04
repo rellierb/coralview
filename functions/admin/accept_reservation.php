@@ -89,11 +89,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 $mail->isSMTP();
                                 $mail->Host = 'smtp.gmail.com';
                                 $mail->SMTPAuth = true;
-                                $mail->Username = 'relliebalagat@gmail.com';  // Fill this up
-                                $mail->Password = 'r31113b@l@g@T';  // Fill this up
+                                $mail->Username = 'coralviewthesis@gmail.com';  // Fill this up
+                                $mail->Password = 'Qwerty1234%';  // Fill this up
                                 $mail->SMTPSecure = 'tls';
                                 $mail->Port = 587;
-                                $mail->setFrom('relliebalagat@gmail.com');
+                                $mail->setFrom('coralviewthesis@gmail.com');
                                 $mail->isHTML(true);
                                 $mail->addAddress($guest_email);
                                 $mail->Subject = 'Coralview Reservation Accepted';
@@ -104,7 +104,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 header('location: ../../admin/accept.php?reference_no='. $dp_reference_no . '');
                             } catch (Exception $e) {
                                 $_SESSION['msg'] = "There\'s an error processing your request";
-                                $_SESSION['alert'] = "alert alert-success";
+                                $_SESSION['alert'] = "alert alert-danger";
                                 echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
                             }
 

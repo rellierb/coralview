@@ -26,7 +26,7 @@ if(isset($_REQUEST["reference_no"])) {
     
         <div class="main-panel">
             <div class="container-fluid">
-                <h1>Reservation Check-in</h1>
+                <h1>Accept Reservation</h1>
                 
                 <?php
         

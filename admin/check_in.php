@@ -93,6 +93,5 @@ $db = connect_to_db();
 <?php
 
 include('../common/footer.php');
-session_destroy();
 
 ?>

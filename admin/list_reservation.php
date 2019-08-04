@@ -30,7 +30,7 @@ $db = connect_to_db();
 
             <div class="row">
                 <div class="col">
-                    <?php var_dump($_SESSION['account_type']); ?>
+                    
                     <div class="card">
                         <div class="card-body">
 
