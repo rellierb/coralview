@@ -1,3 +1,5 @@
+
+
 <div class="sidebar" data-color="white" data-active-color="danger">
     <!--
     Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
@@ -17,49 +19,53 @@
     </div>
     <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="">
-                <a href="./dashboard.html">
-                    <!-- <i class="nc-icon nc-bank"></i> -->
-                    <p>Dashboard</p>
+            <li>
+                <a href="/coralview/admin/check_in.php">
+                    <!-- <i class="nc-icon nc-single-02"></i> -->
+                    <p>Check-in</p>
                 </a>
             </li>
             <li>
-                <a href="../maintenance/room_number.php">
+                <a href="/coralview/admin/maintenance/room_number.php">
                     <!-- <i class="nc-icon nc-bell-55"></i> -->
                     <p>Room Availability</p>
                 </a>
             </li>
             <li>
-                <a href="../maintenance/room.php">
-                    <!-- <i class="nc-icon nc-diamond"></i> -->
-                    <p>Room Maintenance</p>
-                </a>
-            </li>
-            <li>
-                <a href="../maintenance/user.php">
+                <a href="/coralview/admin/list_reservation.php">
                     <!-- <i class="nc-icon nc-pin-3"></i> -->
-                    <p>User Maintenance</p>
+                    <p>List of Reservations</p>
                 </a>
             </li>
-             
-            <!--<li>
-                <a href="./user.html">
-                    <i class="nc-icon nc-single-02"></i>
-                    <p>User Profile</p>
-                </a>
-            </li>
-            <li>
-                <a href="./tables.html">
-                    <i class="nc-icon nc-tile-56"></i>
-                    <p>Table List</p>
-                </a>
-            </li>
-            <li>
-                <a href="./typography.html">
-                    <i class="nc-icon nc-caps-small"></i>
-                    <p>Typography</p>
-                </a>
-            </li> -->
+
+            <?php
+            
+            if(isset($_SESSION['account_type'])) {
+
+                if($_SESSION['account_type'] == "Administrator") {
+
+                    echo '
+                        
+                        <li>
+                            <a href="/coralview/admin/maintenance/room.php">
+                                <p>Room Maintenance</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/coralview/admin/user.php">
+                                <p>User Maintenance</p>
+                            </a>
+                        </li>
+                    
+                    ';
+
+                }
+
+            }
+            
+            
+            ?>
+
             
         </ul>
     </div>

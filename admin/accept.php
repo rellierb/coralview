@@ -18,7 +18,6 @@ if(isset($_REQUEST["reference_no"])) {
 
 }
 
-
 ?>
 
     <?php include('../common/admin_sidebar.php') ?>

@@ -1,6 +1,5 @@
 <?php
 
-
 include('common/header.php');
 include('common/reserve_navbar.php');
 
@@ -268,17 +267,9 @@ $db = connect_to_db();
 
     </form>
 
- 
-
-
-
-
-
 <?php
 
-
 include('common/footer.php');
-
 
 ?>
 

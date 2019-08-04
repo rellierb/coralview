@@ -34,7 +34,7 @@ $db = connect_to_db();
                     
                         <table class="table" id="roomStatusTable">
                             <thead>
-                                <tr>
+                                <tr class="text-center">
                                     <th scope="col">Room Number</th> 
                                     <th scope="col">Room Name</th> 
                                     <th scope="col">Status</th> 
@@ -79,7 +79,8 @@ $db = connect_to_db();
                                         
                                     echo '
                                         <tr>
-                                            <td>' . $room_status["number"] . '</td>
+                                            
+                                            <td>' . $room_status["room_number"] . '</td>
                                             <td>' . $room_status["type"] . '</td>
                                             <td><p class="badge badge-pill ' . $room_class . '">' . $room_status["status"] . '</p></td>
                                             <td>

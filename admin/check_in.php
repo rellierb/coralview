@@ -27,6 +27,12 @@ $db = connect_to_db();
             
             ?>
 
+            <?php
+            
+            
+            
+            ?>
+
             <div class="row">
                 <div class="col">
                     
@@ -40,13 +46,13 @@ $db = connect_to_db();
                                         <th scope="col">Status</th> 
                                         <th scope="col">Guest Name</th>
                                         <th scope="col">Date of Stay</th> 
-                                        <th scope="col" class="text-center">>Action</th>
+                                        <th scope="col" class="text-center">Action</th>
                                     </tr>                            
                                 </thead>
                                 <tbody>
                                     <?php
                                     
-                                        $reservation_query = "SELECT * FROM reservation RES INNER JOIN guest G ON RES.guest_id = G.Id";
+                                        $reservation_query = "SELECT * FROM reservation RES INNER JOIN guest G ON RES.guest_id = G.Id WHERE RES.status='PENDING'";
                                         $reservation_result = mysqli_query($db, $reservation_query);
                                                 
                                         if(mysqli_num_rows($reservation_result) > 0) {
@@ -55,13 +61,15 @@ $db = connect_to_db();
                                                 $check_in_date = date_format(new Datetime($reservation["check_in_date"]), "m-d-Y");
                                                 $check_out_date = date_format(new Datetime($reservation["check_in_date"]), "m-d-Y");
 
+                                                
+
                                                 echo '
                                                     <tr>
                                                         <td>' . $reservation["reference_no"] . '</td>
-                                                        <td>' . $reservation["status"]  . '</td>
+                                                        <td><p class="badge badge-primary">' . $reservation["status"]  . '</p></td>
                                                         <td>' . $reservation["first_name"] . " " . $reservation["last_name"]  . '</td>
                                                         <td>' . $check_in_date . " - " . $check_out_date . '</td>                        
-                                                        <td><a href="check_in_user.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-link btn-info">View</a></td>                        
+                                                        <td><a href="check_in_user.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-info btn-block">View</a></td>                        
                                                     </tr>
                                                 ';
 
@@ -72,11 +80,9 @@ $db = connect_to_db();
                                 </tbody>
                             </table> 
 
-                        
                         </div>
                     </div>
-                    
-  
+                      
                 </div>
             </div>
 

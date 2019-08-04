@@ -31,6 +31,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     }
 
-    //header("location: ../../admin/maintenance/room_number.php");
+    header("location: ../../admin/maintenance/room_number.php");
 
 }

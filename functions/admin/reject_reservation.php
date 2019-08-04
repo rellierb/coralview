@@ -86,7 +86,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $_SESSION['alert'] = "alert alert-danger";
                             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
                         }
-                        header('location: ../../admin/reject.php?reference_no='. $dp_reference_no . '');
+                        header('location: ../../admin/reject.php?reference_no='. $dp_reference_no . '');    
 
                     }
 

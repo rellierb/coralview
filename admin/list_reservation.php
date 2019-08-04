@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 include('../common/header.php');
@@ -10,7 +11,7 @@ $db = connect_to_db();
 ?>
 
     <?php include('../common/admin_sidebar.php') ?>
-
+   
     <div class="main-panel">
         <div class="container-fluid">
             <h1>List of Reservation</h1>
@@ -29,7 +30,7 @@ $db = connect_to_db();
 
             <div class="row">
                 <div class="col">
-                    
+                    <?php var_dump($_SESSION['account_type']); ?>
                     <div class="card">
                         <div class="card-body">
 
@@ -56,16 +57,39 @@ $db = connect_to_db();
                                                 $check_in_date = date_format(new Datetime($reservation["check_in_date"]), "m-d-Y");
                                                 $check_out_date = date_format(new Datetime($reservation["check_in_date"]), "m-d-Y");
 
+                                                $reservation_status =  $reservation["status"];
+                                                $hide_class = "";
+                                                // PENDING, FOR CHECK IN, REJECTED, 
+                                                switch($reservation_status) {
+                                                    case "REJECTED":
+                                                        $reservation_class = "badge-danger";
+                                                        $hide_class = "display: none;";
+                                                        break;
+                                                    case "FOR CHECK IN":
+                                                        $reservation_class = "badge-info";
+                                                        $hide_class = "display: none;";
+                                                        break;
+                                                    case "PENDING":
+                                                        $reservation_class = "badge-secondary";                                                        
+                                                        break;
+                                                    case "":
+                                                        $reservation_class = "badge-danger";                                                        
+                                                        break;
+                                                    default:
+                                                        $reservation_class = "badge-success";                                                        
+                                                        break;
+                                                }
+
                                                 echo '
                                                     <tr>
                                                         <td>' . $reservation["reference_no"] . '</td>
-                                                        <td>' . $reservation["status"]  . '</td>
+                                                        <td><p class="' . $reservation_class . '">' . $reservation["status"]  . '</p></td>
                                                         <td>' . $reservation["first_name"] . " " . $reservation["last_name"]  . '</td>
                                                         <td>' . $check_in_date . " - " . $check_out_date . '</td>
                                                         <td>' . $reservation["date_created"] . '</td>               
                                                         <td>
-                                                            <a style="width: 48%;" href="accept.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-success">Accept</a>
-                                                            <a style="width: 48%;" href="reject.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-danger">Reject</a>
+                                                            <a style="width: 48%;' . $hide_class . '" href="accept.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-success">Accept</a>
+                                                            <a style="width: 48%;' . $hide_class . '" href="reject.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-danger">Reject</a>
                                                         </td>                        
                                                     </tr>
                                                 ';
@@ -92,6 +116,5 @@ $db = connect_to_db();
 <?php
 
 include('../common/footer.php');
-session_destroy();
 
 ?>

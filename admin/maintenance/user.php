@@ -73,7 +73,10 @@ if(isset($_GET['edit'])) {
                                 </div>
                                 <div class="form-group">
                                     <label for="">User Type</label>
-                                    <input type="text" name="user_type" class="form-control" id="" value="<?php if(isset($type)) { echo $type;  } ?>">
+                                    <select name="user_type" class="form-control" value="<?php if(isset($type)) { echo $type;  } ?>">
+                                        <option value="Administrator">Administrator</option>
+                                        <option value="Receptionist">Receptionist</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Phone Number</label>
