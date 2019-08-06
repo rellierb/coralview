@@ -6,11 +6,6 @@ require('../functions/assets/connection.php');
 
 $db = connect_to_db();
 
-/*
- * CONSTANT
- */
-define('DOWNPAYMENT_PERCENT', 0.50);
-
 
 if(isset($_REQUEST["reference_no"])) {
 
@@ -18,18 +13,17 @@ if(isset($_REQUEST["reference_no"])) {
 
 }
 
-$payment_type = '';
 $days_of_stay = 0;
 
 ?>
 
     <?php include('../common/admin_sidebar.php') ?>
 
-    <form action="../functions/admin/accept_reservation.php" method="POST">
+    <form action="../functions/admin/cancel_reservation.php" method="POST">
     
         <div class="main-panel">
             <div class="container-fluid">
-                <h1>Accept Reservation</h1>
+                <h1>Cancel Reservation</h1>
                 
                 <?php
         
@@ -47,11 +41,10 @@ $days_of_stay = 0;
                     <div class="col-9">
                     </div>
                     <div class="col-3">
-                        
                     </div>
                 </div>
 
-                <br>
+                <br />
 
                 <div class="row">
                     <div class="col">
@@ -83,9 +76,8 @@ $days_of_stay = 0;
 
                                             $dateDiff = date_diff(date_create($reservation["check_in_date"]), date_create($reservation["check_out_date"]));
                                             $diff = $dateDiff->format('%d');
-                                            $days_of_stay = $diff;
+                                            $days_of_stay = $diff; 
                                             $full_name = $reservation["first_name"] . " " . $reservation["last_name"];
-                                            $payment_type = $reservation["payment"];
 
                                             echo '
                                                 <table style="margin-left: 2em;">
@@ -171,7 +163,9 @@ $days_of_stay = 0;
                                             WHERE RES.reference_no = '$reference_no'";
 
                                         $room_reservation_details_result = mysqli_query($db, $room_reservation_details_query);
+
                                         $rooms_reserved = array();
+
                                         $quantity = 0;
 
                                         if($room_reservation_details_result) {
@@ -206,43 +200,39 @@ $days_of_stay = 0;
                                                         <td class="text-center" style="width: 15%;">' . number_format($room_reservation["peak_rate"], 2)  . '</td>
                                                         <td class="text-center" style="width: 15%;"> ' . number_format($total_price, 2)  . '</td>
                                                     </tr>
-                                                    
                                                 ';
 
                                                 $overall_total_price += $total_price;
                                             }
+                                            
 
                                             echo '</table>';
                                         }
                                     ?>      
 
-                                    <?php
-                                    
-                                    echo '<br/>';
-                                    echo '<br/>';
-                                    
-                                    ?>
+                                    <br />
+                                    <br />
 
                                     <?php
-
+                                    
                                     $overall_total_price *= $days_of_stay;
                                     $vatable_amount = $overall_total_price / 1.12;
                                     $vat = $overall_total_price - $vatable_amount;
                                     $total_amount = $vatable_amount + $vat;
-
+                                    
                                     echo '
-                                        <table class="table">   
+                                        <table class="table">           
                                             <tr>
                                                 <th scope="col" class="text-center">Days of Stay</th>
                                                 <td></td>
                                                 <td></td>
                                                 <td class="text-center">' . $days_of_stay . '</td>
-                                            </tr>                                         
+                                            </tr>                                 
                                             <tr>
                                                 <th scope="col" class="text-center">Amount</th>
                                                 <td></td>
                                                 <td></td>
-                                                <td class="text-center">' .  number_format($vatable_amount, 2) . '</td>
+                                                <td class="text-center">' . number_format($vatable_amount, 2) . '</td>
                                             </tr>
                                             <tr>
                                                 <th scope="col" class="text-center">VAT(12%)</th>
@@ -258,69 +248,27 @@ $days_of_stay = 0;
                                             </tr>
                                         </table>
                                     ';
-                                            
+                                    
                                     ?>
         
-                                    <h5 class="text-center mt-3">Reservation Down Payment</h5>
-                                    
-                                    <table class="table">
-                                        <tr>
-                                            <th scope="col" class="text-center">Reservation Total Price</th>
-                                            <td></td>
-                                            <td></td>
-                                            <td>PHP <?php echo number_format($overall_total_price, 2); ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="col" class="text-center">Required Downpayment</th>
-                                            <td></td>
-                                            <td></td>
+                                    <br>
+                                    <hr>
+                                    <br>
+
+                                    <input type="hidden" name="down_payment_reference_no" value="<?php echo $reference_no; ?>">
+                                    <div class="row">
+                                        <div class="col-12">
                                             <?php
                                             
-                                            if($payment_type == 'BANK DEPOSIT') {
-                                                $required_down_payment = DOWNPAYMENT_PERCENT * $overall_total_price;
-                                            } else if($payment_type == 'CASH') {
-                                                $required_down_payment = $overall_total_price;
+                                            if($status == 'PENDING') {
+                                                echo '<button type="submit" class="btn btn-warning btn-block float-right ">CANCEL RESERVATION</button>';
                                             }
                                             
                                             ?>
-                                            <td>PHP <?php  echo number_format($required_down_payment, 2); ?></td>
-                                        </tr>
-                                    </table>
-
-                                    <p>Enter Downpayment Details</p>
-
-                                    <br>
-                                    <br>
-                                
-                                    <input type="hidden" name="down_payment_reference_no" value="<?php echo $reference_no; ?>">
-                                    <input type="hidden" name="down_payment_total_amount" value="<?php echo $total_price; ?>">
-                                    
-                                    <div>
-                                        <div class="form-row">
-                                            <p class="col-3 text-right pr-4" for="dpAmount">Amount</p>
-                                            <input type="number" name="down_payment_amount" class="form-control col-8" id="dpAmount">
-                                        </div>
-                                        <br>
-                                        <div class="form-row">
-                                            <p class="col-3 text-right pr-4" for="dpDescription">Description</p>
-                                            <textarea class="form-control col-8" name="down_payment_description" id="dpDescription"></textarea>
-                                        </div>
-
-                                        <br>
-
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <?php
-                                                
-                                                if($status == 'PENDING') {
-                                                    echo '<button type="submit" class="btn btn-success btn-block float-right ">ACCEPT RESERVATION</button>';
-                                                }
-                                                
-                                                ?>
-                                                    
-                                            </div>
                                         </div>
                                     </div>
+
+
                             
                                 </div>
                             
@@ -333,12 +281,9 @@ $days_of_stay = 0;
                             </div>
                         </div>
 
-
-
-
+                       
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -350,8 +295,5 @@ $days_of_stay = 0;
 <?php
 
 include('../common/footer.php');
-unset($_SESSION["alert"]);
-unset($_SESSION["msg"]);
-
 
 ?>

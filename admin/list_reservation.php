@@ -8,6 +8,8 @@ require('../functions/assets/connection.php');
 $db = connect_to_db();
 
 
+
+
 ?>
 
     <?php include('../common/admin_sidebar.php') ?>
@@ -67,7 +69,6 @@ $db = connect_to_db();
                                                         break;
                                                     case "FOR CHECK IN":
                                                         $reservation_class = "badge-info";
-                                                        $hide_class = "display: none;";
                                                         break;
                                                     case "PENDING":
                                                         $reservation_class = "badge-secondary";                                                        
@@ -88,8 +89,19 @@ $db = connect_to_db();
                                                         <td>' . $check_in_date . " - " . $check_out_date . '</td>
                                                         <td>' . $reservation["date_created"] . '</td>               
                                                         <td>
-                                                            <a style="width: 48%;' . $hide_class . '" href="accept.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-success">Accept</a>
-                                                            <a style="width: 48%;' . $hide_class . '" href="reject.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-danger">Reject</a>
+                                                        
+                                                ';
+                                                
+                                                if($reservation_status == 'FOR CHECK IN') {
+                                                    echo '<a style="width: 98%;' . $hide_class . '" href="cancel.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-block btn-warning">Cancel</a>';
+                                                } else {
+                                                    echo '
+                                                        <a style="width: 48%;' . $hide_class . '" href="accept.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-success">Accept</a>
+                                                        <a style="width: 48%;' . $hide_class . '" href="reject.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-danger">Reject</a>
+                                                    ';
+                                                }
+
+                                                echo '
                                                         </td>                        
                                                     </tr>
                                                 ';
@@ -115,6 +127,8 @@ $db = connect_to_db();
 
 <?php
 
-include('../common/footer.php');
+include('../common/footer.php');    
+unset($_SESSION["alert"]);
+unset($_SESSION["msg"]);
 
 ?>

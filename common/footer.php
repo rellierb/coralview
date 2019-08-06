@@ -65,7 +65,7 @@
                     startDate: new Date(),
                     minDate: arrivalDateData.currentDate,      
                     onSelect: function() {
-                        spanArrivalDate.innerText = arrivalDateData._prevOnSelectValue;                   
+                        spanArrivalDate.innerText = arrivalDateData._prevOnSelectValue;                 
                         departureDateData.update('minDate', arrivalDateData.selectedDates[0]);            
                         toastr.success('Arrival Date successfully selected!');
                     }
@@ -109,20 +109,34 @@
                     let adultCount = numOfAduField.value;          
                     localStorage.setItem('adultCount', adultCount);
 
-                    $.ajax({
-                        type: 'POST',
-                        url: '/coralview/functions/user/store_adult_count.php',
-                        data: {adult_count: JSON.stringify(adultCount) },
-                        success: function(data) {
-                            spanNoOfGuests.innerHTML = adultCount.toString();
-                            inputAdultCount.value = adultCount;
-                            disableNextButton();
-                            toastr.success('Adult count successfully added');
-                        },
-                        error: function(data) {
-                            console.log(data);
-                        }
-                    })
+                    console.log(adultCount);
+                    console.log(adultCount === 0)
+                    console.log(adultCount === '')
+
+                    if(adultCount == 0 || adultCount === '') {
+
+                        toastr.error('Adult count is empty');
+
+                    } else {
+
+                        
+                        $.ajax({
+                            type: 'POST',
+                            url: '/coralview/functions/user/store_adult_count.php',
+                            data: {adult_count: JSON.stringify(adultCount) },
+                            success: function(data) {
+                                spanNoOfGuests.innerHTML = adultCount.toString();
+                                inputAdultCount.value = adultCount;
+                                disableNextButton();
+                                toastr.success('Adult count successfully added');
+                            },
+                            error: function(data) {
+                                console.log(data);
+                            }
+                        })
+
+                    }
+
 
                 })
 
@@ -136,7 +150,7 @@
                     } else {
                         totalCount = childCount;
                     }
-                    
+
                     $.ajax({
                         type: 'POST',
                         url: '/coralview/functions/user/store_kids_count.php',
@@ -151,8 +165,6 @@
                             console.log(data);
                         }
                     })
-
-
 
                 })
 

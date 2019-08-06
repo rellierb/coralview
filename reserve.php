@@ -154,7 +154,7 @@ $db = connect_to_db();
                                             
                                             <div class="mt-5">
                                                 <label>
-                                                    <input type="radio" value="BANK DEPOSIT" name="modeOfPayment" class="card-input-element" />
+                                                    <input type="radio" id="cash" value="BANK DEPOSIT" name="mode_of_payment" class="card-input-element" />
 
                                                     <div class="panel panel-default card-input">
                                                         <div class="panel-heading">
@@ -178,7 +178,7 @@ $db = connect_to_db();
                                             
                                             <div class="mt-5">
                                                 <label>
-                                                <input type="radio" value="CASH UPON WALK-IN" name="modeOfPayment" class="card-input-element" />
+                                                <input type="radio" id="bankdeposit" value="CASH UPON WALK-IN" name="mode_of_payment" class="card-input-element" />
 
                                                     <div class="panel panel-default card-input">
                                                         <div class="panel-heading">

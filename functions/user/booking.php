@@ -31,6 +31,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $contact_number = mysqli_real_escape_string($db, trim($_POST['p_contact_number']));
     $email = mysqli_real_escape_string($db, trim($_POST['p_email']));
     $address = mysqli_real_escape_string($db, trim($_POST['p_address']));
+    $payment = mysqli_real_escape_string($db, trim($_POST['p_mode_of_payment']));
     
     $guest_insert_query = "INSERT INTO guest(first_name, last_name, address, email, contact_number) ";
     $guest_insert_query .= "VALUES ('$first_name', '$last_name', '$address', '$email', '$contact_number')";
@@ -55,8 +56,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
          * Insert RESERVATION details 
          */
 
-        $reservation_insert_query = "INSERT INTO reservation(guest_id, reference_no, check_in_date, check_out_date, adult_count, kids_count, date_created)";
-        $reservation_insert_query .= " VALUES ('$guest_id', '$reference_no',  STR_TO_DATE('$arrival_date', '%m/%d/%Y'), STR_TO_DATE('$departure_date', '%m/%d/%Y'), '$adult_count', '$kids_count', NOW())";
+        $reservation_insert_query = "INSERT INTO reservation(guest_id, reference_no, payment, check_in_date, check_out_date, adult_count, kids_count, date_created)";
+        $reservation_insert_query .= " VALUES ('$guest_id', '$reference_no', '$payment', STR_TO_DATE('$arrival_date', '%m/%d/%Y'), STR_TO_DATE('$departure_date', '%m/%d/%Y'), '$adult_count', '$kids_count', NOW())";
         $reservation_result = mysqli_query($db, $reservation_insert_query);
 
         if($reservation_result) {

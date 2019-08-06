@@ -53,6 +53,11 @@ if(isset($_REQUEST["rooms_reserved"])) {
     $rooms_reserved = $_REQUEST["rooms_reserved"];
 }
 
+if(isset($_REQUEST["mode_of_payment"])) {
+    $mode_of_payment = $_REQUEST["mode_of_payment"];
+}
+
+
 ?>
 
     <form action="/coralview/functions/user/booking.php" method="POST">
@@ -69,6 +74,7 @@ if(isset($_REQUEST["rooms_reserved"])) {
             <input type="hidden" name="p_contact_number" value="<?php echo $contact_number; ?>">
             <input type="hidden" name="p_email" value="<?php echo $email; ?>">
             <input type="hidden" name="p_address" value="<?php echo $address; ?>">
+            <input type="hidden" name="p_mode_of_payment" value="<?php echo $mode_of_payment; ?>">
 
             <div class="row">
                 <div class="col">

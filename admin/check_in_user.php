@@ -309,6 +309,7 @@ if(isset($_REQUEST["reference_no"])) {
 <?php
 
 include('../common/footer.php');
-session_destroy();
+unset($_SESSION["alert"]);
+unset($_SESSION["msg"]);
 
 ?>

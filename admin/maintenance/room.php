@@ -210,6 +210,7 @@ if(isset($_GET['edit'])) {
 <?php
 
 include('../../common/footer.php');
-session_destroy();
+unset($_SESSION["alert"]);
+unset($_SESSION["msg"]);
 
 ?>

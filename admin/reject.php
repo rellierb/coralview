@@ -13,6 +13,8 @@ if(isset($_REQUEST["reference_no"])) {
 
 }
 
+$days_of_stay = 0;
+$status = '';
 
 ?>
 
@@ -22,7 +24,7 @@ if(isset($_REQUEST["reference_no"])) {
     
         <div class="main-panel">
             <div class="container-fluid">
-                <h1>Reservation Check-in</h1>
+                <h1>Reject Reservation</h1>
                 
                 <?php
         
@@ -40,11 +42,10 @@ if(isset($_REQUEST["reference_no"])) {
                     <div class="col-9">
                     </div>
                     <div class="col-3">
-                        
                     </div>
                 </div>
 
-                <br>
+                <br />
 
                 <div class="row">
                     <div class="col">
@@ -76,8 +77,9 @@ if(isset($_REQUEST["reference_no"])) {
 
                                             $dateDiff = date_diff(date_create($reservation["check_in_date"]), date_create($reservation["check_out_date"]));
                                             $diff = $dateDiff->format('%d');
-
+                                            $days_of_stay = $diff;
                                             $full_name = $reservation["first_name"] . " " . $reservation["last_name"];
+                                            $status = $reservation["status"];
 
                                             echo '
                                                 <table style="margin-left: 2em;">
@@ -103,6 +105,10 @@ if(isset($_REQUEST["reference_no"])) {
                                                 <h5 class="text-center mt-3">Booking Details</h5>
                                                 <hr />
                                                 <table style="margin-left: 2em;">
+                                                    <tr>
+                                                        <th class="text-right pr-3 pb-3"><b>Reference No:</b></th>
+                                                        <td class="pb-3 pl-4">' . $reservation["reference_no"]  . '</td>
+                                                    </tr>
                                                     <tr>
                                                         <th class="text-right pr-3 pb-3"><b>Status:</b></th>
                                                         <td class="pb-3 pl-4">' . $reservation["status"]  . '</td>
@@ -185,11 +191,8 @@ if(isset($_REQUEST["reference_no"])) {
                                                 
                                                 $room_id = $room_reservation["room_id"];
                                                 $room_quantity = $room_reservation["quantity"];
-
                                                 $rooms_reserved[$room_id] = $room_quantity; 
-
                                                 $quantity += $room_quantity;
-
                                                 $total_price = $room_reservation["peak_rate"] * $room_reservation["quantity"];
 
                                                 echo '
@@ -208,16 +211,65 @@ if(isset($_REQUEST["reference_no"])) {
                                             echo '</table>';
                                         }
                                     ?>      
+
+                                    <br />
+                                    <br />
+
+                                    <?php
+                                    
+                                    $overall_total_price *= $days_of_stay;
+                                    $vatable_amount = $overall_total_price / 1.12;
+                                    $vat = $overall_total_price - $vatable_amount;
+                                    $total_amount = $vatable_amount + $vat;
+                                    
+                                    echo '
+                                        <table class="table"> 
+                                            <tr>
+                                                <th scope="col" class="text-center">Days of Stay</th>
+                                                <td></td>
+                                                <td></td>
+                                                <td class="text-center">' . $days_of_stay . '</td>
+                                            </tr>                                          
+                                            <tr>
+                                                <th scope="col" class="text-center">Amount</th>
+                                                <td></td>
+                                                <td></td>
+                                                <td class="text-center">' . number_format($vatable_amount, 2) . '</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col" class="text-center">VAT(12%)</th>
+                                                <td></td>
+                                                <td></td>
+                                                <td class="text-center">' . number_format($vat, 2) . '</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col" class="text-center">TOTAL AMOUNT</th>
+                                                <td></td>
+                                                <td></td>
+                                                <td class="text-center">PHP ' . number_format($total_amount, 2)  . '</td>
+                                            </tr>
+                                        </table>
+                                    ';
+                                    
+                                    ?>
         
                                     <br>
-                                        <h5 class="text-center mt-3">Reject Reservation</h5>
                                     <hr>
-
                                     <br>
+
                                     <input type="hidden" name="down_payment_reference_no" value="<?php echo $reference_no; ?>">
                                     <div class="row">
                                         <div class="col-12">
-                                            <button type="submit" class="btn btn-danger btn-block float-right ">REJECT RESERVATION</button>    
+
+                                            <?php
+                                            
+                                            if($status == 'PENDING') {
+                                                echo '<button type="submit" class="btn btn-danger btn-block float-right ">REJECT RESERVATION</button>';
+                                            }
+                                            
+                                            ?>
+
+                                                
                                         </div>
                                     </div>
 
@@ -249,5 +301,7 @@ if(isset($_REQUEST["reference_no"])) {
 <?php
 
 include('../common/footer.php');
+unset($_SESSION['msg']);
+unset($_SESSION['alert']);
 
 ?>
