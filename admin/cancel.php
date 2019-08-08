@@ -14,6 +14,8 @@ if(isset($_REQUEST["reference_no"])) {
 }
 
 $days_of_stay = 0;
+$status = '';
+
 
 ?>
 

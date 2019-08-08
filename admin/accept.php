@@ -20,6 +20,7 @@ if(isset($_REQUEST["reference_no"])) {
 
 $payment_type = '';
 $days_of_stay = 0;
+$status = '';
 
 ?>
 
@@ -86,6 +87,7 @@ $days_of_stay = 0;
                                             $days_of_stay = $diff;
                                             $full_name = $reservation["first_name"] . " " . $reservation["last_name"];
                                             $payment_type = $reservation["payment"];
+                                            $status = $reservation["status"];
 
                                             echo '
                                                 <table style="margin-left: 2em;">

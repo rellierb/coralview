@@ -111,6 +111,10 @@ if(isset($_REQUEST["mode_of_payment"])) {
                     <hr />
                     <table style="width: 60%; margin: 0 auto;">
                         <tr>
+                            <th style="width: 30%;" class="text-right pr-5 pb-3"><b>Mode of Payment: </b></th>
+                            <td style="width: 70%;" class="pb-3 pl-4"><?php echo $mode_of_payment; ?></td>
+                        </tr>
+                        <tr>
                             <th style="width: 30%;" class="text-right pr-5 pb-3"><b>Check-in Date: </b></th>
                             <td style="width: 70%;" class="pb-3 pl-4"><?php echo $arrival_date; ?></td>
                         </tr>
@@ -207,8 +211,18 @@ if(isset($_REQUEST["mode_of_payment"])) {
                             <td>PHP <?php echo number_format($vat, 2); ?></td>
                         </tr>
                         <tr>
-                            <td><h6>Deadline of Downpayment: </h6></td>
-                            <td><h6></h6></td>
+                            <td><h6>Deadline of Payment: </h6></td>
+                            <?php
+                            
+                                if($mode_of_payment == 'BANK DEPOSIT') {
+                                    $deadline = Date('y:m:d', strtotime("+3 days"));
+                                } else if ($mode_of_payment == 'CASH UPON WALK-IN') {
+                                    $deadline = $arrival_date;
+                                }
+                            
+                            ?>
+
+                            <td><h6><?php $deadline; ?></h6></td>
                         </tr>
 
                     </table>

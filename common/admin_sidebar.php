@@ -52,7 +52,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/coralview/admin/user.php">
+                            <a href="/coralview/admin/maintenance/user.php">
                                 <p>User Maintenance</p>
                             </a>
                         </li>

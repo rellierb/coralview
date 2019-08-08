@@ -118,6 +118,7 @@ $db = connect_to_db();
 <?php
 
 include('../../common/footer.php');
-session_destroy();
+unset($_SESSION['alert']);
+unset($_SESSION['msg']);
 
 ?>

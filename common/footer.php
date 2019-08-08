@@ -250,7 +250,7 @@
                     if(stepNumber === 1) {
                         document.querySelector('.sw-btn-next').disabled = true;
                     } else if(stepNumber === 2) {
-                        document.querySelector('.sw-btn-next').disabled = true;
+                        document.querySelector('.sw-btn-next').disabled = false;
                     } else if(stepNumber === 3) {
                         document.querySelector('.sw-btn-next').style.display = 'none';
                         document.querySelector('.sw-btn-prev').style.display = 'block';
