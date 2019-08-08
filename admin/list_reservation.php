@@ -73,8 +73,8 @@ $db = connect_to_db();
                                                     case "PENDING":
                                                         $reservation_class = "badge-secondary";                                                        
                                                         break;
-                                                    case "":
-                                                        $reservation_class = "badge-danger";                                                        
+                                                    case "CANCELLED":
+                                                        $reservation_class = "badge-warning";                                                        
                                                         break;
                                                     default:
                                                         $reservation_class = "badge-success";                                                        
@@ -94,12 +94,14 @@ $db = connect_to_db();
                                                 
                                                 if($reservation_status == 'FOR CHECK IN') {
                                                     echo '<a style="width: 98%;' . $hide_class . '" href="cancel.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-block btn-warning">Cancel</a>';
+                                                } else if ($reservation_status == 'CANCELLED') {
+                                                    echo '';
                                                 } else {
                                                     echo '
                                                         <a style="width: 48%;' . $hide_class . '" href="accept.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-success">Accept</a>
                                                         <a style="width: 48%;' . $hide_class . '" href="reject.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-danger">Reject</a>
                                                     ';
-                                                }
+                                                } 
 
                                                 echo '
                                                         </td>                        

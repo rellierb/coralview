@@ -56,8 +56,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
          * Insert RESERVATION details 
          */
 
-        $reservation_insert_query = "INSERT INTO reservation(guest_id, reference_no, payment, check_in_date, check_out_date, adult_count, kids_count, date_created)";
-        $reservation_insert_query .= " VALUES ('$guest_id', '$reference_no', '$payment', STR_TO_DATE('$arrival_date', '%m/%d/%Y'), STR_TO_DATE('$departure_date', '%m/%d/%Y'), '$adult_count', '$kids_count', NOW())";
+        $reservation_insert_query = "INSERT INTO reservation(guest_id, reference_no, status, payment, check_in_date, check_out_date, adult_count, kids_count, date_created)";
+        $reservation_insert_query .= " VALUES ('$guest_id', '$reference_no', 'PENDING', '$payment', STR_TO_DATE('$arrival_date', '%m/%d/%Y'), STR_TO_DATE('$departure_date', '%m/%d/%Y'), '$adult_count', '$kids_count', NOW())";
         $reservation_result = mysqli_query($db, $reservation_insert_query);
 
         if($reservation_result) {
