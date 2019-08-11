@@ -51,7 +51,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $departure_date = mysqli_real_escape_string($db, trim($_POST['p_date_departure']));
         $adult_count = mysqli_real_escape_string($db, trim($_POST['p_adult_count']));
         $kids_count = mysqli_real_escape_string($db, trim($_POST['p_kids_count']));
-        
+
+        // p_total_amount
+        $total_amount = mysqli_real_escape_string($db, trim($_POST['p_total_amount']));
+
         /* 
          * Insert RESERVATION details 
          */
@@ -65,6 +68,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $reservation_id = $db->insert_id;
             $reserved_rooms = json_decode($_SESSION["rooms_reserved"]);
             $total_amount = 0;
+            $table_data = "";
 
             foreach($reserved_rooms as $room) {
 
@@ -77,23 +81,95 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $booking_room_query = "INSERT INTO booking_rooms(reservation_id, room_id, quantity) VALUES ('$reservation_id', '$room_id', '$quantity')";
                 $booking_room_result = mysqli_query($db, $booking_room_query);
 
-                $isSuccessOrFailed = '';
+                $is_success_or_failed = '';
 
                 if(!$booking_room_result) {
 
-                    $isSuccessOrFailed = "FAILED";
+                    $is_success_or_failed = "FAILED";
                     break;
                     echo mysqli_error($db);                    
 
                 } else {
-                    $isSuccessOrFailed = "SUCCESS";
+                    
+                    $is_success_or_failed = "SUCCESS";
+                    
+                    $select_room_query = "SELECT * FROM rooms WHERE Id='$room_id'";
+                    
+                    $select_room_result = mysqli_query($db, $select_room_query);
+
+                    if($select_room_result) {
+                        while($room = mysqli_fetch_assoc($select_room_result)) {
+
+                            $amount = $quantity * $room["peak_rate"];
+
+                            $table_data .= '
+                                <tr>
+                                    <td>' . $room["type"]  . '</td>
+                                </tr>
+                                <tr>
+                                    <td>' . number_format($room["peak_rate"], 2)  . '</td>
+                                </tr>
+                                <tr>
+                                    <td>' . $quantity  . '</td>
+                                </tr>
+                                <tr>
+                                    <td>' . $amount . '</td>
+                                </tr>
+                            ';
+
+
+                        }
+                    }
+
+                    
                 }
                 
             }
 
-            if($isSuccessOrFailed == "SUCCESS") {
+            if($is_success_or_failed == "SUCCESS") {
                 
-                $reservationMessage = '
+                $to_pay_on_deadline = 0;
+
+                if($payment == 'CASH UPON WALK IN') {
+                    $to_pay_on_deadline = $total_amount;
+                    $payment_note = '<b>Please be informed that you have to pay ' . number_format($to_pay_on_deadline, 2) . ' on the payment deadline</b>';
+                } else if($payment == 'BANK DEPOSIT') {
+                    $to_pay_on_deadline = $total_amount * .5;
+                    $payment_note = '<b>Please be informed that you have to pay ' . number_format($to_pay_on_deadline, 2) . ' on the payment deadline</b>';
+                }
+
+                $reservation_details = '
+                    <table>                        
+                        <tr>
+                            <td><b>Reference No.</b></td>
+                            <td>' . $reference_no . '</td>
+                        </tr>
+                        <tr>
+                            <td><b>Check-in Date</b></td>
+                            <td>' . date("m dd, YY", strtotime($arrival_date)) . '</td>
+                        </tr>
+                        <tr>
+                            <td><b>Check-out Date</b></td>
+                            <td>' . date("m dd, YY", strtotime($departure_date)) . '</td>
+                        </tr>
+                        <tr>
+                            <td><b>Mode of Payment</b></td>
+                            <td>' . $payment . '</td>
+                        </tr>
+                        <tr>
+                            <td><b>Deadline of Payment</b></td>
+                            <td>' . $payment . '</td>
+                        </tr>
+                    </table>
+                ';
+
+                $room_details = '
+                    <table>
+                        ' . $table_data . '
+                    </table>
+                ';
+
+                $reservation_message = '
                     <style>
 
                         h1, p {
@@ -109,13 +185,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div style="width: 100%;">
                         <h1>CORALVIEW  RESORT</h1>
                         <p>Thank you for booking with us!</p>
+
+                        ' . $reservation_details . '
+                        <br>
+                        ' . $room_details . '
+
                         <p>Please click the <a href="http://localhost/coralview/confirm_reservation.php?refence_no=' . $reference_no . '">link</a> to acknowledge your reservation.</p>
                     </div>
                 ';
 
                 $mail = new PHPMailer(true);
                 try {
-                    $message = $reservationMessage;
+                    $message = $reservation_message;
                     $mail->SMTPDebug = 1;
                     $mail->isSMTP();
                     $mail->Host = 'smtp.gmail.com';

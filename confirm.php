@@ -18,11 +18,19 @@ if(isset($_REQUEST["departure_date"])) {
 }
 
 if(isset($_REQUEST["adult_count"])) {
-    $adult_count = $_REQUEST["adult_count"];
+    if(empty($_REQUEST["adult_count"])) {
+        $adult_count = 0;
+    } else {
+        $adult_count = $_REQUEST["adult_count"];
+    }
 }
 
 if(isset($_REQUEST["kids_count"])) {
-    $kids_count = $_REQUEST["kids_count"];
+    if(empty($_REQUEST["kids_count"])) {
+        $kids_count = 0;
+    } else {
+        $kids_count = $_REQUEST["kids_count"];
+    }
 }
 
 if(isset($_REQUEST["no_of_days"])) {
@@ -175,8 +183,6 @@ if(isset($_REQUEST["mode_of_payment"])) {
                                             <td class="text-center" style="width: 15%;">' . number_format($room["peak_rate"], 2) . '</td>
                                             <td class="text-center" style="width: 15%;">PHP ' .  number_format($room_price, 2) .  '</td>
                                         </tr>
-                                    
-                                    
                                     ';
 
                                 }
@@ -196,8 +202,9 @@ if(isset($_REQUEST["mode_of_payment"])) {
                         
                             $vatable_amount = $total_amount / 1.12;
                             $vat = $total_amount - $vatable_amount;
-                        ?>
 
+                        ?>
+                        <input type="hidden" name="p_total_amount" value="<?php echo $total_amount; ?>">
                         <tr>
                             <td><h6>Total Room Fee:</h6> </td>
                             <td>PHP <?php echo number_format($total_amount, 2); ?></td>
@@ -213,16 +220,16 @@ if(isset($_REQUEST["mode_of_payment"])) {
                         <tr>
                             <td><h6>Deadline of Payment: </h6></td>
                             <?php
-                            
+                               
                                 if($mode_of_payment == 'BANK DEPOSIT') {
-                                    $deadline = Date('y:m:d', strtotime("+3 days"));
+                                    $deadline = Date('F d, o', strtotime("+3 days"));
                                 } else if ($mode_of_payment == 'CASH UPON WALK-IN') {
                                     $deadline = $arrival_date;
                                 }
                             
                             ?>
 
-                            <td><h6><?php $deadline; ?></h6></td>
+                            <td><h6><?php echo $deadline; ?></h6></td>
                         </tr>
 
                     </table>
@@ -232,17 +239,12 @@ if(isset($_REQUEST["mode_of_payment"])) {
                     <br>
                     <br>
                     <br>
-                    <h5 class="text-center mt-3">Terms and Conditions</h5>
+                    <h5 class="text-center mt-3">House Rules</h5>
                     <ol>
                         <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique ab eum enim ratione commodi quasi quisquam pariatur doloremque. Placeat vero qui obcaecati necessitatibus.</li>
                         <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique ab eum enim ratione commodi quasi quisquam pariatur doloremque. Placeat vero qui obcaecati.</li>
                         <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique ab eum enim ratione.</li>
                     </ol>
-
-                    <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="termsAndCondition">
-                        <label class="form-check-label" for="termsAndCondition"><b>I have read and understood the terms and conditons</b></label>
-                    </div>
                     
                     <div class="mt-3 mb-3">
                         <button type="submit" class="btn btn-primary btn-block">Confirm Reservation</button>

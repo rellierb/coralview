@@ -65,8 +65,12 @@
                     startDate: new Date(),
                     minDate: arrivalDateData.currentDate,      
                     onSelect: function() {
-                        spanArrivalDate.innerText = arrivalDateData._prevOnSelectValue;                 
-                        departureDateData.update('minDate', arrivalDateData.selectedDates[0]);            
+                        spanArrivalDate.innerText = arrivalDateData._prevOnSelectValue;  
+                        let departureDate = arrivalDateData.selectedDates[0];
+                        let newDate = new Date(departureDate);
+                        let minDepartureDate = newDate.setDate(departureDate.getDate() + 1);
+                        let anotherDate = new Date(minDepartureDate);                        
+                        departureDateData.update('minDate', anotherDate);            
                         toastr.success('Arrival Date successfully selected!');
                     }
                 });
@@ -84,8 +88,8 @@
                             let arr = arrivalDateData.selectedDates[0];
                             let dep = departureDateData.selectedDates[0];
                             let res = Math.abs(arr - dep)/1000;
-                            let days = Math.floor(res/ 86400) + 1;
-
+                            let days = Math.floor(res/ 86400);
+                            console.log(days);
                             spanDaysOfStay.innerHTML = days;
 
                             inputArrivalDate.value = arrivalDateData._prevOnSelectValue;
@@ -108,10 +112,6 @@
                 numOfAduField.addEventListener('input', ()=> {
                     let adultCount = numOfAduField.value;          
                     localStorage.setItem('adultCount', adultCount);
-
-                    console.log(adultCount);
-                    console.log(adultCount === 0)
-                    console.log(adultCount === '')
 
                     if(adultCount == 0 || adultCount === '') {
 
@@ -158,7 +158,7 @@
                         success: function(data) {
                             inputKidCount.value = childCount;
                             spanNoOfGuests.innerHTML = totalCount;
-                            disableNextButton();    
+                            // disableNextButton();    
                             toastr.success('Kids count successfully added');                  
                         },
                         error: function(data) {
@@ -175,12 +175,9 @@
                 for(let i = 0; i < roomSelectTag.length; i++) {
                     roomSelectTag[i].addEventListener('click', (el)=> {
                         let element = roomSelectTag[i];
-                        
                         let roomId = element.getAttribute('data-room-select');
-                        
                         let roomIdQuery = 'select[data-room-id*="' + roomId + '"]'
                         let selectTag = document.querySelector(roomIdQuery);
-                    
                         let numberOfRooms = selectTag.value;
 
                         if (numberOfRooms == '0') {
@@ -194,15 +191,30 @@
 
                             var roomAndCountStorage = localStorage.getItem('roomsAndCountReserved');
                             
-
-                            if( roomAndCountStorage !== null) {
-
-                                var parsedStorage = JSON.parse(roomAndCountStorage);
-                                parsedStorage.push(objToPush);                          
-                                localStorage.setItem('roomsAndCountReserved', JSON.stringify(toStore));
+                            
+                            
+                            if(roomAndCountStorage !== null) {
                                 
+                                var parsedStorage = JSON.parse(roomAndCountStorage);
+                                
+                                 
+                                for(var x = 0; x < parsedStorage.length; x++) {
+                                    console.log(parsedStorage);
+                                    console.log(parsedStorage[x].roomId);
+                                    console.log(objToPush.roomId);
+                                    console.log(parsedStorage[x].roomId === objToPush.roomId);
+                                    console.log(x);
+                                    
+                                    if(parsedStorage[x].roomId === objToPush.roomId) {
+                                        parsedStorage.splice(x, 1); 
+                                    }   
+                                }
+                                parsedStorage.push(objToPush);      
+
+
+                               
+                                localStorage.setItem('roomsAndCountReserved', JSON.stringify(parsedStorage));
                                 inputRoomsReserved.value = JSON.stringify(JSON.stringify(toStore));
-                                console.log(toStore);
                                 $.ajax({
                                     type: 'POST',
                                     url: '/coralview/functions/user/store_room.php',
@@ -215,10 +227,14 @@
                                         console.log(data);
                                     }
                                 })
+
+                                
                                 
                             } else {
-
+                                toastr.success('Room successfully selected!');            
+                                        
                                 localStorage.setItem('roomsAndCountReserved', JSON.stringify(toStore));
+                                disableNextButton();
                                 inputRoomsReserved.value = JSON.stringify(toStore);
                             }                     
 
@@ -390,10 +406,10 @@
         function disableNextButton() {
             
             var numOfAduField = document.getElementById('numOfAduField').value;
-            var numOfKidsField = document.getElementById('numOfKidsField').value;
+            // var numOfKidsField = document.getElementById('numOfKidsField').value;
             var roomLocalStorage = localStorage.getItem('roomsAndCountReserved'); 
 
-            if((numOfAduField !== '') && (numOfKidsField !== '') && (roomLocalStorage !== null)) {
+            if((numOfAduField !== '') && (roomLocalStorage !== null)) {
                 document.querySelector('.sw-btn-next').disabled = false;
             }
 

@@ -26,6 +26,12 @@
                 </a>
             </li>
             <li>
+                <a href="/coralview/admin/check_out.php">
+                    <!-- <i class="nc-icon nc-single-02"></i> -->
+                    <p>Check-out</p>
+                </a>
+            </li>
+            <li>
                 <a href="/coralview/admin/maintenance/room_number.php">
                     <!-- <i class="nc-icon nc-bell-55"></i> -->
                     <p>Room Availability</p>

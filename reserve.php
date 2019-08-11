@@ -7,6 +7,31 @@ require('functions/assets/connection.php');
 
 $db = connect_to_db();
 
+// PEAK RATE AND OFF-PEAK-RATE
+// OFF PEAK - jan 2 - march 11, 2019  july 18 - Nov 19, 2019
+// PEAK RATE - march 12 - july 17, 2019 nov 2019 - jan 1, 2020
+$date_today = date("Y-m-d");
+
+$off_peak_date_start_1 = strtotime("Y-m-d", strtotime("01/02/2019"));
+$off_peak_date_end_1 = strtotime("Y-m-d", strtotime("03/11/2019"));
+
+$off_peak_date_start_2 = strtotime("Y-m-d", strtotime("07/18/2019"));
+$off_peak_date_end_2 = strtotime("Y-m-d", strtotime("11/19/2019"));
+
+$peak_date_start_1 = strtotime("Y-m-d", strtotime("03/12/2019"));
+$peak_date_end_1 = strtotime("Y-m-d", strtotime("07/17/2019"));
+
+$peak_date_start_2 = strtotime("Y-m-d", strtotime("11/20/2019"));
+$peak_date_end_2 = strtotime("Y-m-d", strtotime("01/01/2020"));
+
+$type_of_rate = "";
+
+if((($date_today >= $off_peak_date_start_1) && ($date_today >= $off_peak_date_start_2)) || (($date_today >= $off_peak_date_start_2) && ($date_today >= $off_peak_date_start_2))) {
+    $type_of_rate = "OFF-PEAK";
+} else if((($date_today >= $peak_date_start_1) && ($date_today >= $peak_date_start_2)) || (($date_today >= $peak_date_start_2) && ($date_today >= $peak_date_start_2))) {
+    $type_of_rate = "PEAK"; 
+}
+
 
 ?>
 
@@ -90,15 +115,27 @@ $db = connect_to_db();
                                 <div class="row mt-3">
                                     <div class="col-12">
                                         <div style="height: 55vh; overflow: scroll;">
+                                        
+                                        <?php
+                                        
+                                        if($type_of_rate == "OFF-PEAK") {
+                                            echo '<h5 class="text-center text-info">Room prices is OFF-PEAK rate.</h5>';
+                                            $off_peak_rate_class = "coralview-blue font-weight-bolder";
+                                            $peak_rate_class = "";
+                                        } else if($type_of_rate == "PEAK") {
+                                            echo '<h5 class="text-center text-info">Room prices is PEAK rate.</h5>';
+                                            $peak_rate_class = "coralview-blue font-weight-bolder";
+                                            $off_peak_rate_class = "";
+                                        }
+                                        
+                                        ?>
+
 
                                         <?php
 
                                         $rooms_query = "SELECT rooms.type, rooms.inclusions, rooms.peak_rate, rooms.off_peak_rate, room_id, count('room_id') as room_count FROM `rooms_status` INNER JOIN rooms ON rooms.Id = rooms_status.room_id  WHERE rooms_status.status = 'AVAILABLE' GROUP BY `room_id` ASC";
                                         $rooms_result = mysqli_query($db, $rooms_query);
         
-                                        // SELECT room_id, count('room_id') as room_count FROM `rooms_status` GROUP BY `room_id` ASC
-                                        // 
-
                                         if(mysqli_num_rows($rooms_result) > 0) {
                                             while($room = mysqli_fetch_assoc($rooms_result)) {
                                                 echo '
@@ -110,8 +147,8 @@ $db = connect_to_db();
                                                                 ' . $room['inclusions'] . '
                                                             </div>
                                                             <div class="col-4">
-                                                                <p class="coralview-blue font-weight-bolder">OFF-PEAK RATE: <span class="float-right">PHP ' . number_format($room['off_peak_rate'], 2) . '</span></p>
-                                                                <p class="coralview-blue font-weight-bolder">PEAK RATE: <span class="float-right font-weight-bolder">PHP ' . number_format($room['peak_rate'], 2) . '</span></p>
+                                                                <p class="' . $off_peak_rate_class . '">OFF-PEAK RATE: <span class="float-right">PHP ' . number_format($room['off_peak_rate'], 2) . '</span></p>
+                                                                <p class="' . $peak_rate_class . '">PEAK RATE: <span class="float-right font-weight-bolder">PHP ' . number_format($room['peak_rate'], 2) . '</span></p>
                                                                 <select class="form-control mt-3" data-room-id="' . $room['room_id'] . '">            
                                                 ';
                                                 

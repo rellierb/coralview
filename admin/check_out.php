@@ -6,13 +6,13 @@ require('../functions/assets/connection.php');
 
 $db = connect_to_db();
 
-// update to 'FOR CHECK-OUT' Status when date is today
-$check_in_query = "SELECT reference_no FROM reservation WHERE check_in_date = CURDATE()";
+// update to 'FOR CHECK-IN' Status when date is today
+$check_in_query = "SELECT reference_no FROM reservation WHERE check_out_date = CURDATE()";
 $check_in_result = mysqli_query($db, $check_in_query);
 
 while($reference_no = mysqli_fetch_assoc($check_in_result)) {
     $number = $reference_no["reference_no"];
-    $update_query_check_in = "UPDATE reservation SET status='FOR CHECK IN' WHERE reference_no='$number'";
+    $update_query_check_in = "UPDATE reservation SET status='FOR CHECK OUT' WHERE reference_no='$number'";
     $update_result_check_in = mysqli_query($db, $update_query_check_in);
 }
 
@@ -23,7 +23,7 @@ while($reference_no = mysqli_fetch_assoc($check_in_result)) {
 
     <div class="main-panel">
         <div class="container-fluid">
-            <h1>Reservation Check-in</h1>
+            <h1>Reservation Check-out</h1>
 
             <h4 class="text-info">Date Today: <?php echo date("M d, Y"); ?></h4>
 
@@ -57,7 +57,7 @@ while($reference_no = mysqli_fetch_assoc($check_in_result)) {
                                 </thead>
                                 <tbody>
                                     <?php
-                                        $reservation_query = "SELECT * FROM reservation RES INNER JOIN guest G ON RES.guest_id = G.Id WHERE RES.check_in_date = CURDATE()";
+                                        $reservation_query = "SELECT * FROM reservation RES INNER JOIN guest G ON RES.guest_id = G.Id WHERE RES.check_out_date = CURDATE()";
                                         $reservation_result = mysqli_query($db, $reservation_query);
                                                 
                                         if(mysqli_num_rows($reservation_result) > 0) {
@@ -69,15 +69,15 @@ while($reference_no = mysqli_fetch_assoc($check_in_result)) {
                                                 echo '
                                                     <tr>
                                                         <td>' . $reservation["reference_no"] . '</td>
-                                                        <td><p class="badge badge-primary">' . $reservation["status"]  . '</p></td>
+                                                        <td><p class="badge badge-info">' . $reservation["status"]  . '</p></td>
                                                         <td>' . $reservation["first_name"] . " " . $reservation["last_name"]  . '</td>
                                                         <td>' . $check_in_date . " - " . $check_out_date . '</td>                        
-                                                        <td style="width: 30%;">
-                                                            <a style="width: 48%; display: inline-block;" href="check_in_user.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-info btn-block">View</a>
-                                                            <a style="width: 48%; display: inline-block;" href="cancel.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-warning btn-block">cancel</a>
+                                                        <td style="width: 20%;">
+                                                            <a style="width: 98%; display: inline-block;" href="check_in_user.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-info btn-block">View</a>
+                                                            
                                                         </td>                        
                                                     </tr>
-                                                ';
+                                                '; // <a style="width: 48%; display: inline-block;" href="cancel.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-warning btn-block">cancel</a>
 
                                             }
                                         }
