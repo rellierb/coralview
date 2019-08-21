@@ -11,59 +11,81 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $is_success = true;
 
+    if(isset($_POST["senior_discount"])) {
+        $senior_discount = mysqli_real_escape_string($db, trim($_POST['senior_discount']));
+        $_SESSION["senior_discount"] = $senior_discount;
+    } 
+
+    if(isset($_POST["pwd_discount"])) {
+        $pwd_discount = mysqli_real_escape_string($db, trim($_POST['pwd_discount']));
+        $_SESSION["pwd_discount"] = $pwd_discount;
+    } 
+
     if(isset($_POST["reference_no"])) {
         $reference_no = mysqli_real_escape_string($db, trim($_POST['reference_no']));
     }
     
     if(!empty($_POST["check_out_add_payment"])) {
         $check_out_payment = mysqli_real_escape_string($db, trim($_POST['check_out_add_payment']));
-    } else {
-        $_SESSION['empty_payment'] = "Additional Payment field is empty";
-    }
+    } 
+    // else {
+    //     $_SESSION['empty_payment'] = "Additional Payment field is empty";
+    // }
   
     if(!empty($_POST["check_out_description"])) {
         $check_out_description = mysqli_real_escape_string($db, trim($_POST['check_out_description']));
-    } else {
-        $_SESSION['empty_description'] = "Description field is empty";
-    }
+    } 
+    // else {
+    //     $_SESSION['empty_description'] = "Description field is empty";
+    // }
 
     if(!empty($_SESSION['empty_description']) && !empty($_SESSION['empty_payment'])) {
         header("location: ../../admin/check_out_user.php?reference_no=$reference_no");
+    } else {
+
+        $insert_query = "
+            INSERT INTO billing (reference_no, amount_paid, total_amount, description, time_stamp)
+            VALUES ('$reference_no', '$check_out_payment', NULL, '$check_out_description', CURDATE())
+        ";
+
+        $insert_result = mysqli_query($db, $insert_query);
+
+        if(!$insert_result) {
+            
+            $_SESSION['msg'] = "Payment transaction cannot be processed";
+            $_SESSION['alert'] = "alert alert-danger";
+
+            header("location: ../../admin/check_out_user.php?reference_no=$reference_no");
+
+        } 
+
     }
     
-    $insert_query = "
-        INSERT INTO billing (reference_no, amount_paid, total_amount, description, time_stamp)
-        VALUES ('$reference_no', '$check_out_payment', NULL, '$check_out_description', CURDATE())
-    ";
+    $find_room_id_query = "SELECT room_number FROM check_in_rooms WHERE reference_no='$reference_no'";
+    $find_room_id_result = mysqli_query($db, $find_room_id_query);
 
-    $insert_result = mysqli_query($db, $insert_query);
+    while($room_id = mysqli_fetch_assoc($find_room_id_result)) {
 
-    if($insert_result) {
-        
-        $find_room_id_query = "SELECT room_number FROM check_in_rooms WHERE reference_no='$reference_no'";
-        $find_room_id_result = mysqli_query($db, $find_room_id_query);
-    
-        while($room_id = mysqli_fetch_assoc($find_room_id_result)) {
-    
-            $room_id_to_update = $room_id["room_number"];
-            $update_room_id_query = "UPDATE rooms_status SET status='AVAILABLE' WHERE room_number='$room_id_to_update'";
-            $update_room_id_result = mysqli_query($db, $update_room_id_query);
+        $room_id_to_update = $room_id["room_number"];
+        $update_room_id_query = "UPDATE rooms_status SET status='AVAILABLE' WHERE room_number='$room_id_to_update'";
+        $update_room_id_result = mysqli_query($db, $update_room_id_query);
 
-        }
+    }
+
+    $update_query = "UPDATE reservation SET status='COMPLETE' WHERE reference_no='$reference_no'";
+    $update_result = mysqli_query($db, $update_query);
+
+    if($update_result) {
 
         $_SESSION['msg'] = "Client successfully check-out";
         $_SESSION['alert'] = "alert alert-success";
 
         header("location: ../../admin/billing.php?reference_no=$reference_no");
 
-    } else {
-
-        $_SESSION['msg'] = "Payment transaction cannot be processed";
-        $_SESSION['alert'] = "alert alert-danger";
-
-        header("location: ../../admin/check_out_user.php?reference_no=$reference_no");
-
     }
+
+    
+
 
     // if(!empty($_POST['room_number'])) {
 

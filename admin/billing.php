@@ -15,6 +15,7 @@ if(isset($_REQUEST["reference_no"])) {
 $reservation_id = 0;
 $overall_total_extra = 0;
 $overall_total_price = 0;
+$guest_count = 0;
 
 ?>
 
@@ -80,6 +81,7 @@ $overall_total_price = 0;
 
                                             $full_name = $reservation["first_name"] . " " . $reservation["last_name"];
                                             $address = $reservation["address"];
+                                            $guest_count = $reservation["adult_count"] + $reservation["kids_count"];
 
                                             echo '
                                                 <table style="margin-left: 2em;">
@@ -158,29 +160,38 @@ $overall_total_price = 0;
                                 <div class="col-8">
 
                                 <br>
-
-
+                                
+                                <div>
+                                    <div>
+                                        <img src="/coralview/assets/images/coralview-logo.jpg" style="display: block; margin: 0 auto;">
+                                    </div>
+                                </div>
+                            
                                 <style type="text/css">
                                     .tg  {border-collapse:collapse;border-spacing:0;}
                                     .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
                                     .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
-                                    .tg .tg-4688{font-weight:bold;font-size:16px;font-family:Arial, Helvetica, sans-serif !important;;border-color:inherit;text-align:left;vertical-align:top}
-                                    .tg .tg-0lax{text-align:center;vertical-align:top}
+                                    .tg .tg-4688{font-weight:bold;font-size:16px;font-family:Arial, Helvetica, sans-serif !important;;border-color:inherit;text-align:left;vertical-align:top;background-color:#47a9df;color:white;}
+                                    .tg .tg-0lax{text-align:center;vertical-align:top;}
                                     .tg .tg-0pky{border-color:inherit;text-align:center;vertical-align:top}
                                 </style>
                                 <table class="tg" style="width: 100%;">
-                                <tr>
-                                    <th class="tg-0pky" colspan="2"><span style="font-weight:bold">Name</span></th>
-                                    <th class="tg-0pky" colspan="2"><?php echo $full_name; ?></th>
-                                </tr>
-                                <tr>
-                                    <td class="tg-0pky" colspan="2"><span style="font-weight:bold">Address</span></td>
-                                    <td class="tg-0pky" colspan="2"><?php echo $address; ?></td>
-                                </tr>
                                     <tr>
-                                        <th class="tg-4688" colspan="2" style="text-align: center;">Description</th>
-                                        <th class="tg-0lax" style="text-align: center;"><span style="font-weight:bold;">Quantity</span></th>
-                                        <th class="tg-4688" style="text-align: center;">Amount</th>
+                                        <th class="tg-0pky" colspan="2"><span style="font-weight:bold">NAME</span></th>
+                                        <th class="tg-0pky" colspan="2"><?php echo $full_name; ?></th>
+                                    </tr>
+                                    <tr>
+                                        <td class="tg-0pky" colspan="2"><span style="font-weight:bold">ADDRESS</span></td>
+                                        <td class="tg-0pky" colspan="2"><?php echo $address; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tg-0pky" colspan="2"><span style="font-weight:bold">DATE</span></td>
+                                        <td class="tg-0pky" colspan="2"><?php echo date("F m, Y"); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="tg-4688" colspan="2" style="text-align: center;">DESCRIPTION</th>
+                                        <th class="tg-4688" style="text-align: center;"><span style="font-weight:bold;">QUANTITY</span></th>
+                                        <th class="tg-4688" style="text-align: center;">AMOUNT</th>
                                     </tr>
 
 
@@ -246,22 +257,64 @@ $overall_total_price = 0;
                                     $overall_total_price += $overall_total_extra;
                                 }
                                 
-                                $vatable_amount = $overall_total_price / 1.12;
-                                $vat = $overall_total_price - $vatable_amount;
-                                
                                 ?>
                                     
+                                    <?php
+                                    
+                                    if(!empty($_SESSION["senior_discount"])) {
+                                        
+                                        $SENIOR_DISCOUNT = .2;
+                                        $discount = 0;
+                                        $senior_discount_price = $overall_total_price / $guest_count;
+                                        $senior_discount_price *= $SENIOR_DISCOUNT;
+                                        $overall_total_price -= $senior_discount_price;
+                                        $pwd_count = $_SESSION["senior_discount"];
+                                        
+                                        $senior_count = $_SESSION["senior_discount"];
+                                    
+                                        echo '
+                                            <tr>
+                                                <td class="tg-0lax" colspan="3"><span style="font-weight:bold">SENIOR CITIZEN DISCOUNT</span></td>
+                                                <td class="tg-0lax"><b>' . number_format($senior_discount_price, 2) . '</b></td>
+                                            </tr>
+                                        ';
+                                        
+                                    }
+
+                                    if(!empty($_SESSION["pwd_discount"])) {
+                                      
+                                        $PWD_DISCOUNT = .2;
+                                        $discount = 0;
+                                        $pwd_discount_price = $overall_total_price / $guest_count;
+                                        $pwd_discount_price *= $PWD_DISCOUNT;
+                                        $overall_total_price -= $pwd_discount_price;
+                                        $pwd_count = $_SESSION["pwd_discount"];
+
+                                        echo '
+                                            <tr>
+                                                <td class="tg-0lax" colspan="3"><span style="font-weight:bold">PWD DISCOUNT</span></td>
+                                                <td class="tg-0lax"><b>' . number_format($pwd_discount_price, 2) . '</b></td>
+                                            </tr>
+                                        ';
+                                        
+                                    }
+
+                                    $vatable_amount = $overall_total_price / 1.12;
+                                    $vat = $overall_total_price - $vatable_amount;
+                                    
+                                    ?>
+                                   
                                     <tr>
-                                        <td class="tg-0lax" colspan="3"><span style="font-weight:bold">Total</span></td>
-                                        <td class="tg-0lax"><b><?php echo number_format($overall_total_price, 2); ?></b></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="tg-0lax" colspan="3"><span style="font-weight:bold">Vatable Amount</span></td>
+                                        <td class="tg-0lax" colspan="3"><span style="font-weight:bold">VATABLE AMOUNT</span></td>
                                         <td class="tg-0lax"><?php echo number_format($vatable_amount, 2); ?></td>
                                     </tr>
                                     <tr>
                                         <td class="tg-0lax" colspan="3"><span style="font-weight:bold">VAT 12%</span></td>
                                         <td class="tg-0lax"><?php echo number_format($vat, 2); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tg-0lax" colspan="3"><span style="font-weight:bold">TOTAL</span></td>
+                                        <td class="tg-0lax"><b><?php echo number_format($overall_total_price, 2); ?></b></td>
                                     </tr>
                                    
                                 </table>

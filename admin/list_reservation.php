@@ -42,7 +42,8 @@ $db = connect_to_db();
                                         <th scope="col">Reservation ID</th> 
                                         <th scope="col">Status</th> 
                                         <th scope="col">Guest Name</th>
-                                        <th scope="col">Arrival/Departure Date</th> 
+                                        <th scope="col">Arrival Date</th> 
+                                        <th scope="col">Departure Date</th> 
                                         <th scope="col">Date Reserved</th> 
                                         <th scope="col" class="text-center">Action</th>
                                     </tr>                            
@@ -76,7 +77,10 @@ $db = connect_to_db();
                                                     case "CANCELLED":
                                                         $reservation_class = "badge-warning";                                                        
                                                         break;
-                                                    default:
+                                                    case "FOR CHECK OUT":
+                                                        $reservation_class = "badge-neutral";
+                                                        break;
+                                                    case "COMPLETE"::
                                                         $reservation_class = "badge-success";                                                        
                                                         break;
                                                 }
@@ -86,15 +90,15 @@ $db = connect_to_db();
                                                         <td>' . $reservation["reference_no"] . '</td>
                                                         <td><p class="' . $reservation_class . '">' . $reservation["status"]  . '</p></td>
                                                         <td>' . $reservation["first_name"] . " " . $reservation["last_name"]  . '</td>
-                                                        <td>' . $check_in_date . " - " . $check_out_date . '</td>
+                                                        <td>' . $check_in_date . '</td>
+                                                        <td>' . $check_out_date .  '</td>
                                                         <td>' . $reservation["date_created"] . '</td>               
                                                         <td>
-                                                        
                                                 ';
                                                 
                                                 if($reservation_status == 'FOR CHECK IN') {
                                                     echo '<a style="width: 98%;' . $hide_class . '" href="cancel.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-block btn-warning">Cancel</a>';
-                                                } else if ($reservation_status == 'CANCELLED') {
+                                                } else if ($reservation_status == 'CANCELLED' || $reservation_status == 'FOR CHECK OUT') {
                                                     echo '';
                                                 } else {
                                                     echo '

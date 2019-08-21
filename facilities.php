@@ -75,9 +75,6 @@ include('common/navbar.php');
                     </div>
 
                 </div>
-         
-                
-            
 
             </div>
 

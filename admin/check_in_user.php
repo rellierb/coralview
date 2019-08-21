@@ -277,7 +277,12 @@ $overall_total_price = 0;
                                     
                                     ?>
 
-                                    <a style="color: white;" id="addExtra" class="btn btn-primary">Add</a>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <a style="color: white;" id="addExtra" class="btn btn-primary float-right">Add</a>
+                                        </div>
+                                    </div>
+                                    
 
                                     <?php
 

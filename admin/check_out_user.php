@@ -15,6 +15,7 @@ if(isset($_REQUEST["reference_no"])) {
 $reservation_id = 0;
 $overall_total_extra = 0;
 $overall_total_price = 0;
+$guest_number = 0;
 
 ?>
 
@@ -88,6 +89,7 @@ $overall_total_price = 0;
                                             $diff = $dateDiff->format('%d');
 
                                             $full_name = $reservation["first_name"] . " " . $reservation["last_name"];
+                                            $guest_number = $reservation["adult_count"];
 
                                             echo '
                                                 <table style="margin-left: 2em;">
@@ -154,7 +156,8 @@ $overall_total_price = 0;
                                             </div>
                                         ';
                                     }
-                                
+
+                                    echo '<input type="hidden" id="guestNumber" value="' . $guest_number . '">';
 
                                     ?>
 
@@ -292,6 +295,10 @@ $overall_total_price = 0;
                                         ';
 
                                         $overall_total_price += $overall_total_extra;
+                                    } else {
+
+                                        echo '<h2 class="text text-info text-center">No extras</h2>';
+
                                     }
 
                                     ?>
@@ -301,48 +308,11 @@ $overall_total_price = 0;
 
                                 <div class="col-5">
                                    
-
                                     <!-- <a style="color: white;" id="addExtra" class="btn btn-primary">Add</a> -->
-
-                                    <?php
-
-                                    $expense_total = 0;
-                                                                        
-                                    // $extra_list_query = "SELECT * FROM billing_extras BE INNER JOIN extras E ON BE.expense_id = E.Id WHERE BE.reference_no='$reference_no'";
-                                    // $extra_list_result = mysqli_query($db, $extra_list_query);
-                                    
-                                    // if(mysqli_num_rows($extra_list_result) > 0) {
-
-                                    //     echo '<table class="table">';
-                                    //     echo '
-                                    //         <tr>
-                                    //             <th scope="col">Extra Name</th>
-                                    //             <th scope="col">Quantity</th>
-                                    //             <th scope="col">Amount</th>
-                                    //         </tr>
-                                    //     ';
-                                    //     while($extra = mysqli_fetch_assoc($extra_list_result)) {
-                                    //         $extra_price = $extra['price'];
-                                    //         echo '
-                                    //         <tr>
-                                    //             <td>' . $extra['description'] . '</td>    
-                                    //             <td>' . $extra['quantity'] . '</td>
-                                    //             <td>' . $extra['price'] . '</td>
-                                    //         </tr>
-                                    //         ';
-
-                                    //         $expense_total += $extra_price;
-                                    //     }
-                                    //     echo '</table>';
-                                    // }
-                                    
-                                    ?>    
-
 
                                     <!-- <div id="extraList">
                                     
                                     </div> -->
-
 
                                     <h5 class="text-center mt-3">Payment Details</h5>
 
@@ -356,7 +326,6 @@ $overall_total_price = 0;
                                         while($billing = mysqli_fetch_assoc($billing_result)) {
 
                                             $amount_paid = $billing["amount_paid"];
-                                            
                                             $remaining_balance -= $amount_paid;
 
                                         }
@@ -365,11 +334,19 @@ $overall_total_price = 0;
                                             <table class="table" style="width: 70%; margin: 0 auto;">
                                                 <tr>
                                                     <th style="width: 50%;" scope="col" class="text-right">Total Amount (Rooms and Extras)</th>
-                                                    <td style="width: 50%;" class="text-right">' . number_format($overall_total_price, 2)  . '</td>
+                                                    <td style="width: 50%;" class="text-right" id="textTotalAmount">' . number_format($overall_total_price, 2)  . '</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width: 50%;" scope="col" class="text-right">Discount</th>
+                                                    <td style="width: 50%;" class="text-right" id="textDiscount">0</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width: 50%;" scope="col" class="text-right">NET TOTAL</th>
+                                                    <td style="width: 50%;" class="text-right" id="textNetTotal">0</td>
                                                 </tr>
                                                 <tr>
                                                     <th style="width: 50%;" scope="col" class="text-right text-danger">Remaining Balance</th>
-                                                    <td style="width: 50%;" class="text-danger text-right">PHP ' . number_format($remaining_balance, 2)  .  '</td>
+                                                    <td style="width: 50%;" class="text-right" id="textRemainingBalance">PHP ' . number_format($remaining_balance, 2)  .  '</td>
                                                 </tr>
                                             </table>
                                         ';
@@ -380,6 +357,7 @@ $overall_total_price = 0;
                                     ?>
 
                                     <h5 class="text-center mt-3">Additional Payment</h5>
+                                    <hr>
                                         <div class="form-group" style="width: 60%; margin: 0 auto;" >
                                             <label for="exampleInputEmail1">Additional Payment</label>
                                             <input class="form-control" name="check_out_add_payment" type="number" min="0">
@@ -387,8 +365,34 @@ $overall_total_price = 0;
                                         <div class="form-group" style="width: 60%; margin: 0 auto;" >
                                             <label for="exampleInputEmail1">Description</label>
                                             <textarea type="email" name="check_out_description" class="form-control"></textarea>
-                                        </div>
+                                        </div>  
                                     <br>
+
+
+                                    <h5 class="text-center mt-3">Discount</h5>
+                                    <hr>
+                                    <div >
+                                        <div class="form-group row">
+                                            <p for="inputEmail3" class="col-sm-6 col-form-label text-right">Senior Citizen Discount (20%)</p>
+                                            <div class="col-sm-3">
+                                                <input type="number" id="seniorDiscount" placeholder="Quantity" name="senior_discount" class="form-control" min="0" max="<?php echo $guest_number; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <p for="inputEmail3" class="col-sm-6 col-form-label text-right">PWD Discount (20%)</p>
+                                            <div class="col-sm-3">
+                                                <input type="number" id="pwdDiscount" placeholder="Quantity" name="pwd_discount" class="form-control" min="0" max="<?php echo $guest_number; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <a class="btn btn-primary float-right" id="btnApplyDiscount" style="color: white;">Apply Discount</a>    
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+
+                                    
                                     
                                 </div>
                             
@@ -416,6 +420,71 @@ $overall_total_price = 0;
         </div>
     
     </form>
+
+    <script>
+    
+        let btnApplyDiscount = document.getElementById('btnApplyDiscount');
+        let textDiscount = document.getElementById('textDiscount');
+        let textNetTotal = document.getElementById('textNetTotal');
+        let textRemainingBalance = document.getElementById('textRemainingBalance');
+        let textTotalAmount = document.getElementById('textTotalAmount');
+        let seniorDiscount = document.getElementById('seniorDiscount');
+        let guestNumber = document.getElementById('guestNumber');
+        let pwdDiscount = document.getElementById('pwdDiscount');
+
+        if(document.body.contains(document.getElementById('btnApplyDiscount'))) {
+
+            btnApplyDiscount.addEventListener('click', function() {
+
+
+                // $PWD_DISCOUNT = .2;
+                // $discount = 0;
+                // $pwd_discount_price = $overall_total_price / $guest_count;
+                // $pwd_discount_price *= $PWD_DISCOUNT;
+                // $overall_total_price -= $pwd_discount_price;
+                // $pwd_count = $_SESSION["pwd_discount"];
+                let totalPrice = textTotalAmount.innerHTML;
+                let trimTotalPrice = totalPrice.replace(',', '');
+                
+                let guest = guestNumber.value;
+                
+                if(seniorDiscount.value !== '') {
+
+                    let senior_discount = .2;
+                    let discount = 0;
+                    let senior_discount_price = parseInt(trimTotalPrice) / guest;                    
+                    senior_discount_price *= senior_discount;
+                    trimTotalPrice -= senior_discount_price;
+                    textDiscount.innerHTML = senior_discount_price.toFixed(2);
+                    textNetTotal.innerHTML = trimTotalPrice.toFixed(2);
+
+                }
+
+                if(pwdDiscount.value !== '') {
+
+                    let pwd_discount = .2;
+
+                    let discount = 0;
+                    
+                    let pwd_discount_price = parseInt(trimTotalPrice) / guest;
+                    
+                    pwd_discount_price *= pwd_discount;
+                    trimTotalPrice -= pwd_discount_price;
+
+                    textDiscount.innerText = pwd_discount_price.toFixed(2);
+                    textNetTotal.innerText = trimTotalPrice.toFixed(2);
+                    
+                }
+
+
+
+
+            })
+
+        }
+    
+    
+    </script>
 
 <?php
 
