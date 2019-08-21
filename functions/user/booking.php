@@ -104,19 +104,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                             $table_data .= '
                                 <tr>
-                                    <td>' . $room["type"]  . '</td>
-                                </tr>
-                                <tr>
-                                    <td>' . number_format($room["peak_rate"], 2)  . '</td>
-                                </tr>
-                                <tr>
-                                    <td>' . $quantity  . '</td>
-                                </tr>
-                                <tr>
-                                    <td>' . $amount . '</td>
+                                    <td class="tg-0lax">' . $room["type"]  . '</td>
+                                    <td class="tg-0lax">' . number_format($room["peak_rate"], 2)  . '</td>
+                                    <td class="tg-cey4" style="text-align: center;">' . $quantity  . '</td>
+                                    <td class="tg-0pky">' . number_format($amount, 2) . '</td>
                                 </tr>
                             ';
-
+                            $total_amount += $amount;
 
                         }
                     }
@@ -132,43 +126,69 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 if($payment == 'CASH UPON WALK IN') {
                     $to_pay_on_deadline = $total_amount;
-                    $payment_note = '<b>Please be informed that you have to pay ' . number_format($to_pay_on_deadline, 2) . ' on the payment deadline</b>';
+                    $payment_note = '<p><b>Please be informed that you have to pay PHP ' . number_format($to_pay_on_deadline, 2) . ' on the arrival/check-in date</b></p>';
                 } else if($payment == 'BANK DEPOSIT') {
                     $to_pay_on_deadline = $total_amount * .5;
-                    $payment_note = '<b>Please be informed that you have to pay ' . number_format($to_pay_on_deadline, 2) . ' on the payment deadline</b>';
+                    $payment_deadline = Date('F d, o', strtotime("+3 days"));
+                    $payment_note = '<p><b>Please be informed that you have to pay PHP ' . number_format($to_pay_on_deadline, 2) . ' on ' . $payment_deadline . '</b></p>';
                 }
 
                 $reservation_details = '
-                    <table>                        
+
+                    <style type="text/css">
+                        .tg  {border-collapse:collapse;border-spacing:0;}
+                        .tg td{font-family:\'Segoe UI\', sans-serif;font-size:16px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+                        .tg th{font-family:\'Segoe UI\', sans-serif;font-size:16px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+                        .tg .tg-wgsn{font-family:\'Segoe UI\', sans-serif; !important;;border-color:inherit;text-align:left;vertical-align:top}
+                        .tg .tg-l1gd{font-size:12px;font-family:\'Segoe UI\', sans-serif; !important;;border-color:inherit;text-align:left;vertical-align:middle}
+                        .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+                    </style>
+                    <table class="tg">
                         <tr>
-                            <td><b>Reference No.</b></td>
-                            <td>' . $reference_no . '</td>
+                            <th class="tg-0pky" style="font-family:\'Segoe UI\', sans-serif;"><b>Reference No.</b></th>
+                            <th class="tg-wgsn">' . $reference_no . '</th>
                         </tr>
                         <tr>
-                            <td><b>Check-in Date</b></td>
-                            <td>' . date("m dd, YY", strtotime($arrival_date)) . '</td>
+                            <td class="tg-0pky"><b>Check-in Date</b></td>
+                            <td class="tg-0pky">' . date("m d, Y", strtotime($arrival_date)) . '</td>
                         </tr>
                         <tr>
-                            <td><b>Check-out Date</b></td>
-                            <td>' . date("m dd, YY", strtotime($departure_date)) . '</td>
+                            <td class="tg-0pky"><b>Check-out Date</b></td>
+                            <td class="tg-0pky">' . date("m d, Y", strtotime($departure_date)) . '</td>
                         </tr>
                         <tr>
-                            <td><b>Mode of Payment</b></td>
-                            <td>' . $payment . '</td>
-                        </tr>
-                        <tr>
-                            <td><b>Deadline of Payment</b></td>
-                            <td>' . $payment . '</td>
+                            <td class="tg-0pky"><b>Mode of Payment</b></td>
+                            <td class="tg-0pky">' . $payment . '</td>
                         </tr>
                     </table>
                 ';
 
                 $room_details = '
-                    <table>
+                    <style type="text/css">
+                        .tg  {border-collapse:collapse;border-spacing:0;}
+                        .tg td{font-family:\'Segoe UI\', sans-serif;font-size:16px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+                        .tg th{font-family:\'Segoe UI\', sans-seriff;font-size:16px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+                        .tg .tg-cey4{font-size:16px;border-color:inherit;text-align:left;vertical-align:top}
+                        .tg .tg-4688{font-weight:bold;font-size:16px;font-family:\'Segoe UI\', sans-serif !important;;border-color:inherit;text-align:left;vertical-align:top}
+                        .tg .tg-b465{font-weight:bold;font-size:16px;font-family:\'Segoe UI\', sans-serif !important;;text-align:left;vertical-align:top}
+                        .tg .tg-fzq1{font-size:16px;font-family:\'Segoe UI\', sans-serif !important;;border-color:inherit;text-align:left;vertical-align:top}
+                        .tg .tg-r2u0{font-weight:bold;font-size:16px;font-family:\'Segoe UI\', sans-serif !important;;border-color:inherit;text-align:left;vertical-align:middle}
+                        .tg .tg-0lax{text-align:left;vertical-align:top}
+                        .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+                    </style>
+
+                    <table class="tg">
+                        <tr>
+                            <th class="tg-b465">Room Name</th>
+                            <th class="tg-b465">Price</th>
+                            <th class="tg-r2u0">Quantity</th>
+                            <th class="tg-4688">Amount</th>
+                        </tr>
                         ' . $table_data . '
                     </table>
                 ';
 
+                
                 $reservation_message = '
                     <style>
 
@@ -185,14 +205,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div style="width: 100%;">
                         <h1>CORALVIEW  RESORT</h1>
                         <p>Thank you for booking with us!</p>
-
                         ' . $reservation_details . '
                         <br>
                         ' . $room_details . '
-
+                        <br>
+                        ' . $payment_note . '
                         <p>Please click the <a href="http://localhost/coralview/confirm_reservation.php?refence_no=' . $reference_no . '">link</a> to acknowledge your reservation.</p>
                     </div>
                 ';
+
+                echo $reservation_message;
 
                 $mail = new PHPMailer(true);
                 try {
@@ -212,7 +234,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $mail->Body = $message;
                     $mail->send();
 
-                    header('location: ../../success_confirmation.php');
+                    echo  '<script>window.location.assign("../../success_confirmation.php")</script>';
 
                 } catch (Exception $e) {
                     $_SESSION['email_error_msg'] = "There\'s an error processing your request";

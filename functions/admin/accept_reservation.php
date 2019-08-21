@@ -20,9 +20,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $dp_amount = mysqli_real_escape_string($db, trim($_POST['down_payment_amount']));
     }
 
-    if(isset($_POST["down_payment_total_amount"])) {
-        $dp_total_amount = mysqli_real_escape_string($db, trim($_POST['down_payment_total_amount']));
-    }
+    // if(isset($_POST["down_payment_total_amount"])) {
+    //     $dp_total_amount = mysqli_real_escape_string($db, trim($_POST['down_payment_total_amount']));
+    // }
 
     if(isset($_POST["down_payment_description"])) {
         $dp_description = mysqli_real_escape_string($db, trim($_POST['down_payment_description']));
@@ -30,7 +30,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $insert_query = "
         INSERT INTO billing (reference_no, amount_paid, total_amount, description, time_stamp)
-        VALUES ('$dp_reference_no', '$dp_amount', '$dp_total_amount', '$dp_description', CURDATE())
+        VALUES ('$dp_reference_no', '$dp_amount', NULL, '$dp_description', CURDATE())
     ";
 
     $insert_result = mysqli_query($db, $insert_query); 

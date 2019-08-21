@@ -61,11 +61,6 @@ if(isset($_REQUEST["rooms_reserved"])) {
     $rooms_reserved = $_REQUEST["rooms_reserved"];
 }
 
-if(isset($_REQUEST["mode_of_payment"])) {
-    $mode_of_payment = $_REQUEST["mode_of_payment"];
-}
-
-
 ?>
 
     <form action="/coralview/functions/user/booking.php" method="POST">
@@ -82,10 +77,11 @@ if(isset($_REQUEST["mode_of_payment"])) {
             <input type="hidden" name="p_contact_number" value="<?php echo $contact_number; ?>">
             <input type="hidden" name="p_email" value="<?php echo $email; ?>">
             <input type="hidden" name="p_address" value="<?php echo $address; ?>">
-            <input type="hidden" name="p_mode_of_payment" value="<?php echo $mode_of_payment; ?>">
 
             <div class="row">
                 <div class="col">
+
+                    <a href="/coralview/reserve.php#step-1" class="btn btn-primary">Back</a>
 
                     <h2 class="text-center mt-3">Reservation Summary</h2>
                     <hr />
@@ -118,10 +114,6 @@ if(isset($_REQUEST["mode_of_payment"])) {
                     <h5 class="text-center mt-3">Booking Details</h5>
                     <hr />
                     <table style="width: 60%; margin: 0 auto;">
-                        <tr>
-                            <th style="width: 30%;" class="text-right pr-5 pb-3"><b>Mode of Payment: </b></th>
-                            <td style="width: 70%;" class="pb-3 pl-4"><?php echo $mode_of_payment; ?></td>
-                        </tr>
                         <tr>
                             <th style="width: 30%;" class="text-right pr-5 pb-3"><b>Check-in Date: </b></th>
                             <td style="width: 70%;" class="pb-3 pl-4"><?php echo $arrival_date; ?></td>
@@ -221,11 +213,7 @@ if(isset($_REQUEST["mode_of_payment"])) {
                             <td><h6>Deadline of Payment: </h6></td>
                             <?php
                                
-                                if($mode_of_payment == 'BANK DEPOSIT') {
-                                    $deadline = Date('F d, o', strtotime("+3 days"));
-                                } else if ($mode_of_payment == 'CASH UPON WALK-IN') {
-                                    $deadline = $arrival_date;
-                                }
+                            $deadline = Date('F d, o', strtotime("+3 days"));
                             
                             ?>
 

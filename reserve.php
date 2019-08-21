@@ -49,7 +49,7 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today >= $off_peak_date_st
                         <div class="card-body">
                             <p class="coralview-blue">Arrival Date <span style="color: black;" id="spanArrivalDate" class="float-right"></span></p>
                             <p class="coralview-blue">Departure Date <span style="color: black;" id="spanDepartureDate" class="float-right"></span></p>
-                            <p class="coralview-blue">Day/s of Stay <span style="color: black;" id="spanDaysOfStay" class="float-right"></span></p>
+                            <p class="coralview-blue">Night/s of Stay <span style="color: black;" id="spanDaysOfStay" class="float-right"></span></p>
                             <p class="coralview-blue">Number of Guests <span style="color: black;" id="spanNoOfGuests" class="float-right"></span></p>                       
                         </div>
                     </div>
@@ -59,10 +59,10 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today >= $off_peak_date_st
 
                     <div id="smartwizard">
                         <ul style="width: 100%:">
-                            <li style="width: 24.5%;" class="text-center coralview-blue"><a href="#step-1">Select Date<br /></a></li>
-                            <li style="width: 24.5%;" class="text-center coralview-blue"><a href="#step-2">Select Room<br /></a></li>
-                            <li style="width: 24.5%;" class="text-center coralview-blue"><a href="#step-3">Modes of Payment<br /></a></li>
-                            <li style="width: 24.5%;" class="text-center coralview-blue"><a href="#step-4">Guest Details<br /></a></li>
+                            <li style="width: 33%;" class="text-center coralview-blue"><a href="#step-1">Select Date<br /></a></li>
+                            <li style="width: 33%;" class="text-center coralview-blue"><a href="#step-2">Select Room<br /></a></li>
+                            <!-- <li style="width: 24.5%;" class="text-center coralview-blue"><a href="#step-3">Modes of Payment<br /></a></li> -->
+                            <li style="width: 33%;" class="text-center coralview-blue"><a href="#step-4">Guest Details<br /></a></li>
                         </ul>
                     
                         <div>
@@ -100,22 +100,21 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today >= $off_peak_date_st
                                     </div>
                                     <div class="col-4">
                                         <div class="form-group">
-                                            <input type="number" class="form-control" id="numOfAduField" placeholder="Number of Adults">
+                                            <input type="number" class="form-control" id="numOfAduField" placeholder="Number of Adults" min="0">
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="form-group">    
-                                            <input type="number" class="form-control" id="numOfKidsField" placeholder="Number of Kids">
+                                            <input type="number" class="form-control" id="numOfKidsField" placeholder="Number of Kids" min="0">
                                         </div>
                                     </div>
                                 </div>
 
                                 <input type="hidden" name="rooms_reserved" id="inputRoomsReserved" value="">
-
+                                <input type="hidden" name="rate_type" id="rateType" value="<?php echo $type_of_rate; ?>">
+                                
                                 <div class="row mt-3">
                                     <div class="col-12">
-                                        <div style="height: 55vh; overflow: scroll;">
-                                        
                                         <?php
                                         
                                         if($type_of_rate == "OFF-PEAK") {
@@ -130,6 +129,9 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today >= $off_peak_date_st
                                         
                                         ?>
 
+                                        <div style="height: 55vh; overflow: scroll;" id="roomList">
+                                        
+                                        
 
                                         <?php
 
@@ -184,7 +186,7 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today >= $off_peak_date_st
                             </div>
                             <div id="step-3" class="" style="height: 50vh;">
                                                          
-                                <div class="container">                                    
+                                <!-- <div class="container">                                    
                                     <div class="row">
                                         
                                         <div class="col-6">
@@ -235,7 +237,7 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today >= $off_peak_date_st
                                         </div>
                                     
                                     </div>
-                                </div> 
+                                </div>  -->
 
                             </div>
                             <div id="step-4" class="">

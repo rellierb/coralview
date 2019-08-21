@@ -6,6 +6,8 @@ require('../functions/assets/connection.php');
 
 $db = connect_to_db();
 
+date_default_timezone_set('Australia/Melbourne');
+
 // update to 'FOR CHECK-IN' Status when date is today
 $check_in_query = "SELECT reference_no FROM reservation WHERE check_out_date = CURDATE()";
 $check_in_result = mysqli_query($db, $check_in_query);
@@ -26,7 +28,7 @@ while($reference_no = mysqli_fetch_assoc($check_in_result)) {
             <h1>Reservation Check-out</h1>
 
             <h4 class="text-info">Date Today: <?php echo date("M d, Y"); ?></h4>
-
+            
             <?php
     
             if(isset($_SESSION['msg']) && $_SESSION['alert']) {
@@ -64,7 +66,7 @@ while($reference_no = mysqli_fetch_assoc($check_in_result)) {
                                             while($reservation = mysqli_fetch_assoc($reservation_result)) {
                                                 
                                                 $check_in_date = date_format(new Datetime($reservation["check_in_date"]), "m-d-Y");
-                                                $check_out_date = date_format(new Datetime($reservation["check_in_date"]), "m-d-Y");
+                                                $check_out_date = date_format(new Datetime($reservation["check_out_date"]), "m-d-Y");
 
                                                 echo '
                                                     <tr>
@@ -73,7 +75,7 @@ while($reference_no = mysqli_fetch_assoc($check_in_result)) {
                                                         <td>' . $reservation["first_name"] . " " . $reservation["last_name"]  . '</td>
                                                         <td>' . $check_in_date . " - " . $check_out_date . '</td>                        
                                                         <td style="width: 20%;">
-                                                            <a style="width: 98%; display: inline-block;" href="check_in_user.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-info btn-block">View</a>
+                                                            <a style="width: 98%; display: inline-block;" href="check_out_user.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-info btn-block">View</a>
                                                             
                                                         </td>                        
                                                     </tr>

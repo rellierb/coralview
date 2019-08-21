@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 04, 2019 at 07:39 AM
+-- Generation Time: Aug 21, 2019 at 12:07 PM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -46,7 +46,34 @@ INSERT INTO `billing` (`id`, `reference_no`, `amount_paid`, `total_amount`, `des
 (2, 'CRLVW-5716FBA', '123', '10000', 'test', '2019-07-30 00:00:00'),
 (3, 'CRLVW-5716FBA', '123', '10000', 'test', '2019-07-30 00:00:00'),
 (4, 'CRLVW-D4E0FCB', '5000', '10000', 'test', '2019-08-04 00:00:00'),
-(5, 'CRLVW-D4E0FCB', '10000', '10000', 'test', '2019-08-04 00:00:00');
+(5, 'CRLVW-D4E0FCB', '10000', '10000', 'test', '2019-08-04 00:00:00'),
+(6, 'CRLVW-A2009D2', '12500', '25000', 'TEST', '2019-08-12 00:00:00'),
+(9, 'CRLVW-A2009D2', '12700', NULL, NULL, '2019-08-17 00:00:00'),
+(12, 'CRLVW-A2009D2', '1000', NULL, 'test', '2019-08-18 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `billing_extras`
+--
+
+CREATE TABLE `billing_extras` (
+  `id` int(11) NOT NULL,
+  `reference_no` varchar(255) DEFAULT NULL,
+  `expense_id` int(11) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `amount` double DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `billing_extras`
+--
+
+INSERT INTO `billing_extras` (`id`, `reference_no`, `expense_id`, `quantity`, `amount`) VALUES
+(4, 'CRLVW-0CABD10', 1, 1, 100),
+(5, 'CRLVW-0CABD10', 2, 1, 100),
+(6, 'CRLVW-A2009D2', 1, 1, 100),
+(7, 'CRLVW-A2009D2', 2, 1, 100);
 
 -- --------------------------------------------------------
 
@@ -69,7 +96,66 @@ INSERT INTO `booking_rooms` (`id`, `reservation_id`, `room_id`, `quantity`) VALU
 (4, 40, 21, 2),
 (5, 40, 22, 2),
 (6, 41, 21, 2),
-(7, 42, 21, 2);
+(7, 42, 21, 2),
+(8, 43, 21, 2),
+(9, 43, 22, 2),
+(10, 44, 21, 2),
+(11, 44, 22, 2),
+(12, 45, 21, 2),
+(13, 45, 22, 2),
+(14, 46, 21, 2),
+(15, 46, 22, 2),
+(16, 47, 21, 2),
+(17, 47, 22, 2),
+(18, 48, 21, 2),
+(19, 48, 22, 2),
+(20, 49, 21, 2),
+(21, 49, 22, 2),
+(22, 50, 21, 1),
+(23, 51, 21, 1),
+(24, 52, 21, 1),
+(25, 53, 21, 1),
+(26, 54, 21, 1),
+(27, 55, 21, 1),
+(28, 56, 21, 1),
+(29, 57, 21, 1),
+(30, 58, 21, 1),
+(31, 59, 21, 1),
+(32, 60, 21, 1),
+(33, 61, 21, 1),
+(34, 62, 21, 1),
+(35, 63, 21, 1),
+(36, 64, 21, 1),
+(37, 65, 21, 1),
+(38, 66, 21, 1),
+(39, 67, 21, 1),
+(40, 68, 21, 1),
+(41, 69, 21, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `check_in_rooms`
+--
+
+CREATE TABLE `check_in_rooms` (
+  `Id` int(11) NOT NULL,
+  `reference_no` varchar(255) DEFAULT NULL,
+  `room_number` varchar(255) DEFAULT NULL,
+  `is_check_out` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `check_in_rooms`
+--
+
+INSERT INTO `check_in_rooms` (`Id`, `reference_no`, `room_number`, `is_check_out`) VALUES
+(1, 'CRLVW-A2009D2', 'CRLVW-508', NULL),
+(2, 'CRLVW-A2009D2', 'CRLVW-509', NULL),
+(3, 'CRLVW-A2009D2', 'CRLVW-104', NULL),
+(4, 'CRLVW-A2009D2', 'CRLVW-105', NULL),
+(5, 'CRLVW-861E81F', 'CRLVW-508', NULL),
+(6, 'CRLVW-861E81F', 'CRLVW-509', NULL);
 
 -- --------------------------------------------------------
 
@@ -113,7 +199,35 @@ CREATE TABLE `guest` (
 INSERT INTO `guest` (`id`, `first_name`, `last_name`, `address`, `email`, `contact_number`) VALUES
 (68, 'Rellie', 'Balagat', 'TEST', 'rellierubiobalagat@gmail.com', '123456'),
 (69, 'Rellie', 'Balagat', '86-A Tandang sora ave qc', 'relliebalagat@gmail.com', '123456'),
-(70, 'Rellie', 'Balagat', '86-A Tandang sora ave qc', 'relliebalagat@gmail.com', '123456');
+(70, 'Rellie', 'Balagat', '86-A Tandang sora ave qc', 'relliebalagat@gmail.com', '123456'),
+(71, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(72, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(73, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(74, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(75, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(76, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(77, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(78, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(79, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(80, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(81, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(82, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(83, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(84, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(85, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(86, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(87, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(88, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(89, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(90, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(91, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(92, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(93, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(94, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(95, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(96, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(97, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(98, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789');
 
 -- --------------------------------------------------------
 
@@ -140,9 +254,36 @@ CREATE TABLE `reservation` (
 --
 
 INSERT INTO `reservation` (`id`, `guest_id`, `reference_no`, `status`, `payment`, `check_in_date`, `check_out_date`, `adult_count`, `kids_count`, `date_created`, `date_updated`) VALUES
-(40, 68, 'CRLVW-E909936', 'REJECTED', 'BANK DEPOSIT', '2019-07-21 00:00:00', '2019-07-21 00:00:00', 3, 1, '2019-07-20 19:53:13', '2019-07-20 19:53:13'),
-(41, 69, 'CRLVW-D4E0FCB', 'FOR CHECK IN', 'BANK DEPOSIT', '2019-07-23 00:00:00', '2019-07-25 00:00:00', 3, 1, '2019-07-21 14:24:21', NULL),
-(42, 70, 'CRLVW-5716FBA', 'FOR CHECK IN', 'BANK DEPOSIT', '2019-07-23 00:00:00', '2019-07-25 00:00:00', 3, 1, '2019-07-21 14:25:04', NULL);
+(40, 68, 'CRLVW-E909936', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-07-21 00:00:00', '2019-08-11 00:00:00', 3, 1, '2019-07-20 19:53:13', '2019-07-20 19:53:13'),
+(41, 69, 'CRLVW-D4E0FCB', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-08 00:00:00', '2019-08-11 00:00:00', 3, 1, '2019-07-21 14:24:21', NULL),
+(42, 70, 'CRLVW-5716FBA', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-07-23 00:00:00', '2019-08-11 00:00:00', 3, 1, '2019-07-21 14:25:04', NULL),
+(43, 72, 'CRLVW-A2009D2', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-11 23:05:04', NULL),
+(44, 73, 'CRLVW-ADC7733', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-12 00:00:00', '2019-08-13 00:00:00', 1, 0, '2019-08-11 23:05:35', NULL),
+(45, 74, 'CRLVW-A53FF86', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-12 00:00:00', '2019-08-13 00:00:00', 1, 0, '2019-08-11 23:05:57', NULL),
+(46, 75, 'CRLVW-210DB2C', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-12 00:00:00', '2019-08-13 00:00:00', 1, 0, '2019-08-11 23:06:12', NULL),
+(47, 76, 'CRLVW-0CABD10', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-12 00:00:00', '2019-08-13 00:00:00', 1, 0, '2019-08-11 23:06:27', NULL),
+(48, 77, 'CRLVW-2BA2CB9', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-12 00:00:00', '2019-08-13 00:00:00', 1, 0, '2019-08-11 23:06:45', NULL),
+(49, 78, 'CRLVW-6EE20D4', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-12 00:00:00', '2019-08-13 00:00:00', 1, 0, '2019-08-11 23:09:19', NULL),
+(50, 79, 'CRLVW-861E81F', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-18 00:00:00', '2019-08-19 00:00:00', 1, 0, '2019-08-12 09:30:15', NULL),
+(51, 80, 'CRLVW-60E49CD', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-18 00:00:00', '2019-08-19 00:00:00', 1, 0, '2019-08-12 09:33:15', NULL),
+(52, 81, 'CRLVW-8680B9C', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 09:43:22', NULL),
+(53, 82, 'CRLVW-57F85B8', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:04:16', NULL),
+(54, 83, 'CRLVW-BD25FD6', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:04:55', NULL),
+(55, 84, 'CRLVW-CA3A189', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:05:07', NULL),
+(56, 85, 'CRLVW-1940C5A', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:10:00', NULL),
+(57, 86, 'CRLVW-31D41A5', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:14:08', NULL),
+(58, 87, 'CRLVW-9A38873', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:15:37', NULL),
+(59, 88, 'CRLVW-46BD0E6', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:16:58', NULL),
+(60, 89, 'CRLVW-61E2D73', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:23:08', NULL),
+(61, 90, 'CRLVW-897974B', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:23:24', NULL),
+(62, 91, 'CRLVW-AB9438E', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:23:56', NULL),
+(63, 92, 'CRLVW-9970B05', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:24:15', NULL),
+(64, 93, 'CRLVW-51AF397', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:30:36', NULL),
+(65, 94, 'CRLVW-20EBFF3', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:31:07', NULL),
+(66, 95, 'CRLVW-8B10B0A', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:33:05', NULL),
+(67, 96, 'CRLVW-C1D8CFC', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:33:36', NULL),
+(68, 97, 'CRLVW-79E4527', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:35:55', NULL),
+(69, 98, 'CRLVW-BF89C25', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:36:38', NULL);
 
 -- --------------------------------------------------------
 
@@ -180,21 +321,21 @@ CREATE TABLE `rooms` (
 --
 
 INSERT INTO `rooms` (`Id`, `number`, `type`, `peak_rate`, `off_peak_rate`, `description`, `image`, `capacity`, `inclusions`) VALUES
-(21, NULL, 'Super Deluxe', 5000, 5600, 'Soak up a breathtaking view of the beach from the comfort of your own private balcony. The Super Deluxe room is furnished with 2 Queen sized beds and a refrigerator for all your snacks and beverages.', NULL, 4, '<ul><li>2 Queen size bed</li><li>Air-Conditioned room</li><li>Private balcony with beach view</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 4 adults</li></ul>'),
-(22, NULL, 'Premier', 7500, 7000, 'Take in the relaxing breeze of the bay from the comfort of your own private balcony. The premier room offers breathtaking views of the beach and can accommodate 4 adults with its 2 queen-sized beds.', NULL, 4, '<ul><li>2 Queen-sized bed</li><li>Private balcony with beach view</li><li>Air-Conditioned room</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 4 adults</li></ul>'),
-(23, NULL, 'Deluxe', 5000, 4500, 'The Deluxe room directly faces the beach and is ideal for small families with its 2 queen-sized beds.', NULL, 4, '<ul><li>2 Queen-sized bed</li><li>Air-Conditioned room</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 4 adults</li></ul>'),
-(24, NULL, 'Double Deluxe', 8500, 7500, 'Experience spacious comfort with 4 queen-sized beds that can accommodate 8 adults. The Super Deluxe room also features a private balcony and views of the expansive beach area.', NULL, 4, '<ul><li>4 Queen-sized bed</li><li>Air-Conditioned room</li><li>Private balcony with beach view</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 8 adults</li></ul>'),
-(25, NULL, 'Suite with kitchen', 8500, 8000, 'The Suite with a kitchen is a spacious option for small families who love home cooked meals. The suite is furnished with a queen-sized bed, a refrigerator and a dining area. Extra bed upon request.', NULL, 4, '<ul><li>1 King-sized bed</li><li>2 Queen-sized pull-out beds</li><li>Air-Conditioned room</li><li>Beach view</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 4 adults</li></ul>'),
-(26, NULL, 'Suite w/o kitchen', 8000, 7500, 'Relax and wake up refreshed with a spacious room that offers a spectacular beachfront view. ', NULL, 4, '<ul><li>1 King-sized bed</li><li>Refrigerator</li><li>Air-Conditioned room</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 4 adults</li></ul>'),
-(27, NULL, 'Family with kitchen', 8500, 7500, 'Relax and wake up refreshed with a spacious room furnished with its own kitchen and dining table. With 4 single beds and 1 double bed, the Family room can comfortably fit up to 6 adults.', NULL, 6, '<ul><li>4 single-sized beds</li><li>1 double-sized bed</li><li>Kitchen</li><li>Dining table</li><li>Air-Conditioned room</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 6 adults</li></ul>'),
-(28, NULL, 'Family w/o kitchen', 7500, 6500, 'With a capacity of up to 8 adults, the family room comes furnished with 4 single beds and 2 double beds which is ideal for large families.', NULL, 8, '<ul><li>4 single-sized beds</li><li>2 double-sized beds</li><li>Air-Conditioned room</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 8 adults</li></ul>'),
-(29, NULL, 'Coralview Villa', 19000, 16000, 'This much-coveted villa features 2 bedrooms, a kitchen, a dining area, a grilling station, a mini infinity pool and a private lanai where you can enjoy a tropical breeze. The Coral View villa can comfortably accommodate up to 10 adults.', NULL, 10, '<ul><li>2 bedrooms</li><li>Private Lanai with beach view</li><li>Kitchen</li><li>Dining area</li><li>Grilling station</li><li>Mini infinity pool</li><li>Air-Conditioned rooms</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li></ul>'),
-(30, NULL, 'Quad', 4500, 4000, 'Enjoy direct access to the salt water swimming pool when you stay at the Quad room. The room features 2 queen-sized beds and is ideal for a small family or a group of friends.', NULL, 4, '<ul><li>2 Queen-sized bed</li><li>Air-Conditioned room</li><li>Direct access to saltwater pool</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 4 adults.</li></ul>'),
-(32, NULL, 'Single', 3700, 3200, 'A comfortable and spacious single room offering a cozy place to relax featuring a queen-sized bed.\r\n\r\n', NULL, 2, '<ul><li>Queen-sized bed</li><li>Air-Conditioned room</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 2 adults.</li></ul>\r\n\r\n\r\n\r\n\r\n\r\n'),
-(33, NULL, 'Dormitory', 7800, 5600, 'Ideal for a group of friends or corporate bookings, The Dormitory room features a bunk bed-style setting and a private bath.', NULL, 10, '<ul><li>3 Rooms</li><li>Bunk Bed-style setting</li><li>Air-Conditioned room</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li></ul>'),
-(34, NULL, 'Dormitory', 10000, 7800, 'Ideal for a group of friends or corporate bookings, The Dormitory room features a bunk bed-style setting and a private bath.', NULL, 14, '<ul><li>3 Rooms</li><li>Bunk Bed-style setting</li><li>Air-Conditioned room</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li></ul>'),
-(35, NULL, 'Dormitory', 12000, 10000, 'Ideal for a group of friends or corporate bookings, The Dormitory room features a bunk bed-style setting and a private bath.', NULL, 18, '<ul><li>4 Rooms</li><li>Bunk Bed-style setting</li><li>Air-Conditioned room</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li></ul>'),
-(36, NULL, 'Coral View (Villa Unit)', 4500, 4000, 'With 2 queen-sized beds, this guestroom offers privacy and basic amenities which makes it an affordable option for families.', NULL, 4, '<ul><li>2 Queen-sized beds</li><li>Air-Conditioned room</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li></ul>');
+(21, NULL, 'Super Deluxe', 5000, 5600, 'Soak up a breathtaking view of the beach from the comfort of your own private balcony. The Super Deluxe room is furnished with 2 Queen sized beds and a refrigerator for all your snacks and beverages.', '/coralview/uploads/rooms/super-deluxe.jpeg', 4, '<ul><li>2 Queen size bed</li><li>Air-Conditioned room</li><li>Private balcony with beach view</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 4 adults</li></ul>'),
+(22, NULL, 'Premier', 7500, 7000, 'Take in the relaxing breeze of the bay from the comfort of your own private balcony. The premier room offers breathtaking views of the beach and can accommodate 4 adults with its 2 queen-sized beds.', '/coralview/uploads/rooms/premier.jpeg', 4, '<ul><li>2 Queen-sized bed</li><li>Private balcony with beach view</li><li>Air-Conditioned room</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 4 adults</li></ul>'),
+(23, NULL, 'Deluxe', 5000, 4500, 'The Deluxe room directly faces the beach and is ideal for small families with its 2 queen-sized beds.', '/coralview/uploads/rooms/deluxe.jpg', 4, '<ul><li>2 Queen-sized bed</li><li>Air-Conditioned room</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 4 adults</li></ul>'),
+(24, NULL, 'Double Deluxe', 8500, 7500, 'Experience spacious comfort with 4 queen-sized beds that can accommodate 8 adults. The Super Deluxe room also features a private balcony and views of the expansive beach area.', '/coralview/uploads/rooms/double-deluxe.jpeg', 4, '<ul><li>4 Queen-sized bed</li><li>Air-Conditioned room</li><li>Private balcony with beach view</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 8 adults</li></ul>'),
+(25, NULL, 'Suite with kitchen', 8500, 8000, 'The Suite with a kitchen is a spacious option for small families who love home cooked meals. The suite is furnished with a queen-sized bed, a refrigerator and a dining area. Extra bed upon request.', '/coralview/uploads/rooms/suite-w-kitchen.jpeg', 4, '<ul><li>1 King-sized bed</li><li>2 Queen-sized pull-out beds</li><li>Air-Conditioned room</li><li>Beach view</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 4 adults</li></ul>'),
+(26, NULL, 'Suite w/o kitchen', 8000, 7500, 'Relax and wake up refreshed with a spacious room that offers a spectacular beachfront view. ', '/coralview/uploads/rooms/suite-kitchen.jpeg', 4, '<ul><li>1 King-sized bed</li><li>Refrigerator</li><li>Air-Conditioned room</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 4 adults</li></ul>'),
+(27, NULL, 'Family with kitchen', 8500, 7500, 'Relax and wake up refreshed with a spacious room furnished with its own kitchen and dining table. With 4 single beds and 1 double bed, the Family room can comfortably fit up to 6 adults.', '/coralview/uploads/rooms/family-w-kitchen.jpeg', 6, '<ul><li>4 single-sized beds</li><li>1 double-sized bed</li><li>Kitchen</li><li>Dining table</li><li>Air-Conditioned room</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 6 adults</li></ul>'),
+(28, NULL, 'Family w/o kitchen', 7500, 6500, 'With a capacity of up to 8 adults, the family room comes furnished with 4 single beds and 2 double beds which is ideal for large families.', '/coralview/uploads/rooms/family-kitchen.jpeg', 8, '<ul><li>4 single-sized beds</li><li>2 double-sized beds</li><li>Air-Conditioned room</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 8 adults</li></ul>'),
+(29, NULL, 'Coralview Villa', 19000, 16000, 'This much-coveted villa features 2 bedrooms, a kitchen, a dining area, a grilling station, a mini infinity pool and a private lanai where you can enjoy a tropical breeze. The Coral View villa can comfortably accommodate up to 10 adults.', '/coralview/uploads/rooms/coralviewvilla.jpeg', 10, '<ul><li>2 bedrooms</li><li>Private Lanai with beach view</li><li>Kitchen</li><li>Dining area</li><li>Grilling station</li><li>Mini infinity pool</li><li>Air-Conditioned rooms</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li></ul>'),
+(30, NULL, 'Quad', 4500, 4000, 'Enjoy direct access to the salt water swimming pool when you stay at the Quad room. The room features 2 queen-sized beds and is ideal for a small family or a group of friends.', '/coralview/uploads/rooms/quad.jpeg', 4, '<ul><li>2 Queen-sized bed</li><li>Air-Conditioned room</li><li>Direct access to saltwater pool</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 4 adults.</li></ul>'),
+(32, NULL, 'Single', 3700, 3200, 'A comfortable and spacious single room offering a cozy place to relax featuring a queen-sized bed.\r\n\r\n', '/coralview/uploads/rooms/single.jpeg', 2, '<ul><li>Queen-sized bed</li><li>Air-Conditioned room</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 2 adults.</li></ul>\r\n\r\n\r\n\r\n\r\n\r\n'),
+(33, NULL, 'Dormitory 1', 7800, 5600, 'Ideal for a group of friends or corporate bookings, The Dormitory room features a bunk bed-style setting and a private bath.', '/coralview/uploads/rooms/dormitory.jpeg', 10, '<ul><li>3 Rooms</li><li>Bunk Bed-style setting</li><li>Air-Conditioned room</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li></ul>'),
+(34, NULL, 'Dormitory 2', 10000, 7800, 'Ideal for a group of friends or corporate bookings, The Dormitory room features a bunk bed-style setting and a private bath.', '/coralview/uploads/rooms/dormitory.jpeg', 14, '<ul><li>3 Rooms</li><li>Bunk Bed-style setting</li><li>Air-Conditioned room</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li></ul>'),
+(35, NULL, 'Dormitory 3', 12000, 10000, 'Ideal for a group of friends or corporate bookings, The Dormitory room features a bunk bed-style setting and a private bath.', '/coralview/uploads/rooms/dormitory.jpeg', 18, '<ul><li>4 Rooms</li><li>Bunk Bed-style setting</li><li>Air-Conditioned room</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li></ul>'),
+(36, NULL, 'Coral View (Villa Unit)', 4500, 4000, 'With 2 queen-sized beds, this guestroom offers privacy and basic amenities which makes it an affordable option for families.', '/coralview/uploads/rooms/coralviewvilla.jpeg', 4, '<ul><li>2 Queen-sized beds</li><li>Air-Conditioned room</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li></ul>');
 
 -- --------------------------------------------------------
 
@@ -254,12 +395,12 @@ INSERT INTO `rooms_status` (`room_number`, `room_id`, `status`, `id`) VALUES
 ('CRLVW-501', 30, 'AVAILABLE', 139),
 ('CRLVW-502', 30, 'AVAILABLE', 140),
 ('CRLVW-503', 30, 'AVAILABLE', 141),
-('CRLVW-504', 21, 'AVAILABLE', 142),
+('CRLVW-504', 21, 'OCCUPIED', 142),
 ('CRLVW-505', 21, 'OCCUPIED', 143),
 ('CRLVW-506', 21, 'OCCUPIED', 144),
-('CRLVW-507', 21, 'AVAILABLE', 145),
-('CRLVW-508', 21, 'AVAILABLE', 146),
-('CRLVW-509', 21, 'AVAILABLE', 147),
+('CRLVW-507', 21, 'OCCUPIED', 145),
+('CRLVW-508', 21, 'OCCUPIED', 146),
+('CRLVW-509', 21, 'OCCUPIED', 147),
 ('CRLVW-601', 21, 'AVAILABLE', 148),
 ('CRLVW-602', 21, 'AVAILABLE', 149),
 ('CRLVW-603', 21, 'AVAILABLE', 150),
@@ -379,10 +520,22 @@ ALTER TABLE `billing`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `billing_extras`
+--
+ALTER TABLE `billing_extras`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `booking_rooms`
 --
 ALTER TABLE `booking_rooms`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `check_in_rooms`
+--
+ALTER TABLE `check_in_rooms`
+  ADD PRIMARY KEY (`Id`);
 
 --
 -- Indexes for table `extras`
@@ -434,31 +587,43 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `billing`
 --
 ALTER TABLE `billing`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `billing_extras`
+--
+ALTER TABLE `billing_extras`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `booking_rooms`
 --
 ALTER TABLE `booking_rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+
+--
+-- AUTO_INCREMENT for table `check_in_rooms`
+--
+ALTER TABLE `check_in_rooms`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `extras`
 --
 ALTER TABLE `extras`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `guest`
 --
 ALTER TABLE `guest`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `reservation_expenses`

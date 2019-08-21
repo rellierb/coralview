@@ -8,10 +8,13 @@ include('common/carousel.php');
 
 
 
+
+
+
 <?php
 
 
+include('common/foot.php');
 include('common/footer.php');
-
 
 ?>

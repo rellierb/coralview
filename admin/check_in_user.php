@@ -12,6 +12,9 @@ if(isset($_REQUEST["reference_no"])) {
 
 }
 
+$total_room_amount = 0;
+$overall_total_price = 0;
+
 
 ?>
 
@@ -53,7 +56,7 @@ if(isset($_REQUEST["reference_no"])) {
 
                             <div class="row">
 
-                                <div class="col-6">
+                                <div class="col-4">
                                 
                                     <h5 class="text-center mt-3">Guest Details</h5>
                                     <hr />
@@ -80,6 +83,7 @@ if(isset($_REQUEST["reference_no"])) {
 
                                             echo '
                                                 <table style="margin-left: 2em;">
+                                                    
                                                     <tr>
                                                         <th style="width: 40%;" class="pr-3 pb-3">Full Name:</th>
                                                         <td style="width: 60%;" class="pb-3 pl-4">' . $full_name . '</td>
@@ -102,6 +106,10 @@ if(isset($_REQUEST["reference_no"])) {
                                                 <h5 class="text-center mt-3">Booking Details</h5>
                                                 <hr />
                                                 <table style="margin-left: 2em;">
+                                                    <tr>
+                                                        <th style="width: 40%;" class="pr-3 pb-3">Reference Coe:</th>
+                                                        <td style="width: 60%;" class="pb-3 pl-4" id="referenceCode">' . $reservation["reference_no"] . '</td>
+                                                    </tr>
                                                     <tr>
                                                         <th style="width: 40%;" class="pr-3 pb-3"><b>Status</b></th>
                                                         <td style="width: 60%;" class="pb-3 pl-4">' . $reservation["status"] . '</td>
@@ -168,10 +176,9 @@ if(isset($_REQUEST["reference_no"])) {
                                                     <th class="text-center" style="width: 15%;">Price</th>
                                                     <th class="text-center" style="width: 15%;">Total</th>
                                                 </tr>
-                                            
                                             ';
 
-                                            $overall_total_price = 0;
+                                            
 
                                             while($room_reservation = mysqli_fetch_assoc($room_reservation_details_result)) {
                                                 
@@ -192,7 +199,7 @@ if(isset($_REQUEST["reference_no"])) {
                                                         <td class="text-center" style="width: 15%;"> ' . number_format($total_price, 2)  . '</td>
                                                     </tr>
                                                 ';
-
+                                                $total_room_amount += $total_price;
                                                 $overall_total_price += $total_price;
                                             }
                                             
@@ -244,14 +251,9 @@ if(isset($_REQUEST["reference_no"])) {
                                     
                                     ?>
 
-
-
-
-
-
                                 </div>
 
-                                <div class="col-3">
+                                <div class="col-5">
                                     <h5 class="text-center mt-3">Add Extras</h5>
                                     <hr />
                                     
@@ -264,10 +266,10 @@ if(isset($_REQUEST["reference_no"])) {
                                         while($extra = mysqli_fetch_assoc($extra_result)) {
 
                                             echo '
-                                            <div class="form-group row">
-                                                <p class="col-4 text-right mr-2 pt-2" for="">' . $extra["description"] . '</p>
-                                                <input type="number" name="" class="form-control col-5" id="" placeholder="Quantity">
-                                            </div>
+                                                <div class="form-group row">
+                                                    <p class="col-4 text-right mr-2 pt-2" for="">' . $extra["description"] . '</p>
+                                                    <input type="number" data-price=' .  $extra["price"] . ' data-name="' . $extra["description"] . '" id="extras-' . $extra["Id"] . '" data-id="' . $extra["Id"] . '" class="form-control col-5" placeholder="Quantity">
+                                                </div>
                                             ';
 
                                         }
@@ -275,9 +277,94 @@ if(isset($_REQUEST["reference_no"])) {
                                     
                                     ?>
 
-                                    <div>
+                                    <a style="color: white;" id="addExtra" class="btn btn-primary">Add</a>
 
+                                    <?php
+
+                                    $expense_total = 0;
+                                                                        
+                                    $extra_list_query = "SELECT * FROM billing_extras BE INNER JOIN extras E ON BE.expense_id = E.Id WHERE BE.reference_no='$reference_no'";
+                                    $extra_list_result = mysqli_query($db, $extra_list_query);
+                                    
+                                    if(mysqli_num_rows($extra_list_result) > 0) {
+
+                                        echo '<table class="table">';
+                                        echo '
+                                            <tr>
+                                                <th scope="col">Extra Name</th>
+                                                <th scope="col">Quantity</th>
+                                                <th scope="col">Amount</th>
+                                            </tr>
+                                        ';
+
+
+                                        while($extra = mysqli_fetch_assoc($extra_list_result)) {
+                                            $extra_price = $extra['price'];
+                                            echo '
+                                                <tr>
+                                                    <td>' . $extra['description'] . '</td>    
+                                                    <td>' . $extra['quantity'] . '</td>
+                                                    <td>' . $extra['price'] . '</td>
+                                                </tr>
+                                            ';
+
+                                            $expense_total += $extra_price;
+                                        }
+
+                                        $overall_total_price += $expense_total;
+
+                                        echo '</table>';
+                                    }
+                                    
+                                    ?>    
+
+
+                                    <!-- <div id="extraList">
+                                    
+                                    </div> -->
+
+
+                                    <h5 class="text-center mt-3">Payment Details</h5>
+
+                                    <?php
+                                    
+                                    $billing_query = "SELECT * FROM billing WHERE reference_no='$reference_no'";
+                                    $billing_result = mysqli_query($db, $billing_query);
+
+                                    if(mysqli_num_rows($billing_result) > 0) {
+                                        
+                                        $balance = $overall_total_price;
+
+                                        while($billing = mysqli_fetch_assoc($billing_result)) {
+
+                                            $amount_paid = $billing["amount_paid"];
+                                            $balance -= $amount_paid;                                            
+
+                                        }
+
+                                        echo '
+                                            <table class="table">
+                                                <tr>
+                                                    <th scope="col" class="text-center">Total Amount (Rooms and Extras)</th>
+                                                    <td>' . number_format($overall_total_price, 2)  .  '</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="col" class="text-center text-danger">Remaining Balance</th>
+                                                    <td class="text-danger">' . number_format($balance, 2)  .  '</td>
+                                                </tr>
+                                            </table>
+                                        ';
+
+                                    }
+                                    
+                                    ?>
+
+                                    <div class="form-row">
+                                        <p class="col-3 text-right pr-4" for="dpAmount">Amount </p>
+                                        <input type="number" name="down_payment_amount" class="form-control col-8" id="dpAmount" min="0">
+                                        <input type="hidden" name="down_total_amount" class="form-control col-8" value="<?php echo $overall_total_amount; ?>" min="0">
                                     </div>
+                                    <br>
                                     
                                 </div>
                             

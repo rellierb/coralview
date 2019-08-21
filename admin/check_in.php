@@ -57,6 +57,7 @@ while($reference_no = mysqli_fetch_assoc($check_in_result)) {
                                 </thead>
                                 <tbody>
                                     <?php
+                                    
                                         $reservation_query = "SELECT * FROM reservation RES INNER JOIN guest G ON RES.guest_id = G.Id WHERE RES.check_in_date = CURDATE()";
                                         $reservation_result = mysqli_query($db, $reservation_query);
                                                 

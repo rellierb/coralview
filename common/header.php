@@ -21,6 +21,7 @@
 
     <link rel="stylesheet" href="/coralview/css/style.css" />
     <script src="https://kit.fontawesome.com/7bbfe16282.js"></script>
+    
 
 </head>
 <body>

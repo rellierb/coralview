@@ -20,8 +20,14 @@ h1, h2, h3, h4, h5, h6, p, span, li {
     color: #F7CF32;
 }
 
+.coralview-blue-bg {
+    background-color: #47A9DF !important;
+}
+
 li.nav-item > a.nav-li {
-    font-family: 'Montserrat', sans-serif; font-size: .9em; color: #47A9DF;
+    font-family: 'Montserrat', sans-serif; 
+    font-size: .9em;
+    color: #47A9DF;
 }
 
 #step-3 label {

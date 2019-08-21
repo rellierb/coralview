@@ -305,7 +305,7 @@ $status = '';
                                         <br>
                                         <div class="form-row">
                                             <p class="col-3 text-right pr-4" for="dpDescription">Description</p>
-                                            <textarea class="form-control col-8" name="down_payment_description" id="dpDescription"></textarea>
+                                            <textarea class="form-control col-8" name="down_payment_description" id="dpDescription" placeholder="Enter Deposit slip details"></textarea>
                                         </div>
 
                                         <br>
@@ -325,7 +325,6 @@ $status = '';
                                     </div>
                             
                                 </div>
-                            
                             
                             </div>
                             
