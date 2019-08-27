@@ -22,18 +22,33 @@ if(isset($_POST["amount"])) {
     $amount = $_POST["amount"];
 }
 
-// "INSERT INTO booking_rooms(reservation_id, room_id, quantity) VALUES ('$reservation_id', '$room_id', '$quantity')";
-$extra_add_query = "INSERT INTO billing_extras(reference_no, expense_id, quantity, amount) VALUES ($reference_no, $extra_id, $quantity, $amount)";
-$extra_add_result = mysqli_query($db, $extra_add_query);
+$select_extra_query = "SELECT * FROM billing_extras WHERE reference_no=$reference_no AND expense_id=$extra_id";
+$select_extra_result = mysqli_query($db, $select_extra_query);
 
-echo $extra_add_query;
+if($select_extra_result) {
 
-if($extra_add_result) {
-    echo "SUCCESS";
+    $update_extra_id_query = "UPDATE billing_extras SET quantity=$quantity WHERE reference_no=$reference_no AND expense_id=$extra_id";
+    $update_extra_id_result = mysqli_query($db, $update_extra_id_query);
+
+    if($update_extra_id_result) {
+        echo "SUCCESS";
+    } else {
+        echo "FAILED";
+    }
+    
 } else {
-    echo "FAILED";
-}
 
+    // "INSERT INTO booking_rooms(reservation_id, room_id, quantity) VALUES ('$reservation_id', '$room_id', '$quantity')";
+    $extra_add_query = "INSERT INTO billing_extras(reference_no, expense_id, quantity, amount) VALUES ($reference_no, $extra_id, $quantity, $amount)";
+    $extra_add_result = mysqli_query($db, $extra_add_query);
+
+    if($extra_add_result) {
+        echo "SUCCESS";
+    } else {
+        echo "FAILED";
+    }
+
+}
 
 
 

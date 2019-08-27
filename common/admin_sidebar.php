@@ -20,6 +20,13 @@
     <div class="sidebar-wrapper">
         <ul class="nav">
             <li>
+                <a href="/coralview/admin/walk_in_reservation.php">
+                    <!-- <i class="nc-icon nc-single-02"></i> -->
+                    <p>Walk-in Reservation</p>
+                </a>
+            </li>
+
+            <li>
                 <a href="/coralview/admin/check_in.php">
                     <!-- <i class="nc-icon nc-single-02"></i> -->
                     <p>Check-in</p>

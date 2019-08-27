@@ -7,9 +7,6 @@ require('../functions/assets/connection.php');
 
 $db = connect_to_db();
 
-
-
-
 ?>
 
     <?php include('../common/admin_sidebar.php') ?>
@@ -69,6 +66,7 @@ $db = connect_to_db();
                                                         $hide_class = "display: none;";
                                                         break;
                                                     case "FOR CHECK IN":
+                                                    case "CHECKED IN":  
                                                         $reservation_class = "badge-info";
                                                         break;
                                                     case "PENDING":
@@ -80,7 +78,7 @@ $db = connect_to_db();
                                                     case "FOR CHECK OUT":
                                                         $reservation_class = "badge-neutral";
                                                         break;
-                                                    case "COMPLETE"::
+                                                    case "CHECKED OUT":
                                                         $reservation_class = "badge-success";                                                        
                                                         break;
                                                 }
@@ -100,6 +98,9 @@ $db = connect_to_db();
                                                     echo '<a style="width: 98%;' . $hide_class . '" href="cancel.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-block btn-warning">Cancel</a>';
                                                 } else if ($reservation_status == 'CANCELLED' || $reservation_status == 'FOR CHECK OUT') {
                                                     echo '';
+                                                } else if ($reservation_status == 'CHECKED IN') { 
+                                                    echo '<a style="width: 98%;' . $hide_class . '" href="checked_in.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-block btn-primary">View</a>';
+
                                                 } else {
                                                     echo '
                                                         <a style="width: 48%;' . $hide_class . '" href="accept.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-success">Accept</a>

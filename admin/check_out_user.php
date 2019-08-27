@@ -359,11 +359,11 @@ $guest_number = 0;
                                     <h5 class="text-center mt-3">Additional Payment</h5>
                                     <hr>
                                         <div class="form-group" style="width: 60%; margin: 0 auto;" >
-                                            <label for="exampleInputEmail1">Additional Payment</label>
+                                            <label for="exampleInputEmail1">ADDITIONAL PAYMENT</label>
                                             <input class="form-control" name="check_out_add_payment" type="number" min="0">
                                         </div>
                                         <div class="form-group" style="width: 60%; margin: 0 auto;" >
-                                            <label for="exampleInputEmail1">Description</label>
+                                            <label for="exampleInputEmail1">DESCRIPTION</label>
                                             <textarea type="email" name="check_out_description" class="form-control"></textarea>
                                         </div>  
                                     <br>
@@ -372,6 +372,8 @@ $guest_number = 0;
                                     <h5 class="text-center mt-3">Discount</h5>
                                     <hr>
                                     <div >
+                                      
+
                                         <div class="form-group row">
                                             <p for="inputEmail3" class="col-sm-6 col-form-label text-right">Senior Citizen Discount (20%)</p>
                                             <div class="col-sm-3">
@@ -410,12 +412,8 @@ $guest_number = 0;
                             </div>
                         </div>
 
-
-
-
                     </div>
                 </div>
-
             </div>
         </div>
     
@@ -423,66 +421,7 @@ $guest_number = 0;
 
     <script>
     
-        let btnApplyDiscount = document.getElementById('btnApplyDiscount');
-        let textDiscount = document.getElementById('textDiscount');
-        let textNetTotal = document.getElementById('textNetTotal');
-        let textRemainingBalance = document.getElementById('textRemainingBalance');
-        let textTotalAmount = document.getElementById('textTotalAmount');
-        let seniorDiscount = document.getElementById('seniorDiscount');
-        let guestNumber = document.getElementById('guestNumber');
-        let pwdDiscount = document.getElementById('pwdDiscount');
-
-        if(document.body.contains(document.getElementById('btnApplyDiscount'))) {
-
-            btnApplyDiscount.addEventListener('click', function() {
-
-
-                // $PWD_DISCOUNT = .2;
-                // $discount = 0;
-                // $pwd_discount_price = $overall_total_price / $guest_count;
-                // $pwd_discount_price *= $PWD_DISCOUNT;
-                // $overall_total_price -= $pwd_discount_price;
-                // $pwd_count = $_SESSION["pwd_discount"];
-                let totalPrice = textTotalAmount.innerHTML;
-                let trimTotalPrice = totalPrice.replace(',', '');
-                
-                let guest = guestNumber.value;
-                
-                if(seniorDiscount.value !== '') {
-
-                    let senior_discount = .2;
-                    let discount = 0;
-                    let senior_discount_price = parseInt(trimTotalPrice) / guest;                    
-                    senior_discount_price *= senior_discount;
-                    trimTotalPrice -= senior_discount_price;
-                    textDiscount.innerHTML = senior_discount_price.toFixed(2);
-                    textNetTotal.innerHTML = trimTotalPrice.toFixed(2);
-
-                }
-
-                if(pwdDiscount.value !== '') {
-
-                    let pwd_discount = .2;
-
-                    let discount = 0;
-                    
-                    let pwd_discount_price = parseInt(trimTotalPrice) / guest;
-                    
-                    pwd_discount_price *= pwd_discount;
-                    trimTotalPrice -= pwd_discount_price;
-
-                    textDiscount.innerText = pwd_discount_price.toFixed(2);
-                    textNetTotal.innerText = trimTotalPrice.toFixed(2);
-                    
-                }
-
-
-
-
-            })
-
-        }
-    
+       
     
     </script>
 
