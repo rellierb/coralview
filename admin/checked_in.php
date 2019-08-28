@@ -21,7 +21,7 @@ $payment_type = '';
 
     <?php include('../common/admin_sidebar.php') ?>
 
-    <form action="../functions/admin/check_in_user.php" method="POST">
+    <form action="../functions/admin/generate_check_in_voucher.php" method="POST">
         <input type="hidden" name="reference_no" value="<?php echo $reference_no; ?>" >
         <div class="main-panel">
             <div class="container-fluid">
@@ -48,11 +48,11 @@ $payment_type = '';
                             <div class="card-body">
                             
                             <div class="row">
-                                <div class="col-12">
-                                    <button type="button" class="btn btn-primary float-right" id="dlCheckInVoucher">DOWNLOAD CHECK-IN VOUCHER</button>
+                                <div class="col-12"> 
+                                    <button type="submit" class="btn btn-primary float-right" id="">DOWNLOAD CHECK-IN VOUCHER</button>
                                 </div>
                             </div>
-
+                            <!-- dlCheckInVoucher -->
                             <div class="row">
                                 <div class="col-12">
 
