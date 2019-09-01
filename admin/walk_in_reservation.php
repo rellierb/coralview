@@ -147,8 +147,6 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today >= $off_peak_date_st
 
                                             <div style="height: 55vh; overflow: scroll;" id="roomList">
                                             
-                                            
-
                                             <?php
 
                                             $rooms_query = "SELECT rooms.type, rooms.inclusions, rooms.image, rooms.peak_rate, rooms.off_peak_rate, room_id, count('room_id') as room_count FROM `rooms_status` INNER JOIN rooms ON rooms.Id = rooms_status.room_id  WHERE rooms_status.status = 'AVAILABLE' GROUP BY `room_id` ASC";

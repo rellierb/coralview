@@ -134,7 +134,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
 
                 $reservation_details = '
-
                     <style type="text/css">
                         .tg  {border-collapse:collapse;border-spacing:0;}
                         .tg td{font-family:\'Segoe UI\', sans-serif;font-size:16px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
@@ -158,7 +157,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </tr>
                         <tr>
                             <td class="tg-0pky"><b>Mode of Payment</b></td>
-                            <td class="tg-0pky">' . $payment . '</td>
+                            <td class="tg-0pky">BANK DEPOSIT</td>
                         </tr>
                     </table>
                 ';
@@ -213,8 +212,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <p>Please click the <a href="http://localhost/coralview/confirm_reservation.php?refence_no=' . $reference_no . '">link</a> to acknowledge your reservation.</p>
                     </div>
                 ';
-
-                echo $reservation_message;
 
                 $mail = new PHPMailer(true);
                 try {

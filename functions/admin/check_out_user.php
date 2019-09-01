@@ -35,7 +35,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $insert_query = "
             INSERT INTO billing (reference_no, amount_paid, total_amount, description, time_stamp)
-            VALUES ('$reference_no', '$check_out_payment', NULL, '$check_out_description', CURDATE())
+            VALUES ('$reference_no', '$check_out_payment', NULL, '$check_out_description', NOW())
         ";
 
         $insert_result = mysqli_query($db, $insert_query);
@@ -62,7 +62,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     }
 
-    $update_query = "UPDATE reservation SET status='CHECKED OUT' WHERE reference_no='$reference_no'";
+    $update_query = "UPDATE reservation SET status='CHECKED OUT', date_updated=NOW() WHERE reference_no='$reference_no'";
     $update_result = mysqli_query($db, $update_query);
 
     if($update_result) {

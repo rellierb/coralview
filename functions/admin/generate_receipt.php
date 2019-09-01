@@ -136,7 +136,7 @@ if($reservation_details_result) {
 $temp_arrival_date = date_create($arrival_date);
 $temp_departure_date = date_create($departure_date);
 $html .= '
-    <h1>Recipient</h1>
+    <h1>Customer</h1>
     <address>
         <p>' . $full_name . ' </p>
     </address>
