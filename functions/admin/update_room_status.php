@@ -7,7 +7,6 @@ $db = connect_to_db();
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-
     if(isset($_POST["room_status"])) {
         $room_status = $_POST["room_status"];
     }

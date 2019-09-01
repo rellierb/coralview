@@ -5,6 +5,7 @@ session_start();
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Dompdf\Dompdf;
+use Mpdf\Mpdf;
 
 // require_once 'dompdf/lib/html5lib/Parser.php';
 // require_once 'dompdf/lib/php-font-lib/src/FontLib/Autoloader.php';
@@ -13,7 +14,24 @@ use Dompdf\Dompdf;
 // Dompdf\Autoloader::register();
 
 require('../assets/connection.php');
-require('../../composer/vendor/autoload.php');
+require_once('../../composer/vendor/autoload.php');
+
+// require_once __DIR__ . '/vendor/autoload.php';
+
+var_dump(__DIR__);
+// $mpdf = new \Mpdf\Mpdf();
+
+try {
+    $mpdf = new \Mpdf\Mpdf([
+        'tempDir' => __DIR__ . '/tmp', // uses the current directory's parent "tmp" subfolder
+        'setAutoTopMargin' => 'stretch',
+        'setAutoBottomMargin' => 'stretch'
+    ]);
+} catch (\Mpdf\MpdfException $e) {
+    print "Creating an mPDF object failed with" . $e->getMessage();
+}
+
+print 'Folder is writable: '.(is_writable('/opt/lampp/htdocs/coralview/functions/admin') ? 'yes' : 'no').'<br />';
 
 $db = connect_to_db();
 
@@ -26,65 +44,146 @@ if(isset($_POST["reference_no"])) {
     $reference_no = mysqli_real_escape_string($db, trim($_POST['reference_no']));
 }
 
+$html .= '
+    <style type="text/css">       
+        #receipt *
+        {
+            border: 0;
+            box-sizing: content-box;
+            color: inherit;
+            font-family: inherit;
+            font-size: inherit;
+            font-style: inherit;
+            font-weight: inherit;
+            line-height: inherit;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+            vertical-align: top;
+        }
+        #receipt h1 { font: bold 100% sans-serif; letter-spacing: 0.5em; text-align: center; text-transform: uppercase; }
+        #receipt table { font-size: 75%; table-layout: fixed; width: 100%; }
+        #receipt table { border-collapse: separate; border-spacing: 2px; }
+        #receipt th, #receipt td { border-width: 1px; padding: 0.5em; position: relative; text-align: left; }
+        #receipt th, #receipt td { border-style: solid; }
+        #receipt th { background: #EEE; border-color: #BBB; }
+        #receipt td { border-color: #DDD; }
+        #receipt div { margin: 0 0 3em; }
+        #receipt div:after { clear: both; content: ""; display: table; }
+        #receipt div h1 { background: #000; color: #FFF; margin: 0 0 1em; padding: 0.5em 0; }
+        #receipt div address { float: left; font-size: 75%; font-style: normal; line-height: 1; margin: 0 1em 1em 0; }
+        #receipt div address p { margin: 0 0 0.25em; }
+        #receipt div span, #receipt div img { display: block; float: right; }
+        #receipt div span { margin: 0 0 1em 1em; max-height: 25%; max-width: 60%; position: relative; }
+        #receipt div img { max-height: 100%; max-width: 100%; }
+        #receipt article, #receipt article address, #receipt table.meta, #receipt table.inventory { margin: 0 0 3em; }
+        #receipt article:after { clear: both; content: ""; display: table; }
+        #receipt article address { float: left; font-size: 125%; font-weight: bold; }
+        #receipt table.meta, #receipt table.balance { float: right; width: 36%; }
+        #receipt table.meta:after, #receipt  table.balance:after { clear: both; content: ""; display: table; }
+        #receipt table.meta th { width: 40%; }
+        #receipt table.meta td { width: 60%; }
+        #receipt table.inventory { clear: both; width: 100%; }
+        #receipt table.inventory th { font-weight: bold; text-align: center; }
+        #receipt table.inventory td:nth-child(1) { width: 26%; }
+        #receipt table.inventory td:nth-child(2) { width: 38%; }
+        #receipt table.inventory td:nth-child(3) { text-align: right; width: 12%; }
+        #receipt table.inventory td:nth-child(4) { text-align: right; width: 12%; }
+        #receipt table.inventory td:nth-child(5) { text-align: right; width: 12%; }
+        #receipt table.balance th, #receipt table.balance td { width: 50%; }
+        #receipt table.balance td { text-align: right; }
+        #receipt aside h1 { border: none; border-width: 0 0 1px; margin: 0 0 1em; }
+        #receipt aside h1 { border-color: #999; border-bottom-style: solid; }
+    </style>
+    <div id="receipt">
+        <div style="text-align: center;">
+            <h1>OFFICIAL RECEIPT</h1>
+            <address style="width: 100%;">
+                <p>CORALVIEW BEACH RESORT</p>
+                <p>POBLACION, MORONG, BATAAN, PHILIPPINES</p>
+                <p>+632-782-2881</p>
+                <p>+632-782-2883</p>
+            </address>
+        </div>
+        <article>
+';
+
 $reservation_details_query = "SELECT * FROM reservation RES
 INNER JOIN guest G ON G.id = RES.guest_id
 WHERE RES.reference_no = '$reference_no'";
 
 $reservation_details_result = mysqli_query($db, $reservation_details_query);
 
+$arrival_date = '';
+$departure_date = '';
+$nights_of_stay = 0;
+
 if($reservation_details_result) {
     while($reservation = mysqli_fetch_assoc($reservation_details_result)) {
         $full_name = $reservation["first_name"] . " " . $reservation["last_name"];
         $address = $reservation["address"];
         $guest_count = $reservation["adult_count"] + $reservation["kids_count"];
+        $arrival_date = $reservation["check_in_date"];
+        $departure_date = $reservation["check_out_date"];
+
+        $dateDiff = date_diff(date_create($reservation["check_in_date"]), date_create($reservation["check_out_date"]));
+        $diff = $dateDiff->format('%d');
+
+        $nights_of_stay = $diff;
     }
 }
-
-// 
-
+$temp_arrival_date = date_create($arrival_date);
+$temp_departure_date = date_create($departure_date);
 $html .= '
-    <div style="display: block; margin: 0 auto; text-align: center;">
-        <img src="data:image/jpeg;base64,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" alt="" />
-    </div>
-    <style type="text/css">
-        .tg  {border-collapse:collapse;border-spacing:0;}
-        .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
-        .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
-        .tg .tg-4688{font-weight:bold;font-size:16px;font-family:Arial, Helvetica, sans-serif !important;;border-color:black;text-align:left;vertical-align:top;background-color:#47a9df;color:white;}
-        .tg .tg-0lax{text-align:center;vertical-align:top}
-        .tg .tg-0pky{border-color:inherit;text-align:center;vertical-align:top}
-    </style>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <table class="tg" style="width: 100%;">
+    <h1>Recipient</h1>
+    <address>
+        <p>' . $full_name . ' </p>
+    </address>
+    <table class="meta">
         <tr>
-            <th class="tg-0pky" colspan="2"><span style="font-weight:bold">Name</span></th>
-            <th class="tg-0pky" colspan="2">' . $full_name . '</th>
+            <th><span>REFERENCE NO</span></th>
+            <td><span>' . $reference_no .'</span></td>
         </tr>
         <tr>
-            <td class="tg-0pky" colspan="2"><span style="font-weight:bold">Address</span></td>
-            <td class="tg-0pky" colspan="2">' . $address . '</td>
+            <th><span>Address</span></th>
+            <td>' . $address . '</td>
         </tr>
         <tr>
-            <td class="tg-0pky" colspan="2"><span style="font-weight:bold">Date</span></td>
-            <td class="tg-0pky" colspan="2">' . date("F m, Y") . '</td>
+            <th><span>Date</span></th>
+            <td><span>' . date("F m, Y h:i:s A") . '</span></td>
         </tr>
         <tr>
-            <th class="tg-4688" colspan="2" style="text-align: center;">Description</th>
-            <th class="tg-4688" style="text-align: center;"><span style="font-weight:bold;">Quantity</span></th>
-            <th class="tg-4688" style="text-align: center;">Amount</th>
+            <th><span>Arrival Date</span></th>
+            <td><span>' . date_format($temp_arrival_date, "M d, Y"). '</span></td>
         </tr>
+        <tr>
+            <th><span>Departure Date</span></th>
+            <td><span>' . date_format($temp_departure_date, "M d, Y") . '</span></td>
+        </tr>
+        <tr>
+            <th><span>Night/s of Stay</span></th>
+            <td><span>' . $nights_of_stay  . '</span></td>
+        </tr>
+    </table>
+    <table class="inventory">
+        <thead>
+            <tr>
+                
+                <th><span>Description</span></th>
+                <th><span>Rate</span></th>
+                <th><span>Quantity</span></th>
+                <th><span>Price</span></th>
+            </tr>
+        </thead>
+        <tbody>
 ';
 
 $room_reservation_details_query = "SELECT * FROM reservation RES
-    INNER JOIN guest G ON G.id = RES.guest_id
-    INNER JOIN booking_rooms BR ON RES.id = BR.reservation_id
-    INNER JOIN rooms R ON BR.room_id = R.Id
-    WHERE RES.reference_no = '$reference_no'";
+INNER JOIN guest G ON G.id = RES.guest_id
+INNER JOIN booking_rooms BR ON RES.id = BR.reservation_id
+INNER JOIN rooms R ON BR.room_id = R.Id
+WHERE RES.reference_no = '$reference_no'";
 
 $room_reservation_details_result = mysqli_query($db, $room_reservation_details_query);
 $rooms_reserved = array();
@@ -102,57 +201,19 @@ if($room_reservation_details_result) {
 
         $html .= '
             <tr>
-                <td class="tg-0pky" colspan="2">' . $room_reservation["type"] . '</td>
-                <td class="tg-0lax">' . $room_reservation["quantity"]  . '</td>
-                <td class="tg-0pky">' . number_format($total_price, 2) . '</td>
+                <td style="text-align: center;"><span>' . $room_reservation["type"] . '</span></td>
+                <td style="text-align: center;">' . number_format($room_reservation["peak_rate"]) . '</span></td>
+                <td style="text-align: center;"><span>' . $room_reservation["quantity"] . '</span></td>
+                <td style="text-align: center;"><span data-prefix>PHP </span><span>' . number_format($total_price, 2)  . '</span></td>
             </tr>
         ';
-        
+
         $overall_total_price += $total_price;
     }
     
 }
 
-$_SESSION["senior_discount"] = 0;
-$_SESSION["pwd_discount"] = 1;
-
-if(!empty($_SESSION["senior_discount"])) { 
-
-    $SENIOR_DISCOUNT = .2;
-    $discount = 0;
-    $senior_discount_price = $overall_total_price / $guest_count;
-    $senior_discount_price *= $SENIOR_DISCOUNT;
-    $overall_total_price -= $senior_discount_price;
-    $senior_count = $_SESSION["senior_discount"];
-
-    $html .= '
-        <tr>
-            <td class="tg-0lax" colspan="3"><span style="font-weight:bold">SENIOR CITIZEN DISCOUNT</span></td>
-            <td class="tg-0lax"><b>' . number_format($senior_discount_price, 2) . '</b></td>
-        </tr>
-    ';
-    
-}
-
-// echo $_SESSION["pwd_discount"];
-// echo $_SESSION["pwd_discount"];
-
-if(!empty($_SESSION["pwd_discount"])) {
-    $PWD_DISCOUNT = .2;
-    $discount = 0;
-    $pwd_discount_price = $overall_total_price / $guest_count;
-    $pwd_discount_price *= $PWD_DISCOUNT;
-    $overall_total_price -= $pwd_discount_price;
-    $pwd_count = $_SESSION["pwd_discount"];
-
-    $html .= '
-        <tr>
-            <td class="tg-0lax" colspan="3"><span style="font-weight:bold">PWD DISCOUNT</span></td>
-            <td class="tg-0lax"><b>' . number_format($pwd_discount_price, 2) . '</b></td>
-        </tr>
-    ';
-}
-
+$overall_total_price *= $nights_of_stay;
 $extra_list_query = "SELECT * FROM billing_extras BE INNER JOIN extras E ON BE.expense_id = E.Id WHERE reference_no='$reference_no'";
 $extra_list_result = mysqli_query($db, $extra_list_query);
 
@@ -165,9 +226,10 @@ if(mysqli_num_rows($extra_list_result) > 0) {
 
         $html .= '
             <tr>
-                <td class="tg-0pky" colspan="2">' . $extra["description"] . '</td>
-                <td class="tg-0lax">' . $extra["quantity"]  . '</td>
-                <td class="tg-0pky">' . number_format($total_extra, 2) . '</td>
+                <td style="text-align: center;"><span>' . $extra["description"] . '</span></td>
+                <td style="text-align: center;">' . $extra["price"]  . '</span></td>
+                <td style="text-align: center;"><span>' .  $extra["quantity"] . '</span></td>
+                <td style="text-align: center;"><span data-prefix>PHP </span><span>' . number_format($total_extra, 2)  . '</span></td>
             </tr>
         ';
 
@@ -176,29 +238,83 @@ if(mysqli_num_rows($extra_list_result) > 0) {
     $overall_total_price += $overall_total_extra;
 }
 
-$vatable_amount = $overall_total_price / 1.12;
-$vat = $overall_total_price - $vatable_amount;
+$add_fees_query = "SELECT * FROM billing_additional_fees WHERE reference_no='$reference_no'";
+$add_fees_result = mysqli_query($db, $add_fees_query);
+$add_fees_amount = 0;
+
+if(mysqli_num_rows($add_fees_result) > 0) {
+
+    while($fees = mysqli_fetch_assoc($add_fees_result)) {
+
+        $html .= '
+            <tr>
+                <td style="text-align: center;"><span>' . $fees["description"] . '</span></td>
+                <td style="text-align: center;">' . number_format($fees["price"] , 2) . '</span></td>
+                <td style="text-align: center;"><span>' .  $fees["quantity"] . '</span></td>
+                <td style="text-align: center;"><span data-prefix>PHP </span><span>' . number_format($total_extra, 2)  . '</span></td>
+            </tr>
+        ';
+
+        $overall_total_price += $fees['amount'];
+
+    }
+
+}
+
+$check_discount_query = "SELECT * FROM billing_discount BD INNER JOIN discount D on BD.discount_id=D.Id  WHERE BD.reference_no='$reference_no'";
+$check_discount_result = mysqli_query($db, $check_discount_query);
+$discount_price = 0;
+
+if(mysqli_num_rows($check_discount_result) > 0) {
+   
+    while($discount = mysqli_fetch_assoc($check_discount_result)) {
+        
+        $discount_amount = $discount["amount"];
+        $comp_discount = $overall_total_price / $quantity;
+       
+        if($discount_amount < 1) {
+            $temp_discount_price = $comp_discount * $discount_amount;
+            $discount_price += $temp_discount_price;
+        } 
+
+        $change_to_percent = $discount['amount'] * 100;
+
+        $html .= '
+            
+            <tr>
+                <td style="text-align: center;"><span>' . $discount["name"] . '</span></td>
+                <td style="text-align: center;">' . $change_to_percent . '%</span></td>
+                <td style="text-align: center;"><span>' .  $discount["quantity"] . ' </span></td>
+                <td style="text-align: center;">(<span data-prefix>PHP </span><span>' . number_format($discount_price, 2)  . '</span>)  </td>
+            </tr>
+        
+        ';
+          
+    }
+}
+
+$net_amount = $overall_total_price - $discount_price;
 
 $html .= '
-
-    <tr>
-        <td class="tg-0lax" colspan="3"><span style="font-weight:bold">Total</span></td>
-        <td class="tg-0lax"><b>' . number_format($overall_total_price, 2) .'</b></td>
-    </tr>
-    <tr>
-        <td class="tg-0lax" colspan="3"><span style="font-weight:bold">Vatable Amount</span></td>
-        <td class="tg-0lax">' . number_format($vatable_amount, 2) .'</td>
-    </tr>
-    <tr>
-        <td class="tg-0lax" colspan="3"><span style="font-weight:bold">VAT 12%</span></td>
-        <td class="tg-0lax">' . number_format($vat, 2) .'</td>
-    </tr>
-
-</table>
+                </tbody>
+            </table>
+        
+            <table class="balance">
+                <tr>
+                    <th><span>Total</span></th>
+                    <td><span data-prefix>PHP </span><span>' . number_format($net_amount, 2) . '</span></td>
+                </tr>
+            </table>
+        </article>
+    </div>
 ';
 
-$dompdf = new Dompdf();
-$dompdf->loadHtml($html);
-$dompdf->setPaper('A4', 'landscape');
-$dompdf->render();
-$dompdf->stream();
+$mpdf->WriteHTML($html);
+$mpdf->Output('receipt.pdf', 'D');
+
+// echo $html;
+// $dompdf = new Dompdf();
+// $dompdf->loadHtml($html);
+// $dompdf->setPaper('A4', 'landscape');
+// $dompdf->render();
+// $dompdf->stream();

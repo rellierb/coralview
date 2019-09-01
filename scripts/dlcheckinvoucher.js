@@ -2,7 +2,9 @@ let dlCheckInVoucher = document.getElementById('dlCheckInVoucher');
 // let remainingBalance = document.getElementById('remainingBalance');
 // let dpAmount = document.getElementById('dpAmount');
 // let dpDescription = document.getElementById('dpDescription');
-let referenceCode = document.getElementById('referenceCode').innerText;
+if(document.body.contains(document.getElementById('referenceCode'))) {
+    let referenceCode = document.getElementById('referenceCode').innerText;
+}
 
 if(document.body.contains(document.getElementById('dlCheckInVoucher'))) {
 

@@ -31,7 +31,13 @@ $(document).ready(function(){
 
         let inputNoOfDays = document.getElementById('inputNoOfDays');
         
-        let arrivalDateMinDate = datePlusOneDate(arrivalDateData.currentDate);
+        let arrivalDateMinDate;
+        if(windowUrl.indexOf('reserve.ph') > 0) {
+            arrivalDateMinDate = datePlusOneDate(arrivalDateData.currentDate);
+        } else {
+            arrivalDateMinDate = arrivalDateData.currentDate;
+        }
+        
 
         $('#arrivalDate').datepicker({
             startDate: new Date(),
@@ -521,7 +527,10 @@ function attachRoomList(list) {
             <h4 class="card-header card-header-info">${parseList[i]["type"]}</h4>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-3">
+                        <img src="${parseList[i]["image"]}" style="border-radius: 0; width: 100%;">
+                    </div>
+                    <div class="col-5">
                         ${parseList[i]["inclusions"]}
                     </div>
                     <div class="col-4">

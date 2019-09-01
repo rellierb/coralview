@@ -31,7 +31,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $contact_number = mysqli_real_escape_string($db, trim($_POST['p_contact_number']));
     $email = mysqli_real_escape_string($db, trim($_POST['p_email']));
     $address = mysqli_real_escape_string($db, trim($_POST['p_address']));
-    $payment = mysqli_real_escape_string($db, trim($_POST['p_mode_of_payment']));
+    $payment = 'BANK DEPOSIT';
     
     $guest_insert_query = "INSERT INTO guest(first_name, last_name, address, email, contact_number) ";
     $guest_insert_query .= "VALUES ('$first_name', '$last_name', '$address', '$email', '$contact_number')";

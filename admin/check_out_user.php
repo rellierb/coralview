@@ -12,10 +12,12 @@ if(isset($_REQUEST["reference_no"])) {
 
 }
 
-$reservation_id = 0;
-$overall_total_extra = 0;
+$total_room_amount = 0;
 $overall_total_price = 0;
-$guest_number = 0;
+$overall_total_extra = 0;
+$payment_type = '';
+$nights_of_stay = 0;
+
 
 ?>
 
@@ -48,13 +50,6 @@ $guest_number = 0;
 
                 ?>
 
-                <div class="row">
-                    <div class="col-9">
-                    </div>
-                    <div class="col-3">
-                    </div>
-                </div>
-
                 <br>
 
                 <div class="row">
@@ -65,10 +60,9 @@ $guest_number = 0;
 
                             <div class="row">
 
-                                <div class="col-4">
+                                <div class="col-12">
                                 
-                                    <h5 class="text-center mt-3">Guest Details</h5>
-                                    <hr />
+                                    <h5 class="text-center mt-3 text-info">GUEST DETAILS</h5>
                                     <?php
                                     // INNER JOIN booking_rooms BR ON RES.id = BR.reservation_id  INNER JOIN rooms R ON BR.room_id = R.Id
                                     $reservation_details_query = "SELECT * FROM reservation RES
@@ -87,62 +81,47 @@ $guest_number = 0;
                                             $reservation_id = $reservation["id"];
                                             $dateDiff = date_diff(date_create($reservation["check_in_date"]), date_create($reservation["check_out_date"]));
                                             $diff = $dateDiff->format('%d');
-
+                                            $nights_of_stay = $diff;
                                             $full_name = $reservation["first_name"] . " " . $reservation["last_name"];
                                             $guest_number = $reservation["adult_count"];
+                                            $payment_type = $reservation["payment"];
 
                                             echo '
-                                                <table style="margin-left: 2em;">
-                                                    
+                                                <table class="table table-bordered">
                                                     <tr>
-                                                        <th style="width: 40%;" class="pr-3 pb-3">Full Name:</th>
-                                                        <td style="width: 60%;" class="pb-3 pl-4">' . $full_name . '</td>
+                                                        <th class="pr-3 pb-3">FULL NAME</th>
+                                                        <td class="pb-3 pl-4">' . $full_name . '</td>
+                                                        <th class="pr-3 pb-3">CONTACT NUMBER</th>
+                                                        <td class="pb-3 pl-4">' . $reservation["contact_number"] . '</td>
                                                     </tr>
                                                     <tr>
-                                                        <th style="width: 40%;" class="pr-3 pb-3">Contact Number:</th>
-                                                        <td style="width: 60%;" class="pb-3 pl-4">' . $reservation["contact_number"] . '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th style="width: 40%;" class="pr-3 pb-3">Email:</th>
-                                                        <td style="width: 60%;" class="pb-3 pl-4">' . $reservation["email"] . '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th style="width: 40%;" class="pr-3 pb-3">Address:</th>
-                                                        <td style="width: 60%;" class="pb-3 pl-4">' . $reservation["address"] . '</td>
+                                                        <th class="pr-3 pb-3">EMAIL ADDRESS</th>
+                                                        <td class="pb-3 pl-4">' . $reservation["email"] . '</td>
+                                                        <th class="pr-3 pb-3">ADDRESS</th>
+                                                        <td class="pb-3 pl-4">' . $reservation["address"] . '</td>
                                                     </tr>
                                                 </table>
                                                 <br />
 
-                                                <h5 class="text-center mt-3">Booking Details</h5>
-                                                <hr />
-                                                <table style="margin-left: 2em;">
+                                                <h5 class="text-center text-info mt-3">BOOKING DETAILS</h5>
+                                                <table class="table table-bordered">
                                                     <tr>
-                                                        <th style="width: 40%;" class="pr-3 pb-3">Reference Code:</th>
-                                                        <td style="width: 60%;" class="pb-3 pl-4" id="referenceCode">' . $reservation["reference_no"] . '</td>
+                                                        <th class="pr-3 pb-3">REFERENCE CODE</th>
+                                                        <td class="pb-3 pl-4" id="referenceCode">' . $reservation["reference_no"] . '</td>
+                                                        <th class="pr-3 pb-3"><b>STATUS</b></th>
+                                                        <td class="pb-3 pl-4">' . $reservation["status"] . '</td>
+                                                        <th class="pr-3 pb-3"><b>PAYMENT</b></th>
+                                                        <td class="pb-3 pl-4">' . $reservation["payment"] . '</td>
                                                     </tr>
                                                     <tr>
-                                                        <th style="width: 40%;" class="pr-3 pb-3"><b>Status</b></th>
-                                                        <td style="width: 60%;" class="pb-3 pl-4">' . $reservation["status"] . '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th style="width: 40%;" class="pr-3 pb-3"><b>Payment</b></th>
-                                                        <td style="width: 60%;" class="pb-3 pl-4">' . $reservation["payment"] . '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th style="width: 40%;" class="pr-3 pb-3"><b>Check-in Date: </b></th>
-                                                        <td style="width: 60%;" class="pb-3 pl-4">' . date_format(new Datetime($reservation["check_in_date"]), "m-d-Y")  . '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th style="width: 40%;" class="pr-3 pb-3"><b>Check-out Date: </b></th>
-                                                        <td style="width: 60%;" class="pb-3 pl-4">' . date_format(new Datetime($reservation["check_out_date"]), "m-d-Y") . '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th style="width: 40%;" class="pr-3 pb-3"><b>Day/s: </b></th>
-                                                        <td style="width: 60%;" class="pb-3 pl-4">' . $diff . '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th style="width: 40%;" class="pr-3 pb-3"><b>Guest/s Number: </b></th>
-                                                        <td style="width: 60%;" class="pb-3 pl-4"><span>Adult: ' . $reservation["adult_count"] .  '</span> <span>Kids: ' . $reservation["kids_count"] . '</span></td>
+                                                        <th class="pr-3 pb-3"><b>CHECK-IN DATE</b></th>
+                                                        <td class="pb-3 pl-4">' . date_format(new Datetime($reservation["check_in_date"]), "m-d-Y")  . '</td>
+                                                        <th class="pr-3 pb-3"><b>CHECK-OUT DATE</b></th>
+                                                        <td class="pb-3 pl-4">' . date_format(new Datetime($reservation["check_out_date"]), "m-d-Y") . '</td>
+                                                        <th class="pr-3 pb-3"><b>NIGHT/S</b></th>
+                                                        <td class="pb-3 pl-4">' . $diff . '</td>
+                                                        <th class="pr-3 pb-3"><b>GUEST/S NUMBER</b></th>
+                                                        <td class="pb-3 pl-4"><span>Adult: ' . $reservation["adult_count"] .  '</span> <span>Kids: ' . $reservation["kids_count"] . '</span></td>
                                                     </tr>
                                                 </table>
 
@@ -177,16 +156,15 @@ $guest_number = 0;
 
                                         if($room_reservation_details_result) {
 
-                                            echo '<h5 class="text-center mt-3">Room Details</h5>';
+                                            echo '<h5 class="text-center mt-3 text-info">ROOM DETAILS</h5>';
                                             echo '
-                                                <hr />  
-                                                <table style="width: 100%;">
-                                                <tr>
-                                                    <th class="text-center" style="width: 55%;">Room/s Reserve</th>
-                                                    <th class="text-center" style="width: 15%;">Quantity</th>
-                                                    <th class="text-center" style="width: 15%;">Price</th>
-                                                    <th class="text-center" style="width: 15%;">Total</th>
-                                                </tr>
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <th class="text-center" style="width: 55%;">ROOM/S RESERVE</th>
+                                                        <th class="text-center" style="width: 15%;">QUANTITY</th>
+                                                        <th class="text-center" style="width: 15%;">PRICE</th>
+                                                        <th class="text-center" style="width: 15%;">TOTAL</th>
+                                                    </tr>
                                             ';
 
                                             while($room_reservation = mysqli_fetch_assoc($room_reservation_details_result)) {
@@ -219,8 +197,11 @@ $guest_number = 0;
                                 
                                 </div>
 
-                                <div class="col-3">
-                                    <h5 class="text-center mt-3">Assigned Rooms</h5>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-6">
+                                    <h5 class="text-center mt-3 text-info">ASSIGNED ROOMS</h5>
                                     
                                     <?php
                                     
@@ -229,21 +210,21 @@ $guest_number = 0;
                                         INNER JOIN rooms R ON RS.room_id = R.id
                                         WHERE CIR.reference_no='$reference_no'";
                                     $assigned_room_result = mysqli_query($db, $assigned_room_query);
-                                   
+                                
                                     if(mysqli_num_rows($assigned_room_result)  > 0) {
 
-                                        echo '<table class="table">';
+                                        echo '<table class="table table-bordered">';
                                         echo '
-                                            <thead>
-                                                <th scope="col">Room Number</th>
-                                                <th scope="col">Room Name</th>
-                                            </thead>
+                                            <tr>
+                                                <th scope="col" class="text-center">ROOM NUMBER</th>
+                                                <th scope="col" class="text-center">ROOM NAME</th>
+                                            </tr>
                                         ';
                                         while($assigned_room = mysqli_fetch_assoc($assigned_room_result)) {
                                             echo '
                                             <tr> 
-                                                <td>' . $assigned_room['room_number'] . '</td>
-                                                <td>' . $assigned_room['type'] . '</td>       
+                                                <td class="text-center">' . $assigned_room['room_number'] . '</td>
+                                                <td class="text-center">' . $assigned_room['type'] . '</td>       
                                             </tr>
                                             ';
                                         }
@@ -253,7 +234,10 @@ $guest_number = 0;
                                     
                                     ?>
 
-                                    <h5 class="text-center mt-3">Extras</h5>
+                                </div>
+
+                                <div class="col-6">
+                                    <h5 class="text-center mt-3 text-info">EXTRAS</h5>
 
                                     <?php 
                                     
@@ -263,28 +247,25 @@ $guest_number = 0;
                                     if(mysqli_num_rows($extra_list_result) > 0) {
 
                                         echo '
-                                            <table class="table">
+                                            <table class="table table-bordered">
                                                 <tr>
-                                                    <th scope="col">Extra</th>
-                                                    <th scope="col">Quantity</th>
-                                                    <th scope="col">Amount</th>
-                                                    <th scope="col">Total</th>
+                                                    <th scope="col" class="text-center">EXTRA</th>
+                                                    <th scope="col" class="text-center">QUANTITY</th>
+                                                    <th scope="col" class="text-center">AMOUNT</th>
+                                                    <th scope="col" class="text-center">TOTAL</th>
                                                 <tr>
 
                                         ';
 
                                         while($extra = mysqli_fetch_assoc($extra_list_result)) {
-
                                             $total_extra = $extra["price"] * $extra["quantity"];
-
                                             $overall_total_extra += $total_extra;
-
                                             echo '
                                                 <tr>
-                                                    <td>' . $extra["description"] . '</td>
-                                                    <td>' . $extra["quantity"] . '</td>
-                                                    <td>' . $extra["price"] . '</td>                                                
-                                                    <td>' . number_format($total_extra, 2) . '</td>                                                
+                                                    <td  class="text-center">' . $extra["description"] . '</td>
+                                                    <td  class="text-center">' . $extra["quantity"] . '</td>
+                                                    <td  class="text-center">' . $extra["price"] . '</td>                                                
+                                                    <td  class="text-center">' . number_format($total_extra, 2) . '</td>                                                
                                                 </tr>
                                             ';
 
@@ -296,108 +277,206 @@ $guest_number = 0;
 
                                         $overall_total_price += $overall_total_extra;
                                     } else {
-
                                         echo '<h2 class="text text-info text-center">No extras</h2>';
 
                                     }
 
                                     ?>
 
-
                                 </div>
+                            </div>
+                                
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="text-center mt-3 text-info">PAYMENT DETAILS</h5>
+                                </div>
+                            </div>
 
-                                <div class="col-5">
-                                   
-                                    <!-- <a style="color: white;" id="addExtra" class="btn btn-primary">Add</a> -->
+                            <div class="row">
+                                <div class="col-8">
+                                
+                                <!-- <a style="color: white;" id="addExtra" class="btn btn-primary">Add</a> -->
 
-                                    <!-- <div id="extraList">
-                                    
-                                    </div> -->
+                                <!-- <div id="extraList">
+                                
+                                </div> -->
 
-                                    <h5 class="text-center mt-3">Payment Details</h5>
+                                <?php
+                                        
+                                // Additional Fees
+                                $add_fees_query = "SELECT * FROM billing_additional_fees WHERE reference_no='$reference_no'";
+                                $add_fees_result = mysqli_query($db, $add_fees_query);
+                                $add_fees_amount = 0;
 
-                                    <?php
-                                    
-                                    $billing_query = "SELECT * FROM billing WHERE reference_no='$reference_no'";
-                                    $billing_result = mysqli_query($db, $billing_query);
+                                if(mysqli_num_rows($add_fees_result) > 0) {
 
-                                    if(mysqli_num_rows($billing_result) > 0) {
-                                        $remaining_balance = $overall_total_price;
-                                        while($billing = mysqli_fetch_assoc($billing_result)) {
-
-                                            $amount_paid = $billing["amount_paid"];
-                                            $remaining_balance -= $amount_paid;
-
-                                        }
-
-                                        echo '
-                                            <table class="table" style="width: 70%; margin: 0 auto;">
-                                                <tr>
-                                                    <th style="width: 50%;" scope="col" class="text-right">Total Amount (Rooms and Extras)</th>
-                                                    <td style="width: 50%;" class="text-right" id="textTotalAmount">' . number_format($overall_total_price, 2)  . '</td>
-                                                </tr>
-                                                <tr>
-                                                    <th style="width: 50%;" scope="col" class="text-right">Discount</th>
-                                                    <td style="width: 50%;" class="text-right" id="textDiscount">0</td>
-                                                </tr>
-                                                <tr>
-                                                    <th style="width: 50%;" scope="col" class="text-right">NET TOTAL</th>
-                                                    <td style="width: 50%;" class="text-right" id="textNetTotal">0</td>
-                                                </tr>
-                                                <tr>
-                                                    <th style="width: 50%;" scope="col" class="text-right text-danger">Remaining Balance</th>
-                                                    <td style="width: 50%;" class="text-right" id="textRemainingBalance">PHP ' . number_format($remaining_balance, 2)  .  '</td>
-                                                </tr>
-                                            </table>
+                                    echo '<table class="table table-bordered">';
+                                    echo '<thead><th class="text-center" scope="col">Additional Fees</th><th class="text-center" scope="col">Amount</th><thead>';
+                                    while($fees = mysqli_fetch_assoc($add_fees_result)) {
+                                        echo'
+                                            <tr>
+                                                <td class="text-center">' . $fees['description'] . '</td>
+                                                <td class="text-center">' . $fees['amount'] . '</td>
+                                            </tr>
                                         ';
 
+                                        $add_fees_amount += $fees['amount'];
+
                                     }
-                                    
+                                    echo '</table>';
 
-                                    ?>
+                                }
+                                
+                                ?>
 
-                                    <h5 class="text-center mt-3">Additional Payment</h5>
-                                    <hr>
-                                        <div class="form-group" style="width: 60%; margin: 0 auto;" >
-                                            <label for="exampleInputEmail1">ADDITIONAL PAYMENT</label>
-                                            <input class="form-control" name="check_out_add_payment" type="number" min="0">
-                                        </div>
-                                        <div class="form-group" style="width: 60%; margin: 0 auto;" >
-                                            <label for="exampleInputEmail1">DESCRIPTION</label>
-                                            <textarea type="email" name="check_out_description" class="form-control"></textarea>
-                                        </div>  
-                                    <br>
+                                <?php
 
+                                $overall_total_price *= $nights_of_stay;
+                                $overall_total_price += $add_fees_amount;
+                                
+                                ?>
 
-                                    <h5 class="text-center mt-3">Discount</h5>
-                                    <hr>
-                                    <div >
-                                      
+                                <?php
+                                
+                                $check_discount_query = "SELECT * FROM billing_discount BD INNER JOIN discount D on BD.discount_id=D.Id  WHERE BD.reference_no='$reference_no'";
+                                $check_discount_result = mysqli_query($db, $check_discount_query);
+                                $discount_price = 0;
 
-                                        <div class="form-group row">
-                                            <p for="inputEmail3" class="col-sm-6 col-form-label text-right">Senior Citizen Discount (20%)</p>
-                                            <div class="col-sm-3">
-                                                <input type="number" id="seniorDiscount" placeholder="Quantity" name="senior_discount" class="form-control" min="0" max="<?php echo $guest_number; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <p for="inputEmail3" class="col-sm-6 col-form-label text-right">PWD Discount (20%)</p>
-                                            <div class="col-sm-3">
-                                                <input type="number" id="pwdDiscount" placeholder="Quantity" name="pwd_discount" class="form-control" min="0" max="<?php echo $guest_number; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <a class="btn btn-primary float-right" id="btnApplyDiscount" style="color: white;">Apply Discount</a>    
-                                            </div>
-                                        </div>
+                                if(mysqli_num_rows($check_discount_result) > 0) {
+                                    echo '<table class="table table-bordered">';
+                                    echo '<thead><th class="text-center" scope="col">Discount</th><th class="text-center" scope="col">Amount</th><thead>';
+                                    while($discount = mysqli_fetch_assoc($check_discount_result)) {
                                         
+                                        $discount_amount = $discount["amount"];
+                                        $comp_discount = $overall_total_price / $quantity;
+                                        
+                                        if($discount_amount < 1) {
+                                            $temp_discount_price = $comp_discount * $discount_amount;
+                                            $discount_price += $temp_discount_price;
+                                        } 
+
+                                        $change_to_percent = $discount['amount'] * 100;
+
+                                        echo'
+                                            <tr>
+                                                <td class="text-center">' . $discount['name'] . '</td>
+                                                <td class="text-center">' . $change_to_percent  . ' %</td>
+                                            </tr>
+                                        
+                                        ';
+                                            
+                                    }
+                                    echo '</table>';
+                                }                                            
+                                
+                                
+                                ?>
+
+                                <?php
+                            
+                                $billing_query = "SELECT * FROM billing WHERE reference_no='$reference_no'";
+                                $billing_result = mysqli_query($db, $billing_query);
+                                $balance = $overall_total_price;
+                                // echo $balance;
+                                if(mysqli_num_rows($billing_result) > 0) {
+                                
+                                    while($billing = mysqli_fetch_assoc($billing_result)) {
+                                        
+                                        $amount_paid = $billing["amount_paid"];
+                                        $balance -= $amount_paid;                                            
+
+                                    }
+
+                                }
+                            
+                                $discounted_price = $balance - $discount_price;
+
+                                // DOWNPAYMENT
+                                $check_down_payment = "SELECT * FROM downpayment WHERE reference_no='$reference_no'";
+                                $check_down_payment_result = mysqli_query($db, $check_down_payment);
+
+                                $downpayment_amount = 0;
+
+                                if(mysqli_num_rows($check_down_payment_result) > 0) {
+
+                                    while($down_payment = mysqli_fetch_assoc($check_down_payment_result)) {
+                                        $downpayment_amount = $down_payment["amount"];
+                                        $balance -= $downpayment_amount;
+                                    }
+
+                                }
+                                
+                                $discounted_price -= $downpayment_amount;
+                                
+                                echo '
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th scope="col" class="text-center">PAYMENT TYPE</th>
+                                            <td class="text-center">' . $payment_type .  '</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col" class="text-center">TOTAL AMOUNT (ROOMS & EXTRAS)</th>
+                                            <td class="text-center">' . number_format($overall_total_price, 2)  .  '</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col" class="text-center">DOWNPAYMENT</th>
+                                            <td class="text-center">' . number_format($downpayment_amount, 2)  .'</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col" class="text-center">TOTAL DISCOUNT</th>
+                                            <td class="text-center">' . number_format($discount_price, 2) . '</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col" class="text-center">AMOUNT AFTER DISCOUNT</th>
+                                            <td class="text-center">' . number_format($discounted_price, 2)  .  '</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col" class="text-center text-danger">REMAINING BALANCE</th>
+                                            <td class="text-danger text-center" id="remainingBalance">' . number_format($discounted_price, 2)  .  '</td>
+                                        </tr>
+                                    </table>
+                                ';
+
+                                ?>
+
+                                </div>
+                                <div class="col-4">
+                                    
+                                    <h5 class="text-center">Additional Fees</h5>
+                                    <hr>
+                                    <div class="form-group" style="width: 60%; margin: 0 auto;" >
+                                        <label>Amount</label>
+                                        <input class="form-control" id="addPayment" name="check_out_add_payment" type="number" min="0">
+                                    </div>
+                                    <div class="form-group" style="width: 60%; margin: 0 auto;" >
+                                        <label>Description</label>
+                                        <textarea type="email" id="addDescription" name="check_out_description" class="form-control"></textarea>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button type="button" class="btn btn-primary float-right" id="applyAddFees">Apply Additonal Fees</button>
+                                        </div>
                                     </div>
 
-                                    
-                                    
+                                    <h5 class="text-center mt-3">Customer Payment</h5>
+                                    <hr>
+                                    <div class="form-row">
+                                        <p class="col-3 text-right pr-4" for="dpAmount">Amount</p>
+                                        <input type="number" name="down_payment_amount" class="form-control col-8" id="dpAmount" min="0">
+                                        <input type="hidden" name="down_total_amount" class="form-control col-8" value="" min="0" >
+                                    </div>
+                                    <br>
+                                    <div class="form-row">
+                                        <p class="col-3 text-right pr-4" for="dpAmount">Description</p>
+                                        <textarea name="down_payment_description" class="form-control col-8" id="dpDescription">Customer Client Payment</textarea>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <a class="btn btn-primary float-right" id="btnApplyPayment" style="color: white;">Apply Payment</a>    
+                                        </div>
+                                    </div>
+
                                 </div>
-                            
                             </div>
                             
                             <br>
@@ -405,7 +484,18 @@ $guest_number = 0;
 
                             <div class="row">
                                 <div class="col">
-                                    <button type="submit" class="btn btn-danger btn-block float-right">CHECK-OUT</button>
+
+                                    <?php
+
+                                    if($discounted_price != 0) {
+                                        $disabled = "disabled";
+                                    } else {
+                                        $disabled = '';
+                                    }
+
+                                    ?>
+
+                                    <button type="submit" class="btn btn-danger btn-block float-right" <?php echo $disabled; ?>>CHECK-OUT</button>
                                 </div>
                             </div>
 

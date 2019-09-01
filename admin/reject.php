@@ -55,10 +55,10 @@ $status = '';
 
                             <div class="row">
 
-                                <div class="col-6">
+                                <div class="col-12">
                                 
-                                    <h5 class="text-center mt-3">Guest Details</h5>
-                                    <hr />
+                                    <h5 class="text-center mt-3 text-info">GUEST DETAILS</h5>
+                                    
                                     <?php
                                     // INNER JOIN booking_rooms BR ON RES.id = BR.reservation_id  INNER JOIN rooms R ON BR.room_id = R.Id
                                     $reservation_details_query = "SELECT * FROM reservation RES
@@ -82,63 +82,43 @@ $status = '';
                                             $status = $reservation["status"];
 
                                             echo '
-                                                <table style="margin-left: 2em;">
-                                                    <tr>
-                                                        <th  class="text-right pr-3 pb-3">Full Name:</th>
-                                                        <td  class="pb-3 pl-4">' . $full_name . '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th  class="text-right pr-3 pb-3">Contact Number:</th>
-                                                        <td  class="pb-3 pl-4">' . $reservation["contact_number"] . '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th  class="text-right pr-3 pb-3">Email:</th>
-                                                        <td  class="pb-3 pl-4">' . $reservation["email"] . '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="text-right pr-3 pb-3">Address:</th>
-                                                        <td class="pb-3 pl-4">' . $reservation["address"] . '</td>
-                                                    </tr>
-                                                </table>
-                                                <br />
+                                            <table class="table table-bordered">
+                                                <tr>
+                                                    <th class="pr-3 pb-3" scope="col">FULL NAME</th>
+                                                    <td class="pb-3 pl-4">' . $full_name . '</td>
+                                                    <th class="pr-3 pb-3" scope="col">CONTACT NUMBER</th>
+                                                    <td class="pb-3 pl-4">' . $reservation["contact_number"] . '</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="pr-3 pb-3" scope="col">EMAIL ADDRESS</th>
+                                                    <td class="pb-3 pl-4">' . $reservation["email"] . '</td>
+                                                    <th class="pr-3 pb-3" scope="col">ADDRESS</th>
+                                                    <td class="pb-3 pl-4">' . $reservation["address"] . '</td>
+                                                </tr>
+                                            </table>
+                                            <br />
 
-                                                <h5 class="text-center mt-3">Booking Details</h5>
-                                                <hr />
-                                                <table style="margin-left: 2em;">
-                                                    <tr>
-                                                        <th class="text-right pr-3 pb-3"><b>Reference No:</b></th>
-                                                        <td class="pb-3 pl-4">' . $reservation["reference_no"]  . '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="text-right pr-3 pb-3"><b>Status:</b></th>
-                                                        <td class="pb-3 pl-4">' . $reservation["status"]  . '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="text-right pr-3 pb-3"><b>Mode of Payment</b></th>
-                                                        <td class="pb-3 pl-4">' . $reservation["payment"]  . '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th  class="text-right pr-3 pb-3"><b>Check-in Date: </b></th>
-                                                        <td  class="pb-3 pl-4">' . date_format(new Datetime($reservation["check_in_date"]), "m-d-Y")  . '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th  class="text-right pr-3 pb-3"><b>Check-out Date: </b></th>
-                                                        <td  class="pb-3 pl-4">' . date_format(new Datetime($reservation["check_out_date"]), "m-d-Y") . '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th  class="text-right pr-3 pb-3"><b>Day/s: </b></th>
-                                                        <td  class="pb-3 pl-4">' . $diff . '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th  class="text-right pr-3 pb-3"><b>Guest/s Number: </b></th>
-                                                        <td  class="pb-3 pl-4"><span>Adult: ' . $reservation["adult_count"] .  '</span> <span>Kids: ' . $reservation["kids_count"] . '</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="text-right pr-3 pb-3"><b>Date Reserved:</b></th>
-                                                        <td class="pb-3 pl-4">' . $reservation["date_created"]  . '</td>
-                                                    </tr>
+                                            <h5 class="text-center mt-3 text-info">BOOKING DETAILS</h5>
+                                            <table class="table table-bordered">
+                                                <tr>
+                                                    <th class="pr-3 pb-3">REFERENCE CODE</th>
+                                                    <td class="pb-3 pl-4" id="referenceCode">' . $reservation["reference_no"] . '</td>
+                                                    <th class="pr-3 pb-3"><b>STATUS</b></th>
+                                                    <td class="pb-3 pl-4">' . $reservation["status"] . '</td>
+                                                    <th class="pr-3 pb-3"><b>GUEST/S NUMBER </b></th>
+                                                    <td class="pb-3 pl-4"><span>Adult: ' . $reservation["adult_count"] .  '</span> <span>Kids: ' . $reservation["kids_count"] . '</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="pr-3 pb-3"><b>CHECK-IN DATE</b></th>
+                                                    <td class="pb-3 pl-4">' . date_format(new Datetime($reservation["check_in_date"]), "m-d-Y")  . '</td>
+                                                    <th class="pr-3 pb-3"><b>CHECK-OUT DATE</b></th>
+                                                    <td class="pb-3 pl-4">' . date_format(new Datetime($reservation["check_out_date"]), "m-d-Y") . '</td>
+                                                    <th class="pr-3 pb-3"><b>NIGHT/S OF STAY </b></th>
+                                                    <td class="pb-3 pl-4">' . $diff . '</td>
                                                     
-                                                </table>
+                                                </tr>
+                                            
+                                            </table>
 
                                                 <br>
 
@@ -154,7 +134,7 @@ $status = '';
                                     ?>
                                 </div>
 
-                                <div class="col-6">
+                                <div class="col-12">
                                 
                                     <?php
                                         
@@ -172,17 +152,15 @@ $status = '';
 
                                         if($room_reservation_details_result) {
 
-                                            echo '<h5 class="text-center mt-3">Room/s Reserved</h5>';
+                                            echo '<h5 class="text-center mt-3 text-info">RESERVED ROOM/S</h5>';
                                             echo '
-                                                <hr />  
-                                                <table style="width: 100%;">
+                                                <table class="table table-bordered">
                                                 <tr>
-                                                    <th class="text-center" style="width: 55%;">Room/s Reserve</th>
-                                                    <th class="text-center" style="width: 15%;">Quantity</th>
-                                                    <th class="text-center" style="width: 15%;">Price</th>
-                                                    <th class="text-center" style="width: 15%;">Total</th>
+                                                    <th class="text-center" style="width: 40%;">ROOM/S NAME</th>
+                                                    <th class="text-center" >QUANTITY</th>
+                                                    <th class="text-center" >PRICE</th>
+                                                    <th class="text-center" >TOTAL</th>
                                                 </tr>
-                                            
                                             ';
 
                                             $overall_total_price = 0;
@@ -223,29 +201,21 @@ $status = '';
                                     $total_amount = $vatable_amount + $vat;
                                     
                                     echo '
-                                        <table class="table"> 
+                                        <table class="table table-bordered"> 
                                             <tr>
                                                 <th scope="col" class="text-center">Days of Stay</th>
-                                                <td></td>
-                                                <td></td>
                                                 <td class="text-center">' . $days_of_stay . '</td>
                                             </tr>                                          
                                             <tr>
                                                 <th scope="col" class="text-center">Amount</th>
-                                                <td></td>
-                                                <td></td>
                                                 <td class="text-center">' . number_format($vatable_amount, 2) . '</td>
                                             </tr>
                                             <tr>
                                                 <th scope="col" class="text-center">VAT(12%)</th>
-                                                <td></td>
-                                                <td></td>
                                                 <td class="text-center">' . number_format($vat, 2) . '</td>
                                             </tr>
                                             <tr>
                                                 <th scope="col" class="text-center">TOTAL AMOUNT</th>
-                                                <td></td>
-                                                <td></td>
                                                 <td class="text-center">PHP ' . number_format($total_amount, 2)  . '</td>
                                             </tr>
                                         </table>
@@ -254,12 +224,11 @@ $status = '';
                                     ?>
         
                                     <br>
-                                    <hr>
                                     <br>
 
                                     <input type="hidden" name="down_payment_reference_no" value="<?php echo $reference_no; ?>">
-                                    <div class="row">
-                                        <div class="col-12">
+                                    <div class="row justify-content-md-center">
+                                        <div class="col-7 offset-col-4">
 
                                             <?php
                                             

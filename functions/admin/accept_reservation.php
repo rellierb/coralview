@@ -16,26 +16,53 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $dp_reference_no = mysqli_real_escape_string($db, trim($_POST['down_payment_reference_no']));
     }
 
-    if(isset($_POST["down_payment_amount"])) {
-        $dp_amount = mysqli_real_escape_string($db, trim($_POST['down_payment_amount']));
+    if(empty($_POST["down_payment_amount"]) && empty($_POST["down_payment_description"])) {
+        $_SESSION['msg'] = "DESCRIPTION AND AMOUNT IN DOWNPAYMENT DETAILS IS EMPTY";
+        $_SESSION['alert'] = "alert alert-danger";
+        header('location: ../../admin/accept.php?reference_no='. $dp_reference_no . '');
+    } else {
+
+        if(!empty($_POST["down_payment_description"])) {
+            $dp_description = mysqli_real_escape_string($db, trim($_POST['down_payment_description']));
+        } else {
+            $_SESSION['msg'] = "DESCRIPTION IN DOWNPAYMENT DETAILS IS EMPTY";
+            $_SESSION['alert'] = "alert alert-danger";
+            header('location: ../../admin/accept.php?reference_no='. $dp_reference_no . '');
+        }
+
+        if(!empty($_POST["down_payment_amount"])) {
+            $dp_amount = mysqli_real_escape_string($db, trim($_POST['down_payment_amount']));
+        } else {
+            $_SESSION['msg'] = "AMOUNT IN DOWNPAYMENT DETAILS IS EMPTY";
+            $_SESSION['alert'] = "alert alert-danger";
+            header('location: ../../admin/accept.php?reference_no='. $dp_reference_no . '');
+        }
+
     }
 
-    // if(isset($_POST["down_payment_total_amount"])) {
-    //     $dp_total_amount = mysqli_real_escape_string($db, trim($_POST['down_payment_total_amount']));
-    // }
-
-    if(isset($_POST["down_payment_description"])) {
-        $dp_description = mysqli_real_escape_string($db, trim($_POST['down_payment_description']));
-    }
-
-    $insert_query = "
-        INSERT INTO billing (reference_no, amount_paid, total_amount, description, time_stamp)
-        VALUES ('$dp_reference_no', '$dp_amount', NULL, '$dp_description', CURDATE())
+    $insert_to_downpayment = "
+        INSERT INTO downpayment (reference_no, amount, description, time_stamp)
+        VALUES ('$dp_reference_no' , '$dp_amount', '$dp_description' , NOW())
     ";
 
-    $insert_result = mysqli_query($db, $insert_query); 
+    $insert_to_downpayment_result = mysqli_query($db, $insert_to_downpayment);
 
-    if($insert_result) {
+
+    // $insert_query = "
+    //     INSERT INTO billing (reference_no, amount_paid, total_amount, description, time_stamp)
+    //     VALUES ('$dp_reference_no', '$dp_amount', NULL, '$dp_description', NOW())
+    // ";
+
+    // $insert_result = mysqli_query($db, $insert_query); 
+
+    if($insert_to_downpayment_result) {
+
+        // $insert_to_downpayment = "
+        //     INSERT INTO downpayment (reference_no, amount, time_stamp)
+        //     VALUES ('$dp_reference_no', '$dp_amount', NOW())
+        // ";
+
+        // $insert_to_downpayment_result = mysqli_query($db, $insert_to_downpayment);
 
         // Update status of reservation to Check-in
         $room_status_query = "UPDATE reservation SET status='FOR CHECK IN' WHERE reference_no='$dp_reference_no'";
@@ -99,7 +126,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 $mail->Subject = 'Coralview Reservation Accepted';
                                 $mail->Body = $message;
                                 $mail->send();
-                                $_SESSION['msg'] = "Reservation is successfully tag as Accepted";
+                                $_SESSION['msg'] = "RESERVATION IS SUCCESSFULLY TAG AS ACCEPTED";
                                 $_SESSION['alert'] = "alert alert-success";
                                 header('location: ../../admin/accept.php?reference_no='. $dp_reference_no . '');
                             } catch (Exception $e) {
@@ -122,7 +149,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     } else {
 
-        echo 'cannot insert';
+        $_SESSION['msg'] = "Cannot process reservation";
+        $_SESSION['alert'] = "alert alert-danger";
+        header('location: ../../admin/accept.php?reference_no='. $dp_reference_no . '');
 
     }
     

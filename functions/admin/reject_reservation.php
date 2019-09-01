@@ -75,7 +75,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $mail->setFrom('coralviewthesis@gmail.com');
                             $mail->isHTML(true);
                             $mail->addAddress($guest_email);
-                            $mail->Subject = 'Coralview Reservation Accepted';
+                            $mail->Subject = 'Coralview Reservation Rejected';
                             $mail->Body = $message;
                             $mail->send();
                             $_SESSION['msg'] = "Reservation is successfully tag as Rejected";

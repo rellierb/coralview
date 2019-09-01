@@ -26,12 +26,14 @@ function generate_reference_no() {
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     /* Guest Details */
-    $first_name = mysqli_real_escape_string($db, trim($_POST['p_first_name']));
-    $last_name = mysqli_real_escape_string($db, trim($_POST['p_last_name']));
-    $contact_number = mysqli_real_escape_string($db, trim($_POST['p_contact_number']));
-    $email = mysqli_real_escape_string($db, trim($_POST['p_email']));
-    $address = mysqli_real_escape_string($db, trim($_POST['p_address']));
-    $payment = mysqli_real_escape_string($db, trim($_POST['p_mode_of_payment']));
+    $first_name = mysqli_real_escape_string($db, trim($_POST['first_name']));
+    $last_name = mysqli_real_escape_string($db, trim($_POST['last_name']));
+    $contact_number = mysqli_real_escape_string($db, trim($_POST['contact_number']));
+    $email = mysqli_real_escape_string($db, trim($_POST['email']));
+    $address = mysqli_real_escape_string($db, trim($_POST['address']));
+    $payment = 'WALK-IN / CASH';
+
+    var_dump($_SESSION["rooms_reserved"]);
     
     $guest_insert_query = "INSERT INTO guest(first_name, last_name, address, email, contact_number) ";
     $guest_insert_query .= "VALUES ('$first_name', '$last_name', '$address', '$email', '$contact_number')";
@@ -47,20 +49,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $guest_id = $db->insert_id;
 
         $reference_no = generate_reference_no();
-        $arrival_date = mysqli_real_escape_string($db, trim($_POST['p_date_arrival']));
-        $departure_date = mysqli_real_escape_string($db, trim($_POST['p_date_departure']));
-        $adult_count = mysqli_real_escape_string($db, trim($_POST['p_adult_count']));
-        $kids_count = mysqli_real_escape_string($db, trim($_POST['p_kids_count']));
+        $arrival_date = mysqli_real_escape_string($db, trim($_POST['arrival_date']));
+        $departure_date = mysqli_real_escape_string($db, trim($_POST['departure_date']));
+        $adult_count = mysqli_real_escape_string($db, trim($_POST['adult_count']));
+        $kids_count = mysqli_real_escape_string($db, trim($_POST['kids_count']));
 
         // p_total_amount
-        $total_amount = mysqli_real_escape_string($db, trim($_POST['p_total_amount']));
+        // $total_amount = mysqli_real_escape_string($db, trim($_POST['p_total_amount']));
 
         /* 
          * Insert RESERVATION details 
          */
 
         $reservation_insert_query = "INSERT INTO reservation(guest_id, reference_no, status, payment, check_in_date, check_out_date, adult_count, kids_count, date_created)";
-        $reservation_insert_query .= " VALUES ('$guest_id', '$reference_no', 'CHECKED IN', '$payment', STR_TO_DATE('$arrival_date', '%m/%d/%Y'), STR_TO_DATE('$departure_date', '%m/%d/%Y'), '$adult_count', '$kids_count', NOW())";
+        $reservation_insert_query .= " VALUES ('$guest_id', '$reference_no', 'FOR CHECK IN', '$payment', STR_TO_DATE('$arrival_date', '%m/%d/%Y'), STR_TO_DATE('$departure_date', '%m/%d/%Y'), '$adult_count', '$kids_count', NOW())";
         $reservation_result = mysqli_query($db, $reservation_insert_query);
 
         if($reservation_result) {
@@ -98,14 +100,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if($is_success_or_failed == "SUCCESS") {
                 
-                $_SESSION['msg'] = "Reservation successfully processed";
+                $_SESSION['msg'] = "WALK-IN RESERVATION SUCCESSFULLY PROCESSED";
                 $_SESSION['alert'] = "alert alert-success";
                 
-                header('location: ../../admin/checked_in.php?reference_no='. $reference_no . '');    
+                header('location: ../../admin/check_in_user.php?reference_no='. $reference_no . '');    
 
             } else {
 
-                $_SESSION['msg'] = "Reservation could not be processed";
+                $_SESSION['msg'] = "WALK-IN RESERVATION COULD NOT BE PROCESSED";
                 $_SESSION['alert'] = "alert alert-danger";
                 
                 header('location: ../../admin/walk_in_reservation.php');

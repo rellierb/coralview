@@ -11,16 +11,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $is_success = true;
 
-    if(isset($_POST["senior_discount"])) {
-        $senior_discount = mysqli_real_escape_string($db, trim($_POST['senior_discount']));
-        $_SESSION["senior_discount"] = $senior_discount;
-    } 
-
-    if(isset($_POST["pwd_discount"])) {
-        $pwd_discount = mysqli_real_escape_string($db, trim($_POST['pwd_discount']));
-        $_SESSION["pwd_discount"] = $pwd_discount;
-    } 
-
     if(isset($_POST["reference_no"])) {
         $reference_no = mysqli_real_escape_string($db, trim($_POST['reference_no']));
     }
@@ -72,7 +62,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     }
 
-    $update_query = "UPDATE reservation SET status='COMPLETE' WHERE reference_no='$reference_no'";
+    $update_query = "UPDATE reservation SET status='CHECKED OUT' WHERE reference_no='$reference_no'";
     $update_result = mysqli_query($db, $update_query);
 
     if($update_result) {
@@ -83,9 +73,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("location: ../../admin/billing.php?reference_no=$reference_no");
 
     }
-
-    
-
 
     // if(!empty($_POST['room_number'])) {
 

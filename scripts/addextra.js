@@ -18,7 +18,7 @@ $(document).ready(function() {
                 if(document.body.contains(document.getElementById('referenceCode'))) {
                     
                     let referenceCode = document.getElementById('referenceCode').innerText;
-                    
+                    // console.log(extraQuantity);
                     if(extraQuantity !== 0) {
 
                         $.ajax({
@@ -26,9 +26,12 @@ $(document).ready(function() {
                             url: '/coralview/functions/admin/add_extra.php',
                             data: {reference_no: JSON.stringify(referenceCode), extra_id: JSON.stringify(extraId), quantity: JSON.stringify(extraQuantity), amount: JSON.stringify(amount) },
                             success: function(data) {
-                                 console.log(data); 
-                                //attachExtras(referenceCode);   
-                                //location.reload();
+                                
+                                toastr.success('Additional Extras successfully entered');
+                                setTimeout(function() {
+                                    location.reload();
+                                }, 3000);
+                              
                             },
                             error: function(data) {
                                 console.log(data);
@@ -62,7 +65,7 @@ function attachExtras(code) {
         data: {reference_no: JSON.stringify(code) },
         success: function(data) {
             //htmlExtraAttach(data);
-            //location.reload();
+            location.reload();
         },
         error: function(data) {
             console.log(data);

@@ -18,6 +18,8 @@ if(isset($_POST["quantity"])) {
     $quantity = $_POST["quantity"];
 }
 
+$test = json_decode('[' . $quantity . ']', true);
+
 if(isset($_POST["amount"])) {
     $amount = $_POST["amount"];
 }
@@ -25,15 +27,29 @@ if(isset($_POST["amount"])) {
 $select_extra_query = "SELECT * FROM billing_extras WHERE reference_no=$reference_no AND expense_id=$extra_id";
 $select_extra_result = mysqli_query($db, $select_extra_query);
 
-if($select_extra_result) {
+if(mysqli_num_rows($select_extra_result) > 0) {
 
-    $update_extra_id_query = "UPDATE billing_extras SET quantity=$quantity WHERE reference_no=$reference_no AND expense_id=$extra_id";
+    $select_extra_quantity = "SELECT quantity FROM billing_extras WHERE reference_no=$reference_no AND expense_id=$extra_id";
+    $select_extra_result = mysqli_query($db, $select_extra_quantity);
+
+    $temp_quantity = 0;
+    if(mysqli_num_rows($select_extra_result) > 0) {
+    
+        while($extra = mysqli_fetch_assoc($select_extra_result)) {
+            $temp_quantity = $extra['quantity'];
+        }
+    }
+    
+    $int_quantity = intval($quantity);
+    $overall_quantity = $temp_quantity + $test[0];
+    
+    $update_extra_id_query = "UPDATE billing_extras SET quantity=$overall_quantity WHERE reference_no=$reference_no AND expense_id=$extra_id";
     $update_extra_id_result = mysqli_query($db, $update_extra_id_query);
 
     if($update_extra_id_result) {
-        echo "SUCCESS";
+        echo "UPDATE SUCCESS";
     } else {
-        echo "FAILED";
+        echo "UPDATE FAILED";
     }
     
 } else {
@@ -43,9 +59,9 @@ if($select_extra_result) {
     $extra_add_result = mysqli_query($db, $extra_add_query);
 
     if($extra_add_result) {
-        echo "SUCCESS";
+        echo "INSERT SUCCESS";
     } else {
-        echo "FAILED";
+        echo "INSERT FAILED";
     }
 
 }

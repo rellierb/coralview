@@ -22,6 +22,13 @@ $payment_type = '';
 $days_of_stay = 0;
 $status = '';
 
+
+$total_room_amount = 0;
+$overall_total_price = 0;
+$overall_total_extra = 0;
+$payment_type = '';
+$nights_of_stay = 0;
+
 ?>
 
     <?php include('../common/admin_sidebar.php') ?>
@@ -44,14 +51,6 @@ $status = '';
                 
                 ?>
 
-                <div class="row">
-                    <div class="col-9">
-                    </div>
-                    <div class="col-3">
-                        
-                    </div>
-                </div>
-
                 <br>
 
                 <div class="row">
@@ -62,10 +61,10 @@ $status = '';
 
                             <div class="row">
 
-                                <div class="col-6">
+                                <div class="col-12">
                                 
-                                    <h5 class="text-center mt-3">Guest Details</h5>
-                                    <hr />
+                                    <h5 class="text-center mt-3 text-info">GUEST DETAILS</h5>
+
                                     <?php
                                     // INNER JOIN booking_rooms BR ON RES.id = BR.reservation_id  INNER JOIN rooms R ON BR.room_id = R.Id
                                     $reservation_details_query = "SELECT * FROM reservation RES
@@ -84,68 +83,47 @@ $status = '';
 
                                             $dateDiff = date_diff(date_create($reservation["check_in_date"]), date_create($reservation["check_out_date"]));
                                             $diff = $dateDiff->format('%d');
-                                            $days_of_stay = $diff;
+                                            $nights_of_stay = $diff;
                                             $full_name = $reservation["first_name"] . " " . $reservation["last_name"];
                                             $payment_type = $reservation["payment"];
                                             $status = $reservation["status"];
-
                                             echo '
-                                                <table style="margin-left: 2em;">
+                                                <table class="table table-bordered">
                                                     <tr>
-                                                        <th  class="text-right pr-3 pb-3">Full Name:</th>
-                                                        <td  class="pb-3 pl-4">' . $full_name . '</td>
+                                                        <th class="pr-3 pb-3" scope="col">FULL NAME</th>
+                                                        <td class="pb-3 pl-4">' . $full_name . '</td>
+                                                        <th class="pr-3 pb-3" scope="col">CONTACT NUMBER</th>
+                                                        <td class="pb-3 pl-4">' . $reservation["contact_number"] . '</td>
                                                     </tr>
                                                     <tr>
-                                                        <th  class="text-right pr-3 pb-3">Contact Number:</th>
-                                                        <td  class="pb-3 pl-4">' . $reservation["contact_number"] . '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th  class="text-right pr-3 pb-3">Email:</th>
-                                                        <td  class="pb-3 pl-4">' . $reservation["email"] . '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="text-right pr-3 pb-3">Address:</th>
+                                                        <th class="pr-3 pb-3" scope="col">EMAIL ADDRESS</th>
+                                                        <td class="pb-3 pl-4">' . $reservation["email"] . '</td>
+                                                        <th class="pr-3 pb-3" scope="col">ADDRESS</th>
                                                         <td class="pb-3 pl-4">' . $reservation["address"] . '</td>
                                                     </tr>
                                                 </table>
                                                 <br />
 
-                                                <h5 class="text-center mt-3">Booking Details</h5>
-                                                <hr />
-                                                <table style="margin-left: 2em;">
+                                                <h5 class="text-center mt-3 text-info">BOOKING DETAILS</h5>
+                                                <table class="table table-bordered">
                                                     <tr>
-                                                        <th class="text-right pr-3 pb-3"><b>Reference No:</b></th>
-                                                        <td class="pb-3 pl-4">' . $reservation["reference_no"]  . '</td>
+                                                        <th class="pr-3 pb-3">REFERENCE CODE</th>
+                                                        <td class="pb-3 pl-4" id="referenceCode">' . $reservation["reference_no"] . '</td>
+                                                        <th class="pr-3 pb-3"><b>STATUS</b></th>
+                                                        <td class="pb-3 pl-4">' . $reservation["status"] . '</td>
+                                                        <th class="pr-3 pb-3"><b>GUEST/S NUMBER </b></th>
+                                                        <td class="pb-3 pl-4"><span>Adult: ' . $reservation["adult_count"] .  '</span> <span>Kids: ' . $reservation["kids_count"] . '</span></td>
                                                     </tr>
                                                     <tr>
-                                                        <th class="text-right pr-3 pb-3"><b>Status:</b></th>
-                                                        <td class="pb-3 pl-4">' . $reservation["status"]  . '</td>
+                                                        <th class="pr-3 pb-3"><b>CHECK-IN DATE</b></th>
+                                                        <td class="pb-3 pl-4">' . date_format(new Datetime($reservation["check_in_date"]), "m-d-Y")  . '</td>
+                                                        <th class="pr-3 pb-3"><b>CHECK-OUT DATE</b></th>
+                                                        <td class="pb-3 pl-4">' . date_format(new Datetime($reservation["check_out_date"]), "m-d-Y") . '</td>
+                                                        <th class="pr-3 pb-3"><b>NIGHT/S OF STAY </b></th>
+                                                        <td class="pb-3 pl-4">' . $diff . '</td>
+                                                        
                                                     </tr>
-                                                    <tr>
-                                                        <th class="text-right pr-3 pb-3"><b>Mode of Payment</b></th>
-                                                        <td class="pb-3 pl-4">' . $reservation["payment"]  . '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th  class="text-right pr-3 pb-3"><b>Check-in Date: </b></th>
-                                                        <td  class="pb-3 pl-4">' . date_format(new Datetime($reservation["check_in_date"]), "m-d-Y")  . '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th  class="text-right pr-3 pb-3"><b>Check-out Date: </b></th>
-                                                        <td  class="pb-3 pl-4">' . date_format(new Datetime($reservation["check_out_date"]), "m-d-Y") . '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th  class="text-right pr-3 pb-3"><b>Day/s: </b></th>
-                                                        <td  class="pb-3 pl-4">' . $diff . '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th  class="text-right pr-3 pb-3"><b>Guest/s Number: </b></th>
-                                                        <td  class="pb-3 pl-4"><span>Adult: ' . $reservation["adult_count"] .  '</span> <span>Kids: ' . $reservation["kids_count"] . '</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="text-right pr-3 pb-3"><b>Date Reserved:</b></th>
-                                                        <td class="pb-3 pl-4">' . $reservation["date_created"]  . '</td>
-                                                    </tr>
-                                                    
+                                                   
                                                 </table>
 
                                                 <br>
@@ -158,12 +136,10 @@ $status = '';
                                             </div>
                                         ';
                                     }
-
                                     ?>
                                 </div>
 
-                                <div class="col-6">
-                                
+                                <div class="col-12">
                                     <?php
                                         
                                         $room_reservation_details_query = "SELECT * FROM reservation RES
@@ -173,25 +149,23 @@ $status = '';
                                             WHERE RES.reference_no = '$reference_no'";
 
                                         $room_reservation_details_result = mysqli_query($db, $room_reservation_details_query);
+
                                         $rooms_reserved = array();
+
                                         $quantity = 0;
 
                                         if($room_reservation_details_result) {
 
-                                            echo '<h5 class="text-center mt-3">Room/s Reserved</h5>';
+                                            echo '<h5 class="text-center mt-3 text-info">RESERVED ROOM/S</h5>';
                                             echo '
-                                                <hr />  
-                                                <table style="width: 100%;">
+                                                <table class="table table-bordered">
                                                 <tr>
-                                                    <th class="text-center" style="width: 55%;">Room/s Reserve</th>
-                                                    <th class="text-center" style="width: 15%;">Quantity</th>
-                                                    <th class="text-center" style="width: 15%;">Price</th>
-                                                    <th class="text-center" style="width: 15%;">Total</th>
+                                                    <th class="text-center" style="width: 40%;">ROOM/S NAME</th>
+                                                    <th class="text-center" >QUANTITY</th>
+                                                    <th class="text-center" >PRICE</th>
+                                                    <th class="text-center" >TOTAL</th>
                                                 </tr>
-                                            
                                             ';
-
-                                            $overall_total_price = 0;
 
                                             while($room_reservation = mysqli_fetch_assoc($room_reservation_details_result)) {
                                                 
@@ -203,19 +177,71 @@ $status = '';
 
                                                 echo '
                                                     <tr>
-                                                        <td class="text-center" style="width: 55%;">' . $room_reservation["type"] . '</td>
-                                                        <td class="text-center" style="width: 15%;">' . $room_reservation["quantity"] . '</td>
-                                                        <td class="text-center" style="width: 15%;">' . number_format($room_reservation["peak_rate"], 2)  . '</td>
-                                                        <td class="text-center" style="width: 15%;"> ' . number_format($total_price, 2)  . '</td>
+                                                        <td class="text-center" >' . $room_reservation["type"] . '</td>
+                                                        <td class="text-center" >' . $room_reservation["quantity"] . '</td>
+                                                        <td class="text-center" >' . number_format($room_reservation["peak_rate"], 2)   . '</td>
+                                                        <td class="text-center" > ' . number_format($total_price, 2)  . '</td>
                                                     </tr>
-                                                    
                                                 ';
-
+                                                $total_room_amount += $total_price;
                                                 $overall_total_price += $total_price;
                                             }
+                                            
+                                            $overall_total_price *= $nights_of_stay;
 
                                             echo '</table>';
                                         }
+                                        ?>
+                                    <?php
+                                        
+                                        // $room_reservation_details_query = "SELECT * FROM reservation RES
+                                        //     INNER JOIN guest G ON G.id = RES.guest_id
+                                        //     INNER JOIN booking_rooms BR ON RES.id = BR.reservation_id
+                                        //     INNER JOIN rooms R ON BR.room_id = R.Id
+                                        //     WHERE RES.reference_no = '$reference_no'";
+
+                                        // $room_reservation_details_result = mysqli_query($db, $room_reservation_details_query);
+                                        // $rooms_reserved = array();
+                                        // $quantity = 0;
+
+                                        // if($room_reservation_details_result) {
+                                            
+                                        //     echo '<h5 class="text-center mt-3 text-info">RESERVED ROOM/S</h5>';
+                                        //     echo '
+                                        //         <table class="table table-bordered">
+                                        //         <tr>
+                                        //             <th class="text-center" style="width: 40%;">ROOM/S NAME</th>
+                                        //             <th class="text-center" >QUANTITY</th>
+                                        //             <th class="text-center" >PRICE</th>
+                                        //             <th class="text-center" >TOTAL</th>
+                                        //         </tr>
+                                        //     ';
+
+                                        //     $overall_total_price = 0;
+
+                                        //     while($room_reservation = mysqli_fetch_assoc($room_reservation_details_result)) {
+                                                
+                                        //         $room_id = $room_reservation["room_id"];
+                                        //         $room_quantity = $room_reservation["quantity"];
+                                        //         $rooms_reserved[$room_id] = $room_quantity; 
+                                        //         $quantity += $room_quantity;
+                                        //         $total_price = $room_reservation["peak_rate"] * $room_reservation["quantity"];
+
+                                        //         echo '
+                                        //             <tr>
+                                        //                 <td class="text-center" style="width: 55%;">' . $room_reservation["type"] . '</td>
+                                        //                 <td class="text-center" style="width: 15%;">' . $room_reservation["quantity"] . '</td>
+                                        //                 <td class="text-center" style="width: 15%;">' . number_format($room_reservation["peak_rate"], 2)  . '</td>
+                                        //                 <td class="text-center" style="width: 15%;"> ' . number_format($total_price, 2)  . '</td>
+                                        //             </tr>
+                                                    
+                                        //         ';
+
+                                        //         $overall_total_price += $total_price;
+                                        //     }
+
+                                        //     echo '</table>';
+                                        // }
                                     ?>      
 
                                     <?php
@@ -225,37 +251,39 @@ $status = '';
                                     
                                     ?>
 
-                                    <?php
+                                    <h5 class="text-center mt-3 text-info">PAYMENT DETAILS</h5> 
 
-                                    $overall_total_price *= $days_of_stay;
+                                    <?php
+                                    
+                                    $overall_total_price *= $nights_of_stay;
                                     $vatable_amount = $overall_total_price / 1.12;
                                     $vat = $overall_total_price - $vatable_amount;
                                     $total_amount = $vatable_amount + $vat;
 
                                     echo '
-                                        <table class="table">   
+                                        <table class="table table-bordered">   
                                             <tr>
-                                                <th scope="col" class="text-center">Days of Stay</th>
-                                                <td></td>
-                                                <td></td>
-                                                <td class="text-center">' . $days_of_stay . '</td>
+                                                <th scope="col" class="text-center">NIGHT/S OF STAY</th>
+                                                
+                                                
+                                                <td class="text-center">' . $nights_of_stay . '</td>
                                             </tr>                                         
                                             <tr>
-                                                <th scope="col" class="text-center">Amount</th>
-                                                <td></td>
-                                                <td></td>
+                                                <th scope="col" class="text-center">AMOUNT</th>
+                                                
+                                                
                                                 <td class="text-center">' .  number_format($vatable_amount, 2) . '</td>
                                             </tr>
                                             <tr>
                                                 <th scope="col" class="text-center">VAT(12%)</th>
-                                                <td></td>
-                                                <td></td>
+                                                
+                                                
                                                 <td class="text-center">' . number_format($vat, 2) . '</td>
                                             </tr>
                                             <tr>
                                                 <th scope="col" class="text-center">TOTAL AMOUNT</th>
-                                                <td></td>
-                                                <td></td>
+                                                
+                                                
                                                 <td class="text-center">PHP ' . number_format($total_amount, 2)  . '</td>
                                             </tr>
                                         </table>
@@ -263,55 +291,62 @@ $status = '';
                                             
                                     ?>
         
-                                    <h5 class="text-center mt-3">Reservation Down Payment</h5>
+                                    <h5 class="text-center mt-3 text-info">RESERVATION DOWN PAYMENT</h5>
                                     
-                                    <table class="table">
+                                    <table class="table table-bordered">
                                         <tr>
-                                            <th scope="col" class="text-center">Reservation Total Price</th>
-                                            <td></td>
-                                            <td></td>
-                                            <td>PHP <?php echo number_format($overall_total_price, 2); ?></td>
+                                            <th scope="col" class="text-center">RESERVATION TOTAL PRICE</th>
+                                            
+                                            
+                                            <td class="text-center">PHP <?php echo number_format($overall_total_price, 2); ?></td>
                                         </tr>
                                         <tr>
-                                            <th scope="col" class="text-center">Required Downpayment</th>
-                                            <td></td>
-                                            <td></td>
-                                            <?php
+                                            <th scope="col" class="text-center">REQUIRED DOWNPAYMENT</th>
                                             
-                                            if($payment_type == 'BANK DEPOSIT') {
-                                                $required_down_payment = DOWNPAYMENT_PERCENT * $overall_total_price;
-                                            } else if($payment_type == 'CASH') {
-                                                $required_down_payment = $overall_total_price;
-                                            }
+                                            
+                                            <?php
+
+                                            $required_down_payment = DOWNPAYMENT_PERCENT * $overall_total_price;
+                                            
+                                            // if($payment_type == 'BANK DEPOSIT') {
+                                                
+                                            // } else if($payment_type == 'CASH') {
+                                            //     $required_down_payment = $overall_total_price;
+                                            // }
                                             
                                             ?>
-                                            <td>PHP <?php  echo number_format($required_down_payment, 2); ?></td>
+                                            <td class="text-center">PHP <?php  echo number_format($required_down_payment, 2); ?></td>
                                         </tr>
                                     </table>
 
-                                    <p>Enter Downpayment Details</p>
-
                                     <br>
-                                    <br>
+                                    <h5 class="text-center text-info mt-3">Downpayment Details</h5>
                                 
                                     <input type="hidden" name="down_payment_reference_no" value="<?php echo $reference_no; ?>">
                                     <input type="hidden" name="down_payment_total_amount" value="<?php echo $total_price; ?>">
+                                    <?php
                                     
+                                    $disabled = '';
+                                    if($status != 'PENDING')
+                                    {
+                                        $disabled = 'disabled';
+                                    }
+                                    ?>
                                     <div>
                                         <div class="form-row">
                                             <p class="col-3 text-right pr-4" for="dpAmount">Amount</p>
-                                            <input type="number" name="down_payment_amount" class="form-control col-8" id="dpAmount">
+                                            <input type="number" name="down_payment_amount" class="form-control col-6" <?php echo $disabled; ?> id="dpAmount" min="0">
                                         </div>
                                         <br>
                                         <div class="form-row">
                                             <p class="col-3 text-right pr-4" for="dpDescription">Description</p>
-                                            <textarea class="form-control col-8" name="down_payment_description" id="dpDescription" placeholder="Enter Deposit slip details"></textarea>
+                                            <textarea class="form-control col-6" name="down_payment_description" id="dpDescription" <?php echo $disabled; ?> placeholder="Enter Deposit slip details"></textarea>
                                         </div>
 
                                         <br>
 
-                                        <div class="row">
-                                            <div class="col-12">
+                                        <div class="row justify-content-md-center">
+                                            <div class="col-7 offset-col-4">
                                                 <?php
                                                 
                                                 if($status == 'PENDING') {

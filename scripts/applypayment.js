@@ -17,18 +17,25 @@ if(document.body.contains(document.getElementById('btnApplyPayment'))) {
         let description = dpDescription.value;
         
         if(inputAmount > trimTotalBalance) {
-            toastr.error('Invalid Amount');
+            toastr.error('Invalid Amount in Customer Payment');
         } else if (inputAmount < trimTotalBalance) {
-            toastr.error('Invalid Amount');
+            toastr.error('Invalid Amount in Customer Payment');
+        } else if (inputAmount === '') {
+            toastr.error('Empty Amount Field in Customer Payment');
         } else {
 
             $.ajax({
                 type: 'POST',
                 url: '/coralview/functions/admin/apply_payment.php',
-                data: {reference_no: JSON.stringify(referenceCode), amount_paid: JSON.stringify(inputAmount), description: JSON.stringify(description) },
+                data: {reference_no: JSON.stringify(referenceCode.innerText), amount_paid: JSON.stringify(inputAmount), description: JSON.stringify(description) },
                 success: function(data) {
-                    console.log(data);
-                    toastr.success('Payment succcessfully entered');
+                    
+                    toastr.success('PAYMENT SUCCESSFULLY ENTERED');
+                    
+                    setTimeout(function() {
+                        location.reload();    
+                    }, 3000);
+                    
                 },
                 error: function(data) {
                     console.log(data);
@@ -37,6 +44,8 @@ if(document.body.contains(document.getElementById('btnApplyPayment'))) {
 
         }
 
+        
+        
     })
 
 }

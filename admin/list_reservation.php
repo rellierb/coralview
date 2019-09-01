@@ -55,7 +55,7 @@ $db = connect_to_db();
                                             while($reservation = mysqli_fetch_assoc($reservation_result)) {
                                                 
                                                 $check_in_date = date_format(new Datetime($reservation["check_in_date"]), "m-d-Y");
-                                                $check_out_date = date_format(new Datetime($reservation["check_in_date"]), "m-d-Y");
+                                                $check_out_date = date_format(new Datetime($reservation["check_out_date"]), "m-d-Y");
 
                                                 $reservation_status =  $reservation["status"];
                                                 $hide_class = "";
@@ -81,6 +81,9 @@ $db = connect_to_db();
                                                     case "CHECKED OUT":
                                                         $reservation_class = "badge-success";                                                        
                                                         break;
+                                                    default:
+                                                        $reservation_class = "";
+                                                        break;
                                                 }
 
                                                 echo '
@@ -100,8 +103,7 @@ $db = connect_to_db();
                                                     echo '';
                                                 } else if ($reservation_status == 'CHECKED IN') { 
                                                     echo '<a style="width: 98%;' . $hide_class . '" href="checked_in.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-block btn-primary">View</a>';
-
-                                                } else {
+                                                } else if ($reservation_status == 'FOR CHECKED IN') {
                                                     echo '
                                                         <a style="width: 48%;' . $hide_class . '" href="accept.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-success">Accept</a>
                                                         <a style="width: 48%;' . $hide_class . '" href="reject.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-danger">Reject</a>

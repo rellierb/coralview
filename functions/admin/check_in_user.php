@@ -20,7 +20,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if(!$update_room_result) {
 
-                $_SESSION['msg'] = "Room status cannot be updated";
+                $_SESSION['msg'] = "ROOM STATUS CANNOT BE UPDATED";
                 $_SESSION['alert'] = "alert alert-danger"; 
                 
                 header("location: ../../admin/check_in_user.php?reference_no='$reference_no'");
@@ -29,7 +29,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 $insert_check_in_query = "INSERT INTO check_in_rooms(reference_no, room_number) VALUES('$reference_no', '$room_number')";
                 $insert_check_in_result = mysqli_query($db, $insert_check_in_query);
-
 
                 continue;
             }
@@ -43,14 +42,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if($status_to_checked_in_query) {
 
-        $_SESSION['msg'] = "Check-in successfully processed";
+        $_SESSION['msg'] = "CHECK-IN SUCCESFULLY PROCESSED";
         $_SESSION['alert'] = "alert alert-success"; 
         
         header("location: ../../admin/checked_in.php?reference_no=$reference_no");
 
     } else {
 
-        $_SESSION['msg'] = "Reservation cannot be processed";
+        $_SESSION['msg'] = "RESERVATION CANNOT BE PROCESSED";
         $_SESSION['alert'] = "alert alert-danger"; 
         
         header("location: ../../admin/check_in_user.php?reference_no=$reference_no");    

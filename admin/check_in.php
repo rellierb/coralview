@@ -7,7 +7,7 @@ require('../functions/assets/connection.php');
 $db = connect_to_db();
 
 // update to 'FOR CHECK-OUT' Status when date is today
-$check_in_query = "SELECT reference_no FROM reservation WHERE check_in_date = CURDATE()";
+$check_in_query = "SELECT reference_no FROM reservation WHERE check_in_date = CURDATE() AND status='PENDING'";
 $check_in_result = mysqli_query($db, $check_in_query);
 
 while($reference_no = mysqli_fetch_assoc($check_in_result)) {
@@ -15,7 +15,6 @@ while($reference_no = mysqli_fetch_assoc($check_in_result)) {
     $update_query_check_in = "UPDATE reservation SET status='FOR CHECK IN' WHERE reference_no='$number'";
     $update_result_check_in = mysqli_query($db, $update_query_check_in);
 }
-
 
 ?>
 
@@ -58,14 +57,14 @@ while($reference_no = mysqli_fetch_assoc($check_in_result)) {
                                 <tbody>
                                     <?php
                                     
-                                        $reservation_query = "SELECT * FROM reservation RES INNER JOIN guest G ON RES.guest_id = G.Id WHERE RES.check_in_date = CURDATE()";
+                                        $reservation_query = "SELECT * FROM reservation RES INNER JOIN guest G ON RES.guest_id = G.Id WHERE RES.check_in_date = CURDATE() AND RES.status='FOR CHECK IN'";
                                         $reservation_result = mysqli_query($db, $reservation_query);
                                                 
                                         if(mysqli_num_rows($reservation_result) > 0) {
                                             while($reservation = mysqli_fetch_assoc($reservation_result)) {
                                                 
                                                 $check_in_date = date_format(new Datetime($reservation["check_in_date"]), "m-d-Y");
-                                                $check_out_date = date_format(new Datetime($reservation["check_in_date"]), "m-d-Y");
+                                                $check_out_date = date_format(new Datetime($reservation["check_out_date"]), "m-d-Y");
 
                                                 echo '
                                                     <tr>

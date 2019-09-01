@@ -8,19 +8,40 @@ if(document.body.contains(document.getElementById('applyAddFees'))) {
 
         let amount = addPayment.value;
         let description = addDescription.value;
+        let code = referenceCode.innerText;
 
-        $.ajax({
-            type: 'POST',
-            url: '/coralview/functions/admin/apply_additional_fees.php',
-            data: {reference_no: JSON.stringify(referenceCode), amount: JSON.stringify(amount), description: JSON.stringify(description)  },
-            success: function(data) {
-                console.log(data);
-                toastr.success('Additional Fees successfully entered');
-            },
-            error: function(data) {
-                console.log(data);
-            }
-        })
+
+        if(amount === '' || description === '') {
+            toastr.error('Amount and Description in Additional Fees is empty');
+        } else if (description === '') {
+            toastr.error('Description in Additional Fees is empty');
+        } else if (amount === '') {
+            toastr.error('Amount in Additional Fees is empty');
+        } else {
+
+            $.ajax({
+                type: 'POST',
+                url: '/coralview/functions/admin/apply_additional_fees.php',
+                data: {reference_no: JSON.stringify(code), amount: JSON.stringify(amount), description: JSON.stringify(description)  },
+                success: function(data) {
+                    
+                    toastr.success('Additional Fees successfully entered');
+
+                    setTimeout(function() {
+
+                        location.reload();
+                        
+                    }, 3000);
+
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            })
+
+        }
+        
+        
 
     })
 

@@ -31,7 +31,7 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today >= $off_peak_date_st
 
     <?php include('../common/admin_sidebar.php') ?>
 
-    <form action="confirm.php" method="POST">
+    <form action="../functions/admin/walk_in_reservation.php" method="POST">
         <input type="hidden" name="reference_no" value="<?php echo $reference_no; ?>" >
         <div class="main-panel">
             <div class="container-fluid">
@@ -151,7 +151,7 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today >= $off_peak_date_st
 
                                             <?php
 
-                                            $rooms_query = "SELECT rooms.type, rooms.inclusions, rooms.peak_rate, rooms.off_peak_rate, room_id, count('room_id') as room_count FROM `rooms_status` INNER JOIN rooms ON rooms.Id = rooms_status.room_id  WHERE rooms_status.status = 'AVAILABLE' GROUP BY `room_id` ASC";
+                                            $rooms_query = "SELECT rooms.type, rooms.inclusions, rooms.image, rooms.peak_rate, rooms.off_peak_rate, room_id, count('room_id') as room_count FROM `rooms_status` INNER JOIN rooms ON rooms.Id = rooms_status.room_id  WHERE rooms_status.status = 'AVAILABLE' GROUP BY `room_id` ASC";
                                             $rooms_result = mysqli_query($db, $rooms_query);
             
                                             if(mysqli_num_rows($rooms_result) > 0) {
@@ -161,7 +161,10 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today >= $off_peak_date_st
                                                         <h4 class="card-header card-header-info">' . $room['type'] . '</h4>
                                                         <div class="card-body">
                                                             <div class="row">
-                                                                <div class="col-8">
+                                                                <div class="col-3">
+                                                                    <img src="' . $room['image'] . '" style="border-radius: 0; width: 100%;">
+                                                                </div>
+                                                                <div class="col-5">
                                                                     ' . $room['inclusions'] . '
                                                                 </div>
                                                                 <div class="col-4">

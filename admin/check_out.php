@@ -9,7 +9,7 @@ $db = connect_to_db();
 date_default_timezone_set('Australia/Melbourne');
 
 // update to 'FOR CHECK-IN' Status when date is today
-$check_in_query = "SELECT reference_no FROM reservation WHERE check_out_date = CURDATE()";
+$check_in_query = "SELECT reference_no FROM reservation WHERE check_out_date = CURDATE() AND status='CHECKED IN'";
 $check_in_result = mysqli_query($db, $check_in_query);
 
 while($reference_no = mysqli_fetch_assoc($check_in_result)) {
@@ -17,7 +17,6 @@ while($reference_no = mysqli_fetch_assoc($check_in_result)) {
     $update_query_check_in = "UPDATE reservation SET status='FOR CHECK OUT' WHERE reference_no='$number'";
     $update_result_check_in = mysqli_query($db, $update_query_check_in);
 }
-
 
 ?>
 
