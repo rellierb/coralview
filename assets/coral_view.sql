@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 28, 2019 at 03:39 AM
+-- Generation Time: Sep 02, 2019 at 02:05 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -42,7 +42,10 @@ CREATE TABLE `billing` (
 --
 
 INSERT INTO `billing` (`id`, `reference_no`, `amount_paid`, `total_amount`, `description`, `time_stamp`) VALUES
-(15, 'CRLVW-A2009D2', '22500', NULL, 'Customer Client Payment', '2019-08-27 05:09:23');
+(15, 'CRLVW-A2009D2', '22500', NULL, 'Customer Client Payment', '2019-08-27 05:09:23'),
+(21, 'CRLVW-3F311FB', '9180', NULL, 'Customer Client Payment', '2019-09-01 16:11:14'),
+(22, 'CRLVW-1C800E0', '4180', NULL, 'Customer Client Payment', '2019-09-01 19:28:09'),
+(23, 'CRLVW-1C800E0', '3240', NULL, 'Customer Client Payment', '2019-09-01 20:37:43');
 
 -- --------------------------------------------------------
 
@@ -63,7 +66,10 @@ CREATE TABLE `billing_additional_fees` (
 --
 
 INSERT INTO `billing_additional_fees` (`Id`, `reference_no`, `amount`, `description`, `time_stamp`) VALUES
-(1, 'CRLVW-A2009D2', 123, 'TEST', '2019-08-27 06:38:53');
+(1, 'CRLVW-A2009D2', 123, 'TEST', '2019-08-27 06:38:53'),
+(2, 'CRLVW-1C800E0', 1000, 'TEST', '2019-09-01 19:44:25'),
+(3, 'CRLVW-1C800E0', 1000, 'TEST 2', '2019-09-01 19:51:12'),
+(4, 'CRLVW-1C800E0', 1000, 'TEST 3', '2019-09-01 20:31:37');
 
 -- --------------------------------------------------------
 
@@ -84,7 +90,9 @@ CREATE TABLE `billing_discount` (
 
 INSERT INTO `billing_discount` (`Id`, `reference_no`, `discount_id`, `quantity`) VALUES
 (1, 'CRLVW-A2009D2', 1, 1),
-(2, 'CRLVW-A2009D2', 2, 1);
+(2, 'CRLVW-A2009D2', 2, 1),
+(3, 'CRLVW-3F311FB', 1, 1),
+(4, 'CRLVW-1C800E0', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -105,10 +113,10 @@ CREATE TABLE `billing_extras` (
 --
 
 INSERT INTO `billing_extras` (`id`, `reference_no`, `expense_id`, `quantity`, `amount`) VALUES
-(4, 'CRLVW-0CABD10', 1, 1, 100),
-(5, 'CRLVW-0CABD10', 2, 1, 100),
-(6, NULL, 1, 1, 100),
-(7, NULL, 2, 1, 100);
+(12, 'CRLVW-1C800E0', 1, 4, 100),
+(13, 'CRLVW-1C800E0', 2, 4, 100),
+(14, 'CRLVW-3F311FB', 1, 1, 100),
+(15, 'CRLVW-3F311FB', 2, 1, 100);
 
 -- --------------------------------------------------------
 
@@ -128,45 +136,9 @@ CREATE TABLE `booking_rooms` (
 --
 
 INSERT INTO `booking_rooms` (`id`, `reservation_id`, `room_id`, `quantity`) VALUES
-(4, 40, 21, 2),
-(5, 40, 22, 2),
-(6, 41, 21, 2),
-(7, 42, 21, 2),
-(8, 43, 21, 2),
-(9, 43, 22, 2),
-(10, 44, 21, 2),
-(11, 44, 22, 2),
-(12, 45, 21, 2),
-(13, 45, 22, 2),
-(14, 46, 21, 2),
-(15, 46, 22, 2),
-(16, 47, 21, 2),
-(17, 47, 22, 2),
-(18, 48, 21, 2),
-(19, 48, 22, 2),
-(20, 49, 21, 2),
-(21, 49, 22, 2),
-(22, 50, 21, 1),
-(23, 51, 21, 1),
-(24, 52, 21, 1),
-(25, 53, 21, 1),
-(26, 54, 21, 1),
-(27, 55, 21, 1),
-(28, 56, 21, 1),
-(29, 57, 21, 1),
-(30, 58, 21, 1),
-(31, 59, 21, 1),
-(32, 60, 21, 1),
-(33, 61, 21, 1),
-(34, 62, 21, 1),
-(35, 63, 21, 1),
-(36, 64, 21, 1),
-(37, 65, 21, 1),
-(38, 66, 21, 1),
-(39, 67, 21, 1),
-(40, 68, 21, 1),
-(41, 69, 21, 1),
-(42, 70, 21, 1);
+(43, 71, 21, 2),
+(44, 72, 21, 2),
+(45, 73, 21, 2);
 
 -- --------------------------------------------------------
 
@@ -191,7 +163,11 @@ INSERT INTO `check_in_rooms` (`Id`, `reference_no`, `room_number`, `is_check_out
 (3, 'CRLVW-A2009D2', 'CRLVW-104', NULL),
 (4, 'CRLVW-A2009D2', 'CRLVW-105', NULL),
 (5, 'CRLVW-861E81F', 'CRLVW-508', NULL),
-(6, 'CRLVW-861E81F', 'CRLVW-509', NULL);
+(6, 'CRLVW-861E81F', 'CRLVW-509', NULL),
+(7, 'CRLVW-3F311FB', 'CRLVW-508', NULL),
+(8, 'CRLVW-3F311FB', 'CRLVW-509', NULL),
+(9, 'CRLVW-1C800E0', 'CRLVW-601', NULL),
+(10, 'CRLVW-1C800E0', 'CRLVW-602', NULL);
 
 -- --------------------------------------------------------
 
@@ -212,6 +188,27 @@ CREATE TABLE `discount` (
 INSERT INTO `discount` (`Id`, `name`, `amount`) VALUES
 (1, 'Senior Citizen', 0.2),
 (2, 'PWD', 0.2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `downpayment`
+--
+
+CREATE TABLE `downpayment` (
+  `id` int(11) NOT NULL,
+  `reference_no` varchar(255) DEFAULT NULL,
+  `amount` float DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `time_stamp` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `downpayment`
+--
+
+INSERT INTO `downpayment` (`id`, `reference_no`, `amount`, `description`, `time_stamp`) VALUES
+(1, 'CRLVW-1C800E0', 5000, NULL, '2019-09-01 12:40:17');
 
 -- --------------------------------------------------------
 
@@ -285,7 +282,10 @@ INSERT INTO `guest` (`id`, `first_name`, `last_name`, `address`, `email`, `conta
 (97, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
 (98, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
 (99, '', '', '', '', ''),
-(100, 'Rellie', 'Balagat', '86-A Tandang Sora', 'relliebalagat@gmail.com', '09123456789');
+(100, 'Rellie', 'Balagat', '86-A Tandang Sora', 'relliebalagat@gmail.com', '09123456789'),
+(101, 'Rellie', 'Balagat', '86-A Tandang Sora Ave', 'relliebalagat@gmail.com', '09123456789'),
+(102, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(103, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789');
 
 -- --------------------------------------------------------
 
@@ -312,37 +312,8 @@ CREATE TABLE `reservation` (
 --
 
 INSERT INTO `reservation` (`id`, `guest_id`, `reference_no`, `status`, `payment`, `check_in_date`, `check_out_date`, `adult_count`, `kids_count`, `date_created`, `date_updated`) VALUES
-(40, 68, 'CRLVW-E909936', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-07-21 00:00:00', '2019-08-11 00:00:00', 3, 1, '2019-07-20 19:53:13', '2019-07-20 19:53:13'),
-(41, 69, 'CRLVW-D4E0FCB', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-08 00:00:00', '2019-08-11 00:00:00', 3, 1, '2019-07-21 14:24:21', NULL),
-(42, 70, 'CRLVW-5716FBA', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-07-23 00:00:00', '2019-08-11 00:00:00', 3, 1, '2019-07-21 14:25:04', NULL),
-(43, 72, 'CRLVW-A2009D2', 'CHECKED IN', 'BANK DEPOSIT', '2019-08-24 00:00:00', '2019-08-26 00:00:00', 1, 0, '2019-08-11 23:05:04', NULL),
-(44, 73, 'CRLVW-ADC7733', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-12 00:00:00', '2019-08-13 00:00:00', 1, 0, '2019-08-11 23:05:35', NULL),
-(45, 74, 'CRLVW-A53FF86', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-12 00:00:00', '2019-08-13 00:00:00', 1, 0, '2019-08-11 23:05:57', NULL),
-(46, 75, 'CRLVW-210DB2C', 'CHECKED IN', 'BANK DEPOSIT', '2019-08-24 00:00:00', '2019-08-29 00:00:00', 1, 0, '2019-08-11 23:06:12', NULL),
-(47, 76, 'CRLVW-0CABD10', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-12 00:00:00', '2019-08-13 00:00:00', 1, 0, '2019-08-11 23:06:27', NULL),
-(48, 77, 'CRLVW-2BA2CB9', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-12 00:00:00', '2019-08-13 00:00:00', 1, 0, '2019-08-11 23:06:45', NULL),
-(49, 78, 'CRLVW-6EE20D4', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-12 00:00:00', '2019-08-13 00:00:00', 1, 0, '2019-08-11 23:09:19', NULL),
-(50, 79, 'CRLVW-861E81F', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-18 00:00:00', '2019-08-19 00:00:00', 1, 0, '2019-08-12 09:30:15', NULL),
-(51, 80, 'CRLVW-60E49CD', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-18 00:00:00', '2019-08-19 00:00:00', 1, 0, '2019-08-12 09:33:15', NULL),
-(52, 81, 'CRLVW-8680B9C', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 09:43:22', NULL),
-(53, 82, 'CRLVW-57F85B8', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:04:16', NULL),
-(54, 83, 'CRLVW-BD25FD6', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:04:55', NULL),
-(55, 84, 'CRLVW-CA3A189', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:05:07', NULL),
-(56, 85, 'CRLVW-1940C5A', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:10:00', NULL),
-(57, 86, 'CRLVW-31D41A5', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:14:08', NULL),
-(58, 87, 'CRLVW-9A38873', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:15:37', NULL),
-(59, 88, 'CRLVW-46BD0E6', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:16:58', NULL),
-(60, 89, 'CRLVW-61E2D73', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:23:08', NULL),
-(61, 90, 'CRLVW-897974B', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:23:24', NULL),
-(62, 91, 'CRLVW-AB9438E', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:23:56', NULL),
-(63, 92, 'CRLVW-9970B05', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:24:15', NULL),
-(64, 93, 'CRLVW-51AF397', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:30:36', NULL),
-(65, 94, 'CRLVW-20EBFF3', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:31:07', NULL),
-(66, 95, 'CRLVW-8B10B0A', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:33:05', NULL),
-(67, 96, 'CRLVW-C1D8CFC', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:33:36', NULL),
-(68, 97, 'CRLVW-79E4527', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:35:55', NULL),
-(69, 98, 'CRLVW-BF89C25', 'FOR CHECK OUT', 'BANK DEPOSIT', '2019-08-17 00:00:00', '2019-08-18 00:00:00', 1, 0, '2019-08-12 10:36:38', NULL),
-(70, 100, 'CRLVW-BD7DD45', 'CHECKED IN', '', '2019-08-28 00:00:00', '2019-08-29 00:00:00', 1, 1, '2019-08-27 09:28:59', NULL);
+(71, 101, 'CRLVW-1C800E0', 'COMPLETE', 'BANK DEPOSIT', '2019-08-31 00:00:00', '2019-09-01 00:00:00', 1, 1, '2019-08-31 15:42:42', '2019-09-02 00:00:00'),
+(73, 103, 'CRLVW-3F311FB', 'FOR CHECK OUT', 'WALK-IN / CASH', '2019-09-01 00:00:00', '2019-09-04 00:00:00', 1, 1, '2019-09-01 15:32:17', '2019-09-02 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -454,12 +425,12 @@ INSERT INTO `rooms_status` (`room_number`, `room_id`, `status`, `id`) VALUES
 ('CRLVW-501', 30, 'AVAILABLE', 139),
 ('CRLVW-502', 30, 'AVAILABLE', 140),
 ('CRLVW-503', 30, 'AVAILABLE', 141),
-('CRLVW-504', 21, 'OCCUPIED', 142),
-('CRLVW-505', 21, 'OCCUPIED', 143),
-('CRLVW-506', 21, 'OCCUPIED', 144),
+('CRLVW-504', 21, 'AVAILABLE', 142),
+('CRLVW-505', 21, 'AVAILABLE', 143),
+('CRLVW-506', 21, 'AVAILABLE', 144),
 ('CRLVW-507', 21, 'OCCUPIED', 145),
-('CRLVW-508', 21, 'AVAILABLE', 146),
-('CRLVW-509', 21, 'AVAILABLE', 147),
+('CRLVW-508', 21, 'OCCUPIED', 146),
+('CRLVW-509', 21, 'OCCUPIED', 147),
 ('CRLVW-601', 21, 'AVAILABLE', 148),
 ('CRLVW-602', 21, 'AVAILABLE', 149),
 ('CRLVW-603', 21, 'AVAILABLE', 150),
@@ -615,6 +586,12 @@ ALTER TABLE `discount`
   ADD PRIMARY KEY (`Id`);
 
 --
+-- Indexes for table `downpayment`
+--
+ALTER TABLE `downpayment`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `extras`
 --
 ALTER TABLE `extras`
@@ -664,43 +641,49 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `billing`
 --
 ALTER TABLE `billing`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `billing_additional_fees`
 --
 ALTER TABLE `billing_additional_fees`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `billing_discount`
 --
 ALTER TABLE `billing_discount`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `billing_extras`
 --
 ALTER TABLE `billing_extras`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `booking_rooms`
 --
 ALTER TABLE `booking_rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `check_in_rooms`
 --
 ALTER TABLE `check_in_rooms`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `discount`
 --
 ALTER TABLE `discount`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `downpayment`
+--
+ALTER TABLE `downpayment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `extras`
@@ -712,13 +695,13 @@ ALTER TABLE `extras`
 -- AUTO_INCREMENT for table `guest`
 --
 ALTER TABLE `guest`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `reservation_expenses`
