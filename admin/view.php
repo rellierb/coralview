@@ -77,7 +77,7 @@ $date_completed = '';
                                             $full_name = $reservation["first_name"] . " " . $reservation["last_name"];
                                             $payment_type = $reservation["payment"];
                                             $date_completed = $reservation["date_updated"];
-                                            echo $date_completed;
+                                            
                                             echo '
                                                 <table class="table table-bordered">
                                                     <tr>
@@ -178,8 +178,7 @@ $date_completed = '';
                                                 $overall_total_price += $total_price;
                                             }
                                             
-                                            $overall_total_price *= $nights_of_stay;
-
+                                           
                                             echo '</table>';
                                         }
                                         ?>

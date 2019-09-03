@@ -50,6 +50,12 @@
                     <p>List of Reservations</p>
                 </a>
             </li>
+            <li>
+                <a href="/coralview/admin/reports.php">
+                    <!-- <i class="nc-icon nc-pin-3"></i> -->
+                    <p>Reports Generation</p>
+                </a>
+            </li>
 
             <?php
             
