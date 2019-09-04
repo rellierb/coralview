@@ -33,7 +33,7 @@ $(document).ready(function(){
         
         let arrivalDateMinDate;
         if(windowUrl.indexOf('reserve.ph') > 0) {
-            arrivalDateMinDate = datePlusOneDate(arrivalDateData.currentDate);
+            arrivalDateMinDate = datePlusTwoDate(arrivalDateData.currentDate);
         } else {
             arrivalDateMinDate = arrivalDateData.currentDate;
         }

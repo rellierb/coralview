@@ -18,6 +18,7 @@ $overall_total_extra = 0;
 $payment_type = '';
 $nights_of_stay = 0;
 $date_completed = '';
+$status = '';
 
 ?>
 
@@ -77,6 +78,7 @@ $date_completed = '';
                                             $full_name = $reservation["first_name"] . " " . $reservation["last_name"];
                                             $payment_type = $reservation["payment"];
                                             $date_completed = $reservation["date_updated"];
+                                            $status = $reservation["status"];
                                             
                                             echo '
                                                 <table class="table table-bordered">
@@ -429,8 +431,20 @@ $date_completed = '';
 
                                     <div class="row">
                                         <div class="col-12">
-                                        <?php $date_completed_one = date_create($date_completed) ?>
-                                        <h4 class="text-center text-success">Date Completed: <?php echo date_format($date_completed_one, 'M d, Y'); ?></h4>
+                                        
+                                        <?php 
+                                            
+                                            $date_one = date_create($date_completed); 
+                                        
+                                            if($status == 'CANCELLED') {
+                                                echo '<h4 class="text-center text-warning">Date Cancelled: ' . date_format($date_one, 'M d, Y') .'</h4>';
+                                            } else if ($status == 'COMPLETE') {
+                                                echo '<h4 class="text-center text-success">Date Completed: ' . date_format($date_one, 'M d, Y') .'</h4>';
+                                            }
+                                        
+                                        
+                                        ?>
+
                                         </div>
                                     </div>
                                     <br>
