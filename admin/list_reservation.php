@@ -75,9 +75,6 @@ $db = connect_to_db();
                                                     case "CANCELLED":
                                                         $reservation_class = "badge-warning";                                                        
                                                         break;
-                                                    case "FOR CHECK OUT":
-                                                        $reservation_class = "badge-neutral";
-                                                        break;
                                                     case "COMPLETE":
                                                         $reservation_class = "badge-success";                                                        
                                                         break;
@@ -100,10 +97,10 @@ $db = connect_to_db();
                                                 if($reservation_status == 'FOR CHECK IN') {
                                                     echo '<a style="width: 98%;' . $hide_class . '" href="cancel.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-block btn-warning">Cancel</a>';
                                                 } else if ($reservation_status == 'CANCELLED' || $reservation_status == 'FOR CHECK OUT') {
-                                                    echo '';
+                                                    echo ' <a style="width: 98%; display: inline-block;" href="check_out_user.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-info btn-block">View</a>';
                                                 } else if ($reservation_status == 'CHECKED IN') { 
                                                     echo '<a style="width: 98%;' . $hide_class . '" href="checked_in.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-block btn-primary">View</a>';
-                                                } else if ($reservation_status == 'FOR CHECKED IN') {
+                                                } else if ($reservation_status == 'FOR CHECKED IN' ||  $reservation_status == 'PENDING' ) {
                                                     echo '
                                                         <a style="width: 48%;' . $hide_class . '" href="accept.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-success">Accept</a>
                                                         <a style="width: 48%;' . $hide_class . '" href="reject.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-danger">Reject</a>

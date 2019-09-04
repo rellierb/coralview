@@ -62,7 +62,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     }
 
-    $update_query = "UPDATE reservation SET status='CHECKED OUT', date_updated=NOW() WHERE reference_no='$reference_no'";
+    $update_query = "UPDATE reservation SET status='COMPLETE', date_updated=NOW() WHERE reference_no='$reference_no'";
     $update_result = mysqli_query($db, $update_query);
 
     if($update_result) {
