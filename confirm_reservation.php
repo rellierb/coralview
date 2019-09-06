@@ -23,15 +23,15 @@ if(isset($_REQUEST["refence_no"])) {
             
             <div></div>
 
-            <h2 class="text-center">Thank you for booking with us!</h2>
+            <h2 class="text-center text-info">Thank you for booking with us!</h2>
 
             <div>
                 <p class="text-center">Here are the details of your reservation.</p>
             </div>
 
-            <h2 class="text-center mt-3">Reservation Summary</h2>
+            <h2 class="text-center mt-3 text-info">Reservation Summary</h2>
             <hr />
-            <h5 class="text-center mt-3">Guest Details</h5>
+            <h5 class="text-center mt-3 text-info mt-3">Guest Details</h5>
             <hr />
 
             <?php
@@ -54,43 +54,43 @@ if(isset($_REQUEST["refence_no"])) {
                     $diff = $dateDiff->format('%d');
 
                     echo '
-                        <table style="width: 60%; margin: 0 auto;">
+                        <table style="width: 60%; margin: 0 auto;" class="table table-bordered">
                             <tr>
-                                <th style="width: 30%;" class="text-right pr-5 pb-3">First Name:</th>
+                                <th style="width: 30%;" class="text-right pr-4 pb-3">FIRST NAME</th>
                                 <td style="width: 70%;" class="pb-3 pl-4">' . $reservation["first_name"]  . '</td>
                             </tr>
                             <tr>
-                                <th style="width: 30%;" class="text-right pr-5 pb-3">Last Name:</th>
+                                <th style="width: 30%;" class="text-right pr-4 pb-3">LAST NAME</th>
                                 <td style="width: 70%;" class="pb-3 pl-4">' . $reservation["last_name"] . '</td>
                             </tr>
                             <tr>
-                                <th style="width: 30%;" class="text-right pr-5 pb-3">Email:</th>
+                                <th style="width: 30%;" class="text-right pr-4 pb-3">EMAIL</th>
                                 <td style="width: 70%;" class="pb-3 pl-4">' . $reservation["email"] . '</td>
                             </tr>
                             <tr>
-                                <th style="width: 30%;" class="text-right pr-5 pb-3">Address:</th>
+                                <th style="width: 30%;" class="text-right pr-4 pb-3">ADDRESS</th>
                                 <td style="width: 70%;" class="pb-3 pl-4">' . $reservation["address"] . '</td>
                             </tr>
                         </table>
                         <br />
 
-                        <h5 class="text-center mt-3">Booking Details</h5>
+                        <h5 class="text-center mt-3 table text-info" >Booking Details</h5>
                         <hr />
-                        <table style="width: 60%; margin: 0 auto;">
+                        <table style="width: 60%; margin: 0 auto;" class="table table-bordered">
                             <tr>
-                                <th style="width: 30%;" class="text-right pr-5 pb-3"><b>Check-in Date: </b></th>
+                                <th style="width: 30%;" class="text-right pr-4 pb-3"><b>CHECK-IN DATE</b></th>
                                 <td style="width: 70%;" class="pb-3 pl-4">' . date_format(new Datetime($reservation["check_in_date"]), "m-d-Y")  . '</td>
                             </tr>
                             <tr>
-                                <th style="width: 30%;" class="text-right pr-5 pb-3"><b>Check-out Date: </b></th>
+                                <th style="width: 30%;" class="text-right pr-4 pb-3"><b>CHECK-OUT DATE</b></th>
                                 <td style="width: 70%;" class="pb-3 pl-4">' . date_format(new Datetime($reservation["check_out_date"]), "m-d-Y") . '</td>
                             </tr>
                             <tr>
-                                <th style="width: 30%;" class="text-right pr-5 pb-3"><b>Day/s: </b></th>
+                                <th style="width: 30%;" class="text-right pr-4 pb-3"><b>NIGHT/S</b></th>
                                 <td style="width: 70%;" class="pb-3 pl-4">' . $diff . '</td>
                             </tr>
                             <tr>
-                                <th style="width: 30%;" class="text-right pr-5 pb-3"><b>Guest/s Number: </b></th>
+                                <th style="width: 30%;" class="text-right pr-4 pb-3"><b>GUEST/S NUMBER</b></th>
                                 <td style="width: 70%;" class="pb-3 pl-4"><span>Adult: ' . $reservation["adult_count"] .  '</span> <span>Kids: ' . $reservation["kids_count"] . '</span></td>
                             </tr>
                         </table>
@@ -124,12 +124,12 @@ if(isset($_REQUEST["refence_no"])) {
                 echo '<h5 class="text-center mt-3">Room Details</h5>';
                 echo '
                     <hr />  
-                    <table style="width: 100%;">
+                    <table style="width: 100%;" class="table table-bordered">
                     <tr>
-                        <th class="text-center" style="width: 55%;">Room/s Reserve</th>
-                        <th class="text-center" style="width: 15%;">Quantity</th>
-                        <th class="text-center" style="width: 15%;">Price</th>
-                        <th class="text-center" style="width: 15%;">Total</th>
+                        <th class="text-center" style="width: 55%;">ROOMS/S RESERVE</th>
+                        <th class="text-center" style="width: 15%;">QUANTITY</th>
+                        <th class="text-center" style="width: 15%;">PRICE</th>
+                        <th class="text-center" style="width: 15%;">TOTAL</th>
                     </tr>
                 
                 ';
@@ -198,7 +198,7 @@ if(isset($_REQUEST["refence_no"])) {
         </div>   
         
 
-
+<!-- 
         <div class="row">
             <div class="col-lg-12 offset-lg-2">              
                 <h5>Resort Rules and Regulation</h5>    
@@ -211,7 +211,7 @@ if(isset($_REQUEST["refence_no"])) {
                     <li class="mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
                 </ol>
             </div>
-        </div>
+        </div> -->
 
     </div>  
 

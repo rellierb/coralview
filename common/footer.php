@@ -1,6 +1,7 @@
 
     <!-- <script src="/coralview/resources/jquery/jquery.min.js"> </script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
     <script src="/coralview/resources/bootstrap/bootstrap.min.js"></script>
     <script src="/coralview/resources/paperkit/assets/js/paper-kit.min.js"></script>
     <script src="/coralview/resources/smart-wizard/dist/js/jquery.smartWizard.min.js"></script>
@@ -15,6 +16,7 @@
     <script src="/coralview/scripts/applypayment.js"></script>
     <script src="/coralview/scripts/applyaddfees.js"></script>
     <script src="/coralview/scripts/dlcheckinvoucher.js"></script>
+    <script src="/coralview/scripts/googlemaps.js"></script>
     
     <script type="text/javascript">
 
@@ -35,8 +37,6 @@
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
         }
-
-        
 
     </script>
 

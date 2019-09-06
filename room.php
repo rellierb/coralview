@@ -31,32 +31,56 @@ if(isset($_REQUEST["room_id"])) {
                     echo '
                     
                         <h2 class="text-center coralview-orange">' . $room['type'] . '</h2>
+                        <hr>
                         <br><br>
-                        <div class="row" style="height: 60vh;">
-                        
-                        <div class="col-6">
-                            <img src="/coralview/uploads/rooms/deluxe.jpg" alt="">
-                        </div>
+                        <div class="row" style="height: 50vh;">
+                            
+                            <div class="col-12">
+                            
+                                <div class="card">
+                                    <div class="card-header">
 
-                        <div class="col-6">
-                            <table class="table">
-                                <tr>
-                                    <td style="width: 50%;" class="text-center">Capacity</td>
-                                    <td style="width: 50%;">' . $room['capacity'] . '</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 50%;" class="text-center">Peak Rate:</td>
-                                    <td style="width: 50%;">PHP ' . number_format($room['peak_rate'], 2) . '</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 50%;" class="text-center">Off-Peak Rate:</td>
-                                    <td style="width: 50%;">PHP ' . number_format($room['off_peak_rate'], 2) . '</td>
-                                </tr>
-                            </table>
+                                        <div class="row">
+                                        
+                                            <div class="col-6">
+                                                <img style="border-radius: 0px;" src="/coralview/uploads/rooms/deluxe.jpg" alt="">
+                                            </div>
 
-                            <p>' . $room['description'] . '</p>
-                            ' . $room['inclusions'] . '
-                        </div>
+                                            <div class="col-6">
+                                                <table class="table">
+                                                    <tr>
+                                                        <td style="width: 50%;" class="text-center coralview-blue">Capacity</td>
+                                                        <td style="width: 50%;">' . $room['capacity'] . '</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 50%;" class="text-center coralview-blue">Peak Rate:</td>
+                                                        <td style="width: 50%;">PHP ' . number_format($room['peak_rate'], 2) . '</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 50%;" class="text-center coralview-blue">Off-Peak Rate:</td>
+                                                        <td style="width: 50%;">PHP ' . number_format($room['off_peak_rate'], 2) . '</td>
+                                                    </tr>
+                                                </table>
+                                                
+                                                <p>' . $room['description'] . '</p>
+                                                <br>
+
+                                                <div id="room_id">
+                                                    ' . $room['inclusions'] . '
+                                                </div>
+                                                
+                                            </div>
+                                        
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            
+                            </div>
+
+
+                            
+                        </div>                        
 
 
                     

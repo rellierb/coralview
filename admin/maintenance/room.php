@@ -79,8 +79,6 @@ if(isset($_GET['edit'])) {
             
             ?>
 
-
-
             <div class="row">
                 <div class="col-12">
                     

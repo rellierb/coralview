@@ -43,7 +43,7 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today >= $off_peak_date_st
                 <div class="col-3">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="coralview-blue">Reservation Details</h4>
+                            <h4 class="coralview-blue text-center">Reservation Details</h4>
                         </div>
 
                         <div class="card-body">
@@ -130,8 +130,6 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today >= $off_peak_date_st
                                         ?>
 
                                         <div style="height: 55vh; overflow: scroll;" id="roomList">
-                                        
-                                        
 
                                         <?php
 
@@ -142,7 +140,7 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today >= $off_peak_date_st
                                             while($room = mysqli_fetch_assoc($rooms_result)) {
                                                 echo '
                                                 <div class="card card-nav-tabs">
-                                                    <h4 class="card-header card-header-info">' . $room['type'] . '</h4>
+                                                    <h4 class="card-header card-header-info coralview-blue">' . $room['type'] . '</h4>
                                                     <div class="card-body">
                                                         <div class="row">
                                                             <div class="col-3">

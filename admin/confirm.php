@@ -84,7 +84,7 @@ if(isset($_REQUEST["rooms_reserved"])) {
 
                     <a href="walk_in_reservation.php" class="btn btn-primary">Back</a>
 
-                    <h2 class="text-center mt-3">Reservation Summary</h2>
+                    <h2 class="text-center mt-3 coralview-blue">Reservation Summary</h2>
                     <hr />
                     <h5 class="text-center mt-3">Guest Details</h5>
                     <hr />
@@ -124,7 +124,7 @@ if(isset($_REQUEST["rooms_reserved"])) {
                             <td style="width: 70%;" class="pb-3 pl-4"><?php echo $departure_date; ?></td>
                         </tr>
                         <tr>
-                            <th style="width: 30%;" class="text-right pr-5 pb-3"><b>Days: </b></th>
+                            <th style="width: 30%;" class="text-right pr-5 pb-3"><b>Night/s: </b></th>
                             <td style="width: 70%;" class="pb-3 pl-4"><?php echo $no_of_days; ?></td>
                         </tr>
                         <tr>

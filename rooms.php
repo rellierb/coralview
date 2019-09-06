@@ -15,9 +15,9 @@ $db = connect_to_db();
         <div class="col">
 
             <div>
-                <h2 class="text-center coralview-orange">Rooms</h2>
-                
-                <div>
+                <h2 class="text-center coralview-orange mt-5 mb-5">Rooms</h2>
+                <hr>
+                <div class="mt-5">
 
 
                     <?php
@@ -41,20 +41,19 @@ $db = connect_to_db();
                             echo '
                             <div class="col-6">
                                 <div class="card">
-                                    <img class="card-img-top" src="' . $room['image'] . '" alt="Card image cap">
+                                    <img style="border-radius: 0;" class="card-img-top" src="' . $room['image'] . '" alt="Card image cap">
                                     <div class="card-header">
-                                        <h5>' . $room['type'] . '</h5>
+                                        <h5 class="coralview-blue">' . $room['type'] . '</h5>
                                     </div>
                                     <div class="card-body">
                                     
                                         <div class="row">
-                                            <div class="col-6">
-                                                <span>Peak Rate: ' . number_format($room['peak_rate'], 2)  . '</span>
+                                            <div class="col-4">
+                                                <span style="font-family: \'Segoe UI\', sans-serif;" class="coralview-blue">PEAK RATE: ' . number_format($room['peak_rate'], 2)  . '</span>
                                             </div>
-                                            <div class="col-6">
-                                                <span>Off-peak Rate: ' . number_format($room['off_peak_rate'], 2) . '</span>
+                                            <div class="col-5">
+                                                <span style="font-family: \'Segoe UI\', sans-serif;" class="coralview-blue">OFF-PEAK RATE: ' . number_format($room['off_peak_rate'], 2) . '</span>
                                             </div>
-                                            
                                         </div>
                                        
                                         <br>
@@ -93,7 +92,7 @@ $db = connect_to_db();
 
 </div>
 
-
+                </div>
 <?php
 
 include('common/foot.php');

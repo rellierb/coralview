@@ -4722,6 +4722,7 @@ License - nucleoapp.com/license/
 .sidebar .nav p,
 .off-canvas-sidebar .nav p {
   margin-bottom: 0;
+  color: white;
 }
 
 .sidebar .nav .collapse .nav,
@@ -4863,7 +4864,7 @@ License - nucleoapp.com/license/
 
 .sidebar[data-color="white"]:after,
 .off-canvas-sidebar[data-color="white"]:after {
-  background: #FFFFFF;
+  background: #ffffff;
 }
 
 .sidebar[data-color="white"] .nav li a,

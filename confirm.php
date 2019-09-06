@@ -83,51 +83,51 @@ if(isset($_REQUEST["rooms_reserved"])) {
 
                     <a href="/coralview/reserve.php#step-1" class="btn btn-primary">Back</a>
 
-                    <h2 class="text-center mt-3">Reservation Summary</h2>
+                    <h2 class="text-center mt-3 coralview-blue">Reservation Summary</h2>
                     <hr />
-                    <h5 class="text-center mt-3">Guest Details</h5>
+                    <h5 class="text-center mt-5 coralview-blue">Guest Details</h5>
                     <hr />
-                    <table style="width: 60%; margin: 0 auto;">
+                    <table style="width: 60%; margin: 0 auto;" class="table table-bordered mt-4">
                         <tr>
-                            <th style="width: 30%;" class="text-right pr-5 pb-3">First Name:</th>
+                            <th style="width: 30%;" class="text-right pr-4 pb-3">FIRST NAME</th>
                             <td style="width: 70%;" class="pb-3 pl-4"><?php echo $first_name; ?></td>
                         </tr>
                         <tr>
-                            <th style="width: 30%;" class="text-right pr-5 pb-3">Last Name:</th>
+                            <th style="width: 30%;" class="text-right pr-4 pb-3">LAST NAME</th>
                             <td style="width: 70%;" class="pb-3 pl-4"><?php echo $last_name; ?></td>
                         </tr>
                         <tr>
-                            <th style="width: 30%;" class="text-right pr-5 pb-3">Email:</th>
+                            <th style="width: 30%;" class="text-right pr-4 pb-3">EMAIL</th>
                             <td style="width: 70%;" class="pb-3 pl-4"><?php echo $email; ?></td>
                         </tr>
                         <tr>
-                            <th style="width: 30%;" class="text-right pr-5 pb-3">Contact Number:</th>
+                            <th style="width: 30%;" class="text-right pr-4 pb-3">CONTACT NUMBER</th>
                             <td style="width: 70%;" class="pb-3 pl-4"><?php echo $contact_number;  ?></td>
                         </tr>
                         <tr>
-                            <th style="width: 30%;" class="text-right pr-5 pb-3">Address:</th>
+                            <th style="width: 30%;" class="text-right pr-4 pb-3">ADDRESS</th>
                             <td style="width: 70%;" class="pb-3 pl-4"><?php echo $address; ?></td>
                         </tr>
                     </table>
                     <br />
 
-                    <h5 class="text-center mt-3">Booking Details</h5>
+                    <h5 class="text-center mt-3 coralview-blue">Booking Details</h5>
                     <hr />
-                    <table style="width: 60%; margin: 0 auto;">
+                    <table style="width: 60%; margin: 0 auto;" class="table table-bordered">
                         <tr>
-                            <th style="width: 30%;" class="text-right pr-5 pb-3"><b>Check-in Date: </b></th>
+                            <th style="width: 30%;" class="text-right pr-4 pb-3"><b>CHECK-IN DATE</b></th>
                             <td style="width: 70%;" class="pb-3 pl-4"><?php echo $arrival_date; ?></td>
                         </tr>
                         <tr>
-                            <th style="width: 30%;" class="text-right pr-5 pb-3"><b>Check-out Date: </b></th>
+                            <th style="width: 30%;" class="text-right pr-4 pb-3"><b>CHECK-OUT DATE</b></th>
                             <td style="width: 70%;" class="pb-3 pl-4"><?php echo $departure_date; ?></td>
                         </tr>
                         <tr>
-                            <th style="width: 30%;" class="text-right pr-5 pb-3"><b>Days: </b></th>
+                            <th style="width: 30%;" class="text-right pr-4 pb-3"><b>DAYS</b></th>
                             <td style="width: 70%;" class="pb-3 pl-4"><?php echo $no_of_days; ?></td>
                         </tr>
                         <tr>
-                            <th style="width: 30%;" class="text-right pr-5 pb-3"><b>Guest/s: </b></th>
+                            <th style="width: 30%;" class="text-right pr-4 pb-3"><b>GUEST NUMBER</b></th>
                             <td style="width: 70%;" class="pb-3 pl-4">
                                 <div>
                                     <span class="pr-5 ">Adult: <?php echo $adult_count; ?> </span>
@@ -139,14 +139,14 @@ if(isset($_REQUEST["rooms_reserved"])) {
                     </table>
                     <br>
 
-                    <h5 class="text-center mt-3">Room Details</h5>
+                    <h5 class="text-center mt-3 text-info">Room Details</h5>
                     <hr />                
-                    <table style="width: 100%;">
+                    <table style="width: 100%;" class="table table-bordered">
                         <tr>
-                            <th class="text-center" style="width: 55%;">Room/s Reserve</th>
-                            <th class="text-center" style="width: 15%;">Quantity</th>
-                            <th class="text-center" style="width: 15%;">Price</th>
-                            <th class="text-center" style="width: 15%;">Total</th>
+                            <th class="text-center" style="width: 55%;">ROOM/S RESERVE</th>
+                            <th class="text-center" style="width: 15%;">QUANTITY</th>
+                            <th class="text-center" style="width: 15%;">PRICE</th>
+                            <th class="text-center" style="width: 15%;">TOTAL</th>
                         </tr>
 
                         <?php
@@ -186,9 +186,9 @@ if(isset($_REQUEST["rooms_reserved"])) {
 
                     </table>
 
-                    <h5 class="text-center mt-3">Payment Details</h5>
+                    <h5 class="text-center mt-3 text-info">Payment Details</h5>
                     <hr />                
-                    <table style="width: 40%; margin: 0 auto;">
+                    <table style="width: 40%; margin: 0 auto;" class="table table-bordered">
 
                         <?php 
                         
@@ -198,42 +198,32 @@ if(isset($_REQUEST["rooms_reserved"])) {
                         ?>
                         <input type="hidden" name="p_total_amount" value="<?php echo $total_amount; ?>">
                         <tr>
-                            <td><h6>Total Room Fee:</h6> </td>
-                            <td>PHP <?php echo number_format($total_amount, 2); ?></td>
+                            <td><h6>TOTAL ROOM FEE</h6> </td>
+                            <td class="text-right pr-4 pb-3">PHP <?php echo number_format($total_amount, 2); ?></td>
                         </tr>
                         <tr>
-                            <td><h6>Vatable Amount:</h6></td>
-                            <td>PHP <?php echo number_format($vatable_amount, 2); ?></td>
+                            <td><h6>VATABLE AMOUNT</h6></td>
+                            <td class="text-right pr-4 pb-3">PHP <?php echo number_format($vatable_amount, 2); ?></td>
                         </tr>
                         <tr>
-                            <td><h6>Total Amount:<h6></td>
-                            <td>PHP <?php echo number_format($vat, 2); ?></td>
+                            <td><h6>TOTAL AMOUNT<h6></td>
+                            <td class="text-right pr-4 pb-3">PHP <?php echo number_format($vat, 2); ?></td>
                         </tr>
                         <tr>
-                            <td><h6>Deadline of Payment: </h6></td>
+                            <td><h6>DEADLINE OF PAYMENT</h6></td>
                             <?php
                                
                             $deadline = Date('F d, o', strtotime("+3 days"));
                             
                             ?>
 
-                            <td><h6><?php echo $deadline; ?></h6></td>
+                            <td  class="text-right pr-4 pb-3"><h6 ><?php echo $deadline; ?></h6></td>
                         </tr>
 
                     </table>
 
+                    <br>
 
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <h5 class="text-center mt-3">House Rules</h5>
-                    <ol>
-                        <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique ab eum enim ratione commodi quasi quisquam pariatur doloremque. Placeat vero qui obcaecati necessitatibus.</li>
-                        <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique ab eum enim ratione commodi quasi quisquam pariatur doloremque. Placeat vero qui obcaecati.</li>
-                        <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique ab eum enim ratione.</li>
-                    </ol>
-                    
                     <div class="mt-3 mb-3">
                         <button type="submit" class="btn btn-primary btn-block">Confirm Reservation</button>
                     </div>

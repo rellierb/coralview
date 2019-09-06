@@ -5,10 +5,10 @@
 .main-panel {
     min-height: 100vh;
 }
-
+/* 
 h1, h2, h3, h4, h5, h6, p, span, li {
     font-family: 'Segoe UI', sans-serif;
-}
+} */
 
 /* Color */
 
@@ -58,3 +58,11 @@ li.nav-item > a.nav-li {
 .card {
     border-radius: 0px;
 }
+
+#room_id li {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* #admin_sidebar {
+
+} */

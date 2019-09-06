@@ -1,6 +1,6 @@
 
 
-<div class="sidebar" data-color="white" data-active-color="danger">
+<div class="sidebar coralview-blue-bg" data-color="white" data-active-color="danger" id="admin_sidebar">
     <!--
     Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
 -->
@@ -10,8 +10,8 @@
             
             </div>
         </a>
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-            Coral View
+        <a href="http://www.creative-tim.com" class="simple-text logo-normal coralview-blue">
+            CoralView
             <!-- <div class="logo-image-big">
             <img src="../assets/img/logo-big.png">
             </div> -->
@@ -22,38 +22,38 @@
             <li>
                 <a href="/coralview/admin/walk_in_reservation.php">
                     <!-- <i class="nc-icon nc-single-02"></i> -->
-                    <p>Walk-in Reservation</p>
+                    <p class="coralview-blue">Walk-in Reservation</p>
                 </a>
             </li>
 
             <li>
                 <a href="/coralview/admin/check_in.php">
                     <!-- <i class="nc-icon nc-single-02"></i> -->
-                    <p>Check-in</p>
+                    <p class="coralview-blue">Check-in</p>
                 </a>
             </li>
             <li>
                 <a href="/coralview/admin/check_out.php">
                     <!-- <i class="nc-icon nc-single-02"></i> -->
-                    <p>Check-out</p>
+                    <p class="coralview-blue">Check-out</p>
                 </a>
             </li>
             <li>
                 <a href="/coralview/admin/maintenance/room_number.php">
                     <!-- <i class="nc-icon nc-bell-55"></i> -->
-                    <p>Room Availability</p>
+                    <p class="coralview-blue">Room Availability</p>
                 </a>
             </li>
             <li>
                 <a href="/coralview/admin/list_reservation.php">
                     <!-- <i class="nc-icon nc-pin-3"></i> -->
-                    <p>List of Reservations</p>
+                    <p class="coralview-blue">List of Reservations</p>
                 </a>
             </li>
             <li>
                 <a href="/coralview/admin/reports.php">
                     <!-- <i class="nc-icon nc-pin-3"></i> -->
-                    <p>Reports Generation</p>
+                    <p class="coralview-blue">Reports Generation</p>
                 </a>
             </li>
 
@@ -67,12 +67,12 @@
                         
                         <li>
                             <a href="/coralview/admin/maintenance/room.php">
-                                <p>Room Maintenance</p>
+                                <p class="coralview-blue">Room Maintenance</p>
                             </a>
                         </li>
                         <li>
                             <a href="/coralview/admin/maintenance/user.php">
-                                <p>User Maintenance</p>
+                                <p class="coralview-blue">User Maintenance</p>
                             </a>
                         </li>
                     
