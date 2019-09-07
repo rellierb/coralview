@@ -30,7 +30,7 @@ $db = connect_to_db();
             <div class="row">
                 <div class="col">
                     
-                    <div class="card" style="height: 40vh;">
+                    <div class="card" style="height: 60vh;">
                         <div class="card-body">
                             <h4 class="text-center text-info">ROOM REPORTS</h4>
                             
@@ -38,6 +38,19 @@ $db = connect_to_db();
                                 <div class="col-4">
 
                                     <form action="../../functions/admin/reports_room.php" method="POST">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="">Date of Reservation (From)</label>
+                                                    <input type="text" class="form-control datetimepicker" name="date_reservation_from" id="dateFrom">
+                                                </div>
+                                                <div class="col">
+                                                    <label for="">Date of Reservation (To)</label>
+                                                    <input type="text" class="form-control datetimepicker" name="date_reservation_to" id="dateTo">
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div class="form-group">
                                             <label for="">ROOM NAME</label>
                                             <select class="form-control" name="room_name">

@@ -16,8 +16,18 @@
             <img src="../assets/img/logo-big.png">
             </div> -->
         </a>
+
     </div>
+
+    
+
     <div class="sidebar-wrapper">
+
+        <div style="margin-right: 15px; margin-left: 15px; margin-top: 15px;" >
+            <p class="text-center">WELCOME, RELLIE</p>
+            <hr style="border: 1px solid #66615B; opacity: .3;">
+        </div>
+
         <ul class="nav">
             <li>
                 <a href="/coralview/admin/walk_in_reservation.php">
@@ -87,5 +97,14 @@
 
             
         </ul>
+
+        <div style="margin-right: 15px; margin-left: 15px; position: relative; top: 40%;">
+            <hr>
+            <a href="" class="btn btn-primary btn-link btn-block">Log out</a>
+            <hr>
+        </div>
+
+        
+
     </div>
 </div>

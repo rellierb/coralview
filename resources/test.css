@@ -4722,7 +4722,7 @@ License - nucleoapp.com/license/
 .sidebar .nav p,
 .off-canvas-sidebar .nav p {
   margin-bottom: 0;
-  color: white;
+  /* color: white; */
 }
 
 .sidebar .nav .collapse .nav,

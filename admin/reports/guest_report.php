@@ -30,7 +30,7 @@ $db = connect_to_db();
             <div class="row">
                 <div class="col">
                     
-                    <div class="card" style="height: 40vh;">
+                    <div class="card" style="height: 60vh;">
                         <div class="card-body">
                             <h4 class="text-center text-info">GUEST REPORT</h4>
                             
@@ -39,9 +39,23 @@ $db = connect_to_db();
 
                                     <form action="../../functions/admin/reports_guest.php" method="POST">
                                         <div class="form-group">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="">Date of Reservation (From)</label>
+                                                    <input type="text" class="form-control datetimepicker" name="date_reservation_from" id="dateFrom">
+                                                </div>
+                                                <div class="col">
+                                                    <label for="">Date of Reservation (To)</label>
+                                                    <input type="text" class="form-control datetimepicker" name="date_reservation_to" id="dateTo">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
                                             <label for="">First Name</label>
                                             <input type="text" class="form-control" name="first_name" id="">
                                         </div>
+
                                         <div class="form-group">
                                             <label for="">Last Name</label>
                                             <input type="text" class="form-control" name="last_name" id="">

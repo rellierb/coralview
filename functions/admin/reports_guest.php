@@ -10,7 +10,13 @@ use Mpdf\Mpdf;
 require('../assets/connection.php');
 require_once('../../composer/vendor/autoload.php');
 
+var_dump();
 var_dump(__DIR__);
+
+date_default_timezone_set("Asia/Manila");
+
+$user = $_SESSION['full_name'];
+$date = date("Y/m/d h:i:sa");
 
 try {
     $mpdf = new \Mpdf\Mpdf([
@@ -34,6 +40,14 @@ if(isset($_POST["first_name"])) {
     $last_name = mysqli_real_escape_string($db, trim($_POST['last_name']));
 }
 
+if(isset($_POST["date_reservation_from"])) {
+    $date_reservation_from = mysqli_real_escape_string($db, trim($_POST['date_reservation_from']));
+}
+
+if(isset($_POST["date_reservation_to"])) {
+    $date_reservation_to = mysqli_real_escape_string($db, trim($_POST['date_reservation_to']));
+}
+
 $reference_no = '';
 $guest_id = '';
 $payment_type = '';
@@ -51,7 +65,7 @@ if(mysqli_num_rows($find_guest_id_result) > 0) {
     while($guest = mysqli_fetch_assoc($find_guest_id_result)) {
         $guest_id = $guest['id'];
 
-        $find_ref_no = "SELECT reference_no FROM reservation WHERE guest_id='$guest_id'";
+        $find_ref_no = "SELECT reference_no FROM reservation WHERE guest_id='$guest_id' AND date_created BETWEEN '$date_reservation_from' AND '$date_reservation_to'";
         $find_ref_no_result = mysqli_query($db, $find_ref_no);
 
         if(mysqli_num_rows($find_ref_no_result) > 0) {
@@ -97,7 +111,14 @@ if(mysqli_num_rows($find_guest_id_result) > 0) {
                 
 
                 $html .= '
-                    
+
+                    <div style="text-align: center;">
+                        <img src="/coralview/assets/images/coralview-logo.jpg"  />
+                        <h1 style="font-family: Arial;">GUEST/S REPORT</h1>
+                    </div>
+
+                    <br>
+
                     <style type="text/css">
                         .tg  {border-collapse:collapse;border-spacing:0;border-color:#000;}
                         .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#9ABAD9;color:#444;background-color:#EBF5FF;}
@@ -381,6 +402,11 @@ if(mysqli_num_rows($find_guest_id_result) > 0) {
                     <br>
                     <br>
                     <br>
+
+                    <div>
+                        <p style="font-family: Arial;"><b>PRINTED BY: </b> ' . $user . '</p>
+                        <p style="font-family: Arial;"><b>DATE PRINTED: </b> ' . $date . ' </p>
+                    </div>
                 ';
 
                
@@ -392,10 +418,7 @@ if(mysqli_num_rows($find_guest_id_result) > 0) {
 
         }
 
-
-
     }
-
 
 } else {
 
