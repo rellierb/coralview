@@ -61,6 +61,8 @@ if(isset($_REQUEST["rooms_reserved"])) {
     $rooms_reserved = $_REQUEST["rooms_reserved"];
 }
 
+$room_html = '';
+
 ?>
 
     <form action="/coralview/functions/user/booking.php" method="POST">
@@ -123,7 +125,7 @@ if(isset($_REQUEST["rooms_reserved"])) {
                             <td style="width: 70%;" class="pb-3 pl-4"><?php echo $departure_date; ?></td>
                         </tr>
                         <tr>
-                            <th style="width: 30%;" class="text-right pr-4 pb-3"><b>DAYS</b></th>
+                            <th style="width: 30%;" class="text-right pr-4 pb-3"><b>NIGHT/S</b></th>
                             <td style="width: 70%;" class="pb-3 pl-4"><?php echo $no_of_days; ?></td>
                         </tr>
                         <tr>
@@ -139,91 +141,127 @@ if(isset($_REQUEST["rooms_reserved"])) {
                     </table>
                     <br>
 
-                    <h5 class="text-center mt-3 text-info">Room Details</h5>
-                    <hr />                
-                    <table style="width: 100%;" class="table table-bordered">
-                        <tr>
-                            <th class="text-center" style="width: 55%;">ROOM/S RESERVE</th>
-                            <th class="text-center" style="width: 15%;">QUANTITY</th>
-                            <th class="text-center" style="width: 15%;">PRICE</th>
-                            <th class="text-center" style="width: 15%;">TOTAL</th>
-                        </tr>
 
-                        <?php
+                    <?php
+                    
+                    $room_html = '
+                       
+                        <br>
 
-                        $reserved_rooms = json_decode(json_decode($rooms_reserved));
-                        $total_amount = 0;
-                        foreach($reserved_rooms as $test) {
+                        <h5 class="text-center mt-3 text-info">Room Details</h5>
+                        <hr />                
+                        <table style="width: 100%;" class="table table-bordered">
+                            <tr>
+                                <th class="text-center" style="width: 55%;">ROOM/S RESERVE</th>
+                                <th class="text-center" style="width: 15%;">QUANTITY</th>
+                                <th class="text-center" style="width: 15%;">PRICE</th>
+                                <th class="text-center" style="width: 15%;">TOTAL</th>
+                            </tr>
+                    ';
 
-                            $id = $test->roomId;
-                            $room_count = $test->roomNumber;
-                            
-                            $room_query = "SELECT * FROM rooms WHERE Id=$id";
-                            
-                            $rooms_result = mysqli_query($db, $room_query);
-                                    
-                            if(mysqli_num_rows($rooms_result) > 0) {
-                                while($room = mysqli_fetch_assoc($rooms_result)) {
-                                    
-                                    $room_price = $room_count * $room["peak_rate"];
-                                    $total_amount += $room_price;
+                    ?>
 
-                                    echo '
-                                        <tr>
-                                            <td class="text-center" style="width: 55%;"><h5>' . $room["type"] . '</h5></td>
-                                            <td class="text-center" style="width: 15%;">' . $room_count . '</td>
-                                            <td class="text-center" style="width: 15%;">' . number_format($room["peak_rate"], 2) . '</td>
-                                            <td class="text-center" style="width: 15%;">PHP ' .  number_format($room_price, 2) .  '</td>
-                                        </tr>
-                                    ';
+                    <?php
 
-                                }
+                    $reserved_rooms = json_decode(json_decode($rooms_reserved));
+                    $total_amount = 0;
+                    foreach($reserved_rooms as $test) {
+
+                        $id = $test->roomId;
+                        $room_count = $test->roomNumber;
+                        
+                        $room_query = "SELECT * FROM rooms WHERE Id=$id";
+                        
+                        $rooms_result = mysqli_query($db, $room_query);
+                                
+                        if(mysqli_num_rows($rooms_result) > 0) {
+                            while($room = mysqli_fetch_assoc($rooms_result)) {
+                                
+                                $room_price = $room_count * $room["peak_rate"];
+                                $total_amount += $room_price;
+
+                                $room_html .= '
+                                    <tr>
+                                        <td class="text-center" style="width: 55%;"><h5>' . $room["type"] . '</h5></td>
+                                        <td class="text-center" style="width: 15%;">' . $room_count . '</td>
+                                        <td class="text-center" style="width: 15%;">' . number_format($room["peak_rate"], 2) . '</td>
+                                        <td class="text-center" style="width: 15%;">PHP ' .  number_format($room_price, 2) .  '</td>
+                                    </tr>
+                                ';
+
                             }
+                        }
 
-                        }                    
-                        
-                        ?>
+                    }                    
+                    
+                    ?>
 
-                    </table>
+                    <?php $room_html .= '</table>'; ?>
 
-                    <h5 class="text-center mt-3 text-info">Payment Details</h5>
-                    <hr />                
-                    <table style="width: 40%; margin: 0 auto;" class="table table-bordered">
 
-                        <?php 
-                        
-                            $vatable_amount = $total_amount / 1.12;
-                            $vat = $total_amount - $vatable_amount;
+                    <?php
+                    
+                    $payment_html = '';
 
-                        ?>
-                        <input type="hidden" name="p_total_amount" value="<?php echo $total_amount; ?>">
+
+                    $payment_html .= '
+                        <h5 class="text-center mt-3 text-info">Payment Details</h5>
+                        <hr />                
+                        <table style="width: 40%; margin: 0 auto;" class="table table-bordered">
+                    ';
+
+                    $overall_total_amount = $no_of_days * $total_amount;
+                    $vatable_amount = $overall_total_amount / 1.12;
+                    $vat = $overall_total_amount - $vatable_amount;
+                    
+                    
+                    $payment_html .= ' <input type="hidden" name="p_total_amount" value="' .$total_amount .  '">';
+                    
+                    $payment_html .= '
                         <tr>
-                            <td><h6>TOTAL ROOM FEE</h6> </td>
-                            <td class="text-right pr-4 pb-3">PHP <?php echo number_format($total_amount, 2); ?></td>
+                            <td><h6>TOTAL AMOUNT</h6> </td>
+                            <td class="text-right pr-4 pb-3">PHP ' . number_format($overall_total_amount, 2)  . '</td>
+                        </tr>
+                        <tr>
+                            <td><h6>Total Room Fee</h6> </td>
+                            <td class="text-right pr-4 pb-3"> ' . number_format($total_amount, 2)  . '</td>
                         </tr>
                         <tr>
                             <td><h6>VATABLE AMOUNT</h6></td>
-                            <td class="text-right pr-4 pb-3">PHP <?php echo number_format($vatable_amount, 2); ?></td>
+                            <td class="text-right pr-4 pb-3"> ' . number_format($vatable_amount, 2) . '</td>
                         </tr>
                         <tr>
-                            <td><h6>TOTAL AMOUNT<h6></td>
-                            <td class="text-right pr-4 pb-3">PHP <?php echo number_format($vat, 2); ?></td>
-                        </tr>
+                            <td><h6>VALUE ADDED TAX<h6></td>
+                            <td class="text-right pr-4 pb-3"> ' . number_format($vat, 2) . '</td>
+                        </tr>    
+                    
+                    ';
+
+                    $payment_html .= '
                         <tr>
                             <td><h6>DEADLINE OF PAYMENT</h6></td>
-                            <?php
-                               
-                            $deadline = Date('F d, o', strtotime("+3 days"));
-                            
-                            ?>
+                    
+                    ';
 
-                            <td  class="text-right pr-4 pb-3"><h6 ><?php echo $deadline; ?></h6></td>
-                        </tr>
+                    $deadline = Date('F d, o', strtotime("+3 days"));
 
-                    </table>
+                    $payment_html .= '
+                    
+                                <td class="text-right pr-4 pb-3"><h6>' . $deadline . '</h6></td>
+                            </tr>
+                        </table>
 
-                    <br>
+                    ';
 
+                    ?>
+
+                    <?php 
+                    
+                    echo $payment_html;
+                    echo $room_html;
+                    
+                    ?>
+                     
                     <div class="mt-3 mb-3">
                         <button type="submit" class="btn btn-primary btn-block">Confirm Reservation</button>
                     </div>

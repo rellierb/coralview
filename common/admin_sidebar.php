@@ -23,10 +23,24 @@
 
     <div class="sidebar-wrapper">
 
-        <div style="margin-right: 15px; margin-left: 15px; margin-top: 15px;" >
-            <p class="text-center">WELCOME, RELLIE</p>
-            <hr style="border: 1px solid #66615B; opacity: .3;">
-        </div>
+        <?php 
+        
+        if(isset($_SESSION['full_name'])) {
+
+            echo '
+                
+                <div style="margin-right: 15px; margin-left: 15px; margin-top: 15px;" >
+                    <p class="text-center">WELCOME, ' . $_SESSION['full_name'] . ' </p>
+                    <hr style="border: 1px solid #66615B; opacity: .3;">
+                </div>
+                    
+            ';
+
+        } 
+        
+        ?>
+
+
 
         <ul class="nav">
             <li>
@@ -83,6 +97,11 @@
                         <li>
                             <a href="/coralview/admin/maintenance/user.php">
                                 <p class="coralview-blue">User Maintenance</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/coralview/admin/maintenance/extras.php">
+                                <p class="coralview-blue">Extra Maintenance</p>
                             </a>
                         </li>
                     

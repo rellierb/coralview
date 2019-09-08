@@ -288,140 +288,165 @@ $status = '';
                                         <div class="col-12">
 
                                             <?php
-                                            
-                                            // Additional Fees
-                                            $add_fees_query = "SELECT * FROM billing_additional_fees WHERE reference_no='$reference_no'";
-                                            $add_fees_result = mysqli_query($db, $add_fees_query);
-                                            $add_fees_amount = 0;
 
-                                            if(mysqli_num_rows($add_fees_result) > 0) {
+                                            if($status == 'REJECTED') {
 
-                                                echo '<table class="table table-bordered">';
-                                                echo '<thead><th class="text-center" scope="col">Additional Fees</th><th class="text-center" scope="col">Amount</th><thead>';
-                                                while($fees = mysqli_fetch_assoc($add_fees_result)) {
-                                                    echo'
-                                                        <tr>
-                                                            <td class="text-center">' . $fees['description'] . '</td>
-                                                            <td class="text-center">' . $fees['amount'] . '</td>
-                                                        </tr>
-                                                    ';
+                                                echo '<h2 class="text text-info text-center">Payment not applicable</h2>';
 
-                                                    $add_fees_amount += $fees['amount'];
+                                            }  else {
+
+                                                // Additional Fees
+                                                $add_fees_query = "SELECT * FROM billing_additional_fees WHERE reference_no='$reference_no'";
+                                                $add_fees_result = mysqli_query($db, $add_fees_query);
+                                                $add_fees_amount = 0;
+
+                                                if(mysqli_num_rows($add_fees_result) > 0) {
+
+                                                    echo '<table class="table table-bordered">';
+                                                    echo '<thead><th class="text-center" scope="col">Additional Fees</th><th class="text-center" scope="col">Amount</th><thead>';
+                                                    while($fees = mysqli_fetch_assoc($add_fees_result)) {
+                                                        echo'
+                                                            <tr>
+                                                                <td class="text-center">' . $fees['description'] . '</td>
+                                                                <td class="text-center">' . $fees['amount'] . '</td>
+                                                            </tr>
+                                                        ';
+
+                                                        $add_fees_amount += $fees['amount'];
+
+                                                    }
+                                                    echo '</table>';
 
                                                 }
-                                                echo '</table>';
 
-                                            }
+
+                                                $overall_total_price *= $nights_of_stay;
+                                                $overall_total_price += $add_fees_amount;
+
+
+                                                $check_discount_query = "SELECT * FROM billing_discount BD INNER JOIN discount D on BD.discount_id=D.Id  WHERE BD.reference_no='$reference_no'";
+                                                $check_discount_result = mysqli_query($db, $check_discount_query);
+                                                $discount_price = 0;
+
+                                                if(mysqli_num_rows($check_discount_result) > 0) {
+
+                                                    echo '<table class="table table-bordered">';
+                                                    echo '<thead><th class="text-center" scope="col">Discount</th><th class="text-center" scope="col">Amount</th><thead>';
+                                                    while($discount = mysqli_fetch_assoc($check_discount_result)) {
+                                                        
+                                                        $discount_amount = $discount["amount"];
+                                                        $comp_discount = $overall_total_price / $quantity;
+                                                    
+                                                        if($discount_amount < 1) {
+                                                            $temp_discount_price = $comp_discount * $discount_amount;
+                                                            $discount_price += $temp_discount_price;
+                                                        } 
+
+                                                        $change_to_percent = $discount['amount'] * 100;
+
+                                                        echo'
+                                                            <tr>
+                                                                <td class="text-center">' . $discount['name'] . '</td>
+                                                                <td class="text-center">' . $change_to_percent  . ' %</td>
+                                                            </tr>
+                                                        
+                                                        ';
+                                                        
+                                                    }
+                                                    echo '</table>';
+                                                }                   
+
+
+                                                $billing_query = "SELECT * FROM billing WHERE reference_no='$reference_no'";
+                                                $billing_result = mysqli_query($db, $billing_query);
+                                                $balance = $overall_total_price;
+                                                // echo $balance;
+                                                if(mysqli_num_rows($billing_result) > 0) {
+                                                
+                                                    while($billing = mysqli_fetch_assoc($billing_result)) {
+                                                        
+                                                        $amount_paid = $billing["amount_paid"];
+                                                        $balance -= $amount_paid;                                            
+    
+                                                    }
+    
+                                                }
+                                            
+                                                $discounted_price = $balance - $discount_price;
+    
+                                                // DOWNPAYMENT
+                                                $check_down_payment = "SELECT * FROM downpayment WHERE reference_no='$reference_no'";
+                                                $check_down_payment_result = mysqli_query($db, $check_down_payment);
+    
+                                                $downpayment_amount = 0;
+    
+                                                if(mysqli_num_rows($check_down_payment_result) > 0) {
+    
+                                                    while($down_payment = mysqli_fetch_assoc($check_down_payment_result)) {
+                                                        $downpayment_amount = $down_payment["amount"];
+                                                        $balance -= $downpayment_amount;
+                                                    }
+    
+                                                }
+                                                
+                                                $discounted_price -= $downpayment_amount;
+                                                // echo $balance;
+                                                echo '
+                                                    <table class="table table-bordered">
+                                                        <tr>
+                                                            <th scope="col" class="text-center">PAYMENT TYPE</th>
+                                                            <td class="text-center">' . $payment_type .  '</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="col" class="text-center">TOTAL AMOUNT (ROOMS & EXTRAS)</th>
+                                                            <td class="text-center">' . number_format($overall_total_price, 2)  .  '</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="col" class="text-center">DOWNPAYMENT</th>
+                                                            <td class="text-center">' . number_format($downpayment_amount, 2)  .'</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="col" class="text-center">TOTAL DISCOUNT</th>
+                                                            <td class="text-center">' . number_format($discount_price, 2) . '</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="col" class="text-center">AMOUNT AFTER DISCOUNT</th>
+                                                            <td class="text-center">' . number_format($discounted_price, 2)  .  '</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="col" class="text-center text-danger">REMAINING BALANCE</th>
+                                                            <td class="text-danger text-center" id="remainingBalance">' . number_format($discounted_price, 2)  .  '</td>
+                                                        </tr>
+                                                    </table>
+                                                ';
+
+
+
+
+
+
+
+                                            } // end of else
+                                            
+                                            
                                             
                                             ?>
 
                                             <?php
 
-                                            $overall_total_price *= $nights_of_stay;
-                                            $overall_total_price += $add_fees_amount;
+                                            
                                             
                                             ?>
 
                                             <?php
-                                            
-                                            $check_discount_query = "SELECT * FROM billing_discount BD INNER JOIN discount D on BD.discount_id=D.Id  WHERE BD.reference_no='$reference_no'";
-                                            $check_discount_result = mysqli_query($db, $check_discount_query);
-                                            $discount_price = 0;
-
-                                            if(mysqli_num_rows($check_discount_result) > 0) {
-                                                echo '<table class="table table-bordered">';
-                                                echo '<thead><th class="text-center" scope="col">Discount</th><th class="text-center" scope="col">Amount</th><thead>';
-                                                while($discount = mysqli_fetch_assoc($check_discount_result)) {
-                                                    
-                                                    $discount_amount = $discount["amount"];
-                                                    $comp_discount = $overall_total_price / $quantity;
-                                                   
-                                                    if($discount_amount < 1) {
-                                                        $temp_discount_price = $comp_discount * $discount_amount;
-                                                        $discount_price += $temp_discount_price;
-                                                    } 
-
-                                                    $change_to_percent = $discount['amount'] * 100;
-
-                                                    echo'
-                                                        <tr>
-                                                            <td class="text-center">' . $discount['name'] . '</td>
-                                                            <td class="text-center">' . $change_to_percent  . ' %</td>
-                                                        </tr>
-                                                    
-                                                    ';
-                                                      
-                                                }
-                                                echo '</table>';
-                                            }                                            
+                                                                     
                                             
                                             
                                             ?>
 
                                             <?php
                                         
-                                            $billing_query = "SELECT * FROM billing WHERE reference_no='$reference_no'";
-                                            $billing_result = mysqli_query($db, $billing_query);
-                                            $balance = $overall_total_price;
-                                            // echo $balance;
-                                            if(mysqli_num_rows($billing_result) > 0) {
-                                            
-                                                while($billing = mysqli_fetch_assoc($billing_result)) {
-                                                    
-                                                    $amount_paid = $billing["amount_paid"];
-                                                    $balance -= $amount_paid;                                            
-
-                                                }
-
-                                            }
-                                        
-                                            $discounted_price = $balance - $discount_price;
-
-                                            // DOWNPAYMENT
-                                            $check_down_payment = "SELECT * FROM downpayment WHERE reference_no='$reference_no'";
-                                            $check_down_payment_result = mysqli_query($db, $check_down_payment);
-
-                                            $downpayment_amount = 0;
-
-                                            if(mysqli_num_rows($check_down_payment_result) > 0) {
-
-                                                while($down_payment = mysqli_fetch_assoc($check_down_payment_result)) {
-                                                    $downpayment_amount = $down_payment["amount"];
-                                                    $balance -= $downpayment_amount;
-                                                }
-
-                                            }
-                                            
-                                            $discounted_price -= $downpayment_amount;
-                                            // echo $balance;
-                                            echo '
-                                                <table class="table table-bordered">
-                                                    <tr>
-                                                        <th scope="col" class="text-center">PAYMENT TYPE</th>
-                                                        <td class="text-center">' . $payment_type .  '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="col" class="text-center">TOTAL AMOUNT (ROOMS & EXTRAS)</th>
-                                                        <td class="text-center">' . number_format($overall_total_price, 2)  .  '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="col" class="text-center">DOWNPAYMENT</th>
-                                                        <td class="text-center">' . number_format($downpayment_amount, 2)  .'</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="col" class="text-center">TOTAL DISCOUNT</th>
-                                                        <td class="text-center">' . number_format($discount_price, 2) . '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="col" class="text-center">AMOUNT AFTER DISCOUNT</th>
-                                                        <td class="text-center">' . number_format($discounted_price, 2)  .  '</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="col" class="text-center text-danger">REMAINING BALANCE</th>
-                                                        <td class="text-danger text-center" id="remainingBalance">' . number_format($discounted_price, 2)  .  '</td>
-                                                    </tr>
-                                                </table>
-                                            ';
+                                           
 
                                             ?>
                                         

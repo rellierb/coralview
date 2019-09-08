@@ -57,7 +57,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                             <div style="width: 100%;">
                                 <h1>CORALVIEW  RESORT</h1>
-                                <p>This is to inform you that your reservation has been <b>Rejected</b>. Please be reminded of the date of your check in.</p>
+                                <p>We regret to inform you that we are unable to accommodate your booking request at this time. Thank you for your consideration.</p>
                             </div>
                         ';
 

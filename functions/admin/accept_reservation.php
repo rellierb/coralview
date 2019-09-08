@@ -47,14 +47,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $insert_to_downpayment_result = mysqli_query($db, $insert_to_downpayment);
 
-
-    // $insert_query = "
-    //     INSERT INTO billing (reference_no, amount_paid, total_amount, description, time_stamp)
-    //     VALUES ('$dp_reference_no', '$dp_amount', NULL, '$dp_description', NOW())
-    // ";
-
-    // $insert_result = mysqli_query($db, $insert_query); 
-
     if($insert_to_downpayment_result) {
 
         // $insert_to_downpayment = "

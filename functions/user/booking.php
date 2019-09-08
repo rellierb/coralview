@@ -52,6 +52,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $adult_count = mysqli_real_escape_string($db, trim($_POST['p_adult_count']));
         $kids_count = mysqli_real_escape_string($db, trim($_POST['p_kids_count']));
 
+        $no_of_days = mysqli_real_escape_string($db, trim($_POST['p_no_of_days']));
+
         // p_total_amount
         $total_amount = mysqli_real_escape_string($db, trim($_POST['p_total_amount']));
 
@@ -114,10 +116,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                         }
                     }
-
-                    
                 }
-                
             }
 
             if($is_success_or_failed == "SUCCESS") {
@@ -125,12 +124,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $to_pay_on_deadline = 0;
 
                 if($payment == 'CASH UPON WALK IN') {
-                    $to_pay_on_deadline = $total_amount;
+                    $to_pay_on_deadline = $total_amount ;
                     $payment_note = '<p><b>Please be informed that you have to pay PHP ' . number_format($to_pay_on_deadline, 2) . ' on the arrival/check-in date</b></p>';
                 } else if($payment == 'BANK DEPOSIT') {
-                    $to_pay_on_deadline = $total_amount * .5;
+                    $to_pay_on_deadline = ($total_amount * $no_of_days) * .5;
                     $payment_deadline = Date('F d, o', strtotime("+3 days"));
-                    $payment_note = '<p><b>Please be informed that you have to pay PHP ' . number_format($to_pay_on_deadline, 2) . ' on ' . $payment_deadline . '</b></p>';
+                    $payment_note = '<p><b>Please be informed that you have to pay PHP ' . number_format($to_pay_on_deadline, 2) . ' on or before ' . $payment_deadline . '</b></p>';
                 }
 
                 $reservation_details = '
@@ -156,6 +155,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <td class="tg-0pky">' . date("m d, Y", strtotime($departure_date)) . '</td>
                         </tr>
                         <tr>
+                            <td class="tg-0pky"><b>Total Amount Due</b></td>
+                            <td class="tg-0pky">PHP ' . number_format(($total_amount * $no_of_days), 2)   . '</td>
+                        </tr>
+                        <tr>
+                            <td class="tg-0pky"><b>Night/s</b></td>
+                            <td class="tg-0pky">' . $no_of_days . '</td>
+                        </tr>
+                        <tr>
                             <td class="tg-0pky"><b>Mode of Payment</b></td>
                             <td class="tg-0pky">BANK DEPOSIT</td>
                         </tr>
@@ -163,18 +170,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 ';
 
                 $room_details = '
-                    <style type="text/css">
-                        .tg  {border-collapse:collapse;border-spacing:0;}
-                        .tg td{font-family:\'Segoe UI\', sans-serif;font-size:16px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
-                        .tg th{font-family:\'Segoe UI\', sans-seriff;font-size:16px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
-                        .tg .tg-cey4{font-size:16px;border-color:inherit;text-align:left;vertical-align:top}
-                        .tg .tg-4688{font-weight:bold;font-size:16px;font-family:\'Segoe UI\', sans-serif !important;;border-color:inherit;text-align:left;vertical-align:top}
-                        .tg .tg-b465{font-weight:bold;font-size:16px;font-family:\'Segoe UI\', sans-serif !important;;text-align:left;vertical-align:top}
-                        .tg .tg-fzq1{font-size:16px;font-family:\'Segoe UI\', sans-serif !important;;border-color:inherit;text-align:left;vertical-align:top}
-                        .tg .tg-r2u0{font-weight:bold;font-size:16px;font-family:\'Segoe UI\', sans-serif !important;;border-color:inherit;text-align:left;vertical-align:middle}
-                        .tg .tg-0lax{text-align:left;vertical-align:top}
-                        .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
-                    </style>
 
                     <table class="tg">
                         <tr>
@@ -199,11 +194,22 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                             font-size: 16px;
                         }
 
+                        .tg  {border-collapse:collapse;border-spacing:0;}
+                        .tg td{font-family:\'Segoe UI\', sans-serif;font-size:16px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+                        .tg th{font-family:\'Segoe UI\', sans-seriff;font-size:16px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+                        .tg .tg-cey4{font-size:16px;border-color:inherit;text-align:left;vertical-align:top}
+                        .tg .tg-4688{font-weight:bold;font-size:16px;font-family:\'Segoe UI\', sans-serif !important;;border-color:inherit;text-align:left;vertical-align:top}
+                        .tg .tg-b465{font-weight:bold;font-size:16px;font-family:\'Segoe UI\', sans-serif !important;;text-align:left;vertical-align:top}
+                        .tg .tg-fzq1{font-size:16px;font-family:\'Segoe UI\', sans-serif !important;;border-color:inherit;text-align:left;vertical-align:top}
+                        .tg .tg-r2u0{font-weight:bold;font-size:16px;font-family:\'Segoe UI\', sans-serif !important;;border-color:inherit;text-align:left;vertical-align:middle}
+                        .tg .tg-0lax{text-align:left;vertical-align:top}
+                        .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+
                     </style>
 
                     <div style="width: 100%;">
-                        <h1>CORALVIEW  RESORT</h1>
-                        <p>Thank you for booking with us!</p>
+                        <h1>CORALVIEW BEACH RESORT</h1>
+                        <p>Thank you for booking with us! Please see details below for reference.</p>
                         ' . $reservation_details . '
                         <br>
                         ' . $room_details . '
@@ -214,6 +220,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 ';
 
                 $mail = new PHPMailer(true);
+
+                echo $reservation_message;
+
                 try {
                     $message = $reservation_message;
                     $mail->SMTPDebug = 1;

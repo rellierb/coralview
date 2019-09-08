@@ -23,6 +23,10 @@ $nights_of_stay = 0;
 $arrival_date = '';
 $departure_date = '';
 
+
+$content_html = '';
+
+
 ?>
 
     <?php include('../common/admin_sidebar.php') ?>
@@ -143,7 +147,10 @@ $departure_date = '';
                             
                                 <div class="col-12">
 
-                                <br>
+                                
+
+
+                                <!-- <br>
                                 
                                 <style>       
                                     #receipt *
@@ -282,14 +289,23 @@ $departure_date = '';
                                                         $quantity += $room_quantity;
                                                         $total_price = $room_reservation["peak_rate"] * $room_reservation["quantity"];
             
-                                                        echo '
+                                                        $content_html .= '
+                                                        
                                                             <tr>
-                                                                <td style="text-align: center;"><span>' . $room_reservation["type"] . '</span></td>
-                                                                <td style="text-align: center;">' . number_format($room_reservation["peak_rate"]) . '</span></td>
-                                                                <td style="text-align: center;"><span>' . $room_reservation["quantity"] . '</span></td>
-                                                                <td style="text-align: center;"><span data-prefix>PHP </span><span>' . number_format($total_price, 2)  . '</span></td>
+                                                                <td class="tg-cly1" colspan="5">' . $room_reservation["type"] . ' (' . $room_quantity . ')</td>
+                                                                <td style="text-align: center;" class="tg-0lax" colspan="5">' . number_format($total_price, 2) . '</td>
                                                             </tr>
+                                                        
                                                         ';
+                                                        
+                                                        // echo '
+                                                        //     <tr>
+                                                        //         <td style="text-align: center;"><span>' . $room_reservation["type"] . '</span></td>
+                                                        //         <td style="text-align: center;">' . number_format($room_reservation["peak_rate"]) . '</span></td>
+                                                        //         <td style="text-align: center;"><span>' . $room_reservation["quantity"] . '</span></td>
+                                                        //         <td style="text-align: center;"><span data-prefix>PHP </span><span>' . number_format($total_price, 2)  . '</span></td>
+                                                        //     </tr>
+                                                        // ';
             
                                                         $overall_total_price += $total_price;
                                                     }
@@ -300,7 +316,7 @@ $departure_date = '';
 
                                                 <?php
 
-                                                $overall_total_price *= $nights_of_stay;
+                                                
                                                 
                                                 ?>
 
@@ -316,20 +332,30 @@ $departure_date = '';
                                                         $total_extra = $extra["price"] * $extra["quantity"];
                                                         $overall_total_extra += $total_extra;
 
-                                                        echo '
+                                                        $content_html .= '
+                                                        
                                                             <tr>
-                                                                <td style="text-align: center;"><span>' . $extra["description"] . '</span></td>
-                                                                <td style="text-align: center;">' . $extra["price"]  . '</span></td>
-                                                                <td style="text-align: center;"><span>' .  $extra["quantity"] . '</span></td>
-                                                                <td style="text-align: center;"><span data-prefix>PHP </span><span>' . number_format($total_extra, 2)  . '</span></td>
+                                                                <td class="tg-cly1" colspan="5">' . $extra["description"] . ' (' . $extra["quantity"] . ')</td>
+                                                                <td style="text-align: center;" class="tg-0lax" colspan="5">' . number_format($total_extra, 2) . '</td>
                                                             </tr>
+                                                        
                                                         ';
+
+                                                        // echo '
+                                                        //     <tr>
+                                                        //         <td style="text-align: center;"><span>' . $extra["description"] . '</span></td>
+                                                        //         <td style="text-align: center;">' . $extra["price"]  . '</span></td>
+                                                        //         <td style="text-align: center;"><span>' .  $extra["quantity"] . '</span></td>
+                                                        //         <td style="text-align: center;"><span data-prefix>PHP </span><span>' . number_format($total_extra, 2)  . '</span></td>
+                                                        //     </tr>
+                                                        // ';
 
                                                     }
 
                                                     $overall_total_price += $overall_total_extra;
                                                 }
                                                 
+                                                $overall_total_price *= $nights_of_stay;
                                                 ?>
 
                                                 <?php
@@ -343,14 +369,24 @@ $departure_date = '';
 
                                                         while($fees = mysqli_fetch_assoc($add_fees_result)) {
 
-                                                            echo'
+
+                                                            $content_html .= '
+                                                        
                                                                 <tr>
-                                                                    <td style="text-align: center;"><span>' . $fees["description"] . '</span></td>
-                                                                    <td style="text-align: center;">' . number_format($fees["price"] , 2) . '</span></td>
-                                                                    <td style="text-align: center;"><span>' .  $fees["quantity"] . '</span></td>
-                                                                    <td style="text-align: center;"><span data-prefix>PHP </span><span>' . number_format($total_extra, 2)  . '</span></td>
+                                                                    <td class="tg-cly1" colspan="5">' . $fees["description"] . ' (' . $fees["quantity"] . ')</td>
+                                                                    <td style="text-align: center;" class="tg-0lax" colspan="5">' . number_format($fees["price"], 2) . '</td>
                                                                 </tr>
+                                                            
                                                             ';
+
+                                                            // echo'
+                                                            //     <tr>
+                                                            //         <td style="text-align: center;"><span>' . $fees["description"] . '</span></td>
+                                                            //         <td style="text-align: center;">' . number_format($fees["price"] , 2) . '</span></td>
+                                                            //         <td style="text-align: center;"><span>' .  $fees["quantity"] . '</span></td>
+                                                            //         <td style="text-align: center;"><span data-prefix>PHP </span><span>' . number_format($total_extra, 2)  . '</span></td>
+                                                            //     </tr>
+                                                            // ';
 
                                                             $overall_total_price += $fees['amount'];
 
@@ -379,17 +415,27 @@ $departure_date = '';
                                                         } 
     
                                                         $change_to_percent = $discount['amount'] * 100;
-    
-                                                        echo'
-                                                            
+                                                        
+
+                                                        $content_html .= '
+                                                        
                                                             <tr>
-                                                                <td style="text-align: center;"><span>' . $discount["name"] . '</span></td>
-                                                                <td style="text-align: center;">' . $change_to_percent . ' %</span></td>
-                                                                <td style="text-align: center;"><span>' .  $discount["quantity"] . ' </span></td>
-                                                                <td style="text-align: center;">(<span data-prefix>PHP </span><span>' . number_format($discount_price, 2)  . '</span>)  </td>
+                                                                <td class="tg-cly1" colspan="5">' . $discount["name"] . ' (' . $change_to_percent . ')</td>
+                                                                <td style="text-align: center;" class="tg-0lax" colspan="5">(' . number_format($discount_price, 2) . ')</td>
                                                             </tr>
                                                         
                                                         ';
+
+                                                        // echo'
+                                                            
+                                                        //     <tr>
+                                                        //         <td style="text-align: center;"><span>' . $discount["name"] . '</span></td>
+                                                        //         <td style="text-align: center;">' . $change_to_percent . ' %</span></td>
+                                                        //         <td style="text-align: center;"><span>' .  $discount["quantity"] . ' </span></td>
+                                                        //         <td style="text-align: center;">(<span data-prefix>PHP </span><span>' . number_format($discount_price, 2)  . '</span>)  </td>
+                                                        //     </tr>
+                                                        
+                                                        // ';
                                                           
                                                     }
                                                 }
@@ -400,9 +446,14 @@ $departure_date = '';
                                         </table>
 
                                         <?php
-                                        
-                                        $net_amount = $overall_total_price - $discount_price;
-                                        
+
+                                        $overall_total_amount = $overall_total_price;
+                                        $vatable_amount = $overall_total_amount / 1.12;
+                                        $vat = $overall_total_amount - $vatable_amount;
+
+                                        $net_amount = $overall_total_amount - $discount_price;
+
+
                                         ?>
                                         
                                         <table class="balance">
@@ -414,14 +465,128 @@ $departure_date = '';
                                     </article>
                                    
                                 
+                                </div> -->
+
                                 </div>
 
-                            
+                                <div class="col-12">
+                                
+                                <div style="width: 100%; display: inline;">
+                                    <div style="width: 40%; float: left;">   
+                                        <style type="text/css">
+                                            .tg  {border-collapse:collapse;border-spacing:0;}
+                                            .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+                                            .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+                                            .tg .tg-cly1{text-align:left;vertical-align:middle}
+                                            .tg .tg-baqh{text-align:center;vertical-align:top}
+                                            .tg .tg-nrix{text-align:center;vertical-align:middle}
+                                            .tg .tg-0lax{text-align:left;vertical-align:top}
+                                        </style>
+                                        <table class="tg" style="width: 100%;">
+                                            <tr>
+                                                <th class="tg-nrix" colspan="10">In Settlement of the following:</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="tg-nrix" colspan="5">PARTICULARS</td>
+                                                <td class="tg-baqh" colspan="5">AMOUNT</td>
+                                            </tr>
+                                            <?php
+
+                                            echo $content_html;
+                                            
+                                            ?>
+                                            <tr>
+                                                <td class="tg-0lax" colspan="5">VATABLE SALES</td>
+                                                <td style="text-align: center;" class="tg-0lax" colspan="5"><? echo number_format($overall_total_amount, 2) ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tg-0lax" colspan="5">VAT-EXEMPT SALES</td>
+                                                <td style="text-align: center;" class="tg-0lax" colspan="5"><? echo number_format($vatable_amount, 2) ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tg-0lax" colspan="5">ZERO RATED SALES</td>
+                                                <td style="text-align: center;" style="text-align: center;" class="tg-0lax" colspan="5"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tg-0lax" colspan="5">VAT Amount</td>
+                                                <td style="text-align: center;" class="tg-0lax" colspan="5"><? echo number_format($vat, 2) ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tg-0lax" colspan="5">TOTAL AMOUNT DUE</td>
+                                                <td style="text-align: center;" class="tg-0lax" colspan="5"><? echo number_format($net_amount, 2) ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tg-0lax" colspan="5"><span style="font-weight:bold">Form of Payment</span></td>
+                                                <td class="tg-baqh" colspan="5"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tg-0lax" colspan="10">CASH ______ CHECK ______<br></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tg-0lax" colspan="10">BANK  _____________ DATE _______</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div style="width: 57%;  float: right; margin-left: 15px; font-family: Arial;">
+
+                                        <h3 style="text-align: center;">CORALVIEW BEACH RESORT</h3>         
+                                        <h5 style="text-align: center;">OWNED AND OPERATED BY: CJ MORONG INC.</h5>
+                                        <h6 style="text-align: center;">Sitio Panibatuhan, Poblacion, Morong, Bataan</h6>
+                                        <h6 style="text-align: center;">VAT Reg. TIN 008-854-530-000</h6>
+
+
+                                        <div >
+                                            <h6 style="text-align: right;">NO: <u><? echo $reference_no; ?></u> </h6>
+                                            <h6 style="text-align: right;">Date: <u><? echo date("F m, Y h:i:s A"); ?></u></h6>
+                                        </div>
+                                        
+                                        <div style="display: block;">
+                                            <h3>Official Receipt</h3>
+                                        </div>
+
+                                        <div style="display: block;">
+                                            <h6>Received from <b><u><?php echo $full_name;?></u></b> With TIN _____ </h6>
+                                            <h6>and Address at  <b><u><?php echo $address; ?></u></b> </h6>
+                                            <h6>engaged in the business style of _____ </h6>
+                                            <h6>the sum of <b><u><?php echo number_format($net_amount, 2); ?></u></b> pesos </h6>
+                                            <h6>(P <b><u><?php echo number_format($net_amount, 2); ?></u></b> ) in partial / full payment for _____ </h6>
+                                            <br>
+                                            <span>RDO 20 OCN 4AU0001460621</span><br>
+                                            <span>100 Bkits. 50x2 000001-005000</span><br>
+                                            <span>Date Issued: 02-27-2015</span><br>
+                                            <span>Valid Until: 02-26-2020</span><br>
+                                        </div>
+
+                                        <div style="display: block; float: right; margin-left: 40%;">
+                                            <h6>BY: ________________________________</h6>
+                                            <span style="text-align: center;">Cashier/Authorized Representative</span>
+                                            <br>
+                                            <span>THIS OFFICIAL RECEIPT SHALL BE VALID FOR</span>
+                                            <br>
+                                            <span>FIVE (5) YEARS FROM DATE OF ATP</span>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+
+
+                                
+                                </div>
+
+
+
                         
                             </div>
                         </div>
 
-                        <button type="submit"  class="btn btn-info btn-block float-right">Generate Receipt</button>
+                        <div class="col">
+                            <button type="submit" class="btn btn-info btn-block float-right">Generate Receipt</button>
+                        </div>
+                        
 
 
                     </div>

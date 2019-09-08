@@ -187,7 +187,7 @@ $nights_of_stay = 0;
                                                 $overall_total_price += $total_price;
                                             }
                                             
-                                            $overall_total_price *= $nights_of_stay;
+                                            // $overall_total_price *= $nights_of_stay;
 
                                             echo '</table>';
                                         }

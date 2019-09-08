@@ -268,16 +268,27 @@ $(document).ready(function(){
 
         $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection, stepPosition) { 
             
+            console.log(stepDirection)
+            console.log(stepPosition)
+
             if(stepNumber === 1) {
                 document.querySelector('.sw-btn-next').disabled = true;
             } else if(stepNumber === 2) {
-                document.querySelector('.sw-btn-next').disabled = false;
-            } else if(stepNumber === 3) {
+                // document.querySelector('.sw-btn-next').disabled = false;
                 document.querySelector('.sw-btn-next').style.display = 'none';
                 document.querySelector('.sw-btn-prev').style.display = 'block';
             } else if(stepNumber === 0) {
                 
-                document.querySelector('.sw-btn-next').disabled = true;
+                // document.querySelector('.sw-btn-next').disabled = true;
+
+                if(document.body.contains(document.querySelector('.sw-btn-prev'))) {
+                    document.querySelector('.sw-btn-prev').style.display = 'none';
+                    document.querySelector('.sw-btn-next').style.display = 'block';
+                    document.querySelector('.sw-btn-next').disabled = true;
+                } else {
+                    document.querySelector('.sw-btn-next').disabled = true;
+                }
+
             }
 
         });

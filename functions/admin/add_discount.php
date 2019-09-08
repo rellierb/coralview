@@ -27,9 +27,9 @@ if(mysqli_num_rows($select_discount_result) > 0) {
     $update_discount_id_result = mysqli_query($db, $update_discount_id_query);
 
     if($update_discount_id_result) {
-        echo "SUCCESS";
+        echo "UPDATE SUCCESS";
     } else {
-        echo "FAILED";
+        echo "UPDATE FAILED";
     }
     
 } else {
@@ -39,9 +39,9 @@ if(mysqli_num_rows($select_discount_result) > 0) {
     $discount_add_result = mysqli_query($db, $discount_add_query);
 
     if($discount_add_result) {
-        echo "SUCCESS";
+        echo "INSERT SUCCESS";
     } else {
-        echo "FAILED";
+        echo "INSERT FAILED";
     }
 
 }

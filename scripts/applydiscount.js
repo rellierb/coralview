@@ -20,21 +20,27 @@ if(document.body.contains(document.getElementById('btnApplyDiscount'))) {
             let quantity = element.value;
             let referenceCode = document.getElementById('referenceCode').innerText;
             
-            $.ajax({
-                type: 'POST',
-                url: '/coralview/functions/admin/add_discount.php',
-                data: {reference_no: JSON.stringify(referenceCode), discount_id: JSON.stringify(discountId), quantity: JSON.stringify(quantity) },
-                success: function(data) {
-                    if(data == 'SUCCESS') {
-                        toastr.success('Discount successfully applied');
-                        location.reload();
+
+            if(quantity !== '' && quantity !== 0) {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/coralview/functions/admin/add_discount.php',
+                    data: {reference_no: JSON.stringify(referenceCode), discount_id: JSON.stringify(discountId), quantity: JSON.stringify(quantity) },
+                    success: function(data) {
+                        if(data == 'UPDATE SUCCESS' || data == 'INSERT SUCCESS') {
+                            toastr.success('Discount successfully applied');
+                            location.reload();
+                        }
+                    },
+                    error: function(data) {
+                        console.log(data);
                     }
-                    
-                },
-                error: function(data) {
-                    console.log(data);
-                }
-            })
+                })
+
+            }
+
+            
 
         }
 

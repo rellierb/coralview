@@ -189,7 +189,6 @@ $nights_of_stay = 0;
 
                                                 $overall_total_price += $total_price;
                                             }
-                                            
 
                                             echo '</table>';
                                         }
@@ -274,8 +273,9 @@ $nights_of_stay = 0;
                                         echo '
                                             </table>
                                         ';
-
+                                        
                                         $overall_total_price += $overall_total_extra;
+
                                     } else {
                                         echo '<h2 class="text text-info text-center">No extras</h2>';
 
@@ -333,7 +333,7 @@ $nights_of_stay = 0;
 
                                 $overall_total_price *= $nights_of_stay;
                                 $overall_total_price += $add_fees_amount;
-                                
+
                                 ?>
 
                                 <?php
@@ -479,7 +479,6 @@ $nights_of_stay = 0;
                                 </div>
                             </div>
                             
-                            <br>
                             <br>
 
                             <div class="row">

@@ -10,9 +10,6 @@ use Mpdf\Mpdf;
 require('../assets/connection.php');
 require_once('../../composer/vendor/autoload.php');
 
-var_dump();
-var_dump(__DIR__);
-
 date_default_timezone_set("Asia/Manila");
 
 $user = $_SESSION['full_name'];

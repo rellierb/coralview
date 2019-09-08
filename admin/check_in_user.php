@@ -204,6 +204,44 @@ $nights_of_stay = 0;
                                         <div class="col-4">
                                             <h5 class="text-center">Room Assignment</h5>
                                             <hr />
+                                            <h6>Room Count</h6>
+                                            <br>
+                                            <?php
+                                            
+                                            echo '<table class="table table-striped">
+                                                <tr>
+                                                    <th scope="col">ROOM NAME</th>
+                                                    <th scope="col">COUNT</th>
+                                                <tr>
+                                            ';
+
+                                            foreach($rooms_reserved as $k => $v) {
+                                                $assign_room_query = "SELECT COUNT(R.Id), R.type FROM rooms_status RS INNER JOIN rooms R ON R.Id = RS.room_id WHERE RS.room_id = $k AND RS.status='AVAILABLE' ORDER BY R.Id";
+                                                $assign_room_result = mysqli_query($db, $assign_room_query);
+
+
+                                                if(mysqli_num_rows($assign_room_result) > 0) {
+                                                    while($room_assign = mysqli_fetch_assoc($assign_room_result)) {
+
+                                                        echo '
+                                                            
+                                                            <tr>
+                                                                <td>' . $room_assign["type"] . '</td>
+                                                                <td>' . $room_assign["COUNT(R.Id)"] . '</td> 
+                                                            </tr>
+                                                        
+                                                        '; 
+
+                                                    }
+                                                }
+
+                                            }
+
+                                            echo '</table>';
+                                            
+                                            ?>
+
+                                            <hr />
                                             <h6>List of Available Rooms</h6>
                                             <br>
                         
@@ -408,9 +446,11 @@ $nights_of_stay = 0;
 
 
                                             <?php
-                                                $overall_total_price *= $nights_of_stay;
+                                            
+                                            $overall_total_price *= $nights_of_stay;
                                             
                                             ?>
+
                                             <?php
                                             
                                             $check_discount_query = "SELECT * FROM billing_discount BD INNER JOIN discount D on BD.discount_id=D.Id  WHERE BD.reference_no='$reference_no'";
@@ -455,6 +495,7 @@ $nights_of_stay = 0;
                                             $billing_query = "SELECT * FROM billing WHERE reference_no='$reference_no'";
                                             $billing_result = mysqli_query($db, $billing_query);
                                             $balance = $overall_total_price;
+
                                             // echo $balance;
                                             if(mysqli_num_rows($billing_result) > 0) {
                                             
@@ -491,7 +532,6 @@ $nights_of_stay = 0;
                                             
                                             $discount_applied = '</table>';
                                             $discounted_price = $balance - $discount_price;
-
 
                                             // DOWNPAYMENT
                                             $check_down_payment = "SELECT * FROM downpayment WHERE reference_no='$reference_no'";

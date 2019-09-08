@@ -28,6 +28,7 @@ $(document).ready(function() {
                             success: function(data) {
                                 
                                 toastr.success('Additional Extras successfully entered');
+
                                 setTimeout(function() {
                                     location.reload();
                                 }, 3000);

@@ -95,8 +95,7 @@ $db = connect_to_db();
                                                 ';
                                                 
                                                 if($reservation_status == 'FOR CHECK IN') {
-                                                    echo '<a style="width: 48%; display: inline-block;" href="check_in_user.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-info">Check-in</a>';
-                                                    echo '<a style="width: 47%;' . $hide_class . '" href="cancel.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-warning ml-1">Cancel</a>';
+                                                    echo '<a style="width: 98%;' . $hide_class . '" href="cancel.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-warning ml-1">Cancel</a>';
                                                 } else if ($reservation_status == 'CANCELLED') {
                                                     echo ' <a style="width: 98%; display: inline-block;" href="view.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-info btn-block">View</a>';
                                                 } else if ($reservation_status == 'CHECKED IN') { 
@@ -110,6 +109,8 @@ $db = connect_to_db();
                                                     echo '<a style="width: 98%;' . $hide_class . '" href="view.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-block btn-primary">View</a>';
                                                 } else if($reservation_status == 'FOR CHECK OUT') {
                                                     echo ' <a style="width: 98%; display: inline-block;" href="check_out_user.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-info btn-block">Check-out</a>';
+                                                } else if($reservation_status == 'REJECTED') {
+                                                    echo ' <a style="width: 98%; display: inline-block;" href="view.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-info btn-block">View</a>';
                                                 }
 
                                                 echo '
