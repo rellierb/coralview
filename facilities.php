@@ -38,8 +38,8 @@ include('common/navbar.php');
                                 <h4 class="title text-center coralview-blue">Multipurpose Hall</h4>
                             </div>
                             <div>
-                                <img style="border-radius: 0px;" class="img-no-padding img-responsive" src="/coralview/assets/images/facilities-5.jpeg">
-                                <h4 class="title text-center coralview-blue">Bonfire</h4>             
+                                <img style="border-radius: 0px;" class="img-no-padding img-responsive" src="/coralview/assets/images/facilities-10.jpeg">
+                                <h4 class="title text-center coralview-blue">Kids Play Area</h4>
                             </div>
                             <div>
                                 <img style="border-radius: 0px;" class="img-no-padding img-responsive" src="/coralview/assets/images/facilities-6.jpeg">
@@ -63,28 +63,17 @@ include('common/navbar.php');
 
                     </div>
 
-                    <div class="row mb-5">
-                        <div class="col-6">
-                            <div>
-                                <img style="border-radius: 0px;" class="img-no-padding img-responsive" src="/coralview/assets/images/facilities-10.jpeg">
-                                <h4 class="title text-center coralview-blue">Kids Play Area</h4>
-                            </div>
-                        </div>
+                    <div class="row mb-5 justify-content-center">
                         <div class="col-6">
                             <div>
                                 <img style="border-radius: 0px;" class="img-no-padding img-responsive" src="/coralview/assets/images/facilities-7.jpeg">
                                 <h4 class="title text-center coralview-blue">Full service restaurant and snack bar</h4>
                             </div>
                         </div>
-
                     </div>
 
                     </div>
                 </div>
-
-
-
-                
 
             </div>
 

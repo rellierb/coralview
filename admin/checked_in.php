@@ -17,6 +17,7 @@ $overall_total_price = 0;
 $overall_total_extra = 0;
 $payment_type = '';
 $nights_of_stay = 0;
+$reservation_id = 0;
 
 ?>
 
@@ -74,6 +75,7 @@ $nights_of_stay = 0;
                                         ';
 
                                         while($reservation = mysqli_fetch_assoc($reservation_details_result)) {
+                                            $reservation_id = $reservation["id"];
 
                                             $dateDiff = date_diff(date_create($reservation["check_in_date"]), date_create($reservation["check_out_date"]));
                                             $diff = $dateDiff->format('%d');
@@ -190,6 +192,8 @@ $nights_of_stay = 0;
 
                                 <div class="col-12">
                                     <br>
+                                    
+
                                     <h5 class="text-center mt-3 text-info">ASSIGNED ROOM/S</h5>
                                     
                                     <?php
@@ -213,7 +217,7 @@ $nights_of_stay = 0;
                                             echo '
                                             <tr> 
                                                 <td class="text-center">' . $assigned_room['room_number'] . '</td>
-                                                <td class="text-center">' . $assigned_room['type'] . '</td>       
+                                                <td class="text-center">' . $assigned_room['type'] . '</td>              
                                             </tr>
                                             ';
                                         }

@@ -7,6 +7,19 @@ require('functions/assets/connection.php');
 
 $db = connect_to_db();
 
+$off_peak_date_start_1 = date("F d, Y", strtotime("01/02/2019"));
+$off_peak_date_end_1 = date("F d, Y", strtotime("03/11/2019"));
+
+$off_peak_date_start_2 = date("F d, Y", strtotime("07/18/2019"));
+$off_peak_date_end_2 = date("F d, Y", strtotime("11/19/2019"));
+
+$peak_date_start_1 = date("F d, Y", strtotime("03/12/2019"));
+$peak_date_end_1 = date("F d, Y", strtotime("07/17/2019"));
+
+$peak_date_start_2 = date("F d, Y", strtotime("11/20/2019"));
+$peak_date_end_2 = date("F d, Y", strtotime("01/01/2020"));
+
+
 ?>
 
 <div class="container">
@@ -16,6 +29,22 @@ $db = connect_to_db();
 
             <div>
                 <h2 class="text-center coralview-orange mt-5 mb-5">Rooms</h2>
+                <hr>
+                
+                <table class="table table-bordered">
+                    <tr>
+                        <th class="text-center">OFF-PEAK DATES</th>
+                        <td class="text-center"><?php echo $off_peak_date_start_1 . ' - ' . $off_peak_date_end_1; ?></td>
+                        <td class="text-center"><?php echo $off_peak_date_start_2 . ' - ' . $off_peak_date_end_2; ?></td>                    
+                    </tr>
+                    <tr>
+                        <th class="text-center">PEAK DATES</th>
+                        <td class="text-center"><?php echo $peak_date_start_1 . ' - ' . $peak_date_end_1; ?></td>
+                        <td class="text-center"><?php echo $peak_date_start_2 . ' - ' . $peak_date_end_2; ?></td>                    
+                    </tr>
+                </table>
+                
+
                 <hr>
                 <div class="mt-5">
 

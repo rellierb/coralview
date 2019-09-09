@@ -24,7 +24,7 @@
           <a class="nav-link" style="font-family: 'Montserrat'; font-size: 1em; color: #47A9DF;" href="contact_us.php">Contact Us</a>
         </li>
         <li class="nav-item nav-li">
-          <a class="btn btn-primary" href="reserve.php" style="font-family: 'Montserrat'; font-size: 1em; background-color: #F7CF32; color: #47A9DF;" href="reserve.php">BOOK ONLINE</a>
+          <a class="btn btn-primary animated bounce" href="reserve.php" style="font-family: 'Montserrat'; font-size: 1em; background-color: #F7CF32; color: #47A9DF;" href="reserve.php">BOOK ONLINE</a>
         </li>
         <li class="nav-item nav-li">
           <a class="nav-link" style="font-family: 'Montserrat'; font-size: 1em; color: #47A9DF;" href="account.php">Account</a>

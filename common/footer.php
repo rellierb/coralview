@@ -22,6 +22,7 @@
     <script src="/coralview/scripts/dlcheckinvoucher.js"></script>
     <script src="/coralview/scripts/googlemaps.js"></script>
     <script src="/coralview/scripts/initdatepicker.js"></script>
+    <script src="/coralview/scripts/upgraderoom.js"></script>
     
     <script type="text/javascript">
 

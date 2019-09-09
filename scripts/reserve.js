@@ -33,7 +33,7 @@ $(document).ready(function(){
         
         let arrivalDateMinDate;
         if(windowUrl.indexOf('reserve.ph') > 0) {
-            arrivalDateMinDate = datePlusTwoDate(arrivalDateData.currentDate);
+            arrivalDateMinDate = datePlusTwoThree(arrivalDateData.currentDate);
         } else {
             arrivalDateMinDate = arrivalDateData.currentDate;
         }
@@ -205,7 +205,6 @@ $(document).ready(function(){
                     if(roomAndCountStorage !== null) {
                         
                         var parsedStorage = JSON.parse(roomAndCountStorage);
-                        
                          
                         for(var x = 0; x < parsedStorage.length; x++) {
                             
@@ -224,6 +223,8 @@ $(document).ready(function(){
                             success: function(data) {
                                 toastr.success('Room successfully selected!');            
                                 disableNextButton();
+                                attachRemoveButton(roomId);
+
                             },
                             error: function(data) {
                                 console.log(data);
@@ -234,7 +235,7 @@ $(document).ready(function(){
                         
                     } else {
                         toastr.success('Room successfully selected!');            
-                                
+                        attachRemoveButton(roomId);
                         localStorage.setItem('roomsAndCountReserved', JSON.stringify(toStore));
                         disableNextButton();
                         inputRoomsReserved.value = JSON.stringify(toStore);
@@ -490,6 +491,16 @@ function datePlusTwoDate(date) {
     return returnDate;
 }
 
+function datePlusTwoThree(date) {
+    
+    let tempDate = date;
+    let newDate = new Date(tempDate);
+    let minDepartureDate = newDate.setDate(tempDate.getDate() + 3);
+    let returnDate = new Date(minDepartureDate);
+    
+    return returnDate;
+}
+
 function showRoomsBasedOnCapacity(capacity) {
 
     $.ajax({
@@ -507,7 +518,7 @@ function showRoomsBasedOnCapacity(capacity) {
 }
 
 function attachRoomList(list) {
-
+    
     let parseList = JSON.parse(list);
     let html = '';
     let isOffPeakClass = '';
@@ -559,6 +570,11 @@ function attachRoomList(list) {
         html += `
                         </select>
                     <a href="#" data-room-select="${parseList[i]["room_id"]}" class="btn btn-primary btn-block mt-3">Select</a>
+                    <div data-room-remove="${parseList[i]["room_id"]}">
+
+
+                    
+                    </div>
                     </div>
                 </div>
             </div>
@@ -596,7 +612,6 @@ function attachRoomList(list) {
                         
                         var parsedStorage = JSON.parse(roomAndCountStorage);
                         
-                         
                         for(var x = 0; x < parsedStorage.length; x++) {
                             
                             if(parsedStorage[x].roomId === objToPush.roomId) {
@@ -614,6 +629,7 @@ function attachRoomList(list) {
                             success: function(data) {
                                 toastr.success('Room successfully selected!');            
                                 disableNextButton();
+                                // attachRemoveButton(roomId);
                             },
                             error: function(data) {
                                 console.log(data);
@@ -624,7 +640,7 @@ function attachRoomList(list) {
                         
                     } else {
                         toastr.success('Room successfully selected!');            
-                                
+                        // attachRemoveButton(roomId);        
                         localStorage.setItem('roomsAndCountReserved', JSON.stringify(toStore));
                         disableNextButton();
                         inputRoomsReserved.value = JSON.stringify(toStore);
@@ -634,6 +650,59 @@ function attachRoomList(list) {
                 }
             });
         }
+
+}
+
+
+function attachRemoveButton(roomId) {
+
+    let id = roomId;
+
+    let divToAttach = document.querySelector('div[data-room-remove*="' + id + '"]');
+
+    let buttonToAttach = '<button type="button" class="btn btn-danger btn-block" data-remove-button="' + roomId +'">Remove</button>';
+
+    divToAttach.innerHTML = buttonToAttach;
+
+    let removeBtn = document.querySelectorAll('button[data-remove-button*="' + roomId + '"]');
+
+    for(let i = 0; i < removeBtn.length; i++) {
+
+        let element = removeBtn[i];
+
+        element.addEventListener('click', function() {
+
+            let el = this;
+
+            let roomsReserved = localStorage.getItem('roomsAndCountReserved');
+
+            let parsedRoomsReserved = JSON.parse(roomsReserved);
+
+            for(let j = 0; j < parsedRoomsReserved.length; j++) {
+                
+                let roomReserved = parsedRoomsReserved[j];
+                
+                let roomToRemoved = roomReserved.roomId; 
+
+                if(roomToRemoved === roomId) {
+                    parsedRoomsReserved.splice(j, 1);
+                }
+
+            }
+
+            if(parsedRoomsReserved.length !== 0) {
+                localStorage.setItem('roomsAndCountReserved', JSON.stringify(parsedRoomsReserved));
+            } 
+            
+            divToAttach.innerHTML = '';
+            toastr.info('Room successfully removed');
+
+
+        })
+
+    }    
+
+
 
 }
 

@@ -17,6 +17,7 @@ $overall_total_price = 0;
 $guest_number = 0;
 $payment_type = '';
 $nights_of_stay = 0;
+$reservation_id = 0;
 
 ?>
 
@@ -77,7 +78,7 @@ $nights_of_stay = 0;
                                         ';
 
                                         while($reservation = mysqli_fetch_assoc($reservation_details_result)) {
-
+                                            $reservation_id = $reservation["id"];
                                             $dateDiff = date_diff(date_create($reservation["check_in_date"]), date_create($reservation["check_out_date"]));
                                             $diff = $dateDiff->format('%d');
                                             $nights_of_stay = $diff;
@@ -138,8 +139,12 @@ $nights_of_stay = 0;
 
                                     ?>
 
+                                    <div class="float-right">
+                                        <button type="button" data-toggle="modal" data-target="#upgradeRoom" style="color-white" class="btn btn-primary">Upgrade Rooms</button>
+                                    </div>
+
                                     <h5 class="text-center mt-3 text-info">ROOM DETAILS</h5>
-                                    
+
                                     <div class="row">
                                       
                                         <div class="col-8">
@@ -183,7 +188,7 @@ $nights_of_stay = 0;
                                                     $total_price = $room_reservation["peak_rate"] * $room_reservation["quantity"];
 
                                                     echo '
-                                                        <tr>overall_total_price
+                                                        <tr>
                                                             <td class="text-center" style="width: 55%;">' . $room_reservation["type"] . '</td>
                                                             <td class="text-center" style="width: 15%;">' . $room_reservation["quantity"] . '</td>
                                                             <td class="text-center" style="width: 15%;">' . number_format($room_reservation["peak_rate"]) . '</td>
@@ -594,8 +599,8 @@ $nights_of_stay = 0;
                                 <div class="col">
 
                                     <?php
-                                    
-                                    if($discounted_price != 0) {
+                                    echo $discounted_price;
+                                    if($discounted_price != 0 || $discounted_price < 0) {
                                         $disabled = "disabled";
                                     } else {
                                         $disabled = '';
@@ -623,6 +628,7 @@ $nights_of_stay = 0;
 
 <?php
 
+include('../common/upgrade_room_modal.php');
 include('../common/footer.php');
 unset($_SESSION["alert"]);
 unset($_SESSION["msg"]);

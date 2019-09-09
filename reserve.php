@@ -162,6 +162,9 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today >= $off_peak_date_st
                                                 echo '
                                                             </select>
                                                             <a href="#" data-room-select="' . $room['room_id'] . '" class="btn btn-primary btn-block mt-3">Select</a>
+                                                            <div data-room-remove="' . $room['room_id'] . '">
+                                                                
+                                                            </div>
                                                             </div>
                                                         </div>
                                                     </div>
