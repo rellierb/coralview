@@ -204,11 +204,16 @@ $reservation_id = 0;
                                             }
                                             ?>
                                         
+                                            
+
                                         </div>
 
                                         <div class="col-4">
                                             <h5 class="text-center">Room Assignment</h5>
                                             <hr />
+
+                                         
+
                                             <h6>Room Count</h6>
                                             <br>
                                             <?php
@@ -246,6 +251,32 @@ $reservation_id = 0;
                                             
                                             ?>
 
+
+                                            <?php
+                                            
+                                            if(!empty($_SESSION["save_rooms"])) {
+
+                                                echo '<h6>Saved Rooms</h6>';
+                                                echo '<br>';
+                                                echo '<table class="table table-bordered">';
+                                                echo '<tr><th>Room Name</th></tr>';
+                                                foreach($_SESSION["save_rooms"] as $room) {
+
+                                                    echo '
+                                                        
+                                                        <tr><td>' . $room . '</td></tr>
+                                                    
+                                                    ';
+
+                                                }
+                                                echo '</table>';
+
+                                            }
+
+                                            ?>
+
+
+
                                             <hr />
                                             <h6>List of Available Rooms</h6>
                                             <br>
@@ -253,7 +284,7 @@ $reservation_id = 0;
                                             <?php
                                             
                                             $html_assign = "";
-                                            
+                                           
                                             foreach($rooms_reserved as $k => $v) {
                                                 $assign_room_query = "SELECT * FROM rooms_status RS INNER JOIN rooms R ON R.Id = RS.room_id WHERE RS.room_id = $k AND RS.status='AVAILABLE'";
                                                 $assign_room_result = mysqli_query($db, $assign_room_query);
@@ -265,12 +296,13 @@ $reservation_id = 0;
 
                                                             <div class="form-check">
                                                                 <label class="form-check-label">
-                                                                    <input class="form-check-input" name="room_number[]" type="checkbox" value="' . $room_assign["room_number"] . '">                                      
+                                                                    <input class="form-check-input" data-room-id="' . $room_assign["room_number"] . '" name="room_number[]" type="checkbox" value="' . $room_assign["room_number"] . '">                                      
                                                                     <span class="form-check-sign">
                                                                         <span class="check">' . $room_assign["room_number"] . ' - ' . $room_assign["type"] . ' -  <span class="badge badge-success">'. $room_assign["status"] .  '</span>
                                                                     </span>
                                                                 </label>
                                                             </div>
+                                                            
 
                                                         ';
 
@@ -280,6 +312,8 @@ $reservation_id = 0;
                                             }
                                             
                                             echo $html_assign;
+                                            
+                                            echo '<button type="button" class="btn btn-primary float-right" id="saveCheckIn" >Save</button>';
                                             
                                             ?>
 
@@ -356,7 +390,7 @@ $reservation_id = 0;
                                                              
                                                 } 
 
-                                                $overall_total_price += $expense_total;
+                                                // $overall_total_price += $expense_total;
 
                                                 echo '</table>';
                                             }else {
@@ -562,8 +596,12 @@ $reservation_id = 0;
                                                         <td class="text-center">' . $payment_type .  '</td>
                                                     </tr>
                                                     <tr>
-                                                        <th scope="col" class="text-center">TOTAL AMOUNT (ROOMS & EXTRAS)</th>
+                                                        <th scope="col" class="text-center">TOTAL AMOUNT (ROOMS)</th>
                                                         <td class="text-center">' . number_format($overall_total_price, 2)  .  '</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="col" class="text-center">TOTAL AMOUNT (EXTRAS)</th>
+                                                        <td class="text-center">' . number_format($expense_total, 2)  .  '</td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="col" class="text-center">DOWNPAYMENT</th>
@@ -599,7 +637,7 @@ $reservation_id = 0;
                                 <div class="col">
 
                                     <?php
-                                    echo $discounted_price;
+                                    
                                     if($discounted_price != 0 || $discounted_price < 0) {
                                         $disabled = "disabled";
                                     } else {

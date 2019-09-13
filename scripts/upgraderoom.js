@@ -5,7 +5,7 @@ let upgradeButton = document.querySelectorAll('button[data-upgrade-button]');
 for(let i = 0; i < upgradeButton.length; i++) {
 
     let button = upgradeButton[i];
-    console.log(button);
+    
     button.addEventListener('click', function(el) {
 
         let element = this;

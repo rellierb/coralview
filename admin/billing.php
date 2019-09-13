@@ -23,6 +23,7 @@ $nights_of_stay = 0;
 $arrival_date = '';
 $departure_date = '';
 
+$TOTAL_PRICE = 0;
 
 $content_html = '';
 
@@ -308,6 +309,8 @@ $content_html = '';
                                                         // ';
             
                                                         $overall_total_price += $total_price;
+                                                        $TOTAL_PRICE += $total_price;
+
                                                     }
                                                     
                                                 }
@@ -316,7 +319,8 @@ $content_html = '';
 
                                                 <?php
 
-                                                
+                                                $overall_total_price *= $nights_of_stay;
+                                                $TOTAL_PRICE *= $nights_of_stay;
                                                 
                                                 ?>
 
@@ -352,10 +356,14 @@ $content_html = '';
 
                                                     }
 
-                                                    $overall_total_price += $overall_total_extra;
+                                                    // $overall_total_price += $overall_total_extra;
+                                                    $TOTAL_PRICE += $overall_total_extra;
                                                 }
                                                 
-                                                $overall_total_price *= $nights_of_stay;
+                                                
+                                                // $overall_total_price *= $nights_of_stay;
+                                                
+
                                                 ?>
 
                                                 <?php
@@ -373,8 +381,8 @@ $content_html = '';
                                                             $content_html .= '
                                                         
                                                                 <tr>
-                                                                    <td class="tg-cly1" colspan="5">' . $fees["description"] . ' (' . $fees["quantity"] . ')</td>
-                                                                    <td style="text-align: center;" class="tg-0lax" colspan="5">' . number_format($fees["price"], 2) . '</td>
+                                                                    <td class="tg-cly1" colspan="5">' . $fees["description"] . '</td>
+                                                                    <td style="text-align: center;" class="tg-0lax" colspan="5">' . number_format($fees["amount"], 2) . '</td>
                                                                 </tr>
                                                             
                                                             ';
@@ -388,7 +396,7 @@ $content_html = '';
                                                             //     </tr>
                                                             // ';
 
-                                                            $overall_total_price += $fees['amount'];
+                                                            $TOTAL_PRICE += $fees['amount'];
 
                                                         }
 
@@ -447,7 +455,7 @@ $content_html = '';
 
                                         <?php
 
-                                        $overall_total_amount = $overall_total_price;
+                                        $overall_total_amount = $TOTAL_PRICE;
                                         $vatable_amount = $overall_total_amount / 1.12;
                                         $vat = $overall_total_amount - $vatable_amount;
 
@@ -497,7 +505,7 @@ $content_html = '';
                                             ?>
                                             <tr>
                                                 <td class="tg-0lax" colspan="5">VATABLE SALES</td>
-                                                <td style="text-align: center;" class="tg-0lax" colspan="5"><? echo number_format($overall_total_amount, 2) ?></td>
+                                                <td style="text-align: center;" class="tg-0lax" colspan="5"><? echo number_format($TOTAL_PRICE, 2) ?></td>
                                             </tr>
                                             <tr>
                                                 <td class="tg-0lax" colspan="5">VAT-EXEMPT SALES</td>
@@ -546,7 +554,7 @@ $content_html = '';
                                         </div>
 
                                         <div style="display: block;">
-                                            <h6>Received from <b><u><?php echo $full_name;?></u></b> With TIN _____ </h6>
+                                            <h6>Received from <span style="width: 50%:"><b><u><?php echo $full_name;?></u></b></span> With TIN _____ </h6>
                                             <h6>and Address at  <b><u><?php echo $address; ?></u></b> </h6>
                                             <h6>engaged in the business style of _____ </h6>
                                             <h6>the sum of <b><u><?php echo number_format($net_amount, 2); ?></u></b> pesos </h6>

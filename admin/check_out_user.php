@@ -18,6 +18,8 @@ $overall_total_extra = 0;
 $payment_type = '';
 $nights_of_stay = 0;
 
+$TOTAL_PRICE = 0;
+
 
 ?>
 
@@ -188,6 +190,7 @@ $nights_of_stay = 0;
                                                 ';
 
                                                 $overall_total_price += $total_price;
+                                                $TOTAL_PRICE += $total_price;
                                             }
 
                                             echo '</table>';
@@ -274,7 +277,7 @@ $nights_of_stay = 0;
                                             </table>
                                         ';
                                         
-                                        $overall_total_price += $overall_total_extra;
+                                        // $TOTAL_PRICE += $overall_total_extra;
 
                                     } else {
                                         echo '<h2 class="text text-info text-center">No extras</h2>';
@@ -332,7 +335,10 @@ $nights_of_stay = 0;
                                 <?php
 
                                 $overall_total_price *= $nights_of_stay;
-                                $overall_total_price += $add_fees_amount;
+                                $TOTAL_PRICE *= $nights_of_stay;
+                                
+                                $TOTAL_PRICE += $add_fees_amount;
+                                $TOTAL_PRICE += $overall_total_extra;
 
                                 ?>
 
@@ -362,7 +368,6 @@ $nights_of_stay = 0;
                                                 <td class="text-center">' . $discount['name'] . '</td>
                                                 <td class="text-center">' . $change_to_percent  . ' %</td>
                                             </tr>
-                                        
                                         ';
                                             
                                     }
@@ -376,7 +381,7 @@ $nights_of_stay = 0;
                             
                                 $billing_query = "SELECT * FROM billing WHERE reference_no='$reference_no'";
                                 $billing_result = mysqli_query($db, $billing_query);
-                                $balance = $overall_total_price;
+                                $balance = $TOTAL_PRICE;
                                 // echo $balance;
                                 if(mysqli_num_rows($billing_result) > 0) {
                                 
@@ -405,7 +410,7 @@ $nights_of_stay = 0;
                                     }
 
                                 }
-                                
+                                // $overall_total_price += $add_fees_amount;
                                 $discounted_price -= $downpayment_amount;
                                 
                                 echo '
@@ -415,8 +420,12 @@ $nights_of_stay = 0;
                                             <td class="text-center">' . $payment_type .  '</td>
                                         </tr>
                                         <tr>
-                                            <th scope="col" class="text-center">TOTAL AMOUNT (ROOMS & EXTRAS)</th>
+                                            <th scope="col" class="text-center">TOTAL AMOUNT (ROOMS)</th>
                                             <td class="text-center">' . number_format($overall_total_price, 2)  .  '</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col" class="text-center">TOTAL AMOUNT (EXTRAS)</th>
+                                            <td class="text-center">' . number_format($overall_total_extra, 2)  .  '</td>
                                         </tr>
                                         <tr>
                                             <th scope="col" class="text-center">DOWNPAYMENT</th>

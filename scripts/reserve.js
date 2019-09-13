@@ -153,8 +153,14 @@ $(document).ready(function(){
 
 
             } else if(childCount < 0) {
+
                 toastr.error('Invalid input on Kids Count');
-            } else {
+
+            } else if(childCount == 0 || childCount === '') {
+
+                toastr.error('Adult count is empty');
+
+            }else {
                 totalCount = childCount;
 
                 $.ajax({
@@ -216,6 +222,7 @@ $(document).ready(function(){
 
                         localStorage.setItem('roomsAndCountReserved', JSON.stringify(parsedStorage));
                         inputRoomsReserved.value = JSON.stringify(JSON.stringify(toStore));
+                        
                         $.ajax({
                             type: 'POST',
                             url: '/coralview/functions/user/store_room.php',
@@ -629,7 +636,7 @@ function attachRoomList(list) {
                             success: function(data) {
                                 toastr.success('Room successfully selected!');            
                                 disableNextButton();
-                                // attachRemoveButton(roomId);
+                                attachRemoveButton(roomId);
                             },
                             error: function(data) {
                                 console.log(data);
@@ -640,7 +647,7 @@ function attachRoomList(list) {
                         
                     } else {
                         toastr.success('Room successfully selected!');            
-                        // attachRemoveButton(roomId);        
+                        attachRemoveButton(roomId);        
                         localStorage.setItem('roomsAndCountReserved', JSON.stringify(toStore));
                         disableNextButton();
                         inputRoomsReserved.value = JSON.stringify(toStore);
@@ -692,7 +699,24 @@ function attachRemoveButton(roomId) {
 
             if(parsedRoomsReserved.length !== 0) {
                 localStorage.setItem('roomsAndCountReserved', JSON.stringify(parsedRoomsReserved));
-            } 
+                inputRoomsReserved.value = JSON.stringify(JSON.stringify(parsedRoomsReserved));
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/coralview/functions/user/store_room.php',
+                    data: {room_reserved: JSON.stringify(parsedRoomsReserved) },
+                    success: function(data) {
+                            
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                })
+
+                
+            } else {
+                localStorage.removeItem('roomsAndCountReserved');
+            }
             
             divToAttach.innerHTML = '';
             toastr.info('Room successfully removed');

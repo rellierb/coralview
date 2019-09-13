@@ -12,10 +12,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $reference_no = mysqli_real_escape_string($db, trim($_POST['reference_no']));
     }
 
-    if(!empty($_POST['room_number'])) {
+    if(!empty($_SESSION["save_rooms"])) {
 
-        foreach($_POST['room_number'] as $room_number) {
-            $update_room_query = "UPDATE rooms_status SET status='OCCUPIED' WHERE room_number='$room_number'";
+        foreach($_SESSION["save_rooms"] as $room_number) {
+            $update_room_query = "UPDATE rooms_status SET status='OCCUPIED' WHERE room_number=$room_number";
             $update_room_result = mysqli_query($db, $update_room_query);
 
             if(!$update_room_result) {
@@ -27,7 +27,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             } else {
 
-                $insert_check_in_query = "INSERT INTO check_in_rooms(reference_no, room_number) VALUES('$reference_no', '$room_number')";
+                $insert_check_in_query = "INSERT INTO check_in_rooms(reference_no, room_number) VALUES('$reference_no', $room_number)";
                 $insert_check_in_result = mysqli_query($db, $insert_check_in_query);
 
                 continue;
@@ -56,24 +56,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     }
 
-    // if(!empty($_POST['down_payment_amount'])) {
-    //     $amount_paid_by_client = mysqli_real_escape_string($db, trim($_POST['down_payment_amount']));
-    // }
-
-    // $amount_paid_query = "INSERT INTO billing(reference_no, amount_paid, total_amount, description, time_stamp) VALUES ('$reference_no', '$amount_paid_by_client', NULL, NULL, CURDATE())";
-    // $amount_paid_result = mysqli_query($db, $amount_paid_query);
-
-    // if($amount_paid_result) {
-
-    // } else {
-
-    //     $_SESSION['msg'] = "Payment cannot be processed";
-    //     $_SESSION['alert'] = "alert alert-danger"; 
-        
-    //     header("location: ../../admin/check_in_user.php?reference_no=$reference_no");
-
-    // }
-
-
+    unset($_SESSION["save_rooms"]);
 
 }

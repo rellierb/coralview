@@ -23,6 +23,35 @@ function generate_reference_no() {
     return $ref_number;
 }
 
+function check_peak_rate($date_reserved) {
+
+    $date = date("Y-m-d", strtotime($date_reserved));
+
+    $off_peak_date_start_1 = date("Y-m-d", strtotime("01/02/2019"));
+    $off_peak_date_end_1 = date("Y-m-d", strtotime("03/11/2019"));
+
+    $off_peak_date_start_2 = date("Y-m-d", strtotime("07/18/2019"));
+    $off_peak_date_end_2 = date("Y-m-d", strtotime("11/19/2019"));
+
+    $peak_date_start_1 = date("Y-m-d", strtotime("03/12/2019"));
+    $peak_date_end_1 = date("Y-m-d", strtotime("07/17/2019"));
+
+    $peak_date_start_2 = date("Y-m-d", strtotime("11/20/2019"));
+    $peak_date_end_2 = date("Y-m-d", strtotime("01/01/2020"));
+
+    $type_of_rate = "";
+    
+    if((($date >= $off_peak_date_start_1) && ($date <= $off_peak_date_end_1)) || (($date >= $off_peak_date_start_2) && ($date <= $off_peak_date_end_2))) {
+        $type_of_rate = 0;
+    } else if((($date >= $peak_date_start_1) && ($date <= $peak_date_end_1)) || (($date >= $peak_date_start_2) && ($date <= $peak_date_end_2))) {
+        $type_of_rate = 1;
+    }
+
+    return $type_of_rate;
+
+}
+
+
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     /* Guest Details */
@@ -51,18 +80,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $departure_date = mysqli_real_escape_string($db, trim($_POST['p_date_departure']));
         $adult_count = mysqli_real_escape_string($db, trim($_POST['p_adult_count']));
         $kids_count = mysqli_real_escape_string($db, trim($_POST['p_kids_count']));
-
         $no_of_days = mysqli_real_escape_string($db, trim($_POST['p_no_of_days']));
+        $is_peak_rate = check_peak_rate($arrival_date);
 
-        // p_total_amount
         $total_amount = mysqli_real_escape_string($db, trim($_POST['p_total_amount']));
 
         /* 
          * Insert RESERVATION details 
          */
 
-        $reservation_insert_query = "INSERT INTO reservation(guest_id, reference_no, status, payment, check_in_date, check_out_date, adult_count, kids_count, date_created)";
-        $reservation_insert_query .= " VALUES ('$guest_id', '$reference_no', 'PENDING', '$payment', STR_TO_DATE('$arrival_date', '%m/%d/%Y'), STR_TO_DATE('$departure_date', '%m/%d/%Y'), '$adult_count', '$kids_count', NOW())";
+        $reservation_insert_query = "INSERT INTO reservation(guest_id, reference_no, status, payment, check_in_date, check_out_date, adult_count, kids_count, is_peak_rate, date_created)";
+        $reservation_insert_query .= " VALUES ('$guest_id', '$reference_no', 'PENDING', '$payment', STR_TO_DATE('$arrival_date', '%m/%d/%Y'), STR_TO_DATE('$departure_date', '%m/%d/%Y'), '$adult_count', '$kids_count', $is_peak_rate, NOW())";
         $reservation_result = mysqli_query($db, $reservation_insert_query);
 
         if($reservation_result) {
@@ -209,7 +237,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     <div style="width: 100%;">
                         <h1>CORALVIEW BEACH RESORT</h1>
-                        <p>Thank you for booking with us! Please see details below for reference.</p>
+                        <p>Thank you for booking with us! Please see details below for reference and attached filed for the resort house rules.</p>
                         ' . $reservation_details . '
                         <br>
                         ' . $room_details . '
@@ -223,6 +251,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 echo $reservation_message;
 
+
+                  $attachment = "../../assets/files/house-rules.docx";
+
                 try {
                     $message = $reservation_message;
                     $mail->SMTPDebug = 1;
@@ -233,6 +264,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $mail->Password = 'Qwerty1234@1234';  // Fill this up
                     $mail->SMTPSecure = 'tls';
                     $mail->Port = 587;
+
+                    // add attachment
+                    $mail->addAttachment($attachment, 'House Rules.docx');
+
                     $mail->setFrom('coralviewthesis@gmail.com');
                     $mail->isHTML(true);
                     $mail->addAddress($email);

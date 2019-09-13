@@ -81,7 +81,7 @@ if(mysqli_num_rows($find_guest_id_result) > 0) {
                 $nights_of_stay = 0;
                 $overall_total_price = 0;
                 $overall_total_extra = 0;
-   
+                $TOTAL_PRICE = 0;
 
                 if($reservation_details_result) {
                     while($reservation = mysqli_fetch_assoc($reservation_details_result)) {
@@ -216,7 +216,8 @@ if(mysqli_num_rows($find_guest_id_result) > 0) {
                             </tr>
                         ';
 
-                        $overall_total_price += $total_price;
+                        $overall_total_price += $total_price; 
+                        $TOTAL_PRICE += $total_price; 
                     }
 
                 }
@@ -252,10 +253,12 @@ if(mysqli_num_rows($find_guest_id_result) > 0) {
 
                     }
                     
-                    $overall_total_price += $overall_total_extra;
+                    // $overall_total_price += $overall_total_extra;
                 }
                 
                 $overall_total_price *= $nights_of_stay;
+                $TOTAL_PRICE *= $nights_of_stay;
+                $TOTAL_PRICE += $overall_total_extra;
 
                 $add_fees_query = "SELECT * FROM billing_additional_fees WHERE reference_no='$reference_no'";
                 $add_fees_result = mysqli_query($db, $add_fees_query);
@@ -296,7 +299,7 @@ if(mysqli_num_rows($find_guest_id_result) > 0) {
                 }
 
                 
-                $overall_total_price += $add_fees_amount;
+                $TOTAL_PRICE += $add_fees_amount;
 
                 $check_discount_query = "SELECT * FROM billing_discount BD INNER JOIN discount D on BD.discount_id=D.Id  WHERE BD.reference_no='$reference_no'";
                 $check_discount_result = mysqli_query($db, $check_discount_query);
@@ -335,7 +338,7 @@ if(mysqli_num_rows($find_guest_id_result) > 0) {
               
                 $billing_query = "SELECT * FROM billing WHERE reference_no='$reference_no'";
                 $billing_result = mysqli_query($db, $billing_query);
-                $balance = $overall_total_price;
+                $balance = $TOTAL_PRICE;
             
                 if(mysqli_num_rows($billing_result) > 0) {
                 
@@ -366,7 +369,7 @@ if(mysqli_num_rows($find_guest_id_result) > 0) {
                 }
                 
                 $discounted_price -= $downpayment_amount;
-
+                
                 $html .= '
                         <tr>
                             <td class="tg-mqa1" colspan="15">OTHER DETAILS</td>
@@ -376,8 +379,12 @@ if(mysqli_num_rows($find_guest_id_result) > 0) {
                             <td class="tg-73oq" colspan="7" style="text-align: center;">' . $payment_type .  '</td>
                         </tr>
                         <tr>
-                            <td class="tg-73oq" colspan="8" style="text-align: center;">TOTAL AMOUNT (ROOMS & EXTRAS)</td>
+                            <td class="tg-73oq" colspan="8" style="text-align: center;">TOTAL AMOUNT (ROOMS)</td>
                             <td class="tg-73oq" colspan="7" style="text-align: center;">' . number_format($overall_total_price, 2)  .  '</td>
+                        </tr>
+                        <tr>
+                            <td class="tg-73oq" colspan="8" style="text-align: center;">TOTAL AMOUNT (EXTRAS)</td>
+                            <td class="tg-73oq" colspan="7" style="text-align: center;">' . number_format($overall_total_extra, 2)  .  '</td>
                         </tr>
                         <tr>
                             <td class="tg-73oq" colspan="8" style="text-align: center;">DOWNPAYMENT</td>
@@ -406,7 +413,10 @@ if(mysqli_num_rows($find_guest_id_result) > 0) {
                     </div>
                 ';
 
-               
+                                
+                $mpdf->WriteHTML($html);
+                $mpdf->Output('guests_reports.pdf', 'D');
+
             }
         
         } else {
@@ -420,15 +430,11 @@ if(mysqli_num_rows($find_guest_id_result) > 0) {
 } else {
 
     $_SESSION['msg'] = 'No Data Exist';
-    $_SESSION['alert'] = 'alert alert-success';
+    $_SESSION['alert'] = 'alert alert-warning';
 
     header("location: ../../admin/reports/guest_report.php"); 
 
 }
-
-$mpdf->WriteHTML($html);
-$mpdf->Output('guests_reports.pdf', 'D');
-
 
 
 

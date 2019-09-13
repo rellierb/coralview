@@ -28,6 +28,7 @@ $overall_total_price = 0;
 $overall_total_extra = 0;
 $payment_type = '';
 $nights_of_stay = 0;
+$is_peak_rate;
 
 ?>
 
@@ -80,13 +81,16 @@ $nights_of_stay = 0;
                                         ';
 
                                         while($reservation = mysqli_fetch_assoc($reservation_details_result)) {
-
+                                            
                                             $dateDiff = date_diff(date_create($reservation["check_in_date"]), date_create($reservation["check_out_date"]));
                                             $diff = $dateDiff->format('%d');
                                             $nights_of_stay = $diff;
                                             $full_name = $reservation["first_name"] . " " . $reservation["last_name"];
                                             $payment_type = $reservation["payment"];
                                             $status = $reservation["status"];
+
+                                            $is_peak_rate = $reservation["is_peak_rate"];
+
                                             echo '
                                                 <table class="table table-bordered">
                                                     <tr>
@@ -172,8 +176,14 @@ $nights_of_stay = 0;
                                                 $room_id = $room_reservation["room_id"];
                                                 $room_quantity = $room_reservation["quantity"];
                                                 $rooms_reserved[$room_id] = $room_quantity; 
-                                                $quantity += $room_quantity;
-                                                $total_price = $room_reservation["peak_rate"] * $room_reservation["quantity"];
+                                                $quantity += $room_quantity;    
+
+                                                if($is_peak_rate == 0) {
+                                                    $total_price = $room_reservation["peak_rate"] * $room_reservation["quantity"];
+                                                } else if ($is_peak_rate == 1) {
+                                                    $total_price = $room_reservation["off_peak_rate"] * $room_reservation["quantity"];
+                                                }
+
 
                                                 echo '
                                                     <tr>

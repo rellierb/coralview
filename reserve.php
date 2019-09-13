@@ -12,23 +12,23 @@ $db = connect_to_db();
 // PEAK RATE - march 12 - july 17, 2019 nov 2019 - jan 1, 2020
 $date_today = date("Y-m-d");
 
-$off_peak_date_start_1 = strtotime("Y-m-d", strtotime("01/02/2019"));
-$off_peak_date_end_1 = strtotime("Y-m-d", strtotime("03/11/2019"));
+$off_peak_date_start_1 = date("Y-m-d", strtotime("01/02/2019"));
+$off_peak_date_end_1 = date("Y-m-d", strtotime("03/11/2019"));
 
-$off_peak_date_start_2 = strtotime("Y-m-d", strtotime("07/18/2019"));
-$off_peak_date_end_2 = strtotime("Y-m-d", strtotime("11/19/2019"));
+$off_peak_date_start_2 = date("Y-m-d", strtotime("07/18/2019"));
+$off_peak_date_end_2 = date("Y-m-d", strtotime("11/19/2019"));
 
-$peak_date_start_1 = strtotime("Y-m-d", strtotime("03/12/2019"));
-$peak_date_end_1 = strtotime("Y-m-d", strtotime("07/17/2019"));
+$peak_date_start_1 = date("Y-m-d", strtotime("03/12/2019"));
+$peak_date_end_1 = date("Y-m-d", strtotime("07/17/2019"));
 
-$peak_date_start_2 = strtotime("Y-m-d", strtotime("11/20/2019"));
-$peak_date_end_2 = strtotime("Y-m-d", strtotime("01/01/2020"));
+$peak_date_start_2 = date("Y-m-d", strtotime("11/20/2019"));
+$peak_date_end_2 = date("Y-m-d", strtotime("01/01/2020"));
 
 $type_of_rate = "";
 
-if((($date_today >= $off_peak_date_start_1) && ($date_today >= $off_peak_date_start_2)) || (($date_today >= $off_peak_date_start_2) && ($date_today >= $off_peak_date_start_2))) {
+if((($date_today >= $off_peak_date_start_1) && ($date_today <= $off_peak_date_end_1)) || (($date_today >= $off_peak_date_start_2) && ($date_today <= $off_peak_date_end_2))) {
     $type_of_rate = "OFF-PEAK";
-} else if((($date_today >= $peak_date_start_1) && ($date_today >= $peak_date_start_2)) || (($date_today >= $peak_date_start_2) && ($date_today >= $peak_date_start_2))) {
+} else if((($date_today >= $peak_date_start_1) && ($date_today <= $peak_date_end_1)) || (($date_today >= $peak_date_start_2) && ($date_today <= $peak_date_end_2))) {
     $type_of_rate = "PEAK"; 
 }
 
@@ -302,8 +302,6 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today >= $off_peak_date_st
                             </div>
                         </div>
                     </div>
-
-                
                 </div>
             </div>
         </div>

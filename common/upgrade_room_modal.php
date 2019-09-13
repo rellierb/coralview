@@ -59,7 +59,8 @@
 
                     if(mysqli_num_rows($select_all_rooms_result) > 1) {
                         
-                        echo '<div style="margin: 0 auto;"><select class="form-control" name="room_id" data-room-id-' . $room_id . ' style="display: inline-block; width: 40%;">';
+                        echo '<div style="margin: 0 auto;">
+                                <select class="form-control" name="room_id" data-room-id-' . $room_id . ' style="display: inline-block; width: 48%;">';
                         echo '<option value=""></option>';
                         while($room = mysqli_fetch_assoc($select_all_rooms_result)) {
 
@@ -67,7 +68,7 @@
 
                         }
                         echo '</select>     
-                                <button type="button" name="upgrade_room" data-previous-room-id="' . $room_id . '"  data-reservation-id="' . $reservation_id  . '"  data-upgrade-button style="inline-block; width: 38%;" type="submit" class="btn btn-primary">Upgrade</button>  
+                                <button type="button" name="upgrade_room" data-previous-room-id="' . $room_id . '"  data-reservation-id="' . $reservation_id  . '"  data-upgrade-button style="inline-block; width: 50%;" type="submit" class="btn btn-primary">Upgrade</button>  
                             </div>
                         ';
                     }

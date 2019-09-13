@@ -23,6 +23,7 @@
     <script src="/coralview/scripts/googlemaps.js"></script>
     <script src="/coralview/scripts/initdatepicker.js"></script>
     <script src="/coralview/scripts/upgraderoom.js"></script>
+    <script src="/coralview/scripts/savecheckin.js"></script>
     
     <script type="text/javascript">
 
