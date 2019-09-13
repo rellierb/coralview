@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 02, 2019 at 02:05 AM
+-- Generation Time: Sep 13, 2019 at 08:43 PM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -45,7 +45,10 @@ INSERT INTO `billing` (`id`, `reference_no`, `amount_paid`, `total_amount`, `des
 (15, 'CRLVW-A2009D2', '22500', NULL, 'Customer Client Payment', '2019-08-27 05:09:23'),
 (21, 'CRLVW-3F311FB', '9180', NULL, 'Customer Client Payment', '2019-09-01 16:11:14'),
 (22, 'CRLVW-1C800E0', '4180', NULL, 'Customer Client Payment', '2019-09-01 19:28:09'),
-(23, 'CRLVW-1C800E0', '3240', NULL, 'Customer Client Payment', '2019-09-01 20:37:43');
+(23, 'CRLVW-1C800E0', '3240', NULL, 'Customer Client Payment', '2019-09-01 20:37:43'),
+(25, 'CRLVW-AB8972E', '10840', NULL, 'Customer Client Payment', '2019-09-08 22:44:21'),
+(26, 'CRLVW-F5A7097', '17400', NULL, 'PAID', '2019-09-13 23:53:28'),
+(27, 'CRLVW-F5A7097', '1200', NULL, 'Customer Client Payment', '2019-09-14 00:39:08');
 
 -- --------------------------------------------------------
 
@@ -69,7 +72,8 @@ INSERT INTO `billing_additional_fees` (`Id`, `reference_no`, `amount`, `descript
 (1, 'CRLVW-A2009D2', 123, 'TEST', '2019-08-27 06:38:53'),
 (2, 'CRLVW-1C800E0', 1000, 'TEST', '2019-09-01 19:44:25'),
 (3, 'CRLVW-1C800E0', 1000, 'TEST 2', '2019-09-01 19:51:12'),
-(4, 'CRLVW-1C800E0', 1000, 'TEST 3', '2019-09-01 20:31:37');
+(4, 'CRLVW-1C800E0', 1000, 'TEST 3', '2019-09-01 20:31:37'),
+(5, 'CRLVW-F5A7097', 1000, 'TEST', '2019-09-14 00:36:45');
 
 -- --------------------------------------------------------
 
@@ -92,7 +96,10 @@ INSERT INTO `billing_discount` (`Id`, `reference_no`, `discount_id`, `quantity`)
 (1, 'CRLVW-A2009D2', 1, 1),
 (2, 'CRLVW-A2009D2', 2, 1),
 (3, 'CRLVW-3F311FB', 1, 1),
-(4, 'CRLVW-1C800E0', 2, 1);
+(4, 'CRLVW-1C800E0', 2, 1),
+(5, 'CRLVW-3F311FB', 2, 1),
+(6, 'CRLVW-AB8972E', 2, 1),
+(7, 'CRLVW-F5A7097', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -116,7 +123,11 @@ INSERT INTO `billing_extras` (`id`, `reference_no`, `expense_id`, `quantity`, `a
 (12, 'CRLVW-1C800E0', 1, 4, 100),
 (13, 'CRLVW-1C800E0', 2, 4, 100),
 (14, 'CRLVW-3F311FB', 1, 1, 100),
-(15, 'CRLVW-3F311FB', 2, 1, 100);
+(15, 'CRLVW-3F311FB', 2, 1, 100),
+(16, 'CRLVW-AB8972E', 2, 1, 100),
+(17, 'CRLVW-AB8972E', 1, 1, 100),
+(21, 'CRLVW-F5A7097', 2, 1, 100),
+(22, 'CRLVW-F5A7097', 1, 1, 100);
 
 -- --------------------------------------------------------
 
@@ -137,8 +148,13 @@ CREATE TABLE `booking_rooms` (
 
 INSERT INTO `booking_rooms` (`id`, `reservation_id`, `room_id`, `quantity`) VALUES
 (43, 71, 21, 2),
-(44, 72, 21, 2),
-(45, 73, 21, 2);
+(45, 73, 22, 2),
+(54, 81, 27, 1),
+(55, 82, 21, 2),
+(56, 82, 22, 2),
+(57, 82, 23, 2),
+(58, 94, 23, 1),
+(59, 94, 32, 1);
 
 -- --------------------------------------------------------
 
@@ -167,7 +183,9 @@ INSERT INTO `check_in_rooms` (`Id`, `reference_no`, `room_number`, `is_check_out
 (7, 'CRLVW-3F311FB', 'CRLVW-508', NULL),
 (8, 'CRLVW-3F311FB', 'CRLVW-509', NULL),
 (9, 'CRLVW-1C800E0', 'CRLVW-601', NULL),
-(10, 'CRLVW-1C800E0', 'CRLVW-602', NULL);
+(10, 'CRLVW-1C800E0', 'CRLVW-602', NULL),
+(19, 'CRLVW-F5A7097', '\"DELUXE F\"', NULL),
+(20, 'CRLVW-F5A7097', 'DELUXE F', NULL);
 
 -- --------------------------------------------------------
 
@@ -186,8 +204,7 @@ CREATE TABLE `discount` (
 --
 
 INSERT INTO `discount` (`Id`, `name`, `amount`) VALUES
-(1, 'Senior Citizen', 0.2),
-(2, 'PWD', 0.2);
+(1, 'Senior Citizen / PWD', 0.2);
 
 -- --------------------------------------------------------
 
@@ -208,7 +225,9 @@ CREATE TABLE `downpayment` (
 --
 
 INSERT INTO `downpayment` (`id`, `reference_no`, `amount`, `description`, `time_stamp`) VALUES
-(1, 'CRLVW-1C800E0', 5000, NULL, '2019-09-01 12:40:17');
+(1, 'CRLVW-1C800E0', 5000, NULL, '2019-09-01 12:40:17'),
+(3, 'CRLVW-AB8972E', 17000, 'ABC-123', '2019-09-08 21:50:13'),
+(4, 'CRLVW-F5A7097', 21750, 'Accept', '2019-09-13 22:17:26');
 
 -- --------------------------------------------------------
 
@@ -250,42 +269,10 @@ CREATE TABLE `guest` (
 --
 
 INSERT INTO `guest` (`id`, `first_name`, `last_name`, `address`, `email`, `contact_number`) VALUES
-(68, 'Rellie', 'Balagat', 'TEST', 'rellierubiobalagat@gmail.com', '123456'),
-(69, 'Rellie', 'Balagat', '86-A Tandang sora ave qc', 'relliebalagat@gmail.com', '123456'),
-(70, 'Rellie', 'Balagat', '86-A Tandang sora ave qc', 'relliebalagat@gmail.com', '123456'),
-(71, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(72, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(73, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(74, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(75, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(76, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(77, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(78, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(79, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(80, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(81, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(82, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(83, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(84, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(85, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(86, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(87, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(88, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(89, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(90, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(91, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(92, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(93, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(94, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(95, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(96, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(97, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(98, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(99, '', '', '', '', ''),
-(100, 'Rellie', 'Balagat', '86-A Tandang Sora', 'relliebalagat@gmail.com', '09123456789'),
-(101, 'Rellie', 'Balagat', '86-A Tandang Sora Ave', 'relliebalagat@gmail.com', '09123456789'),
-(102, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
-(103, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789');
+(101, 'TEST', 'TEST', 'TEST', 'TEST', '09123456789'),
+(103, 'TEST', 'TEST', 'TEST', 'TEST', '09123456789'),
+(111, 'TEST', 'TEST', 'TEST', 'TEST', '09123456789'),
+(187, 'TEST', 'TEST', 'TEST', 'TEST', '09123456789');
 
 -- --------------------------------------------------------
 
@@ -303,6 +290,7 @@ CREATE TABLE `reservation` (
   `check_out_date` datetime DEFAULT NULL,
   `adult_count` int(11) DEFAULT NULL,
   `kids_count` int(11) DEFAULT NULL,
+  `is_peak_rate` int(11) NOT NULL,
   `date_created` datetime DEFAULT current_timestamp(),
   `date_updated` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -311,9 +299,11 @@ CREATE TABLE `reservation` (
 -- Dumping data for table `reservation`
 --
 
-INSERT INTO `reservation` (`id`, `guest_id`, `reference_no`, `status`, `payment`, `check_in_date`, `check_out_date`, `adult_count`, `kids_count`, `date_created`, `date_updated`) VALUES
-(71, 101, 'CRLVW-1C800E0', 'COMPLETE', 'BANK DEPOSIT', '2019-08-31 00:00:00', '2019-09-01 00:00:00', 1, 1, '2019-08-31 15:42:42', '2019-09-02 00:00:00'),
-(73, 103, 'CRLVW-3F311FB', 'FOR CHECK OUT', 'WALK-IN / CASH', '2019-09-01 00:00:00', '2019-09-04 00:00:00', 1, 1, '2019-09-01 15:32:17', '2019-09-02 00:00:00');
+INSERT INTO `reservation` (`id`, `guest_id`, `reference_no`, `status`, `payment`, `check_in_date`, `check_out_date`, `adult_count`, `kids_count`, `is_peak_rate`, `date_created`, `date_updated`) VALUES
+(71, 101, 'CRLVW-1C800E0', 'CHECKED IN', 'BANK DEPOSIT', '2019-08-31 00:00:00', '2019-09-01 00:00:00', 1, 1, 0, '2019-08-31 15:42:42', '2019-09-02 00:00:00'),
+(73, 103, 'CRLVW-3F311FB', 'CHECKED IN', 'WALK-IN / CASH', '2019-09-01 00:00:00', '2019-09-04 00:00:00', 1, 1, 0, '2019-09-01 15:32:17', '2019-09-02 00:00:00'),
+(81, 111, 'CRLVW-AB8972E', 'COMPLETE', 'BANK DEPOSIT', '2019-09-13 00:00:00', '2019-09-17 00:00:00', 2, 3, 0, '2019-09-08 12:20:47', '2019-09-08 22:55:50'),
+(94, 187, 'CRLVW-F5A7097', 'COMPLETE', 'BANK DEPOSIT', '2019-09-20 00:00:00', '2019-09-25 00:00:00', 1, 1, 0, '2019-09-13 22:07:19', '2019-09-14 00:39:17');
 
 -- --------------------------------------------------------
 
@@ -385,131 +375,99 @@ CREATE TABLE `rooms_status` (
 --
 
 INSERT INTO `rooms_status` (`room_number`, `room_id`, `status`, `id`) VALUES
-('CRLVW-101', 32, 'FOR REPAIR', 95),
-('CRLVW-102', 32, 'OCCUPIED', 96),
-('CRLVW-103', 32, 'AVAILABLE', 97),
-('CRLVW-104', 22, 'AVAILABLE', 98),
-('CRLVW-105', 22, 'AVAILABLE', 99),
-('CRLVW-106', 22, 'AVAILABLE', 100),
-('CRLVW-107', 22, 'AVAILABLE', 101),
-('CRLVW-108', 23, 'AVAILABLE', 102),
-('CRLVW-109', 23, 'AVAILABLE', 103),
-('CRLVW-201', 23, 'AVAILABLE', 104),
-('CRLVW-202', 23, 'AVAILABLE', 105),
-('CRLVW-203', 23, 'AVAILABLE', 106),
-('CRLVW-204', 23, 'AVAILABLE', 107),
-('CRLVW-205', 23, 'AVAILABLE', 108),
-('CRLVW-206', 30, 'AVAILABLE', 116),
-('CRLVW-207', 30, 'AVAILABLE', 117),
-('CRLVW-208', 30, 'AVAILABLE', 118),
-('CRLVW-209', 30, 'AVAILABLE', 119),
-('CRLVW-301', 30, 'AVAILABLE', 120),
-('CRLVW-302', 30, 'AVAILABLE', 121),
-('CRLVW-303', 30, 'AVAILABLE', 122),
-('CRLVW-304', 30, 'AVAILABLE', 123),
-('CRLVW-305', 30, 'AVAILABLE', 124),
-('CRLVW-306', 30, 'AVAILABLE', 125),
-('CRLVW-307', 30, 'AVAILABLE', 126),
-('CRLVW-307', 30, 'AVAILABLE', 127),
-('CRLVW-308', 30, 'AVAILABLE', 128),
-('CRLVW-309', 30, 'AVAILABLE', 129),
-('CRLVW-401', 30, 'AVAILABLE', 130),
-('CRLVW-402', 30, 'AVAILABLE', 131),
-('CRLVW-403', 30, 'AVAILABLE', 132),
-('CRLVW-404', 30, 'AVAILABLE', 133),
-('CRLVW-405', 30, 'AVAILABLE', 134),
-('CRLVW-406', 30, 'AVAILABLE', 135),
-('CRLVW-407', 30, 'AVAILABLE', 136),
-('CRLVW-408', 30, 'AVAILABLE', 137),
-('CRLVW-409', 30, 'AVAILABLE', 138),
-('CRLVW-501', 30, 'AVAILABLE', 139),
-('CRLVW-502', 30, 'AVAILABLE', 140),
-('CRLVW-503', 30, 'AVAILABLE', 141),
-('CRLVW-504', 21, 'AVAILABLE', 142),
-('CRLVW-505', 21, 'AVAILABLE', 143),
-('CRLVW-506', 21, 'AVAILABLE', 144),
-('CRLVW-507', 21, 'OCCUPIED', 145),
-('CRLVW-508', 21, 'OCCUPIED', 146),
-('CRLVW-509', 21, 'OCCUPIED', 147),
-('CRLVW-601', 21, 'AVAILABLE', 148),
-('CRLVW-602', 21, 'AVAILABLE', 149),
-('CRLVW-603', 21, 'AVAILABLE', 150),
-('CRLVW-604', 21, 'AVAILABLE', 151),
-('CRLVW-605', 21, 'AVAILABLE', 152),
-('CRLVW-606', 24, 'AVAILABLE', 153),
-('CRLVW-607', 24, 'AVAILABLE', 154),
-('CRLVW-608', 24, 'AVAILABLE', 155),
-('CRLVW-609', 25, 'AVAILABLE', 156),
-('CRLVW-701', 26, 'AVAILABLE', 157),
-('CRLVW-702', 27, 'AVAILABLE', 158),
-('CRLVW-703', 27, 'AVAILABLE', 159),
-('CRLVW-704', 27, 'AVAILABLE', 160),
-('CRLVW-705', 27, 'AVAILABLE', 161),
-('CRLVW-706', 27, 'AVAILABLE', 162),
-('CRLVW-707', 27, 'AVAILABLE', 163),
-('CRLVW-708', 27, 'AVAILABLE', 164),
-('CRLVW-709', 27, 'AVAILABLE', 165),
-('CRLVW-801', 28, 'AVAILABLE', 166),
-('CRLVW-802', 28, 'AVAILABLE', 167),
-('CRLVW-803', 28, 'AVAILABLE', 168),
-('CRLVW-804', 28, 'AVAILABLE', 169),
-('CRLVW-805', 28, 'AVAILABLE', 170),
-('CRLVW-806', 28, 'AVAILABLE', 171),
-('CRLVW-807', 28, 'AVAILABLE', 172),
-('CRLVW-808', 28, 'AVAILABLE', 173),
-('CRLVW-809', 28, 'AVAILABLE', 174),
-('CRLVW-901', 28, 'AVAILABLE', 175),
-('CRLVW-902', 28, 'AVAILABLE', 176),
-('CRLVW-903', 28, 'AVAILABLE', 177),
-('CRLVW-904', 28, 'AVAILABLE', 178),
-('CRLVW-905', 28, 'AVAILABLE', 179),
-('CRLVW-906', 28, 'AVAILABLE', 180),
-('CRLVW-907', 28, 'AVAILABLE', 181),
+('101', 32, 'FOR REPAIR', 95),
+('102', 32, 'OCCUPIED', 96),
+('103', 32, 'OCCUPIED', 97),
+('PREMIERE A', 22, 'AVAILABLE', 98),
+('PREMIERE B', 22, 'AVAILABLE', 99),
+('PREMIERE C', 22, 'AVAILABLE', 100),
+('PREMIERE C', 22, 'AVAILABLE', 101),
+('DELUXE E1', 23, 'AVAILABLE', 102),
+('DELUXE E', 23, 'AVAILABLE', 103),
+('DELUXE F', 23, 'AVAILABLE', 104),
+('DELUXE G', 23, 'OCCUPIED', 105),
+('DELUXE H', 23, 'AVAILABLE', 106),
+('DELUXE I', 23, 'AVAILABLE', 107),
+('DELUXE J', 23, 'AVAILABLE', 108),
+('QUAD 1', 30, 'AVAILABLE', 116),
+('QUAD 2', 30, 'AVAILABLE', 117),
+('QUAD 3', 30, 'AVAILABLE', 118),
+('QUAD 4', 30, 'AVAILABLE', 119),
+('QUAD 5', 30, 'AVAILABLE', 120),
+('QUAD 6', 30, 'AVAILABLE', 121),
+('QUAD 7', 30, 'AVAILABLE', 122),
+('QUAD 8', 30, 'AVAILABLE', 123),
+('QUAD 9', 30, 'AVAILABLE', 124),
+('QUAD 10', 30, 'AVAILABLE', 125),
+('QUAD 11', 30, 'AVAILABLE', 126),
+('QUAD 12', 30, 'AVAILABLE', 127),
+('QUAD 14', 30, 'AVAILABLE', 128),
+('QUAD 15', 30, 'AVAILABLE', 129),
+('QUAD 16', 30, 'AVAILABLE', 130),
+('QUAD 17', 30, 'AVAILABLE', 131),
+('QUAD 18', 30, 'AVAILABLE', 132),
+('QUAD 19', 30, 'AVAILABLE', 133),
+('QUAD 20', 30, 'AVAILABLE', 134),
+('QUAD 21', 30, 'AVAILABLE', 135),
+('QUAD 22', 30, 'AVAILABLE', 136),
+('QUAD 23', 30, 'AVAILABLE', 137),
+('QUAD 24', 30, 'AVAILABLE', 138),
+('QUAD 25', 30, 'AVAILABLE', 139),
+('QUAD 26', 30, 'AVAILABLE', 140),
+('QUAD 27', 30, 'AVAILABLE', 141),
+('SUPER DELUXE M', 21, 'AVAILABLE', 142),
+('SUPER DELUXE N', 21, 'AVAILABLE', 143),
+('SUPER DELUXE O', 21, 'AVAILABLE', 144),
+('SUPER DELUXE P', 21, 'OCCUPIED', 145),
+('SUPER DELUXE R', 21, 'OCCUPIED', 146),
+('SUPER DELUXE S', 21, 'OCCUPIED', 147),
+('SUPER DELUXE U', 21, 'AVAILABLE', 148),
+('SUPER DELUXE V', 21, 'AVAILABLE', 149),
+('SUPER DELUXE W', 21, 'AVAILABLE', 150),
+('SUPER DELUXE X', 21, 'AVAILABLE', 151),
+('SUPER DELUXE Z', 21, 'AVAILABLE', 152),
+('DOUBLE DELUXE Q', 24, 'AVAILABLE', 153),
+('DOUBLE DELUXE T', 24, 'AVAILABLE', 154),
+('DOUBLE DELUXE Y', 24, 'AVAILABLE', 155),
+('SUITE L', 25, 'AVAILABLE', 156),
+('SUITE K', 26, 'AVAILABLE', 157),
+('1', 27, 'AVAILABLE', 158),
+('2', 27, 'AVAILABLE', 159),
+('3', 27, 'AVAILABLE', 160),
+('4', 27, 'AVAILABLE', 161),
+('5', 27, 'AVAILABLE', 162),
+('6', 27, 'AVAILABLE', 163),
+('7', 27, 'AVAILABLE', 164),
+('8', 27, 'AVAILABLE', 165),
+('9', 28, 'AVAILABLE', 166),
+('10', 28, 'AVAILABLE', 167),
+('11', 28, 'AVAILABLE', 168),
+('12', 28, 'AVAILABLE', 169),
+('14', 28, 'AVAILABLE', 170),
+('15', 28, 'AVAILABLE', 171),
+('16', 28, 'AVAILABLE', 172),
+('17', 28, 'AVAILABLE', 173),
+('18', 28, 'AVAILABLE', 174),
+('19', 28, 'AVAILABLE', 175),
+('20', 28, 'AVAILABLE', 176),
+('21', 28, 'AVAILABLE', 177),
+('22', 28, 'AVAILABLE', 178),
+('23', 28, 'AVAILABLE', 179),
+('24', 28, 'AVAILABLE', 180),
+('25', 28, 'AVAILABLE', 181),
 ('CRLVW-908', 29, 'AVAILABLE', 182),
 ('CRLVW-909', 36, 'AVAILABLE', 183),
 ('CRLVW-111', 36, 'AVAILABLE', 184),
-('CRLVW-112', 33, 'AVAILABLE', 185),
-('CRLVW-113', 33, 'AVAILABLE', 186),
-('CRLVW-114', 33, 'AVAILABLE', 187),
-('CRLVW-115', 33, 'AVAILABLE', 188),
-('CRLVW-116', 33, 'AVAILABLE', 189),
-('CRLVW-117', 33, 'AVAILABLE', 190),
-('CRLVW-118', 33, 'AVAILABLE', 191),
-('CRLVW-119', 33, 'AVAILABLE', 192),
-('CRLVW-211', 33, 'AVAILABLE', 193),
-('CRLVW-212', 33, 'AVAILABLE', 194),
-('CRLVW-213', 34, 'AVAILABLE', 195),
-('CRLVW-214', 34, 'AVAILABLE', 196),
-('CRLVW-215', 34, 'AVAILABLE', 197),
-('CRLVW-216', 34, 'AVAILABLE', 198),
-('CRLVW-217', 34, 'AVAILABLE', 199),
-('CRLVW-218', 34, 'AVAILABLE', 200),
-('CRLVW-219', 34, 'AVAILABLE', 201),
-('CRLVW-311', 34, 'AVAILABLE', 202),
-('CRLVW-312', 34, 'AVAILABLE', 203),
-('CRLVW-313', 34, 'AVAILABLE', 204),
-('CRLVW-314', 34, 'AVAILABLE', 205),
-('CRLVW-315', 34, 'AVAILABLE', 206),
-('CRLVW-316', 34, 'AVAILABLE', 207),
-('CRLVW-317', 34, 'AVAILABLE', 208),
-('CRLVW-318', 35, 'AVAILABLE', 209),
-('CRLVW-319', 35, 'AVAILABLE', 210),
-('CRLVW-411', 35, 'AVAILABLE', 211),
-('CRLVW-412', 35, 'AVAILABLE', 212),
-('CRLVW-413', 35, 'AVAILABLE', 213),
-('CRLVW-414', 35, 'AVAILABLE', 214),
-('CRLVW-415', 35, 'AVAILABLE', 215),
-('CRLVW-416', 35, 'AVAILABLE', 216),
-('CRLVW-417', 35, 'AVAILABLE', 217),
-('CRLVW-418', 35, 'AVAILABLE', 218),
-('CRLVW-419', 35, 'AVAILABLE', 219),
-('CRLVW-511', 35, 'AVAILABLE', 220),
-('CRLVW-512', 35, 'AVAILABLE', 221),
-('CRLVW-513', 35, 'AVAILABLE', 222),
-('CRLVW-514', 35, 'AVAILABLE', 223),
-('CRLVW-515', 35, 'AVAILABLE', 224),
-('CRLVW-516', 35, 'AVAILABLE', 225),
-('CRLVW-517', 35, 'AVAILABLE', 226);
+('DORMITORY 10A', 33, 'AVAILABLE', 185),
+('DORMITORY 10B', 33, 'AVAILABLE', 186),
+('DORMITORY 10C', 33, 'AVAILABLE', 187),
+('DORMITORY 14A', 34, 'AVAILABLE', 195),
+('DORMITORY 14B', 34, 'AVAILABLE', 196),
+('DORMITORY 14C', 34, 'AVAILABLE', 197),
+('DORMITORY 18A', 35, 'AVAILABLE', 209),
+('DORMITORY 18B', 35, 'AVAILABLE', 210),
+('DORMITORY 18C', 35, 'AVAILABLE', 211),
+('DORMITORY 18D', 35, 'AVAILABLE', 212);
 
 -- --------------------------------------------------------
 
@@ -534,10 +492,11 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `FullName`, `UserName`, `Password`, `Email`, `UserType`, `Type`, `PhoneNumber`) VALUES
 (2, 'ewq', 'zcx', 'ghj', 'uyi', NULL, 'yui', 'qewqe'),
-(3, 'rellie', 'balagat', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'r123@gmail.com', 'ADMINISTRATOR', 'ADMINISTRATOR', '12312'),
-(5, 'john', 'balagat', '8cb2237d0679ca88db6464eac60da96345513964', 'asd@gmail.com', 'RECEPTIONIST', 'RECEPTIONIST', '123'),
+(3, 'Nicole', 'Nicole', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'r123@gmail.com', 'ADMINISTRATOR', 'ADMINISTRATOR', '12312'),
+(5, 'john', 'doe', '8cb2237d0679ca88db6464eac60da96345513964', 'asd@gmail.com', 'RECEPTIONIST', 'RECEPTIONIST', '123'),
 (8, 'john', 'john123', '890123', 'john@gmail.com', NULL, 'user', '123456'),
-(9, 'rellie', 'rellie124', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'relliebalagat@gmail.com', NULL, 'Administrator', '123456');
+(9, 'Yo', 'test123', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'relliebalagat@gmail.com', NULL, 'Administrator', '123456'),
+(10, 'Admin', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin@gmail.com', NULL, 'Administrator', '1');
 
 --
 -- Indexes for dumped tables
@@ -641,37 +600,37 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `billing`
 --
 ALTER TABLE `billing`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `billing_additional_fees`
 --
 ALTER TABLE `billing_additional_fees`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `billing_discount`
 --
 ALTER TABLE `billing_discount`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `billing_extras`
 --
 ALTER TABLE `billing_extras`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `booking_rooms`
 --
 ALTER TABLE `booking_rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `check_in_rooms`
 --
 ALTER TABLE `check_in_rooms`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `discount`
@@ -683,25 +642,25 @@ ALTER TABLE `discount`
 -- AUTO_INCREMENT for table `downpayment`
 --
 ALTER TABLE `downpayment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `extras`
 --
 ALTER TABLE `extras`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `guest`
 --
 ALTER TABLE `guest`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=188;
 
 --
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT for table `reservation_expenses`
@@ -725,7 +684,7 @@ ALTER TABLE `rooms_status`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
