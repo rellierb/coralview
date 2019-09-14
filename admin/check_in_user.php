@@ -508,7 +508,7 @@ $reservation_id = 0;
                                                         $temp_discount_price = $comp_discount * $discount_amount;
                                                         $discount_price += $temp_discount_price;
                                                     } 
-
+ 
                                                     $change_to_percent = $discount['amount'] * 100;
 
                                                     echo'
@@ -622,7 +622,6 @@ $reservation_id = 0;
                                                 </table>
                                             ';
 
-                                           
                                             ?>
                                             
                                         </div>

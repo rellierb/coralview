@@ -156,9 +156,11 @@ $(document).ready(function(){
 
                 toastr.error('Invalid input on Kids Count');
 
+
             } else if(childCount == 0 || childCount === '') {
 
-                toastr.error('Adult count is empty');
+                toastr.error('Kids count is empty');
+                spanNoOfGuests.innerHTML = adultCount;
 
             }else {
                 totalCount = childCount;
@@ -355,8 +357,8 @@ $(document).ready(function(){
 
             var firstName = this.value;
 
-            if(/[^a-zA-Z0-9\-\/]/.test(firstName)) {
-                toastr.error('First name contains special Characters');
+            if(/[^a-zA-Z\-\/]/.test(firstName)) {
+                toastr.error('First name contains special Characters or Numbers');
             } else if (firstName === '') {
                 toastr.error('First name field is empty');
             } else {
@@ -371,8 +373,8 @@ $(document).ready(function(){
 
             var lastName = this.value;
 
-            if(/[^a-zA-Z0-9\-\/]/.test(lastName)) {
-                toastr.error('Last name contains special Characters');
+            if(/[^a-zA-Z\-\/]/.test(lastName)) {
+                toastr.error('Last name contains special Characters or Numbers');
             } else if (lastName === '') {
                 toastr.error('Last name field is empty');
             }
@@ -449,11 +451,11 @@ function disableSubmitButton() {
     let isSubmitReservationBtn = document.body.contains(submitReservationBtn);
     let returnValue = true;
 
-    if(fieldFirstName.value === '') {
+    if(fieldFirstName.value === '' || (/[^a-zA-Z\-\/]/.test(fieldFirstName.value))) {
         returnValue = false;
     }
 
-    if(fieldLastName.value === '') {
+    if(fieldLastName.value === '' || (/[^a-zA-Z\-\/]/.test(fieldLastName.value))) {
         returnValue = false;
     }
 

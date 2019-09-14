@@ -173,7 +173,7 @@ if(isset($_GET['edit'])) {
                                     while($room = mysqli_fetch_assoc($result)) {
                                         echo '
                                             <tr>
-                                                <td></td>
+                                                <td><img src="' . $room['image'] . '"></img></td>
                                                 <td>' . $room['number'] . '</td>
                                                 <td>' . $room['type'] . '</td>
                                                 <td style="width: 8%;">' . $room['peak_rate'] . '</td>

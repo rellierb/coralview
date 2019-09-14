@@ -27,9 +27,9 @@ $peak_date_end_2 = date("Y-m-d", strtotime("01/01/2020"));
 $type_of_rate = "";
 
 if((($date_today >= $off_peak_date_start_1) && ($date_today <= $off_peak_date_end_1)) || (($date_today >= $off_peak_date_start_2) && ($date_today <= $off_peak_date_end_2))) {
-    $type_of_rate = "OFF-PEAK";
-} else if((($date_today >= $peak_date_start_1) && ($date_today <= $peak_date_end_1)) || (($date_today >= $peak_date_start_2) && ($date_today <= $peak_date_end_2))) {
     $type_of_rate = "PEAK"; 
+} else if((($date_today >= $peak_date_start_1) && ($date_today <= $peak_date_end_1)) || (($date_today >= $peak_date_start_2) && ($date_today <= $peak_date_end_2))) {
+    $type_of_rate = "OFF-PEAK";
 }
 
 
@@ -118,13 +118,13 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today <= $off_peak_date_en
                                         <?php
                                         
                                         if($type_of_rate == "OFF-PEAK") {
-                                            echo '<h5 class="text-center text-info">Room prices is OFF-PEAK rate.</h5>';
-                                            $off_peak_rate_class = "coralview-blue font-weight-bolder";
-                                            $peak_rate_class = "";
-                                        } else if($type_of_rate == "PEAK") {
                                             echo '<h5 class="text-center text-info">Room prices is PEAK rate.</h5>';
                                             $peak_rate_class = "coralview-blue font-weight-bolder";
                                             $off_peak_rate_class = "";
+                                        } else if($type_of_rate == "PEAK") {
+                                            echo '<h5 class="text-center text-info">Room prices is OFF-PEAK rate.</h5>';
+                                            $off_peak_rate_class = "coralview-blue font-weight-bolder";
+                                            $peak_rate_class = "";
                                         }
                                         
                                         ?>

@@ -32,9 +32,10 @@
                 echo '
                     <table class="table table-bordered">
                     <tr>
-                        <th class="text-center" style="width: 55%;">ROOM/S RESERVE</th>
+                        <th class="text-center" style="width: 15%;">ROOM/S RESERVE</th>
                         <th class="text-center" style="width: 15%;">QUANTITY</th>
                         <th class="text-center" style="width: 15%;">PRICE</th>
+                        <th class="text-center" style="width: 55%;">ACTION</th>
                         
                     </tr>
                 ';
@@ -47,11 +48,11 @@
 
                     echo '
                         <tr>
-                            <td class="text-center" style="width: 55%;">' . $room_reservation["type"] . '</td>
+                            <td class="text-center" style="width: 15%;">' . $room_reservation["type"] . '</td>
                             <td class="text-center" style="width: 15%;">' . $room_reservation["quantity"] . '</td>
                             <td class="text-center" style="width: 15%;">' . number_format($room_reservation["peak_rate"]) . '</td>
-                        </tr>
-                    </table>
+                            <td class="text-center" style="width: 55%;">
+                   
                     ';
                     
                     $select_all_rooms = "SELECT * FROM rooms WHERE id != " . $room_id  . " ";
@@ -70,10 +71,16 @@
                         echo '</select>     
                                 <button type="button" name="upgrade_room" data-previous-room-id="' . $room_id . '"  data-reservation-id="' . $reservation_id  . '"  data-upgrade-button style="inline-block; width: 50%;" type="submit" class="btn btn-primary">Upgrade</button>  
                             </div>
+                            </td>
+                            </tr>
+                            
                         ';
                     }
                     
                 }
+
+                echo '</table>';
+              
                 
 
             }
