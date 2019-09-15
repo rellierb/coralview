@@ -67,10 +67,53 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if($update_result) {
 
-        $_SESSION['msg'] = "Client successfully check-out";
-        $_SESSION['alert'] = "alert alert-success";
+        $find_guest_email = "SELECT G.email FROM reservation R INNER JOIN guest G ON R.guest_id = G.id WHERE R.reference_no='$reference_no'";
+        $find_guest_email_result = mysqli_query($db, $find_guest_email);
 
-        header("location: ../../admin/billing.php?reference_no=$reference_no");
+        if(mysqli_num_rows($find_guest_email_result) == 1) {
+
+            $email = '';
+            while($guest = mysqli_fetch_assoc($find_guest_email_result)) {
+
+                $email = $guest['email'];
+
+                $html = '<p>Thank you for booking with Coralview Beach Resort!</p><p>To further improve our services, you could email us at coralviewthesis@gmail.com</p>';
+
+                $mail = new PHPMailer(true);
+
+                try {
+                    $message = $html;
+                    $mail->SMTPDebug = 1;
+                    $mail->isSMTP();
+                    $mail->Host = 'smtp.gmail.com';
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'coralviewthesis@gmail.com';  // Fill this up
+                    $mail->Password = 'Qwerty1234@1234';  // Fill this up
+                    $mail->SMTPSecure = 'tls';
+                    $mail->Port = 587;
+
+                    $mail->setFrom('coralviewthesis@gmail.com');
+                    $mail->isHTML(true);
+                    $mail->addAddress($emai);
+                    $mail->Subject = 'Coralview Beach Resort Thank you Message';
+                    $mail->Body = $message;
+                    $mail->send();
+
+                    $_SESSION['msg'] = "Client successfully check-out";
+                    $_SESSION['alert'] = "alert alert-success";
+
+                    header("location: ../../admin/billing.php?reference_no=$reference_no");
+
+                } catch (Exception $e) {
+                    $_SESSION['email_error_msg'] = "There\'s an error processing your request";
+                    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                }
+
+
+
+            }
+
+        }
 
     }
 

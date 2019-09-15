@@ -101,9 +101,10 @@ $db = connect_to_db();
                                                 } else if ($reservation_status == 'CHECKED IN') { 
                                                     echo '<a style="width: 98%;' . $hide_class . '" href="checked_in.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-block btn-primary">View</a>';
                                                 } else if ($reservation_status == 'FOR CHECKED IN' ||  $reservation_status == 'PENDING' ) {
+                                                    // <a style="width: 48%;' . $hide_class . '" href="accept.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-success">Accept</a>
+                                                    // <a style="width: 48%;' . $hide_class . '" href="reject.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-danger">Reject</a>
                                                     echo '
-                                                        <a style="width: 48%;' . $hide_class . '" href="accept.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-success">Accept</a>
-                                                        <a style="width: 48%;' . $hide_class . '" href="reject.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-danger">Reject</a>
+                                                        <a style="width: 98%;' . $hide_class . '" href="accept.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-info">Pending</a>
                                                     ';
                                                 } else if($reservation_status == 'COMPLETE') {
                                                     echo '<a style="width: 98%;' . $hide_class . '" href="view.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-block btn-primary">View</a>';

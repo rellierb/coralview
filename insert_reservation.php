@@ -39,6 +39,7 @@ $db = connect_to_db();
                                 <div class="form-group" style="margin-left: 20%;">
                                     <label>Enter Reference Number</label>
                                     <input class="form-control" name="reference_num" type="text" style="width: 80%;" />
+                                    <button type="submit" class="btn btn-primary">Enter</button>
                                 </div>
                             </form>
 

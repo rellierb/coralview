@@ -18,34 +18,72 @@ if(isset($_REQUEST["reference_no"])) {
     $cancel_query = "SELECT * FROM reservation WHERE reference_no='$reference_no' AND status='CANCELLED'";
     $cancel_result = mysqli_query($db, $cancel_query);
 
-    if($cancel_result) {
+    if(mysqli_num_rows($cancel_result) > 0) {
         $isCancelled = true;
+    }
+
+    $isPaymentUploaded = false;
+
+    $is_uploaded = "SELECT payment_path FROM reservation WHERE reference_no='$reference_no'";
+    $is_uploaded_result = mysqli_query($db, $is_uploaded);
+    
+    if(mysqli_num_rows($cancel_result) > 0) {
+        $isPaymentUploaded = true;
     }
 
 }
 
+
+$html = '';
+$payment_html = '';
+$room_html = '';
+$payment_photo = '';
+
 ?>
-    <!-- CRLVW-E909936 -->
+    
     <div class="container">
 
+        <?php
+        
+        if(isset($_SESSION['msg']) && isset($_SESSION['alert'])) {
+            echo '
+                <div class="' . $_SESSION['alert'] . ' text-center" role="alert">
+                    ' . $_SESSION['msg']  . '
+                </div>
+            ';
+        } else if(isset($_SESSION["fileType"])) {
+            echo '
+                <div class="alert alert-error text-center" role="alert">
+                    ' . $_SESSION['fileError']  . '
+                    ' . $_SESSION['fileType']  . '
+                </div>
+            ';
+        } else if(isset($_SESSION["fileExists"])) {
+            echo '
+                <div class="alert alert-error text-center" role="alert">
+                    ' . $_SESSION['fileError']  . '
+                    ' . $_SESSION['fileExists']  . '
+                </div>
+            ';
+        } else if(isset($_SESSION["fileImage"])) {
+            echo '
+                <div class="alert alert-error text-center" role="alert">
+                    ' . $_SESSION['fileError']  . '
+                    ' . $_SESSION['fileImage']  . '
+                </div>
+            ';
+        } else if(isset($_SESSION["fileType"])) {
+            echo '
+                <div class="alert alert-error text-center" role="alert">
+                    ' . $_SESSION['fileError']  . '
+                    ' . $_SESSION['fileType']  . '
+                </div>
+            ';
+        }
+        
+        ?>
+
         <div class="row">
-            <div class="col">
-            
-            <?php
-
-                if(isset($_SESSION['message']) && $_SESSION['alert']) {
-                    echo '
-                        <div class="' . $_SESSION["alert"] . ' mb-3" role="alert">
-                            <p class="text-center">' . $_SESSION["message"]  . '</p>
-                        </div>
-                    ';
-                }
-            
-            ?>
-
-            <h2 class="text-center mt-3">Reservation Summary</h2>
-            <hr />
-            <div class="row">
                 <div class="col">
 
                     <?php
@@ -55,12 +93,24 @@ if(isset($_REQUEST["reference_no"])) {
                     } 
                     
                     ?>
+
+
+                    <?php
                     
-                </div>
+                    if($isPaymentUploaded) {
+                        echo '<button type="button" class="btn btn-info float-right mr-2" data-toggle="modal" data-target="#uploadPaymentModal">Upload Payment</button>';
+                    }
+                    
+                    ?>
+
+
             </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-12">
             
-            <h5 class="text-center mt-3">Guest Details</h5>
-            <hr />
             <?php
             // INNER JOIN booking_rooms BR ON RES.id = BR.reservation_id  INNER JOIN rooms R ON BR.room_id = R.Id
             $reservation_details_query = "SELECT * FROM reservation RES
@@ -70,7 +120,10 @@ if(isset($_REQUEST["reference_no"])) {
             $reservation_details_result = mysqli_query($db, $reservation_details_query);
 
             if($reservation_details_result) {
-                echo '
+                $html .= '
+                <h5 class="text-center mt-3 text-info mt-3">Guest Details</h5>
+                <hr />
+
                 <div class="row">
                     <div class="col">
                 ';
@@ -79,49 +132,46 @@ if(isset($_REQUEST["reference_no"])) {
 
                     $dateDiff = date_diff(date_create($reservation["check_in_date"]), date_create($reservation["check_out_date"]));
                     $diff = $dateDiff->format('%d');
+                    $payment_photo = $reservation["payment_path"];
 
-                    echo '
-                        <table style="width: 60%; margin: 0 auto;">
+                    $html .= '
+                        <table style="width: 60%; margin: 0 auto;" class="table table-bordered">
                             <tr>
-                                <th style="width: 30%;" class="text-right pr-5 pb-3">First Name:</th>
+                                <th style="width: 30%;" class="text-right pr-4 pb-3">FIRST NAME</th>
                                 <td style="width: 70%;" class="pb-3 pl-4">' . $reservation["first_name"]  . '</td>
                             </tr>
                             <tr>
-                                <th style="width: 30%;" class="text-right pr-5 pb-3">Last Name:</th>
+                                <th style="width: 30%;" class="text-right pr-4 pb-3">LAST NAME</th>
                                 <td style="width: 70%;" class="pb-3 pl-4">' . $reservation["last_name"] . '</td>
                             </tr>
                             <tr>
-                                <th style="width: 30%;" class="text-right pr-5 pb-3">Email:</th>
+                                <th style="width: 30%;" class="text-right pr-4 pb-3">EMAIL</th>
                                 <td style="width: 70%;" class="pb-3 pl-4">' . $reservation["email"] . '</td>
                             </tr>
                             <tr>
-                                <th style="width: 30%;" class="text-right pr-5 pb-3">Address:</th>
+                                <th style="width: 30%;" class="text-right pr-4 pb-3">ADDRESS</th>
                                 <td style="width: 70%;" class="pb-3 pl-4">' . $reservation["address"] . '</td>
-                            </tr>
-                            <tr>
-                                <th style="width: 30%;" class="text-right pr-5 pb-3">Status:</th>
-                                <td style="width: 70%;" class="pb-3 pl-4">' . $reservation["status"] . '</td>
                             </tr>
                         </table>
                         <br />
 
-                        <h5 class="text-center mt-3">Booking Details</h5>
+                        <h5 class="text-center mt-3 table text-info" >Booking Details</h5>
                         <hr />
-                        <table style="width: 60%; margin: 0 auto;">
+                        <table style="width: 60%; margin: 0 auto;" class="table table-bordered">
                             <tr>
-                                <th style="width: 30%;" class="text-right pr-5 pb-3"><b>Check-in Date: </b></th>
+                                <th style="width: 30%;" class="text-right pr-4 pb-3"><b>CHECK-IN DATE</b></th>
                                 <td style="width: 70%;" class="pb-3 pl-4">' . date_format(new Datetime($reservation["check_in_date"]), "m-d-Y")  . '</td>
                             </tr>
                             <tr>
-                                <th style="width: 30%;" class="text-right pr-5 pb-3"><b>Check-out Date: </b></th>
+                                <th style="width: 30%;" class="text-right pr-4 pb-3"><b>CHECK-OUT DATE</b></th>
                                 <td style="width: 70%;" class="pb-3 pl-4">' . date_format(new Datetime($reservation["check_out_date"]), "m-d-Y") . '</td>
                             </tr>
                             <tr>
-                                <th style="width: 30%;" class="text-right pr-5 pb-3"><b>Day/s: </b></th>
+                                <th style="width: 30%;" class="text-right pr-4 pb-3"><b>NIGHT/S</b></th>
                                 <td style="width: 70%;" class="pb-3 pl-4">' . $diff . '</td>
                             </tr>
                             <tr>
-                                <th style="width: 30%;" class="text-right pr-5 pb-3"><b>Guest/s Number: </b></th>
+                                <th style="width: 30%;" class="text-right pr-4 pb-3"><b>GUEST/S NUMBER</b></th>
                                 <td style="width: 70%;" class="pb-3 pl-4"><span>Adult: ' . $reservation["adult_count"] .  '</span> <span>Kids: ' . $reservation["kids_count"] . '</span></td>
                             </tr>
                         </table>
@@ -131,7 +181,7 @@ if(isset($_REQUEST["reference_no"])) {
                     ';
                 }
 
-                echo '
+                $html .= '
                         </div>
                     </div>
                 ';
@@ -151,16 +201,16 @@ if(isset($_REQUEST["reference_no"])) {
             $room_reservation_details_result = mysqli_query($db, $room_reservation_details_query);
 
             if($room_reservation_details_result) {
-
-                echo '<h5 class="text-center mt-3">Room Details</h5>';
-                echo '
+                
+                $room_html .= '<br><h5 class="text-center mt-3 text-info">Room Details</h5>';
+                $room_html .= '
                     <hr />  
-                    <table style="width: 100%;">
+                    <table style="width: 100%;" class="table table-bordered">
                     <tr>
-                        <th class="text-center" style="width: 55%;">Room/s Reserve</th>
-                        <th class="text-center" style="width: 15%;">Quantity</th>
-                        <th class="text-center" style="width: 15%;">Price</th>
-                        <th class="text-center" style="width: 15%;">Total</th>
+                        <th class="text-center" style="width: 55%;">ROOMS/S RESERVE</th>
+                        <th class="text-center" style="width: 15%;">QUANTITY</th>
+                        <th class="text-center" style="width: 15%;">PRICE</th>
+                        <th class="text-center" style="width: 15%;">TOTAL</th>
                     </tr>
                 
                 ';
@@ -171,7 +221,7 @@ if(isset($_REQUEST["reference_no"])) {
 
                     $total_price = $room_reservation["peak_rate"] * $room_reservation["quantity"];
 
-                    echo '
+                    $room_html .= '
                         <tr>
                             <td class="text-center" style="width: 55%;">' . $room_reservation["type"] . '</td>
                             <td class="text-center" style="width: 15%;">' . $room_reservation["quantity"] . '</td>
@@ -183,29 +233,99 @@ if(isset($_REQUEST["reference_no"])) {
                     $overall_total_price += $total_price;
                 }
                 
+                // echo '
+                //     <tr>
+                //         <td></td>
+                //         <td></td>
+                //         <td></td>
+                //         <td class="text-center"><b>PHP '  . number_format($overall_total_price, 2) .  '</b></td>
+                //     </tr>
+                // ';
 
-                echo '
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="text-center"><b>PHP '  . number_format($overall_total_price, 2) .  '</b></td>
-                    </tr>
-                ';
-
-                echo '</table>';
+                $room_html .= '</table>';
             }
             ?>
+ 
+            <?php
+            
+            $overall_total_amount = $diff * $overall_total_price;
+            $vatable_amount = $overall_total_amount / 1.12;
+            $vat = $overall_total_amount - $vatable_amount;
+            
+            $payment_html .= '
 
+                <br>
+                <h5 class="text-center mt-3 text-info mt-3">Payment Details</h5>
+                <hr />
 
+                <table style="width: 40%; margin: 0 auto;" class="table table-bordered">
+                    <tr>
+                        <td class="text-center"><h6>TOTAL AMOUNT</h6></td>
+                        <td class="text-right pr-4 pb-3">PHP ' . number_format($overall_total_amount, 2)  . '</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><h6>Total Room Fee</h6></td>
+                        <td class="text-right pr-4 pb-3">' . number_format($overall_total_price, 2) . '</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><h6>VATABLE AMOUNT</h6></td>
+                        <td class="text-right pr-4 pb-3">' . number_format($vatable_amount, 2) . '</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><h6>VALUE ADDED TAX</h6></td>
+                        <td class="text-right pr-4 pb-3">' . number_format($vat, 2) . '</td>
+                    </tr>
+                </table>
+  
+            ';
+
+            ?>
+
+            <?php echo $html; ?>
+            <?php echo $payment_html; ?>
+           
+            <?php
+            
+            if($payment_photo != '') {
+                echo '
+                
+                <br>
+                <h5 class="text-center mt-3 text-info mt-3">Deposit Slip Details</h5>
+                <hr />
+                
+                ';
+                echo '<div style="text-align: center;"><img style="width: 50%; height: 25%;" src="' . $payment_photo .   '"></img></div>';
+                echo '
+                    <br>
+                    <div class="text-center">
+                        <p>Please wait an email from the resort administrator for the processing of your payment.</p>
+                    
+                    </div>
+                ';
+            }            
+            
+            ?>
+            
+            <?php echo $room_html; ?>
 
 
             <br />
-            <hr />
+            <hr>
+        
+
+
+        </div>
+
+
+
 
             </div>
-        </div>   
-    </div>  
+        </div>
+    </div>
+
+
+    
+
 
 
     <div class="container">
@@ -225,6 +345,7 @@ if(isset($_REQUEST["reference_no"])) {
 <?php
 
 include('common/cancel_reservation_modal.php');
+include('common/upload_payment_modal.php');
 include('common/footer.php');
 
 session_destroy();

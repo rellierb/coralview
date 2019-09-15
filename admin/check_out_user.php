@@ -20,6 +20,7 @@ $nights_of_stay = 0;
 
 $TOTAL_PRICE = 0;
 
+$payment_photo = '';
 
 ?>
 
@@ -87,6 +88,7 @@ $TOTAL_PRICE = 0;
                                             $full_name = $reservation["first_name"] . " " . $reservation["last_name"];
                                             $guest_number = $reservation["adult_count"];
                                             $payment_type = $reservation["payment"];
+                                            $payment_photo = $reservation['payment_path'];
 
                                             echo '
                                                 <table class="table table-bordered">
@@ -141,6 +143,34 @@ $TOTAL_PRICE = 0;
                                     echo '<input type="hidden" id="guestNumber" value="' . $guest_number . '">';
 
                                     ?>
+
+                                    <div class="row">
+                                        <div class="col">
+
+                                        <br>
+                                        <h5 class="text-center mt-3 text-info">DEPOSIT SLIP PAYMENT</h5>
+                                        
+                                        <?php
+                                        
+                                            echo '
+                                            
+                                            <div style="text-align: center;">
+                                            
+                                                <img src="' . $payment_photo . '" style="width: 50%; height: 50%;" />
+                                            
+                                            </div>
+                                            
+                                            
+                                            ';
+                                        
+                                        ?>
+
+                                        <br>
+                                        
+                                        </div>
+                                    </div>
+
+
 
                                     <?php
                                         

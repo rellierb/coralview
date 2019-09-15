@@ -16,6 +16,8 @@ if(isset($_REQUEST["reference_no"])) {
 $days_of_stay = 0;
 $status = '';
 
+$payment_photo = '';
+
 ?>
 
     <?php include('../common/admin_sidebar.php') ?>
@@ -80,6 +82,7 @@ $status = '';
                                             $days_of_stay = $diff;
                                             $full_name = $reservation["first_name"] . " " . $reservation["last_name"];
                                             $status = $reservation["status"];
+                                            $payment_photo = $reservation['payment_path'];
 
                                             echo '
                                             <table class="table table-bordered">
@@ -134,6 +137,29 @@ $status = '';
                                     ?>
                                 </div>
 
+                                <div class="col-12">
+                                    <br>
+                                    <h5 class="text-center mt-3 text-info">DEPOSIT SLIP PAYMENT</h5>
+                                    
+                                    <?php
+                                    
+                                        echo '
+                                        
+                                        <div style="text-align: center;">
+                                        
+                                            <img src="' . $payment_photo . '" style="width: 50%; height: 50%;" />
+                                        
+                                        </div>
+                                        
+                                        
+                                        ';
+                                    
+                                    ?>
+
+                                    <br>
+                                </div>
+
+                              
                                 <div class="col-12">
                                 
                                     <?php

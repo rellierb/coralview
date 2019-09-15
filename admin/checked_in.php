@@ -24,6 +24,8 @@ $payment_type = '';
 $nights_of_stay = 0;
 $reservation_id = 0;
 
+$payment_photo = '';
+
 ?>
 
     <?php include('../common/admin_sidebar.php') ?>
@@ -87,6 +89,8 @@ $reservation_id = 0;
                                             $nights_of_stay = $diff;
                                             $full_name = $reservation["first_name"] . " " . $reservation["last_name"];
                                             $payment_type = $reservation["payment"];
+
+                                            $payment_photo = $reservation['payment_path'];
                                             
                                             echo '
                                                 <table class="table table-bordered">
@@ -141,58 +145,82 @@ $reservation_id = 0;
 
                                     ?>
 
+                                    <div class="col-12">
+                                    
+                                        <br>
+                                        <h5 class="text-center mt-3 text-info">DEPOSIT SLIP PAYMENT</h5>
+                                        
+                                        <?php
+                                        
+                                            echo '
+                                            
+                                            <div style="text-align: center;">
+                                            
+                                                <img src="' . $payment_photo . '" style="width: 50%; height: 50%;" />
+                                            
+                                            </div>
+                                            
+                                            
+                                            ';
+                                        
+                                        ?>
+
+                                        <br>
+                                    
+                                    </div>
+
                                     <?php
                                         
-                                        $room_reservation_details_query = "SELECT * FROM reservation RES
-                                            INNER JOIN guest G ON G.id = RES.guest_id
-                                            INNER JOIN booking_rooms BR ON RES.id = BR.reservation_id
-                                            INNER JOIN rooms R ON BR.room_id = R.Id
-                                            WHERE RES.reference_no = '$reference_no'";
+                                    $room_reservation_details_query = "SELECT * FROM reservation RES
+                                        INNER JOIN guest G ON G.id = RES.guest_id
+                                        INNER JOIN booking_rooms BR ON RES.id = BR.reservation_id
+                                        INNER JOIN rooms R ON BR.room_id = R.Id
+                                        WHERE RES.reference_no = '$reference_no'";
 
-                                        $room_reservation_details_result = mysqli_query($db, $room_reservation_details_query);
+                                    $room_reservation_details_result = mysqli_query($db, $room_reservation_details_query);
 
-                                        $rooms_reserved = array();
+                                    $rooms_reserved = array();
 
-                                        $quantity = 0;
+                                    $quantity = 0;
 
-                                        if($room_reservation_details_result) {
+                                    if($room_reservation_details_result) {
 
-                                            echo '<h5 class="text-center mt-3 text-info">RESERVED ROOM/S</h5>';
+                                        echo '<h5 class="text-center mt-3 text-info">RESERVED ROOM/S</h5>';
+                                        echo '
+                                            <table class="table table-bordered">
+                                            <tr>
+                                                <th class="text-center" style="width: 40%;">ROOM/S NAME</th>
+                                                <th class="text-center" >QUANTITY</th>
+                                                <th class="text-center" >PRICE</th>
+                                                <th class="text-center" >TOTAL</th>
+                                            </tr>
+                                        ';
+
+                                        while($room_reservation = mysqli_fetch_assoc($room_reservation_details_result)) {
+                                            
+                                            $room_id = $room_reservation["room_id"];
+                                            $room_quantity = $room_reservation["quantity"];
+                                            $rooms_reserved[$room_id] = $room_quantity; 
+                                            $quantity += $room_quantity;
+                                            $total_price = $room_reservation["peak_rate"] * $room_reservation["quantity"];
+
                                             echo '
-                                                <table class="table table-bordered">
                                                 <tr>
-                                                    <th class="text-center" style="width: 40%;">ROOM/S NAME</th>
-                                                    <th class="text-center" >QUANTITY</th>
-                                                    <th class="text-center" >PRICE</th>
-                                                    <th class="text-center" >TOTAL</th>
+                                                    <td class="text-center" >' . $room_reservation["type"] . '</td>
+                                                    <td class="text-center" >' . $room_reservation["quantity"] . '</td>
+                                                    <td class="text-center" >' . number_format($room_reservation["peak_rate"], 2)   . '</td>
+                                                    <td class="text-center" > ' . number_format($total_price, 2)  . '</td>
                                                 </tr>
                                             ';
-
-                                            while($room_reservation = mysqli_fetch_assoc($room_reservation_details_result)) {
-                                                
-                                                $room_id = $room_reservation["room_id"];
-                                                $room_quantity = $room_reservation["quantity"];
-                                                $rooms_reserved[$room_id] = $room_quantity; 
-                                                $quantity += $room_quantity;
-                                                $total_price = $room_reservation["peak_rate"] * $room_reservation["quantity"];
-
-                                                echo '
-                                                    <tr>
-                                                        <td class="text-center" >' . $room_reservation["type"] . '</td>
-                                                        <td class="text-center" >' . $room_reservation["quantity"] . '</td>
-                                                        <td class="text-center" >' . number_format($room_reservation["peak_rate"], 2)   . '</td>
-                                                        <td class="text-center" > ' . number_format($total_price, 2)  . '</td>
-                                                    </tr>
-                                                ';
-                                                $total_room_amount += $total_price;
-                                                $overall_total_price += $total_price;
-                                                $TOTAL_PRICE += $total_price;
-                                            }
-                                            
-
-                                            echo '</table>';
+                                            $total_room_amount += $total_price;
+                                            $overall_total_price += $total_price;
+                                            $TOTAL_PRICE += $total_price;
                                         }
-                                        ?>
+                                        
+
+                                        echo '</table>';
+                                    }
+                                    ?>
                                 
                                 </div>
 
@@ -365,9 +393,6 @@ $reservation_id = 0;
                                             $overall_total_price += $add_fees_amount;
                                             $TOTAL_PRICE += $add_fees_amount;
                                             $TOTAL_PRICE += $overall_total_extra;
-                                            
-                                            echo $TOTAL_PRICE;
-
 
                                             ?>
 

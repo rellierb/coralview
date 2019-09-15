@@ -29,7 +29,6 @@ $overall_total_extra = 0;
 $payment_type = '';
 $nights_of_stay = 0;
 $is_peak_rate;
-
 $payment_photo = '';
 
 ?>
@@ -40,7 +39,7 @@ $payment_photo = '';
     
         <div class="main-panel">
             <div class="container-fluid">
-                <h1>Accept Reservation</h1>
+                <h1>Pending Reservation</h1>
                 
                 <?php
         
@@ -89,9 +88,8 @@ $payment_photo = '';
                                             $nights_of_stay = $diff;
                                             $full_name = $reservation["first_name"] . " " . $reservation["last_name"];
                                             $payment_type = $reservation["payment"];
-                                            $payment_photo = $reservation['payment_path'];
                                             $status = $reservation["status"];
-                                            
+                                            $payment_photo = $reservation['payment_path'];
                                             $is_peak_rate = $reservation["is_peak_rate"];
 
                                             echo '
@@ -306,7 +304,7 @@ $payment_photo = '';
 
 
                                     <br>
-                                    <h5 class="text-center mt-3 text-info">DEPOSIT SLIP PAYMENT</h5>
+                                    <h5 class="text-center mt-3 text-info">Deposit Slip Payment</h5>
                                     
                                     <?php
                                     
@@ -323,7 +321,8 @@ $payment_photo = '';
                                     
                                     ?>
 
-                                    <br>
+
+
         
                                     <h5 class="text-center mt-3 text-info">RESERVATION DOWN PAYMENT</h5>
                                     
@@ -354,7 +353,7 @@ $payment_photo = '';
                                     </table>
 
                                     <br>
-                                    <h5 class="text-center text-info mt-3">Downpayment Details</h5>
+                                    <!-- <h5 class="text-center text-info mt-3">Downpayment Details</h5> -->
                                 
                                     <input type="hidden" name="down_payment_reference_no" value="<?php echo $reference_no; ?>">
                                     <input type="hidden" name="down_payment_total_amount" value="<?php echo $total_price; ?>">
@@ -367,7 +366,7 @@ $payment_photo = '';
                                     }
                                     ?>
                                     <div>
-                                        <div class="form-row">
+                                        <!-- <div class="form-row">
                                             <p class="col-3 text-right pr-4" for="dpAmount">Amount</p>
                                             <input type="number" name="down_payment_amount" class="form-control col-6" <?php echo $disabled; ?> id="dpAmount" min="0">
                                         </div>
@@ -375,7 +374,7 @@ $payment_photo = '';
                                         <div class="form-row">
                                             <p class="col-3 text-right pr-4" for="dpDescription">Description</p>
                                             <textarea class="form-control col-6" name="down_payment_description" id="dpDescription" <?php echo $disabled; ?> placeholder="Enter Deposit slip details"></textarea>
-                                        </div>
+                                        </div> -->
 
                                         <br>
 
@@ -384,7 +383,8 @@ $payment_photo = '';
                                                 <?php
                                                 
                                                 if($status == 'PENDING') {
-                                                    echo '<button type="submit" class="btn btn-success btn-block float-right ">ACCEPT RESERVATION</button>';
+                                                    echo '<a href="accept.php?reference_no=' . $reference_no . '" class="btn btn-success btn-block float-right ">ACCEPT RESERVATION</a>';
+                                                    echo '<a href="reject.php?reference_no=' . $reference_no . '" class="btn btn-danger btn-block float-right ">REJECT RESERVATION</a>';
                                                 }
                                                 
                                                 ?>

@@ -19,6 +19,8 @@ $payment_type = '';
 $nights_of_stay = 0;
 $reservation_id = 0;
 
+$payment_photo = '';
+
 ?>
 
     <?php include('../common/admin_sidebar.php') ?>
@@ -85,6 +87,7 @@ $reservation_id = 0;
                                             $guest_number = $reservation["adult_count"] + $reservation["kids_count"];
                                             $full_name = $reservation["first_name"] . " " . $reservation["last_name"];
                                             $payment_type = $reservation["payment"];
+                                            $payment_photo = $reservation['payment_path'];
 
                                             echo '
                                                 <table class="table table-bordered">
@@ -138,6 +141,30 @@ $reservation_id = 0;
                                 
 
                                     ?>
+
+                                    <br>
+                                    <h5 class="text-center mt-3 text-info">DEPOSIT SLIP PAYMENT</h5>
+                                    
+                                    <?php
+                                    
+                                        echo '
+                                        
+                                        <div style="text-align: center;">
+                                        
+                                            <img src="' . $payment_photo . '" style="width: 50%; height: 50%;" />
+                                        
+                                        </div>
+                                        
+                                        
+                                        ';
+                                    
+                                    ?>
+
+                                    <br>
+        
+
+
+
 
                                     <div class="float-right">
                                         <button type="button" data-toggle="modal" data-target="#upgradeRoom" style="color-white" class="btn btn-primary">Upgrade Rooms</button>

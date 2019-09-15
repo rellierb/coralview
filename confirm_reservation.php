@@ -9,8 +9,8 @@ require('functions/assets/connection.php');
 
 $db = connect_to_db();
 
-if(isset($_REQUEST["refence_no"])) {
-    $reference_no = $_REQUEST["refence_no"];
+if(isset($_REQUEST["reference_no"])) {
+    $reference_no = $_REQUEST["reference_no"];
 }
 
 $html = '';

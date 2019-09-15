@@ -31,12 +31,13 @@ $(document).ready(function(){
 
         let inputNoOfDays = document.getElementById('inputNoOfDays');
         
-        let arrivalDateMinDate;
-        if(windowUrl.indexOf('reserve.ph') > 0) {
-            arrivalDateMinDate = datePlusTwoThree(arrivalDateData.currentDate);
-        } else {
-            arrivalDateMinDate = arrivalDateData.currentDate;
-        }
+        let arrivalDateMinDate = arrivalDateData.currentDate;
+
+        // if(windowUrl.indexOf('reserve.ph') > 0) {
+        //     arrivalDateMinDate = datePlusTwoThree(arrivalDateData.currentDate);
+        // } else {
+        //     arrivalDateMinDate = arrivalDateData.currentDate;
+        // }
         
 
         $('#arrivalDate').datepicker({

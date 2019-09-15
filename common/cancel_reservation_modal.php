@@ -12,14 +12,6 @@
                 </div>
                 <div class="modal-body">
                     <p>Are you sure you want to cancel your reservation?</p>
-
-                    <p>Please see rules on cancellation<p>
-                    <ul>
-                        <li>Lorem Ipsum</li>
-                        <li>Lorem Ipsum</li>
-                        <li>Lorem Ipsum</li>
-                        <li>Lorem Ipsum</li>
-                    </ul>
                 </div>
                 <div class="modal-footer p-3">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
