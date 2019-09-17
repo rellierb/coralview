@@ -24,17 +24,20 @@ include('common/navbar.php');
                         </p>
 
                         <div class="row mb-5">
-                            <div class="col-3"></div>
+                            <div class="col-2"></div>
                             <div class="col-2">
-                                <a href="" class="btn btn-primary btn-block animated bounce ">BOOK NOW</a>
+                                <a href="reserve.php" class="btn btn-primary btn-block animated bounce ">BOOK NOW</a>
                             </div>
                             <div class="col-2">
-                                <a href="" class="btn btn-info btn-block">VIEW ROOMS</a>
+                                <a href="rooms.php" class="btn btn-info btn-block">VIEW ROOMS</a>
                             </div>
                             <div class="col-2">
-                                <a href="" class="btn btn-info btn-block">VIEW FACILITIES</a>
+                                <a href="facilities.php" class="btn btn-info btn-block">VIEW FACILITIES</a>
                             </div>
-                            <div class="col-3"></div>
+                            <div class="col-2">
+                                <a href="house_rules.php" class="btn btn-info btn-block">HOUSE RULES</a>
+                            </div>
+                            <div class="col-2"></div>
                         </div>
 
                     </div>

@@ -27,9 +27,9 @@ $peak_date_end_2 = date("Y-m-d", strtotime("01/01/2020"));
 $type_of_rate = "";
 
 if((($date_today >= $off_peak_date_start_1) && ($date_today <= $off_peak_date_end_1)) || (($date_today >= $off_peak_date_start_2) && ($date_today <= $off_peak_date_end_2))) {
-    $type_of_rate = "PEAK"; 
-} else if((($date_today >= $peak_date_start_1) && ($date_today <= $peak_date_end_1)) || (($date_today >= $peak_date_start_2) && ($date_today <= $peak_date_end_2))) {
     $type_of_rate = "OFF-PEAK";
+} else if((($date_today >= $peak_date_start_1) && ($date_today <= $peak_date_end_1)) || (($date_today >= $peak_date_start_2) && ($date_today <= $peak_date_end_2))) {
+    $type_of_rate = "PEAK"; 
 }
 
 
@@ -118,13 +118,13 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today <= $off_peak_date_en
                                         <?php
                                         
                                         if($type_of_rate == "OFF-PEAK") {
+                                            echo '<h5 class="text-center text-info">Room prices is OFF-PEAK rate.</h5>';
+                                            $off_peak_rate_class = "coralview-blue font-weight-bolder";
+                                            $peak_rate_class = "";                                            
+                                        } else if($type_of_rate == "PEAK") {
                                             echo '<h5 class="text-center text-info">Room prices is PEAK rate.</h5>';
                                             $peak_rate_class = "coralview-blue font-weight-bolder";
                                             $off_peak_rate_class = "";
-                                        } else if($type_of_rate == "PEAK") {
-                                            echo '<h5 class="text-center text-info">Room prices is OFF-PEAK rate.</h5>';
-                                            $off_peak_rate_class = "coralview-blue font-weight-bolder";
-                                            $peak_rate_class = "";
                                         }
                                         
                                         ?>
@@ -133,7 +133,7 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today <= $off_peak_date_en
 
                                         <?php
 
-                                        $rooms_query = "SELECT rooms.type, rooms.image, rooms.inclusions, rooms.peak_rate, rooms.off_peak_rate, room_id, count('room_id') as room_count FROM `rooms_status` INNER JOIN rooms ON rooms.Id = rooms_status.room_id  WHERE rooms_status.status = 'AVAILABLE' GROUP BY `room_id` ASC";
+                                        $rooms_query = "SELECT rooms.type, rooms.capacity, rooms.image, rooms.inclusions, rooms.peak_rate, rooms.off_peak_rate, room_id, count('room_id') as room_count FROM `rooms_status` INNER JOIN rooms ON rooms.Id = rooms_status.room_id  WHERE rooms_status.status = 'AVAILABLE' GROUP BY `room_id` ASC";
                                         $rooms_result = mysqli_query($db, $rooms_query);
         
                                         if(mysqli_num_rows($rooms_result) > 0) {
@@ -147,6 +147,7 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today <= $off_peak_date_en
                                                                 <img src="' . $room['image'] . '" style="border-radius: 0; width: 100%;">
                                                             </div>
                                                             <div class="col-5">
+                                                                <p>Room capacity: ' . $room['capacity'] . '<p>
                                                                 ' . $room['inclusions'] . '
                                                             </div>
                                                             <div class="col-4">
