@@ -126,7 +126,7 @@ $payment_photo = '';
                                                         <td class="pb-3 pl-4">' . date_format(new Datetime($reservation["check_out_date"]), "m-d-Y") . '</td>
                                                         <th class="pr-3 pb-3"><b>NIGHT/S </b></th>
                                                         <td class="pb-3 pl-4">' . $diff . '</td>
-                                                        
+                                                        1000000
                                                     </tr>
                                                    
                                                 </table>
@@ -144,31 +144,34 @@ $payment_photo = '';
                                 
 
                                     ?>
-
-                                    <div class="col-12">
+                                        
+                                    <?php
                                     
-                                        <br>
-                                        <h5 class="text-center mt-3 text-info">DEPOSIT SLIP PAYMENT</h5>
-                                        
-                                        <?php
-                                        
-                                            echo '
+                                    if($payment_photo != '') {
+
+                                        echo '
+
+                                            <div class="col-12">
+                                    
+                                                <br>
+                                                <h5 class="text-center mt-3 text-info">DEPOSIT SLIP PAYMENT</h5>
                                             
-                                            <div style="text-align: center;">
-                                            
-                                                <img src="' . $payment_photo . '" style="width: 50%; height: 50%;" />
-                                            
+                                                <div style="text-align: center;">
+                                                
+                                                    <img src="' . $payment_photo . '" style="width: 50%; height: 50%;" />
+                                                
+                                                </div>
+                                                
+                                                <br>
+                                    
                                             </div>
-                                            
-                                            
-                                            ';
                                         
-                                        ?>
-
-                                        <br>
+                                        ';
+                                    } 
                                     
-                                    </div>
+                                    ?>
 
+                                       
                                     <?php
                                         
                                     $room_reservation_details_query = "SELECT * FROM reservation RES
@@ -527,16 +530,22 @@ $payment_photo = '';
                                         </div>
 
                                     </div>
+                    
                                     <br>
                                 </div>
-                            
+                                
+
+                                <div class="col-12">
+                                    <a class="btn btn-primary btn-block" style="color: white;" href="early_check_out.php">Proceed to Early Checkout</a>
+                                </div>
+                              
                             </div>
                             
                             <br>
                             <br>
 
-                            </div>
-                        </div>
+                           
+
                     </div>
                 </div>
 

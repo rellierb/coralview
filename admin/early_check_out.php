@@ -30,7 +30,7 @@ $payment_photo = '';
         <input type="hidden" name="reference_no" value="<?php echo $reference_no; ?>" >
         <div class="main-panel">
             <div class="container-fluid">
-                <h1>Reservation Check-out</h1>
+                <h1>Reservation Early Check-out</h1>
                 
                 <?php
         
@@ -145,34 +145,35 @@ $payment_photo = '';
                                     ?>
 
                                     <?php
-                                    
+
+                                        
                                     if($payment_photo != '') {
 
                                         echo '
                                         
                                             <div class="row">
                                                 <div class="col">
-        
+
                                                 <br>
                                                 <h5 class="text-center mt-3 text-info">DEPOSIT SLIP PAYMENT</h5>
-
+                                            
                                                 <div style="text-align: center;">
                                                 
                                                     <img src="' . $payment_photo . '" style="width: 50%; height: 50%;" />
                                                 
                                                 </div>
                                                 
-                                                
+                                                <br>
+                                        
                                                 </div>
                                             </div>
-                                            
+
                                         ';
 
                                     }
-
+                                        
+                                    
                                     ?>
-
-                                    <br>
 
                                     <?php
                                         

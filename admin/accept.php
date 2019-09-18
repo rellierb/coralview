@@ -305,21 +305,29 @@ $payment_photo = '';
                                     ?>
 
 
-                                    <br>
-                                    <h5 class="text-center mt-3 text-info">DEPOSIT SLIP PAYMENT</h5>
+                                    
                                     
                                     <?php
                                     
-                                        echo '
+                                        if($payment_photo != '') {
+
+                                            echo '
                                         
-                                        <div style="text-align: center;">
+                                                <br>
+                                                <h5 class="text-center mt-3 text-info">DEPOSIT SLIP PAYMENT</h5>
+
+                                                <div style="text-align: center;">
+                                                
+                                                    <img src="' . $payment_photo . '" style="width: 50%; height: 50%;" />
+                                                
+                                                </div>
+                                            
+                                            
+                                            ';
+
+                                        }
+
                                         
-                                            <img src="' . $payment_photo . '" style="width: 50%; height: 50%;" />
-                                        
-                                        </div>
-                                        
-                                        
-                                        ';
                                     
                                     ?>
 

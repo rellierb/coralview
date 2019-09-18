@@ -1,7 +1,12 @@
 <?php
 
 session_start();
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 require('../assets/connection.php');
+require('../../composer/vendor/autoload.php');
 
 $db = connect_to_db();
 
@@ -15,41 +20,43 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $reference_no = mysqli_real_escape_string($db, trim($_POST['reference_no']));
     }
     
-    if(!empty($_POST["check_out_add_payment"])) {
-        $check_out_payment = mysqli_real_escape_string($db, trim($_POST['check_out_add_payment']));
-    } 
+    // if(!empty($_POST["check_out_add_payment"])) {
+    //     $check_out_payment = mysqli_real_escape_string($db, trim($_POST['check_out_add_payment']));
+    // } 
+
     // else {
     //     $_SESSION['empty_payment'] = "Additional Payment field is empty";
     // }
   
-    if(!empty($_POST["check_out_description"])) {
-        $check_out_description = mysqli_real_escape_string($db, trim($_POST['check_out_description']));
-    } 
+    // if(!empty($_POST["check_out_description"])) {
+    //     $check_out_description = mysqli_real_escape_string($db, trim($_POST['check_out_description']));
+    // } 
+
     // else {
     //     $_SESSION['empty_description'] = "Description field is empty";
     // }
 
-    if(!empty($_SESSION['empty_description']) && !empty($_SESSION['empty_payment'])) {
-        header("location: ../../admin/check_out_user.php?reference_no=$reference_no");
-    } else {
+    // if(!empty($_SESSION['empty_description']) && !empty($_SESSION['empty_payment'])) {
+    //     header("location: ../../admin/check_out_user.php?reference_no=$reference_no");
+    // } else {
 
-        $insert_query = "
-            INSERT INTO billing (reference_no, amount_paid, total_amount, description, time_stamp)
-            VALUES ('$reference_no', '$check_out_payment', NULL, '$check_out_description', NOW())
-        ";
+    //     $insert_query = "
+    //         INSERT INTO billing (reference_no, amount_paid, total_amount, description, time_stamp)
+    //         VALUES ('$reference_no', '$check_out_payment', NULL, '$check_out_description', NOW())
+    //     ";
 
-        $insert_result = mysqli_query($db, $insert_query);
+    //     $insert_result = mysqli_query($db, $insert_query);
 
-        if(!$insert_result) {
+    //     if(!$insert_result) {
             
-            $_SESSION['msg'] = "Payment transaction cannot be processed";
-            $_SESSION['alert'] = "alert alert-danger";
+    //         $_SESSION['msg'] = "Payment transaction cannot be processed";
+    //         $_SESSION['alert'] = "alert alert-danger";
 
-            header("location: ../../admin/check_out_user.php?reference_no=$reference_no");
+    //         header("location: ../../admin/check_out_user.php?reference_no=$reference_no");
 
-        } 
+    //     } 
 
-    }
+    // }
     
     $find_room_id_query = "SELECT room_number FROM check_in_rooms WHERE reference_no='$reference_no'";
     $find_room_id_result = mysqli_query($db, $find_room_id_query);
@@ -94,7 +101,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     $mail->setFrom('coralviewthesis@gmail.com');
                     $mail->isHTML(true);
-                    $mail->addAddress($emai);
+                    $mail->addAddress($email);
                     $mail->Subject = 'Coralview Beach Resort Thank you Message';
                     $mail->Body = $message;
                     $mail->send();
