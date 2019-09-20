@@ -160,7 +160,7 @@ $(document).ready(function(){
 
             } else if(childCount == 0 || childCount === '') {
 
-                toastr.error('Kids count is empty');
+                toastr.info('Kids count is empty');
                 spanNoOfGuests.innerHTML = adultCount;
 
             }else {

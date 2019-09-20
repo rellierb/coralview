@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 13, 2019 at 08:43 PM
+-- Generation Time: Sep 20, 2019 at 08:02 PM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -31,8 +31,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `billing` (
   `id` int(11) NOT NULL,
   `reference_no` varchar(255) DEFAULT NULL,
-  `amount_paid` decimal(10,0) DEFAULT NULL,
-  `total_amount` decimal(10,0) DEFAULT NULL,
+  `amount_paid` decimal(10,2) DEFAULT NULL,
+  `total_amount` decimal(10,2) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `time_stamp` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -42,13 +42,17 @@ CREATE TABLE `billing` (
 --
 
 INSERT INTO `billing` (`id`, `reference_no`, `amount_paid`, `total_amount`, `description`, `time_stamp`) VALUES
-(15, 'CRLVW-A2009D2', '22500', NULL, 'Customer Client Payment', '2019-08-27 05:09:23'),
-(21, 'CRLVW-3F311FB', '9180', NULL, 'Customer Client Payment', '2019-09-01 16:11:14'),
-(22, 'CRLVW-1C800E0', '4180', NULL, 'Customer Client Payment', '2019-09-01 19:28:09'),
-(23, 'CRLVW-1C800E0', '3240', NULL, 'Customer Client Payment', '2019-09-01 20:37:43'),
-(25, 'CRLVW-AB8972E', '10840', NULL, 'Customer Client Payment', '2019-09-08 22:44:21'),
-(26, 'CRLVW-F5A7097', '17400', NULL, 'PAID', '2019-09-13 23:53:28'),
-(27, 'CRLVW-F5A7097', '1200', NULL, 'Customer Client Payment', '2019-09-14 00:39:08');
+(15, 'CRLVW-A2009D2', '22500.00', NULL, 'Customer Client Payment', '2019-08-27 05:09:23'),
+(21, 'CRLVW-3F311FB', '9180.00', NULL, 'Customer Client Payment', '2019-09-01 16:11:14'),
+(22, 'CRLVW-1C800E0', '4180.00', NULL, 'Customer Client Payment', '2019-09-01 19:28:09'),
+(23, 'CRLVW-1C800E0', '3240.00', NULL, 'Customer Client Payment', '2019-09-01 20:37:43'),
+(25, 'CRLVW-AB8972E', '10840.00', NULL, 'Customer Client Payment', '2019-09-08 22:44:21'),
+(26, 'CRLVW-F5A7097', '17400.00', NULL, 'PAID', '2019-09-13 23:53:28'),
+(27, 'CRLVW-F5A7097', '1200.00', NULL, 'Customer Client Payment', '2019-09-14 00:39:08'),
+(28, 'CRLVW-1C800E0', '2580.00', NULL, 'Customer Client Payment', '2019-09-18 09:42:57'),
+(30, 'CRLVW-EC7C30B', '29242.86', NULL, 'Customer Client Payment', '2019-09-20 22:00:08'),
+(31, 'CRLVW-EC7C30B', '100.00', NULL, 'Complete Payment', '2019-09-20 22:45:15'),
+(32, 'CRLVW-EC7C30B', '10000.00', NULL, 'Complete', '2019-09-20 22:46:18');
 
 -- --------------------------------------------------------
 
@@ -73,7 +77,8 @@ INSERT INTO `billing_additional_fees` (`Id`, `reference_no`, `amount`, `descript
 (2, 'CRLVW-1C800E0', 1000, 'TEST', '2019-09-01 19:44:25'),
 (3, 'CRLVW-1C800E0', 1000, 'TEST 2', '2019-09-01 19:51:12'),
 (4, 'CRLVW-1C800E0', 1000, 'TEST 3', '2019-09-01 20:31:37'),
-(5, 'CRLVW-F5A7097', 1000, 'TEST', '2019-09-14 00:36:45');
+(5, 'CRLVW-F5A7097', 1000, 'TEST', '2019-09-14 00:36:45'),
+(6, 'CRLVW-EC7C30B', 10000, 'LATE Penalty', '2019-09-20 22:46:04');
 
 -- --------------------------------------------------------
 
@@ -99,7 +104,8 @@ INSERT INTO `billing_discount` (`Id`, `reference_no`, `discount_id`, `quantity`)
 (4, 'CRLVW-1C800E0', 2, 1),
 (5, 'CRLVW-3F311FB', 2, 1),
 (6, 'CRLVW-AB8972E', 2, 1),
-(7, 'CRLVW-F5A7097', 1, 1);
+(7, 'CRLVW-F5A7097', 1, 1),
+(8, 'CRLVW-EC7C30B', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -127,7 +133,9 @@ INSERT INTO `billing_extras` (`id`, `reference_no`, `expense_id`, `quantity`, `a
 (16, 'CRLVW-AB8972E', 2, 1, 100),
 (17, 'CRLVW-AB8972E', 1, 1, 100),
 (21, 'CRLVW-F5A7097', 2, 1, 100),
-(22, 'CRLVW-F5A7097', 1, 1, 100);
+(22, 'CRLVW-F5A7097', 1, 1, 100),
+(23, 'CRLVW-EC7C30B', 1, 1, 100),
+(24, 'CRLVW-EC7C30B', 2, 1, 100);
 
 -- --------------------------------------------------------
 
@@ -154,7 +162,11 @@ INSERT INTO `booking_rooms` (`id`, `reservation_id`, `room_id`, `quantity`) VALU
 (56, 82, 22, 2),
 (57, 82, 23, 2),
 (58, 94, 23, 1),
-(59, 94, 32, 1);
+(59, 94, 32, 1),
+(60, 95, 25, 1),
+(61, 95, 21, 2),
+(62, 96, 21, 2),
+(63, 97, 21, 3);
 
 -- --------------------------------------------------------
 
@@ -185,7 +197,10 @@ INSERT INTO `check_in_rooms` (`Id`, `reference_no`, `room_number`, `is_check_out
 (9, 'CRLVW-1C800E0', 'CRLVW-601', NULL),
 (10, 'CRLVW-1C800E0', 'CRLVW-602', NULL),
 (19, 'CRLVW-F5A7097', '\"DELUXE F\"', NULL),
-(20, 'CRLVW-F5A7097', 'DELUXE F', NULL);
+(20, 'CRLVW-F5A7097', 'DELUXE F', NULL),
+(21, 'CRLVW-EC7C30B', 'SUPER DELUXE M', NULL),
+(22, 'CRLVW-EC7C30B', 'SUPER DELUXE N', NULL),
+(23, 'CRLVW-EC7C30B', 'SUPER DELUXE O', NULL);
 
 -- --------------------------------------------------------
 
@@ -227,7 +242,9 @@ CREATE TABLE `downpayment` (
 INSERT INTO `downpayment` (`id`, `reference_no`, `amount`, `description`, `time_stamp`) VALUES
 (1, 'CRLVW-1C800E0', 5000, NULL, '2019-09-01 12:40:17'),
 (3, 'CRLVW-AB8972E', 17000, 'ABC-123', '2019-09-08 21:50:13'),
-(4, 'CRLVW-F5A7097', 21750, 'Accept', '2019-09-13 22:17:26');
+(4, 'CRLVW-F5A7097', 21750, 'Accept', '2019-09-13 22:17:26'),
+(5, 'CRLVW-376B812', 37400, 'SBC-123', '2019-09-14 11:55:02'),
+(11, 'CRLVW-EC7C30B', 30000, 'TEST', '2019-09-20 20:39:14');
 
 -- --------------------------------------------------------
 
@@ -269,10 +286,13 @@ CREATE TABLE `guest` (
 --
 
 INSERT INTO `guest` (`id`, `first_name`, `last_name`, `address`, `email`, `contact_number`) VALUES
-(101, 'TEST', 'TEST', 'TEST', 'TEST', '09123456789'),
+(101, 'TEST', 'TEST', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
 (103, 'TEST', 'TEST', 'TEST', 'TEST', '09123456789'),
 (111, 'TEST', 'TEST', 'TEST', 'TEST', '09123456789'),
-(187, 'TEST', 'TEST', 'TEST', 'TEST', '09123456789');
+(187, 'TEST', 'TEST', 'TEST', 'TEST', '09123456789'),
+(188, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(189, 'Rellie', 'Balagat', 'TEST', 'relliebalagat@gmail.com', '09123456789'),
+(190, 'Rellie', 'Balagat', 'TEST TEST', 'relliebalagat@gmail.com', '09123456789');
 
 -- --------------------------------------------------------
 
@@ -291,6 +311,7 @@ CREATE TABLE `reservation` (
   `adult_count` int(11) DEFAULT NULL,
   `kids_count` int(11) DEFAULT NULL,
   `is_peak_rate` int(11) NOT NULL,
+  `payment_path` varchar(255) DEFAULT NULL,
   `date_created` datetime DEFAULT current_timestamp(),
   `date_updated` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -299,11 +320,14 @@ CREATE TABLE `reservation` (
 -- Dumping data for table `reservation`
 --
 
-INSERT INTO `reservation` (`id`, `guest_id`, `reference_no`, `status`, `payment`, `check_in_date`, `check_out_date`, `adult_count`, `kids_count`, `is_peak_rate`, `date_created`, `date_updated`) VALUES
-(71, 101, 'CRLVW-1C800E0', 'CHECKED IN', 'BANK DEPOSIT', '2019-08-31 00:00:00', '2019-09-01 00:00:00', 1, 1, 0, '2019-08-31 15:42:42', '2019-09-02 00:00:00'),
-(73, 103, 'CRLVW-3F311FB', 'CHECKED IN', 'WALK-IN / CASH', '2019-09-01 00:00:00', '2019-09-04 00:00:00', 1, 1, 0, '2019-09-01 15:32:17', '2019-09-02 00:00:00'),
-(81, 111, 'CRLVW-AB8972E', 'COMPLETE', 'BANK DEPOSIT', '2019-09-13 00:00:00', '2019-09-17 00:00:00', 2, 3, 0, '2019-09-08 12:20:47', '2019-09-08 22:55:50'),
-(94, 187, 'CRLVW-F5A7097', 'COMPLETE', 'BANK DEPOSIT', '2019-09-20 00:00:00', '2019-09-25 00:00:00', 1, 1, 0, '2019-09-13 22:07:19', '2019-09-14 00:39:17');
+INSERT INTO `reservation` (`id`, `guest_id`, `reference_no`, `status`, `payment`, `check_in_date`, `check_out_date`, `adult_count`, `kids_count`, `is_peak_rate`, `payment_path`, `date_created`, `date_updated`) VALUES
+(71, 101, 'CRLVW-1C800E0', 'COMPLETE', 'BANK DEPOSIT', '2019-08-31 00:00:00', '2019-09-01 00:00:00', 1, 1, 0, NULL, '2019-08-31 15:42:42', '2019-09-18 10:02:22'),
+(73, 103, 'CRLVW-3F311FB', 'CHECKED IN', 'WALK-IN / CASH', '2019-09-01 00:00:00', '2019-09-04 00:00:00', 1, 1, 0, NULL, '2019-09-01 15:32:17', '2019-09-02 00:00:00'),
+(81, 111, 'CRLVW-AB8972E', 'COMPLETE', 'BANK DEPOSIT', '2019-09-13 00:00:00', '2019-09-17 00:00:00', 2, 3, 0, NULL, '2019-09-08 12:20:47', '2019-09-08 22:55:50'),
+(94, 187, 'CRLVW-F5A7097', 'COMPLETE', 'BANK DEPOSIT', '2019-09-20 00:00:00', '2019-09-25 00:00:00', 1, 1, 0, NULL, '2019-09-13 22:07:19', '2019-09-14 00:39:17'),
+(95, 188, 'CRLVW-376B812', 'FOR CHECK IN', 'BANK DEPOSIT', '2019-09-20 00:00:00', '2019-09-24 00:00:00', 1, 1, 0, '/coralview/uploads/payment/Screenshot from 2019-09-14 14-57-26.png', '2019-09-14 11:54:05', NULL),
+(96, 189, 'CRLVW-8AF940C', 'FOR CHECK IN', 'BANK DEPOSIT', '2019-09-20 00:00:00', '2019-09-21 00:00:00', 1, 1, 0, NULL, '2019-09-20 15:20:46', NULL),
+(97, 190, 'CRLVW-EC7C30B', 'COMPLETE', 'BANK DEPOSIT', '2019-09-17 00:00:00', '2019-09-21 00:00:00', 12, 2, 0, '/coralview/uploads/payment/Screenshot from 2019-06-19 10-28-11.png', '2019-09-20 15:35:58', '2019-09-20 22:46:38');
 
 -- --------------------------------------------------------
 
@@ -341,7 +365,7 @@ CREATE TABLE `rooms` (
 --
 
 INSERT INTO `rooms` (`Id`, `number`, `type`, `peak_rate`, `off_peak_rate`, `description`, `image`, `capacity`, `inclusions`) VALUES
-(21, NULL, 'Super Deluxe', 5000, 5600, 'Soak up a breathtaking view of the beach from the comfort of your own private balcony. The Super Deluxe room is furnished with 2 Queen sized beds and a refrigerator for all your snacks and beverages.', '/coralview/uploads/rooms/super-deluxe.jpeg', 4, '<ul><li>2 Queen size bed</li><li>Air-Conditioned room</li><li>Private balcony with beach view</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 4 adults</li></ul>'),
+(21, NULL, 'Super Deluxe', 5600, 5000, 'Soak up a breathtaking view of the beach from the comfort of your own private balcony. The Super Deluxe room is furnished with 2 Queen sized beds and a refrigerator for all your snacks and beverages.', '/coralview/uploads/rooms/super-deluxe.jpeg', 4, '<ul><li>2 Queen size bed</li><li>Air-Conditioned room</li><li>Private balcony with beach view</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 4 adults</li></ul>'),
 (22, NULL, 'Premier', 7500, 7000, 'Take in the relaxing breeze of the bay from the comfort of your own private balcony. The premier room offers breathtaking views of the beach and can accommodate 4 adults with its 2 queen-sized beds.', '/coralview/uploads/rooms/premier.jpeg', 4, '<ul><li>2 Queen-sized bed</li><li>Private balcony with beach view</li><li>Air-Conditioned room</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 4 adults</li></ul>'),
 (23, NULL, 'Deluxe', 5000, 4500, 'The Deluxe room directly faces the beach and is ideal for small families with its 2 queen-sized beds.', '/coralview/uploads/rooms/deluxe.jpg', 4, '<ul><li>2 Queen-sized bed</li><li>Air-Conditioned room</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 4 adults</li></ul>'),
 (24, NULL, 'Double Deluxe', 8500, 7500, 'Experience spacious comfort with 4 queen-sized beds that can accommodate 8 adults. The Super Deluxe room also features a private balcony and views of the expansive beach area.', '/coralview/uploads/rooms/double-deluxe.jpeg', 4, '<ul><li>4 Queen-sized bed</li><li>Air-Conditioned room</li><li>Private balcony with beach view</li><li>LCD Cable TV</li><li>Hot and Cold Shower/Private bath</li><li>Complimentary breakfast for 8 adults</li></ul>'),
@@ -600,37 +624,37 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `billing`
 --
 ALTER TABLE `billing`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `billing_additional_fees`
 --
 ALTER TABLE `billing_additional_fees`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `billing_discount`
 --
 ALTER TABLE `billing_discount`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `billing_extras`
 --
 ALTER TABLE `billing_extras`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `booking_rooms`
 --
 ALTER TABLE `booking_rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `check_in_rooms`
 --
 ALTER TABLE `check_in_rooms`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `discount`
@@ -642,7 +666,7 @@ ALTER TABLE `discount`
 -- AUTO_INCREMENT for table `downpayment`
 --
 ALTER TABLE `downpayment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `extras`
@@ -654,13 +678,13 @@ ALTER TABLE `extras`
 -- AUTO_INCREMENT for table `guest`
 --
 ALTER TABLE `guest`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=188;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=191;
 
 --
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT for table `reservation_expenses`

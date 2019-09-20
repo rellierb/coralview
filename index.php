@@ -91,7 +91,7 @@ include('common/carousel.php');
 
                 <div class="col-12">
                     <div style="text-align: center;">
-                        <button class="btn btn-primary">View all Facilities</button>
+                        <a href="rooms.php" class="btn btn-primary">View all Rooms</a>
                     </div>
                 </div>
 
@@ -178,7 +178,7 @@ include('common/carousel.php');
                     
                     <div class="col-12">
                         <div style="text-align: center;">
-                            <button class="btn btn-primary">View all Rooms</button>
+                            <button href="facilities.php" class="btn btn-primary">View all Facilities</button>
                         </div>
                     </div>
                 
