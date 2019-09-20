@@ -20,6 +20,10 @@ $nights_of_stay = 0;
 $date_completed = '';
 $status = '';
 $is_peak_rate = 0;
+$total_price = 0;
+
+
+$guest_number = 0;
 
 ?>
 
@@ -81,7 +85,8 @@ $is_peak_rate = 0;
                                             $date_completed = $reservation["date_updated"];
                                             $status = $reservation["status"];
                                             $is_peak_rate = $reservation["is_peak_rate"];
-                                            
+                                            $guest_number = $reservation["adult_count"] + $reservation["kids_count"];
+
                                             echo '
                                                 <table class="table table-bordered">
                                                     <tr>
@@ -192,6 +197,7 @@ $is_peak_rate = 0;
                                             
                                            
                                             echo '</table>';
+                                            
                                         }
                                         ?>
                                 
@@ -280,14 +286,14 @@ $is_peak_rate = 0;
                                                 </table>
                                             ';
 
-                                            $overall_total_price += $overall_total_extra;
+                                            
 
                                         } else {
 
                                             echo '<h2 class="text text-primary text-center">No extras</h2>';
 
                                         }
-
+                                        
                                         ?>
                                         
                                         </div>
@@ -333,10 +339,11 @@ $is_peak_rate = 0;
 
                                                 }
 
-
+                                                $total_price *= $nights_of_stay;
+                                                
                                                 $overall_total_price *= $nights_of_stay;
+                                                $overall_total_price += $overall_total_extra;
                                                 $overall_total_price += $add_fees_amount;
-
 
                                                 $check_discount_query = "SELECT * FROM billing_discount BD INNER JOIN discount D on BD.discount_id=D.Id  WHERE BD.reference_no='$reference_no'";
                                                 $check_discount_result = mysqli_query($db, $check_discount_query);
@@ -349,10 +356,10 @@ $is_peak_rate = 0;
                                                     while($discount = mysqli_fetch_assoc($check_discount_result)) {
                                                         
                                                         $discount_amount = $discount["amount"];
-                                                        $comp_discount = $overall_total_price / $quantity;
+                                                        $comp_discount = $total_price / $guest_number;
                                                     
                                                         if($discount_amount < 1) {
-                                                            $temp_discount_price = $comp_discount * $discount_amount;
+                                                            $temp_discount_price =  ($comp_discount * $discount["quantity"]) * $discount_amount;
                                                             $discount_price += $temp_discount_price;
                                                         } 
 
@@ -412,8 +419,12 @@ $is_peak_rate = 0;
                                                             <td class="text-center">' . $payment_type .  '</td>
                                                         </tr>
                                                         <tr>
-                                                            <th scope="col" class="text-center">TOTAL AMOUNT (ROOMS & EXTRAS)</th>
-                                                            <td class="text-center">' . number_format($overall_total_price, 2)  .  '</td>
+                                                            <th scope="col" class="text-center">TOTAL AMOUNT (ROOMS)</th>
+                                                            <td class="text-center">' . number_format($total_price, 2)  .  '</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="col" class="text-center">TOTAL AMOUNT (EXTRAS)</th>
+                                                            <td class="text-center">' . number_format($overall_total_extra, 2)  .  '</td>
                                                         </tr>
                                                         <tr>
                                                             <th scope="col" class="text-center">DOWNPAYMENT</th>

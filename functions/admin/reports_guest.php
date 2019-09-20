@@ -337,7 +337,7 @@ if(!empty($first_name) && !empty($last_name)) {
                             $comp_discount = $overall_total_price / $guest_count;
                         
                             if($discount_amount < 1) {
-                                $temp_discount_price = $comp_discount * $discount_amount;
+                                $temp_discount_price = ($comp_discount * $discount["quantity"]) * $discount_amount;
                                 $discount_price += $temp_discount_price;
                             } 
     
