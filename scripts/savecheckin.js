@@ -26,7 +26,6 @@ if(document.body.contains(saveCheckIn)) {
                         
                         console.log(data);
         
-                        toastr.success('Room Successfully Saved');
         
                         // setTimeout(function() {
         
@@ -45,6 +44,8 @@ if(document.body.contains(saveCheckIn)) {
             }
 
         }
+
+        toastr.success('Room Successfully Saved');
 
     })
 

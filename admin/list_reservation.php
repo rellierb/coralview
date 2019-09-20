@@ -104,7 +104,7 @@ $db = connect_to_db();
                                                     // <a style="width: 48%;' . $hide_class . '" href="accept.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-success">Accept</a>
                                                     // <a style="width: 48%;' . $hide_class . '" href="reject.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-danger">Reject</a>
                                                     echo '
-                                                        <a style="width: 98%;' . $hide_class . '" href="accept.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-info">Pending</a>
+                                                        <a style="width: 98%;' . $hide_class . '" href="pending.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-info">Pending</a>
                                                     ';
                                                 } else if($reservation_status == 'COMPLETE') {
                                                     echo '<a style="width: 98%;' . $hide_class . '" href="view.php?reference_no=' . $reservation["reference_no"] . '" class="btn btn-block btn-primary">View</a>';

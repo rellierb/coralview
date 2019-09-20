@@ -37,7 +37,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
 
         }
-
       
         $mail = new PHPMailer(true);
 
@@ -59,7 +58,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->Body = $message;
             $mail->send();
 
-            echo  'SUCCESS';
+                
+            $_SESSION['alert'] = "alert alert-success"; 
+            $_SESSION['message'] = "Your reservation was successfully cancelled.";
+
+            header('Location: ../../view_reservation.php?reference_no='.$reference_no.'');
 
         } catch (Exception $e) {
             $_SESSION['email_error_msg'] = "There\'s an error processing your request";
@@ -67,16 +70,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         
-        $_SESSION['alert'] = "alert alert-success"; 
-        $_SESSION['message'] = "Your reservation was successfully cancelled.";
-        
     } else {
 
         $_SESSION['alert'] = "alert alert-danger"; 
-        $_SESSION['message'] = "Sorry, we could not cancel your reservation.";
+        $_SESSION['message'] = "Sorry, there's an error processing your request.";
+        header('Location: ../../view_reservation.php?reference_no='.$reference_no.'');
         
     }
 
-    header('Location: ../../view_reservation.php?reference_no='.$reference_no.'');
+ 
 
 }

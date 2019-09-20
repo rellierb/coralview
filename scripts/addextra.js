@@ -26,9 +26,7 @@ $(document).ready(function() {
                             url: '/coralview/functions/admin/add_extra.php',
                             data: {reference_no: JSON.stringify(referenceCode), extra_id: JSON.stringify(extraId), quantity: JSON.stringify(extraQuantity), amount: JSON.stringify(amount) },
                             success: function(data) {
-                                
-                                toastr.success('Additional Extras successfully entered');
-
+                            
                                 setTimeout(function() {
                                     location.reload();
                                 }, 3000);
@@ -44,7 +42,6 @@ $(document).ready(function() {
 
                 }
                 
-              
 
             }
             toastr.success('Extras Successfully Added!');

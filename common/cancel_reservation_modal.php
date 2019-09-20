@@ -12,6 +12,11 @@
                 </div>
                 <div class="modal-body">
                     <p>Are you sure you want to cancel your reservation?</p>
+                    <br>
+                    <p class="text-center"><b>REMINDER</b></p>
+                    <p>CANCELLATION of the event by the guest for whatever reason made one (1) month will be charge (50%) percent penalty while
+                    fifteen (15) days before the reservation date is eighty (80%) percent penalty for the total package, 
+                    the deposited to our account shall be forfeited</p>
                 </div>
                 <div class="modal-footer p-3">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

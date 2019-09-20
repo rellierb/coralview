@@ -21,8 +21,6 @@ if(isset($_POST["description"])) {
 $amount_paid_query = "INSERT INTO billing(reference_no, amount_paid, description, time_stamp) VALUES ($reference_no, $amount_paid, $description, NOW())";
 $amount_paid_result = mysqli_query($db, $amount_paid_query);
 
-echo $amount_paid_query;
-
 if($amount_paid_result) {
 
     echo 'SUCCESS';

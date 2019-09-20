@@ -43,6 +43,7 @@ $html = '';
 $overall_total_extra = 0;
 $overall_total_price = 0;
 $guest_count = 0;
+$TOTAL_PRICE = 0;
 
 if(isset($_POST["reference_no"])) {
     $reference_no = mysqli_real_escape_string($db, trim($_POST['reference_no']));
@@ -99,7 +100,10 @@ $html .= '
         #receipt table.balance td { text-align: right; }
         #receipt aside h1 { border: none; border-width: 0 0 1px; margin: 0 0 1em; }
         #receipt aside h1 { border-color: #999; border-bottom-style: solid; }
+
+        @page normal { sheet-size: 105mm 148.5mm; }
     </style>
+    
     <div id="receipt">
         <div style="text-align: center;">
             <h1>OFFICIAL RECEIPT</h1>
@@ -122,6 +126,7 @@ $reservation_details_result = mysqli_query($db, $reservation_details_query);
 $arrival_date = '';
 $departure_date = '';
 $nights_of_stay = 0;
+$is_peak_rate = 0;
 
 if($reservation_details_result) {
     while($reservation = mysqli_fetch_assoc($reservation_details_result)) {
@@ -135,6 +140,7 @@ if($reservation_details_result) {
         $diff = $dateDiff->format('%d');
 
         $nights_of_stay = $diff;
+        $is_peak_rate = $reservation["is_peak_rate"];
     }
 }
 $temp_arrival_date = date_create($arrival_date);
@@ -201,7 +207,15 @@ if($room_reservation_details_result) {
         $room_quantity = $room_reservation["quantity"];
         $rooms_reserved[$room_id] = $room_quantity; 
         $quantity += $room_quantity;
-        $total_price = $room_reservation["peak_rate"] * $room_reservation["quantity"];
+
+        $room_rate = 0;
+        if($is_peak_rate == 0) {
+            $room_rate = $room_reservation["off_peak_rate"];
+        } else if ($is_peak_rate == 1) {
+            $room_rate = $room_reservation["peak_rate"];
+        }
+
+        $total_price = $room_rate * $room_reservation["quantity"];
 
 
         $content_html = '
@@ -223,11 +237,13 @@ if($room_reservation_details_result) {
         // ';
 
         $overall_total_price += $total_price;
+        $TOTAL_PRICE += $total_price;
     }
     
 }
 
 $overall_total_price *= $nights_of_stay;
+$TOTAL_PRICE *= $nights_of_stay;
 $extra_list_query = "SELECT * FROM billing_extras BE INNER JOIN extras E ON BE.expense_id = E.Id WHERE reference_no='$reference_no'";
 $extra_list_result = mysqli_query($db, $extra_list_query);
 
@@ -258,7 +274,7 @@ if(mysqli_num_rows($extra_list_result) > 0) {
 
     }
 
-    $overall_total_price += $overall_total_extra;
+    $TOTAL_PRICE += $overall_total_extra;
 }
 
 $add_fees_query = "SELECT * FROM billing_additional_fees WHERE reference_no='$reference_no'";
@@ -272,8 +288,8 @@ if(mysqli_num_rows($add_fees_result) > 0) {
         $content_html .= '
                                                         
             <tr>
-                <td class="tg-cly1" colspan="5">' . $fees["description"] . ' (' . $fees["quantity"] . ')</td>
-                <td style="text-align: center;" class="tg-0lax" colspan="5">' . number_format($fees["price"], 2) . '</td>
+                <td class="tg-cly1" colspan="5">' . $fees["description"] . '</td>
+                <td style="text-align: center;" class="tg-0lax" colspan="5">' . number_format($fees["amount"], 2) . '</td>
             </tr>
         
         ';
@@ -287,7 +303,7 @@ if(mysqli_num_rows($add_fees_result) > 0) {
         //     </tr>
         // ';
 
-        $overall_total_price += $fees['amount'];
+        $TOTAL_PRICE += $fees['amount'];
 
     }
 
@@ -302,7 +318,7 @@ if(mysqli_num_rows($check_discount_result) > 0) {
     while($discount = mysqli_fetch_assoc($check_discount_result)) {
         
         $discount_amount = $discount["amount"];
-        $comp_discount = $overall_total_price / $quantity;
+        $comp_discount = $overall_total_price / $guest_count;
        
         if($discount_amount < 1) {
             $temp_discount_price = $comp_discount * $discount_amount;
@@ -353,11 +369,11 @@ $html .= '
 
 
 
-$overall_total_amount = $overall_total_price;
+$overall_total_amount = $TOTAL_PRICE;
 $vatable_amount = $overall_total_amount / 1.12;
 $vat = $overall_total_amount - $vatable_amount;
 
-$net_amount = $overall_total_price - $discount_price;
+$net_amount = $overall_total_amount - $discount_price;
 
 $html_to_print = '
     <div style="width: 100%; display: inline;">
@@ -455,7 +471,7 @@ $html_to_print = '
         </div>
 
     </div>
-
+   
 
 ';
 

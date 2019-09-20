@@ -63,6 +63,28 @@ if(isset($_REQUEST["rooms_reserved"])) {
 
 $room_html = '';
 
+$date_today = date("Y-m-d");
+
+$off_peak_date_start_1 = date("Y-m-d", strtotime("01/02/2019"));
+$off_peak_date_end_1 = date("Y-m-d", strtotime("03/11/2019"));
+
+$off_peak_date_start_2 = date("Y-m-d", strtotime("07/18/2019"));
+$off_peak_date_end_2 = date("Y-m-d", strtotime("11/19/2019"));
+
+$peak_date_start_1 = date("Y-m-d", strtotime("03/12/2019"));
+$peak_date_end_1 = date("Y-m-d", strtotime("07/17/2019"));
+
+$peak_date_start_2 = date("Y-m-d", strtotime("11/20/2019"));
+$peak_date_end_2 = date("Y-m-d", strtotime("01/01/2020"));
+
+$type_of_rate = "";
+
+if((($date_today >= $off_peak_date_start_1) && ($date_today <= $off_peak_date_end_1)) || (($date_today >= $off_peak_date_start_2) && ($date_today <= $off_peak_date_end_2))) {
+    $type_of_rate = "OFF-PEAK";
+} else if((($date_today >= $peak_date_start_1) && ($date_today <= $peak_date_end_1)) || (($date_today >= $peak_date_start_2) && ($date_today <= $peak_date_end_2))) {
+    $type_of_rate = "PEAK"; 
+}
+
 
 ?>
 
@@ -156,7 +178,7 @@ $room_html = '';
                                 <th class="text-center" style="width: 40%;">ROOM/S RESERVE</th>
                                 <th class="text-center" style="width: 15%;">QUANTITY</th>
                                 <th class="text-center" style="width: 15%;">PRICE</th>
-                                <th class="text-center" style="width: 15%;">NIGHTS OF STAY</th>
+                                <th class="text-center" style="width: 15%;">NIGHT/S OF STAY</th>
                                 <th class="text-center" style="width: 15%;">TOTAL</th>
                             </tr>
                     ';
@@ -180,14 +202,21 @@ $room_html = '';
                         if(mysqli_num_rows($rooms_result) > 0) {
                             while($room = mysqli_fetch_assoc($rooms_result)) {
                                 
-                                $room_price = $room_count * $room["peak_rate"] * $no_of_days;
+                                $room_rate = 0;
+                                if($type_of_rate == "OFF-PEAK") {
+                                    $room_rate = $room["off_peak_rate"];
+                                } else if($type_of_rate == "PEAK")  {
+                                    $room_rate = $room["peak_rate"];
+                                }
+
+                                $room_price = $room_count * $room_rate * $no_of_days;
                                 $total_amount += $room_price;
 
                                 $room_html .= '
                                     <tr>
                                         <td class="text-center" style="width: 40%;"><h5>' . $room["type"] . '</h5></td>
                                         <td class="text-center" style="width: 15%;">' . $room_count . '</td>
-                                        <td class="text-center" style="width: 15%;">' . number_format($room["peak_rate"], 2) . '</td>
+                                        <td class="text-center" style="width: 15%;">' . number_format($room_rate, 2) . '</td>
                                         <td class="text-center" style="width: 15%;">' . $no_of_days . '</td>
                                         <td class="text-center" style="width: 15%;">PHP ' .  number_format($room_price, 2) .  '</td>
                                     </tr>
@@ -209,11 +238,7 @@ $room_html = '';
                             <td class="text-center" style="width: 15%;"></td>
                             <td class="text-center" style="width: 15%;"></td>
                             <td class="text-center" style="width: 15%;">' . number_format($total_amount, 2). '</td>
-                        
-                        
                         </tr>
-                    
-                    
                     ';
                     
                     

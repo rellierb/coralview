@@ -19,6 +19,7 @@ $payment_type = '';
 $nights_of_stay = 0;
 $date_completed = '';
 $status = '';
+$is_peak_rate = 0;
 
 ?>
 
@@ -79,6 +80,7 @@ $status = '';
                                             $payment_type = $reservation["payment"];
                                             $date_completed = $reservation["date_updated"];
                                             $status = $reservation["status"];
+                                            $is_peak_rate = $reservation["is_peak_rate"];
                                             
                                             echo '
                                                 <table class="table table-bordered">
@@ -166,13 +168,21 @@ $status = '';
                                                 $room_quantity = $room_reservation["quantity"];
                                                 $rooms_reserved[$room_id] = $room_quantity; 
                                                 $quantity += $room_quantity;
-                                                $total_price = $room_reservation["peak_rate"] * $room_reservation["quantity"];
+
+                                                $room_rate = 0;
+                                                if($is_peak_rate == 0) {
+                                                    $room_rate = $room_reservation["off_peak_rate"];
+                                                } else if($is_peak_rate == 1) {
+                                                    $room_rate = $room_reservation["peak_rate"];
+                                                }
+
+                                                $total_price = $room_rate * $room_reservation["quantity"];
 
                                                 echo '
                                                     <tr>
                                                         <td class="text-center" >' . $room_reservation["type"] . '</td>
                                                         <td class="text-center" >' . $room_reservation["quantity"] . '</td>
-                                                        <td class="text-center" >' . number_format($room_reservation["peak_rate"], 2)   . '</td>
+                                                        <td class="text-center" >' . number_format($room_rate, 2)   . '</td>
                                                         <td class="text-center" > ' . number_format($total_price, 2)  . '</td>
                                                     </tr>
                                                 ';
@@ -218,6 +228,10 @@ $status = '';
                                         }
 
                                         echo '</table>';
+                                    } else {
+
+                                        echo '<h2 class="text text-primary text-center">No Assigned Rooms</h2>';
+
                                     }
                                     
                                     ?>
@@ -270,7 +284,7 @@ $status = '';
 
                                         } else {
 
-                                            echo '<h2 class="text text-info text-center">No extras</h2>';
+                                            echo '<h2 class="text text-primary text-center">No extras</h2>';
 
                                         }
 
@@ -291,7 +305,7 @@ $status = '';
 
                                             if($status == 'REJECTED') {
 
-                                                echo '<h2 class="text text-info text-center">Payment not applicable</h2>';
+                                                echo '<h2 class="text text-primary text-center">Payment not applicable</h2>';
 
                                             }  else {
 
@@ -419,12 +433,6 @@ $status = '';
                                                         </tr>
                                                     </table>
                                                 ';
-
-
-
-
-
-
 
                                             } // end of else
                                             

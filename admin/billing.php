@@ -27,6 +27,8 @@ $TOTAL_PRICE = 0;
 
 $content_html = '';
 
+$is_peak_rate = 0;
+
 
 ?>
 
@@ -90,6 +92,7 @@ $content_html = '';
 
                                             $arrival_date = $reservation["check_in_date"];
                                             $departure_date = $reservation["check_out_date"];
+                                            $is_peak_rate = $reservation["is_peak_rate"];
 
                                             echo '
                                                 <table class="table table-bordered">
@@ -288,7 +291,15 @@ $content_html = '';
                                                         $room_quantity = $room_reservation["quantity"];
                                                         $rooms_reserved[$room_id] = $room_quantity; 
                                                         $quantity += $room_quantity;
-                                                        $total_price = $room_reservation["peak_rate"] * $room_reservation["quantity"];
+
+                                                        $room_rate = 0;
+                                                        if($is_peak_rate == 0) {
+                                                            $room_rate = $room_reservation["off_peak_rate"]; 
+                                                        } else if ($is_peak_rate == 1) {
+                                                            $room_rate = $room_reservation["peak_rate"];
+                                                        }
+
+                                                        $total_price = $room_rate * $room_reservation["quantity"];
             
                                                         $content_html .= '
                                                         
@@ -415,7 +426,7 @@ $content_html = '';
                                                     while($discount = mysqli_fetch_assoc($check_discount_result)) {
                                                         
                                                         $discount_amount = $discount["amount"];
-                                                        $comp_discount = $overall_total_price / $quantity;
+                                                        $comp_discount = $overall_total_price / $guest_count;
                                                        
                                                         if($discount_amount < 1) {
                                                             $temp_discount_price = $comp_discount * $discount_amount;
@@ -510,10 +521,6 @@ $content_html = '';
                                             <tr>
                                                 <td class="tg-0lax" colspan="5">VAT-EXEMPT SALES</td>
                                                 <td style="text-align: center;" class="tg-0lax" colspan="5"><? echo number_format($vatable_amount, 2) ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="tg-0lax" colspan="5">ZERO RATED SALES</td>
-                                                <td style="text-align: center;" style="text-align: center;" class="tg-0lax" colspan="5"></td>
                                             </tr>
                                             <tr>
                                                 <td class="tg-0lax" colspan="5">VAT Amount</td>

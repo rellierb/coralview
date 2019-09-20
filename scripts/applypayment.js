@@ -12,7 +12,7 @@ if(document.body.contains(document.getElementById('btnApplyPayment'))) {
     btnApplyPayment.addEventListener('click', function() {
 
         let balance = remainingBalance.innerText;
-        let trimTotalBalance = parseInt(balance.replace(',', ''));
+        let trimTotalBalance = parseFloat(balance.replace(',', ''));
         let inputAmount = dpAmount.value;
         let description = dpDescription.value;
         

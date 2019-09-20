@@ -21,6 +21,9 @@ $reservation_id = 0;
 
 $payment_photo = '';
 
+$is_peak_rate = 0;
+
+
 ?>
 
     <?php include('../common/admin_sidebar.php') ?>
@@ -88,6 +91,7 @@ $payment_photo = '';
                                             $full_name = $reservation["first_name"] . " " . $reservation["last_name"];
                                             $payment_type = $reservation["payment"];
                                             $payment_photo = $reservation['payment_path'];
+                                            $is_peak_rate = $reservation['is_peak_rate'];
 
                                             echo '
                                                 <table class="table table-bordered">
@@ -212,13 +216,21 @@ $payment_photo = '';
 
                                                     $quantity += $room_quantity;
 
-                                                    $total_price = $room_reservation["peak_rate"] * $room_reservation["quantity"];
+                                                    $room_rate = 0;
+
+                                                    if($is_peak_rate == 0) {
+                                                        $room_rate = $room_reservation["off_peak_rate"];
+                                                    } else if($is_peak_rate == 1) {
+                                                        $room_rate = $room_reservation["peak_rate"];
+                                                    }
+
+                                                    $total_price = $room_rate * $room_reservation["quantity"];
 
                                                     echo '
                                                         <tr>
                                                             <td class="text-center" style="width: 55%;">' . $room_reservation["type"] . '</td>
                                                             <td class="text-center" style="width: 15%;">' . $room_reservation["quantity"] . '</td>
-                                                            <td class="text-center" style="width: 15%;">' . number_format($room_reservation["peak_rate"]) . '</td>
+                                                            <td class="text-center" style="width: 15%;">' . number_format($room_rate) . '</td>
                                                             <td class="text-center" style="width: 15%;"> ' . number_format($total_price, 2)  . '</td>
                                                         </tr>
                                                     ';
@@ -523,13 +535,17 @@ $payment_photo = '';
                                             $check_discount_result = mysqli_query($db, $check_discount_query);
                                             $discount_price = 0;
 
+
+
+
                                             if(mysqli_num_rows($check_discount_result) > 0) {
                                                 echo '<table class="table table-bordered">';
                                                 echo '<thead><th class="text-center" scope="col">Discount</th><th class="text-center" scope="col">Amount</th><thead>';
                                                 while($discount = mysqli_fetch_assoc($check_discount_result)) {
                                                     
                                                     $discount_amount = $discount["amount"];
-                                                    $comp_discount = $overall_total_price / $quantity;
+                                                    $comp_discount = $overall_total_price / $guest_number;
+                                                   
                                                    
                                                     if($discount_amount < 1) {
                                                         $temp_discount_price = $comp_discount * $discount_amount;
@@ -615,6 +631,8 @@ $payment_photo = '';
                                             }
                                             
                                             $discounted_price -= $downpayment_amount;
+
+                                            $price_add_extra = $discounted_price + $expense_total;
                                             // echo $balance;
                                             echo '
                                                 <table class="table table-bordered">
@@ -640,11 +658,11 @@ $payment_photo = '';
                                                     </tr>
                                                     <tr>
                                                         <th scope="col" class="text-center">AMOUNT AFTER DISCOUNT</th>
-                                                        <td class="text-center">' . number_format($discounted_price, 2)  .  '</td>
+                                                        <td class="text-center">' . number_format($price_add_extra, 2)  .  '</td>
                                                     </tr>
                                                     <tr>
-                                                        <th scope="col" class="text-center text-danger">REMAINING BALANCE</th>
-                                                        <td class="text-danger text-center" id="remainingBalance">' . number_format($discounted_price, 2)  .  '</td>
+                                                        <th scope="col" class="text-center text-danger">REMAINING BALANCE </th>
+                                                        <td class="text-danger text-center" id="remainingBalance">' . number_format($price_add_extra, 2)  .  '</td>
                                                     </tr>
                                                 </table>
                                             ';
@@ -663,8 +681,8 @@ $payment_photo = '';
                                 <div class="col">
 
                                     <?php
-                                    
-                                    if($discounted_price != 0 || $discounted_price < 0) {
+                                   
+                                    if(number_format($price_add_extra, 2) != 0 || number_format($price_add_extra, 2) < 0) {
                                         $disabled = "disabled";
                                     } else {
                                         $disabled = '';

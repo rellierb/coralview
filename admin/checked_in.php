@@ -19,12 +19,14 @@ $overall_total_extra = 0;
 
 $TOTAL_PRICE = 0;
 
+$guest_number = 0;
 
 $payment_type = '';
 $nights_of_stay = 0;
 $reservation_id = 0;
 
 $payment_photo = '';
+$is_peak_rate = 0;
 
 ?>
 
@@ -89,8 +91,9 @@ $payment_photo = '';
                                             $nights_of_stay = $diff;
                                             $full_name = $reservation["first_name"] . " " . $reservation["last_name"];
                                             $payment_type = $reservation["payment"];
-
+                                            $guest_number = $reservation["adult_count"] + $reservation["kids_count"];
                                             $payment_photo = $reservation['payment_path'];
+                                            $is_peak_rate = $reservation['is_peak_rate'];
                                             
                                             echo '
                                                 <table class="table table-bordered">
@@ -205,13 +208,20 @@ $payment_photo = '';
                                             $room_quantity = $room_reservation["quantity"];
                                             $rooms_reserved[$room_id] = $room_quantity; 
                                             $quantity += $room_quantity;
-                                            $total_price = $room_reservation["peak_rate"] * $room_reservation["quantity"];
+
+                                            $room_rate = 0;
+                                            if($is_peak_rate == 0) {
+                                                $room_rate = $room_reservation["off_peak_rate"]; 
+                                            } else if ($is_peak_rate == 1) {
+                                                $room_rate = $room_reservation["peak_rate"]; 
+                                            }
+                                            $total_price = $room_rate * $room_reservation["quantity"];
 
                                             echo '
                                                 <tr>
                                                     <td class="text-center" >' . $room_reservation["type"] . '</td>
                                                     <td class="text-center" >' . $room_reservation["quantity"] . '</td>
-                                                    <td class="text-center" >' . number_format($room_reservation["peak_rate"], 2)   . '</td>
+                                                    <td class="text-center" >' . number_format($room_rate, 2)   . '</td>
                                                     <td class="text-center" > ' . number_format($total_price, 2)  . '</td>
                                                 </tr>
                                             ';
@@ -411,7 +421,7 @@ $payment_photo = '';
                                                 while($discount = mysqli_fetch_assoc($check_discount_result)) {
                                                     
                                                     $discount_amount = $discount["amount"];
-                                                    $comp_discount = $overall_total_price / $quantity;
+                                                    $comp_discount = $overall_total_price / $guest_number;
                                                    
                                                     if($discount_amount < 1) {
                                                         $temp_discount_price = $comp_discount * $discount_amount;
@@ -536,7 +546,7 @@ $payment_photo = '';
                                 
 
                                 <div class="col-12">
-                                    <a class="btn btn-primary btn-block" style="color: white;" href="early_check_out.php">Proceed to Early Checkout</a>
+                                    <a class="btn btn-primary btn-block" style="color: white;" href="early_check_out.php?reference_no=<?php echo $reference_no; ?>">Proceed to Early Checkout</a>
                                 </div>
                               
                             </div>

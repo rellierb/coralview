@@ -130,12 +130,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     if($select_room_result) {
                         while($room = mysqli_fetch_assoc($select_room_result)) {
 
+                            $room_rate = 0;
+                            if($is_peak_rate == 0) {
+                                $room_rate = $room["off_peak_rate"];
+                            } else if ($is_peak_rate == 1) {
+                                $room_rate = $room["peak_rate"];
+                            }
+
                             $amount = $quantity * $room["peak_rate"];
 
                             $table_data .= '
                                 <tr>
                                     <td class="tg-0lax">' . $room["type"]  . '</td>
-                                    <td class="tg-0lax">' . number_format($room["peak_rate"], 2)  . '</td>
+                                    <td class="tg-0lax">' . number_format($room_rate, 2)  . '</td>
                                     <td class="tg-cey4" style="text-align: center;">' . $quantity  . '</td>
                                     <td class="tg-0pky">' . number_format($amount, 2) . '</td>
                                 </tr>
@@ -244,22 +251,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <br>
                         ' . $payment_note . '
 
-                        <br>
                         <hr>
-
                         <h4>Payment Rules</h4>
-                        <br>
                         <ol>
-                            <li>1. Pay the due amount of your reservation at any BDO branches. Deposit the amount at Account Number: 123-456-789</li>
-                            <li>2. Deadline of payment is three days after the online reservation date.</li>
-                            <li>3. After paying the due amount, you will an email confirmation from the resort regarding the status of your reservation.</li>
-                            <li>4. Print the reservation voucher and present it to the resort on your arrival date.</li>
-                        <ol>
-
+                            <li>Pay the due amount of your reservation at any BDO branches. Deposit the amount at Account Number: 123-456-789</li>
+                            <li>Deadline of payment is three days after the online reservation date.</li>
+                            <li>After paying the due amount, you will an email confirmation from the resort regarding the status of your reservation.</li>
+                            <li>Print the reservation voucher and present it to the resort on your arrival date.</li>
+                        </ol>
 
                         <hr>
-                        <h4>House Rules</h4>
-                        <br>
+                        <h3>HOUSE RULES</h3>
                         <h4>TERMS AND CONDITIONS</h4>
                         <ul>
                             <li>We assume that all amenities inside the room are in good working conditions and any damage or lost shall be charge to my account.</li>
@@ -289,7 +291,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <li>NOT ALLOWED after the Breakwater</li>
                         </ul>
                         <br>
-                        <h4 class="text-info">POOL RULES</h4>
+                        <h4>POOL RULES</h4>
                         <ul>
                             <li>Strictly NO DIVING.</li>
                             <li>NO PUSHING</li>
@@ -305,9 +307,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 ';
 
                 $mail = new PHPMailer(true);
-
-                echo $reservation_message;
-
 
                   $attachment = "../../assets/files/house-rules.docx";
 

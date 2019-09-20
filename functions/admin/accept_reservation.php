@@ -82,6 +82,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $guest_email = $email["email"];
 
                             // SEND EMAIL TO CLIENT
+
+                            $link = 'http://localhost/coralview/confirm_reservation.php?reference_no=' . $dp_reference_no . '';
+                            echo $link;
+
                             $reservationMessage = '
                                 <style>
 
@@ -142,10 +146,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </ul>
                                     <hr>
 
-                                    <p>Please click the <a href="http://localhost/coralview/confirm_reservation.php?reference_no=' . $reference_no . '">link</a> to print your reservation voucher.</p>
+                                    <p>Please click the <a href="' . $link . '">link</a> to print your reservation voucher.</p>
                                 </div>
                             ';
 
+
+                            echo $reservationMessage;
                             $mail = new PHPMailer(true);
                             try {
                                 $message = $reservationMessage;
@@ -163,9 +169,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 $mail->Subject = 'Coralview Reservation Accepted';
                                 $mail->Body = $message;
                                 $mail->send();
+
                                 $_SESSION['msg'] = "RESERVATION IS SUCCESSFULLY TAG AS ACCEPTED";
                                 $_SESSION['alert'] = "alert alert-success";
-                                header('location: ../../admin/accept.php?reference_no='. $dp_reference_no . '');
+                                
+                                echo  '<script>window.location.assign("../../admin/accept.php?reference_no='. $dp_reference_no . '")</script>';
                             } catch (Exception $e) {
                                 $_SESSION['msg'] = "There\'s an error processing your request";
                                 $_SESSION['alert'] = "alert alert-danger";
@@ -188,7 +196,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $_SESSION['msg'] = "Cannot process reservation";
         $_SESSION['alert'] = "alert alert-danger";
-        header('location: ../../admin/accept.php?reference_no='. $dp_reference_no . '');
+        header('Location: ../../admin/accept.php?reference_no='. $dp_reference_no . '');
 
     }
     

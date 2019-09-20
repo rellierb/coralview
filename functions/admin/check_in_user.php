@@ -12,11 +12,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $reference_no = mysqli_real_escape_string($db, trim($_POST['reference_no']));
     }
 
+    $room_to_loop;
+    if(isset($_POST["room_number"])) {
+        $room_to_loop = $_POST["room_number"];
+    } else if (isset($_SESSION["save_rooms"])) {
+        $room_to_loop = $_SESSION["save_rooms"];
+    }
+
     if(!empty($_SESSION["save_rooms"])) {
 
-        foreach($_SESSION["save_rooms"] as $room_number) {
+        foreach($room_to_loop as $room_number) {
             $update_room_query = "UPDATE rooms_status SET status='OCCUPIED' WHERE room_number=$room_number";
             $update_room_result = mysqli_query($db, $update_room_query);
+
+            var_dump($_SESSION["save_rooms"]);
 
             if(!$update_room_result) {
 
@@ -30,12 +39,22 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $insert_check_in_query = "INSERT INTO check_in_rooms(reference_no, room_number) VALUES('$reference_no', $room_number)";
                 $insert_check_in_result = mysqli_query($db, $insert_check_in_query);
 
-                continue;
+                echo $insert_check_in_query . '<br>'; 
+
+                // continue;
             }
 
         }
         
+    } else if (empty($_SESSION["save_rooms"])) {
+
+        $_SESSION['msg'] = "You have not select any Rooms";
+        $_SESSION['alert'] = "alert alert-danger"; 
+        
+        header("location: ../../admin/check_in_user.php?reference_no=$reference_no");    
+
     }
+    
 
     $status_to_checked_in_query = "UPDATE reservation set status='CHECKED IN' WHERE reference_no='$reference_no'"; 
     $status_to_checked_in_result = mysqli_query($db, $status_to_checked_in_query);

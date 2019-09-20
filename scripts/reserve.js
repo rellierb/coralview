@@ -281,9 +281,6 @@ $(document).ready(function(){
 
         $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection, stepPosition) { 
             
-            console.log(stepDirection)
-            console.log(stepPosition)
-
             if(stepNumber === 1) {
                 document.querySelector('.sw-btn-next').disabled = true;
             } else if(stepNumber === 2) {
@@ -445,6 +442,14 @@ function disableNextButton() {
             document.querySelector('.sw-btn-next').disabled = false;
         }
         
+    }
+
+}
+
+function enableNextButton() {
+
+    if(document.body.contains(document.getElementById('smartwizard'))) { 
+        document.querySelector('.sw-btn-next').disabled = true;
     }
 
 }
@@ -749,14 +754,13 @@ function checkCapacity(roomsReserved) {
         url: '/coralview/functions/user/check_capacity.php',
         data: {room_reserved: JSON.stringify(roomsReserved), capacity: JSON.stringify(capacity) },
         success: function(data) {
-            console.log(data);
 
             if(data == 'greater') {
                 setTimeout(function() {
                     toastr.options.timeOut = 5000;
                     toastr.options.extendedTimeOut = 500;
-                    toastr.info('Guest Capacity is greater than the room you reserved. Please add another room to accomodate all.');
-
+                    toastr.info('Guest Capacity is greater than the room you reserved. Please add another room to accomodate guest count.');
+                    enableNextButton();
                 }, 2000);
             }
         },

@@ -181,18 +181,22 @@ $payment_photo = '';
                                                 $rooms_reserved[$room_id] = $room_quantity; 
                                                 $quantity += $room_quantity;    
 
+                                                $room_rate = 0;
                                                 if($is_peak_rate == 0) {
-                                                    $total_price = $room_reservation["peak_rate"] * $room_reservation["quantity"];
+                                                    $room_rate = $room_reservation["off_peak_rate"];
                                                 } else if ($is_peak_rate == 1) {
-                                                    $total_price = $room_reservation["off_peak_rate"] * $room_reservation["quantity"];
+                                                    $room_rate = $room_reservation["peak_rate"];
+                                                    
                                                 }
+
+                                                $total_price = $room_rate * $room_reservation["quantity"];
 
 
                                                 echo '
                                                     <tr>
                                                         <td class="text-center" >' . $room_reservation["type"] . '</td>
                                                         <td class="text-center" >' . $room_reservation["quantity"] . '</td>
-                                                        <td class="text-center" >' . number_format($room_reservation["peak_rate"], 2)   . '</td>
+                                                        <td class="text-center" >' . number_format($room_rate, 2)   . '</td>
                                                         <td class="text-center" > ' . number_format($total_price, 2)  . '</td>
                                                     </tr>
                                                 ';

@@ -17,8 +17,10 @@ $overall_total_price = 0;
 $overall_total_extra = 0;
 $payment_type = '';
 $nights_of_stay = 0;
-
+$guest_number = 0;
 $TOTAL_PRICE = 0;
+
+$is_peak_rate = 0;
 
 $payment_photo = '';
 
@@ -86,9 +88,10 @@ $payment_photo = '';
                                             $diff = $dateDiff->format('%d');
                                             $nights_of_stay = $diff;
                                             $full_name = $reservation["first_name"] . " " . $reservation["last_name"];
-                                            $guest_number = $reservation["adult_count"];
+                                            $guest_number = $reservation["adult_count"] + $reservation["kids_count"];
                                             $payment_type = $reservation["payment"];
                                             $payment_photo = $reservation['payment_path'];
+                                            $is_peak_rate = $reservation['is_peak_rate'];
 
                                             echo '
                                                 <table class="table table-bordered">
@@ -211,13 +214,20 @@ $payment_photo = '';
 
                                                 $quantity += $room_quantity;
 
-                                                $total_price = $room_reservation["peak_rate"] * $room_reservation["quantity"];
+                                                $room_rate = 0;
+                                                if($is_peak_rate == 0) {
+                                                    $room_rate = $room_reservation["off_peak_rate"]; 
+                                                } else if ($is_peak_rate == 1) {
+                                                    $room_rate = $room_reservation["peak_rate"];
+                                                }
+
+                                                $total_price = $room_rate * $room_reservation["quantity"];
 
                                                 echo '
                                                     <tr>
                                                         <td class="text-center" style="width: 55%;">' . $room_reservation["type"] . '</td>
                                                         <td class="text-center" style="width: 15%;">' . $room_reservation["quantity"] . '</td>
-                                                        <td class="text-center" style="width: 15%;">' . $room_reservation["peak_rate"] . '</td>
+                                                        <td class="text-center" style="width: 15%;">' . $room_rate . '</td>
                                                         <td class="text-center" style="width: 15%;"> ' . number_format($total_price, 2)  . '</td>
                                                     </tr>
                                                 ';
@@ -387,7 +397,7 @@ $payment_photo = '';
                                     while($discount = mysqli_fetch_assoc($check_discount_result)) {
                                         
                                         $discount_amount = $discount["amount"];
-                                        $comp_discount = $overall_total_price / $quantity;
+                                        $comp_discount = $overall_total_price / $guest_number;
                                         
                                         if($discount_amount < 1) {
                                             $temp_discount_price = $comp_discount * $discount_amount;

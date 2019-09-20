@@ -27,7 +27,7 @@ if(isset($_REQUEST["reference_no"])) {
     $is_uploaded = "SELECT payment_path FROM reservation WHERE reference_no='$reference_no'";
     $is_uploaded_result = mysqli_query($db, $is_uploaded);
     
-    if(mysqli_num_rows($cancel_result) > 0) {
+    if(mysqli_num_rows($is_uploaded_result) > 0) {
         $isPaymentUploaded = true;
     }
 
@@ -38,6 +38,7 @@ $html = '';
 $payment_html = '';
 $room_html = '';
 $payment_photo = '';
+$is_peak_rate = 0;
 
 ?>
     
@@ -45,36 +46,39 @@ $payment_photo = '';
 
         <?php
         
-        if(isset($_SESSION['msg']) && isset($_SESSION['alert'])) {
+        
+        if(isset($_SESSION['message']) && isset($_SESSION['alert'])) {
             echo '
                 <div class="' . $_SESSION['alert'] . ' text-center" role="alert">
-                    ' . $_SESSION['msg']  . '
+                    ' . $_SESSION['message']  . '
                 </div>
             ';
-        } else if(isset($_SESSION["fileType"])) {
+        }
+        
+        if(isset($_SESSION["fileType"])) {
             echo '
-                <div class="alert alert-error text-center" role="alert">
+                <div class="alert alert-danger text-center" role="alert">
                     ' . $_SESSION['fileError']  . '
                     ' . $_SESSION['fileType']  . '
                 </div>
             ';
         } else if(isset($_SESSION["fileExists"])) {
             echo '
-                <div class="alert alert-error text-center" role="alert">
+                <div class="alert alert-danger text-center" role="alert">
                     ' . $_SESSION['fileError']  . '
                     ' . $_SESSION['fileExists']  . '
                 </div>
             ';
         } else if(isset($_SESSION["fileImage"])) {
             echo '
-                <div class="alert alert-error text-center" role="alert">
+                <div class="alert alert-danger text-center" role="alert">
                     ' . $_SESSION['fileError']  . '
                     ' . $_SESSION['fileImage']  . '
                 </div>
             ';
         } else if(isset($_SESSION["fileType"])) {
             echo '
-                <div class="alert alert-error text-center" role="alert">
+                <div class="alert alert-danger text-center" role="alert">
                     ' . $_SESSION['fileError']  . '
                     ' . $_SESSION['fileType']  . '
                 </div>
@@ -90,14 +94,16 @@ $payment_photo = '';
                     
                     if(!$isCancelled) {
                         echo '<button type="button" class="btn btn-danger float-right" data-toggle="modal" data-target="#cancelReservation">Cancel Reservation</button>';  
-                    } 
+                    } else {
+                        echo '<h4 class="text-danger text-center">Reservation Status: CANCELLED</h4>';
+                    }
                     
                     ?>
 
 
                     <?php
                     
-                    if($isPaymentUploaded) {
+                    if($isPaymentUploaded && !$isCancelled) {
                         echo '<button type="button" class="btn btn-info float-right mr-2" data-toggle="modal" data-target="#uploadPaymentModal">Upload Payment</button>';
                     }
                     
@@ -133,6 +139,7 @@ $payment_photo = '';
                     $dateDiff = date_diff(date_create($reservation["check_in_date"]), date_create($reservation["check_out_date"]));
                     $diff = $dateDiff->format('%d');
                     $payment_photo = $reservation["payment_path"];
+                    
 
                     $html .= '
                         <table style="width: 60%; margin: 0 auto;" class="table table-bordered">
@@ -210,22 +217,32 @@ $payment_photo = '';
                         <th class="text-center" style="width: 55%;">ROOMS/S RESERVE</th>
                         <th class="text-center" style="width: 15%;">QUANTITY</th>
                         <th class="text-center" style="width: 15%;">PRICE</th>
+                        <th class="text-center" style="width: 15%;">NIGHT/S OF STAY</th>
                         <th class="text-center" style="width: 15%;">TOTAL</th>
                     </tr>
                 
                 ';
 
                 $overall_total_price = 0;
+                $overall_price = 0;
 
                 while($room_reservation = mysqli_fetch_assoc($room_reservation_details_result)) {
 
-                    $total_price = $room_reservation["peak_rate"] * $room_reservation["quantity"];
+                    if($is_peak_rate == 0) {
+                        $room_rate = $room_reservation["off_peak_rate"]; 
+                    } else if ($is_peak_rate == 1) {
+                        $room_rate = $room_reservation["peak_rate"];
+                    }
+
+                    $total_price = $room_rate * $room_reservation["quantity"];
+                    $overall_price += $total_price; 
 
                     $room_html .= '
                         <tr>
-                            <td class="text-center" style="width: 55%;">' . $room_reservation["type"] . '</td>
+                            <td class="text-center" style="width: 40%;">' . $room_reservation["type"] . '</td>
                             <td class="text-center" style="width: 15%;">' . $room_reservation["quantity"] . '</td>
-                            <td class="text-center" style="width: 15%;">' . $room_reservation["peak_rate"] . '</td>
+                            <td class="text-center" style="width: 15%;">' . $room_rate . '</td>
+                            <td class="text-center" style="width: 15%;">' . $diff . '</td>
                             <td class="text-center" style="width: 15%;"> ' . number_format($total_price, 2)  . '</td>
                         </tr>
                     ';
@@ -233,14 +250,15 @@ $payment_photo = '';
                     $overall_total_price += $total_price;
                 }
                 
-                // echo '
-                //     <tr>
-                //         <td></td>
-                //         <td></td>
-                //         <td></td>
-                //         <td class="text-center"><b>PHP '  . number_format($overall_total_price, 2) .  '</b></td>
-                //     </tr>
-                // ';
+                $room_html .= '
+                    <tr>
+                        <td class="text-center" style="width: 40%;">SUBTOTAL</td>
+                        <td class="text-center" style="width: 15%;"></td>
+                        <td class="text-center" style="width: 15%;"></td>
+                        <td class="text-center" style="width: 15%;"></td>
+                        <td class="text-center" style="width: 15%;">' . number_format($overall_price * $diff, 2). '</td>
+                    </tr>    
+                ';
 
                 $room_html .= '</table>';
             }
@@ -287,23 +305,28 @@ $payment_photo = '';
             <?php
             
             if($payment_photo != '') {
-                echo '
-                
-                <br>
-                <h5 class="text-center mt-3 text-info mt-3">Deposit Slip Details</h5>
-                <hr />
-                
-                ';
-                echo '<div style="text-align: center;"><img style="width: 50%; height: 25%;" src="' . $payment_photo .   '"></img></div>';
-                echo '
-                    <br>
-                    <div class="text-center">
-                        <p>Please wait an email from the resort administrator for the processing of your payment.</p>
-                    
-                    </div>
-                ';
-            }            
+
+                if($payment_photo != "0") {
+
+                    echo '
             
+                    <br>
+                    <h5 class="text-center mt-3 text-info mt-3">Deposit Slip Details</h5>
+                    <hr />
+                    
+                    ';
+                    echo '<div style="text-align: center;"><img style="width: 50%; height: 25%;" src="' . $payment_photo .   '"></img></div>';
+                    echo '
+                        <br>
+                        <div class="text-center">
+                            <p>Please wait an email from the resort administrator for the processing of your payment.</p>
+                        
+                        </div>
+                    ';
+
+                }
+            
+            }   
             ?>
             
             <?php echo $room_html; ?>
@@ -332,22 +355,26 @@ $payment_photo = '';
             
         <div class="row">               
             <div class="col text-center">
-                <button href="/coralview/index.php" class="btn btn-primary mb-5 mt-2">GO BACK TO HOME PAGE</button>                
+                <button href="/index.php" class="btn btn-primary mb-5 mt-2">GO BACK TO HOME PAGE</button>                
             </div> 
         </div>
     
     </div>
     
-
-
-
-
 <?php
 
 include('common/cancel_reservation_modal.php');
 include('common/upload_payment_modal.php');
 include('common/footer.php');
 
-session_destroy();
+unset($_SESSION["alert"]);
+unset($_SESSION["message"]);
+unset($_SESSION["fileType"]);
+unset($_SESSION["fileExists"]);
+unset($_SESSION["fileSize"]);
+unset($_SESSION["fileImage"]);
+unset($_SESSION["fileError"]);
+
+
 
 ?>

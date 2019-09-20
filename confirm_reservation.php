@@ -16,6 +16,8 @@ if(isset($_REQUEST["reference_no"])) {
 $html = '';
 $payment_html = '';
 $room_html = '';
+$rate_type = 0;
+
 
 ?>
 
@@ -70,6 +72,8 @@ $room_html = '';
 
                     $dateDiff = date_diff(date_create($reservation["check_in_date"]), date_create($reservation["check_out_date"]));
                     $diff = $dateDiff->format('%d');
+
+                    $rate_type = $reservation["is_peak_rate"];
 
                     $html .= '
                         <table style="width: 60%; margin: 0 auto;" class="table table-bordered">
@@ -147,45 +151,61 @@ $room_html = '';
                         <th class="text-center" style="width: 55%;">ROOMS/S RESERVE</th>
                         <th class="text-center" style="width: 15%;">QUANTITY</th>
                         <th class="text-center" style="width: 15%;">PRICE</th>
+                        <th class="text-center" style="width: 15%;">NIGHT/S OF STAY</th>
                         <th class="text-center" style="width: 15%;">TOTAL</th>
                     </tr>
-                
                 ';
 
                 $overall_total_price = 0;
+                $total_amount = 0;
 
                 while($room_reservation = mysqli_fetch_assoc($room_reservation_details_result)) {
 
-                    $total_price = $room_reservation["peak_rate"] * $room_reservation["quantity"];
+                    $room_rate = 0;
+
+
+                    if($rate_type == 0) {
+                        $room_rate = $room_reservation["off_peak_rate"];
+                    } else if ($rate_type == 1) {
+                        $room_rate = $room_reservation["peak_rate"];
+                    }
+
+                    $total_price = $room_rate * $room_reservation["quantity"];
+                    $total_amount += $total_price * $diff;
 
                     $room_html .= '
                         <tr>
-                            <td class="text-center" style="width: 55%;">' . $room_reservation["type"] . '</td>
+                            <td class="text-center" style="width: 40%;">' . $room_reservation["type"] . '</td>
                             <td class="text-center" style="width: 15%;">' . $room_reservation["quantity"] . '</td>
-                            <td class="text-center" style="width: 15%;">' . $room_reservation["peak_rate"] . '</td>
-                            <td class="text-center" style="width: 15%;"> ' . number_format($total_price, 2)  . '</td>
+                            <td class="text-center" style="width: 15%;">' . number_format($room_rate, 2) . '</td>
+                            <td class="text-center" style="width: 15%;">' . $diff . '</td>
+                            <td class="text-center" style="width: 15%;"> ' . number_format($total_price * $diff, 2)  . '</td>
                         </tr>
                     ';
 
                     $overall_total_price += $total_price;
                 }
                 
-                // echo '
-                //     <tr>
-                //         <td></td>
-                //         <td></td>
-                //         <td></td>
-                //         <td class="text-center"><b>PHP '  . number_format($overall_total_price, 2) .  '</b></td>
-                //     </tr>
-                // ';
+                $room_html .= '
+                    <tr>
+                        <td class="text-center" style="width: 40%;">SUBTOTAL</td>
+                        <td class="text-center" style="width: 15%;"></td>
+                        <td class="text-center" style="width: 15%;"></td>
+                        <td class="text-center" style="width: 15%;"></td>
+                        <td class="text-center" style="width: 15%;">' . number_format($total_amount, 2). '</td>
+                    </tr>
+        
+                ';
 
                 $room_html .= '</table>';
+
+                
             }
             ?>
  
             <?php
             
-            $overall_total_amount = $diff * $overall_total_price;
+            $overall_total_amount = $overall_total_price * $diff;
             $vatable_amount = $overall_total_amount / 1.12;
             $vat = $overall_total_amount - $vatable_amount;
             
@@ -202,7 +222,7 @@ $room_html = '';
                     </tr>
                     <tr>
                         <td class="text-center"><h6>Total Room Fee</h6></td>
-                        <td class="text-right pr-4 pb-3">' . number_format($overall_total_price, 2) . '</td>
+                        <td class="text-right pr-4 pb-3">' . number_format($total_amount, 2) . '</td>
                     </tr>
                     <tr>
                         <td class="text-center"><h6>VATABLE AMOUNT</h6></td>
@@ -276,7 +296,7 @@ $room_html = '';
             
         <div class="row">               
             <div class="col text-center">
-                <button href="/coralview/index.php" class="btn btn-primary mb-5 mt-2">GO BACK TO HOME PAGE</button>                
+                <a href="index.php" style="color: white;" class="btn btn-primary mb-5 mt-2">GO BACK TO HOME PAGE</a>                
             </div> 
         </div>
     
