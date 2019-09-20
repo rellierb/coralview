@@ -56,7 +56,19 @@ $db = connect_to_db();
                                         </div>
 
 
-                                        <div class="form-group">
+                                        <a class="btn btn-outline-default btn-block" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                            Filter
+                                        </a>
+                                        <div class="collapse" id="collapseExample">
+                                            <div class="card card-body">
+                                                <label for="">Reference No.</label>
+                                                <input type="text" class="form-control" name="reference_no">
+                                            </div>
+                                        </div>
+
+
+
+                                        <!-- <div class="form-group">
                                             <label for="">Reservation Reference No.</label>
                                             <select class="form-control" name="reference_no" >
                                             <?php
@@ -74,7 +86,7 @@ $db = connect_to_db();
 
                                             ?>
                                             </select>
-                                        </div>
+                                        </div> -->
                                         
                                         <!-- <div class="form-group">
                                             <label for="">First Name</label>

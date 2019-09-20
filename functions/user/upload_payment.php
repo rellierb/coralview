@@ -101,7 +101,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $mail->setFrom('coralviewthesis@gmail.com');
                 $mail->isHTML(true);
                 $mail->addAddress('coralviewthesis@gmail.com');
-                $mail->Subject = 'Coralview Beach Resort Cancelled Reservation';
+                $mail->Subject = 'Coralview Beach Resort Payment Reservation';
                 $mail->Body = $message;
                 $mail->send();
 

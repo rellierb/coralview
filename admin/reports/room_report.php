@@ -51,33 +51,46 @@ $db = connect_to_db();
                                             </div>
                                         </div>
 
-                                        <div class="form-group">
-                                            <label for="">ROOM NAME</label>
-                                            <select class="form-control" name="room_name">
-                                            <?php
-                                                
-                                                $room_query = "SELECT type, Id FROM rooms";
-                                                $room_result = mysqli_query($db, $room_query); 
-                                                
-                                                if(mysqli_num_rows($room_result) > 0) {
 
-                                                    while($room = mysqli_fetch_assoc($room_result)) {
-                                                        echo '<option value="' . $room['Id'] . '">' . $room['type'] . '</option>';
-                                                    }
+                                        <a class="btn btn-outline-default btn-block" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                            Filter
+                                        </a>
+                                        <div class="collapse" id="collapseExample">
+                                            <div class="card card-body">
 
-                                                } 
+                                                <div class="form-group">
+                                                    <label for="">ROOM NAME</label>
+                                                    <select class="form-control" name="room_name">
+                                                    <?php
+                                                        
+                                                        $room_query = "SELECT type, Id FROM rooms";
+                                                        $room_result = mysqli_query($db, $room_query); 
+                                                        
+                                                        if(mysqli_num_rows($room_result) > 0) {
+                                                            echo '<option value="">All Rooms</option>';
+                                                            while($room = mysqli_fetch_assoc($room_result)) {
+                                                                echo '<option value="' . $room['Id'] . '">' . $room['type'] . '</option>';
+                                                            }
 
-                                            ?>
-                                            </select>
+                                                        } 
+
+                                                    ?>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">ROOM STATUS</label>
+                                                    <select class="form-control" id="" name="room_availability">
+                                                        <option value="">All Status</option>
+                                                        <option value="AVAILABLE">AVAILABLE</option>
+                                                        <option value="OCCUPIED">OCCUPIED</option>
+                                                        <option value="FOR REPAIR">FOR REPAIR</option>                                                
+                                                    </select>
+                                                </div>
+
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="">ROOM STATUS</label>
-                                            <select class="form-control" id="" name="room_availability">
-                                                <option class="AVAILABLE">AVAILABLE</option>
-                                                <option class="OCCUPIED">OCCUPIED</option>
-                                                <option class="FOR REPAIR">FOR REPAIR</option>                                                
-                                            </select>
-                                        </div>
+
+                                        
                                         <br>
                                         <button type="submit" class="btn btn-primary btn-block">Generate Report</button>
                                     </form>

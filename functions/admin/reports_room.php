@@ -45,13 +45,48 @@ if(isset($_POST["date_reservation_to"])) {
     $date_reservation_to = mysqli_real_escape_string($db, trim($_POST['date_reservation_to']));
 }
 
-$room_query = "SELECT RS.room_number, RS.status, R.type FROM rooms_status RS 
 
-INNER JOIN rooms R ON RS.room_id = R.id 
-INNER JOIN booking_rooms BR ON BR.room_id = R.id
-INNER JOIN reservation RES ON RES.Id = BR.reservation_id
+$room_query = '';
 
-WHERE RS.status='$room_availability' AND R.Id='$room_name' AND date_created BETWEEN '$date_reservation_from' AND '$date_reservation_to'";
+if(!empty($room_name) && !empty($room_availability)) {
+
+    $room_query = "SELECT RS.room_number, RS.status, R.type FROM rooms_status RS 
+
+    INNER JOIN rooms R ON RS.room_id = R.id 
+    INNER JOIN booking_rooms BR ON BR.room_id = R.id
+    INNER JOIN reservation RES ON RES.Id = BR.reservation_id
+
+    WHERE RS.status='$room_availability' AND R.Id='$room_name' AND RES.date_created BETWEEN '$date_reservation_from' AND '$date_reservation_to'";
+
+} else if (!empty($room_name) && empty($room_availability)) {
+
+    $room_query = "SELECT RS.room_number, RS.status, R.type FROM rooms_status RS 
+
+    INNER JOIN rooms R ON RS.room_id = R.id 
+    INNER JOIN booking_rooms BR ON BR.room_id = R.id
+    INNER JOIN reservation RES ON RES.Id = BR.reservation_id
+
+    WHERE RS.status='$room_availability' AND RES.date_created BETWEEN '$date_reservation_from' AND '$date_reservation_to'";
+
+
+} else if (empty($room_name) && !empty($room_availability)) {
+
+
+    $room_query = "SELECT RS.room_number, RS.status, R.type FROM rooms_status RS 
+
+    INNER JOIN rooms R ON RS.room_id = R.id 
+    INNER JOIN booking_rooms BR ON BR.room_id = R.id
+    INNER JOIN reservation RES ON RES.Id = BR.reservation_id
+
+    WHERE R.Id='$room_name' AND RES.date_created BETWEEN '$date_reservation_from' AND '$date_reservation_to'";
+
+
+} else {
+
+    $room_query = "SELECT RS.room_number, RS.status, R.type FROM rooms_status RS 
+    INNER JOIN rooms R ON RS.room_id = R.id ";
+
+}
 
 $room_result = mysqli_query($db, $room_query);
 
@@ -110,17 +145,14 @@ if(mysqli_num_rows($room_result) > 0) {
 } else {
 
     $_SESSION['msg'] = 'No Data Exist';
-    $_SESSION['alert'] = 'alert alert-success';
+    $_SESSION['alert'] = 'alert alert-warning';
 
-    header("location: ../../admin/reports/reports_room.php"); 
+    header("Location: ../../admin/reports/room_report.php"); 
 
 }
 
-
-echo $html;
-
-// $mpdf->WriteHTML($html);
-// $mpdf->Output('room_reports.pdf', 'D');
+$mpdf->WriteHTML($html);
+$mpdf->Output('room_reports.pdf', 'D');
 
 
 

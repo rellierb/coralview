@@ -367,8 +367,6 @@ $html .= '
 ';
 
 
-
-
 $overall_total_amount = $TOTAL_PRICE;
 $vatable_amount = $overall_total_amount / 1.12;
 $vat = $overall_total_amount - $vatable_amount;

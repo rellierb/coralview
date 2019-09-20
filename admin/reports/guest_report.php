@@ -51,16 +51,28 @@ $db = connect_to_db();
                                             </div>
                                         </div>
                                         
-                                        <div class="form-group">
-                                            <label for="">First Name</label>
-                                            <input type="text" class="form-control" name="first_name" id="">
+                                        <a class="btn btn-outline-default btn-block" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                            Filter
+                                        </a>
+                                        <div class="collapse" id="collapseExample">
+                                            <div class="card card-body">
+
+                                                <div class="form-group">
+                                                    <label for="">First Name</label>
+                                                    <input type="text" class="form-control" name="first_name" id="">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="">Last Name</label>
+                                                    <input type="text" class="form-control" name="last_name" id="">
+                                                </div>
+        
+
+
+                                            </div>
                                         </div>
 
-                                        <div class="form-group">
-                                            <label for="">Last Name</label>
-                                            <input type="text" class="form-control" name="last_name" id="">
-                                        </div>
-                                        
+                                                                                
                                         <br>
                                         <button type="submit" class="btn btn-primary btn-block">Generate Report</button>
                                     </form>

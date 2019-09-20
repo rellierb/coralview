@@ -55,27 +55,37 @@ $db = connect_to_db();
                                             </div>
                                         </div>
 
+                                        <a class="btn btn-outline-default btn-block" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                            Filter
+                                        </a>
+                                        <div class="collapse" id="collapseExample">
+                                            <div class="card card-body">
+                                                <label for="">Referecen No.</label>
+                                                <input type="text" class="form-control" name="reference_no">
+                                            </div>
+                                        </div>
+
 
                                         <!-- <div class="form-group">
                                             <label for="">Reservation Reference No.</label>
                                             <select class="form-control" name="reference_no" >
                                             <?php
                                                 
-                                                $room_query = "SELECT reference_no, id FROM reservation WHERE status='CHECKED IN'";
-                                                $room_result = mysqli_query($db, $room_query); 
+                                                // $room_query = "SELECT reference_no, id FROM reservation WHERE status='CHECKED IN'";
+                                                // $room_result = mysqli_query($db, $room_query); 
                                                 
-                                                if(mysqli_num_rows($room_result) > 0) {                                                    
+                                                // if(mysqli_num_rows($room_result) > 0) {                                                    
 
-                                                    while($room = mysqli_fetch_assoc($room_result)) {
-                                                        echo '<option value="' . $room['reference_no'] . '">' . $room['reference_no'] . '</option>';
-                                                    }
+                                                //     while($room = mysqli_fetch_assoc($room_result)) {
+                                                //         echo '<option value="' . $room['reference_no'] . '">' . $room['reference_no'] . '</option>';
+                                                //     }
 
-                                                    echo '</select>';
+                                                //     echo '</select>';
 
-                                                } else {
+                                                // } else {
 
 
-                                                }
+                                                // }
 
                                             ?>
                                             

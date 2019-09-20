@@ -37,13 +37,25 @@ if(isset($_POST["date_reservation_to"])) {
     $date_reservation_to = mysqli_real_escape_string($db, trim($_POST['date_reservation_to']));
 }
 
-echo 
 
-$reservation_details_query = "SELECT * FROM reservation RES
-INNER JOIN guest G ON G.id = RES.guest_id
-WHERE RES.date_created BETWEEN '$date_reservation_from' AND '$date_reservation_to' AND RES.status='CHECKED IN' ";
+if(isset($_POST["reference_no"])) {
+    $reference_no = mysqli_real_escape_string($db, trim($_POST['reference_no']));
+}
 
-echo $reservation_details_query;
+if(!empty($reference_no)) {
+
+    $reservation_details_query = "SELECT * FROM reservation RES
+    INNER JOIN guest G ON G.id = RES.guest_id
+    WHERE RES.date_created BETWEEN '$date_reservation_from' AND '$date_reservation_to' AND RES.status='CHECKED IN' AND RES.reference_no='$reference_no'";
+
+
+} else if(empty($reference_no)) {
+
+    $reservation_details_query = "SELECT * FROM reservation RES
+    INNER JOIN guest G ON G.id = RES.guest_id
+    WHERE RES.date_created BETWEEN '$date_reservation_from' AND '$date_reservation_to' AND RES.status='CHECKED IN' ";
+}
+
 
 $guest_count = 0;
 
@@ -58,10 +70,18 @@ $overall_total_extra = 0;
 $guest_id = '';
 $payment_type = '';
 $nights_of_stay = '';
+$is_peak_rate = 0;
 $html = '';
 
 if(mysqli_num_rows($reservation_details_result) > 0) {
 
+    $html = '
+    <div style="text-align: center;">
+        <img src="/coralview/assets/images/coralview-logo.jpg"  />
+        <h1 style="font-family: Arial;">CHECKED-IN RESERVATION REPORT</h1>
+    </div>
+    ';
+    
     while($reservation = mysqli_fetch_assoc($reservation_details_result)) {
         $reference_no = $reservation["reference_no"];
         $full_name = $reservation["first_name"] . " " . $reservation["last_name"];
@@ -72,132 +92,154 @@ if(mysqli_num_rows($reservation_details_result) > 0) {
         $contact_number = $reservation["contact_number"];
         $email = $reservation["email"];
         $status = $reservation["status"];
-
+        $is_peak_rate = $reservation["is_peak_rate"];
         $payment_type = $reservation["payment"];
 
         $dateDiff = date_diff(date_create($reservation["check_in_date"]), date_create($reservation["check_out_date"]));
         $diff = $dateDiff->format('%d');
 
         $nights_of_stay = $diff;
-    }
-
-    $temp_arrival_date = date_create($arrival_date);
-    $temp_departure_date = date_create($departure_date);
-
-    $html .= '
-
-        <div style="text-align: center;">
-            <img src="/coralview/assets/images/coralview-logo.jpg"  />
-            <h1 style="font-family: Arial;">CHECKED-IN RESERVATION REPORT</h1>
-        </div>
-
-        <br>
-
-        <style type="text/css">
-            .tg  {border-collapse:collapse;border-spacing:0;border-color:#000;}
-            .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#9ABAD9;color:#444;background-color:#EBF5FF;}
-            .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#9ABAD9;color:#fff;background-color:#409cff;}
-            .tg .tg-lboi{border-color:inherit;text-align:left;vertical-align:middle}
-            .tg .tg-yq5v{background-color:#409cff;color:#ffffff;border-color:inherit;text-align:center;vertical-align:middle}
-            .tg .tg-9wq8{border-color:inherit;text-align:center;vertical-align:middle}
-            .tg .tg-uzvj{font-weight:bold;border-color:inherit;text-align:center;vertical-align:middle}
-            .tg .tg-7btt{font-weight:bold;border-color:inherit;text-align:center;vertical-align:top}
-            .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
-            .tg .tg-8nlf{background-color:#409cff;color:#ffffff;border-color:inherit;text-align:center;vertical-align:top}
-            .tg .tg-o21n{background-color:#409cff;color:#ffffff;border-color:#000000;text-align:center;vertical-align:top}
-            .tg .tg-mqa1{font-weight:bold;border-color:#000000;text-align:center;vertical-align:top}
-            .tg .tg-73oq{border-color:#000000;text-align:left;vertical-align:top}
-        </style>
-        <table class="tg" style="width: 100%;">
-            
-            <tr>
-                <td class="tg-yq5v" colspan="15">RESERVATION DETAILS</td>
-            </tr>
-            <tr>
-                <td class="tg-uzvj" colspan="6">Reference No</td>
-                <td class="tg-lboi" colspan="9" style="text-align: center;">' . $reference_no . '</td>
-            </tr>
-            <tr>
-                <td class="tg-uzvj" colspan="6">Status</td>
-                <td class="tg-lboi" colspan="9" style="text-align: center;">' . $status . '</td>
-            </tr>
-            <tr>
-                <td class="tg-7btt" colspan="6">Arrival Date</td>
-                <td class="tg-0pky" colspan="9" style="text-align: center;">' . date_format($temp_arrival_date, "M d, Y") . '</td>
-            </tr>
-            <tr>
-                <td class="tg-7btt" colspan="6">Departure Date</td>
-                <td class="tg-0pky" colspan="9" style="text-align: center;">' . date_format($temp_departure_date, "M d, Y") . '</td>
-            </tr>
-            <tr>
-                <td class="tg-7btt" colspan="6">Guest Count</td>
-                <td class="tg-0pky" colspan="9" style="text-align: center;">' . $guest_count . '</td>
-            </tr>
-            <tr>
-                <th class="tg-9wq8" colspan="15">GUEST DETAILS</th>
-            </tr>
-            <tr>
-                <td class="tg-uzvj" colspan="6">Full Name</td>
-                <td class="tg-lboi" colspan="9" style="text-align: center;">' . $full_name . '</td>
-            </tr>
-            <tr>
-                <td class="tg-uzvj" colspan="6">Address</td>
-                <td class="tg-lboi" colspan="9" style="text-align: center;">' . $address . '</td>
-            </tr>
-            <tr>
-                <td class="tg-uzvj" colspan="6">Contact Number</td>
-                <td class="tg-lboi" colspan="9" style="text-align: center;">' . $contact_number . '</td>
-            </tr>
-            <tr>
-                <td class="tg-uzvj" colspan="6">Email</td>
-                <td class="tg-lboi" colspan="9" style="text-align: center;">' . $email . '</td>
-            </tr>
-        
-    ';
-
-    $room_reservation_details_query = "SELECT * FROM reservation RES
-    INNER JOIN guest G ON G.id = RES.guest_id
-    INNER JOIN booking_rooms BR ON RES.id = BR.reservation_id
-    INNER JOIN rooms R ON BR.room_id = R.Id
-    WHERE RES.reference_no = '$reference_no'";
-
-    $room_reservation_details_result = mysqli_query($db, $room_reservation_details_query);
-    $rooms_reserved = array();
-    $quantity = 0;
-
-    if($room_reservation_details_result) {
+    
+    
+        $temp_arrival_date = date_create($arrival_date);
+        $temp_departure_date = date_create($departure_date);
 
         $html .= '
-            <tr>
-                <td class="tg-8nlf" colspan="15">ROOM DETAILS</td>
-            </tr>
-            <tr>
-                <td class="tg-7btt" colspan="11">Room Name</td>
-                <td class="tg-7btt" colspan="4">Qty</td>
-                
-            </tr>
-        ';
-        // <td class="tg-7btt" colspan="4">Amount</td>
 
-        while($room_reservation = mysqli_fetch_assoc($room_reservation_details_result)) {
+        
+
+            <br>
+
+            <style type="text/css">
+                .tg  {border-collapse:collapse;border-spacing:0;border-color:#000;}
+                .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#9ABAD9;color:#444;background-color:#EBF5FF;}
+                .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#9ABAD9;color:#fff;background-color:#409cff;}
+                .tg .tg-lboi{border-color:inherit;text-align:left;vertical-align:middle}
+                .tg .tg-yq5v{background-color:#409cff;color:#ffffff;border-color:inherit;text-align:center;vertical-align:middle}
+                .tg .tg-9wq8{border-color:inherit;text-align:center;vertical-align:middle}
+                .tg .tg-uzvj{font-weight:bold;border-color:inherit;text-align:center;vertical-align:middle}
+                .tg .tg-7btt{font-weight:bold;border-color:inherit;text-align:center;vertical-align:top}
+                .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+                .tg .tg-8nlf{background-color:#409cff;color:#ffffff;border-color:inherit;text-align:center;vertical-align:top}
+                .tg .tg-o21n{background-color:#409cff;color:#ffffff;border-color:#000000;text-align:center;vertical-align:top}
+                .tg .tg-mqa1{font-weight:bold;border-color:#000000;text-align:center;vertical-align:top}
+                .tg .tg-73oq{border-color:#000000;text-align:left;vertical-align:top}
+            </style>
+            <table class="tg" style="width: 100%;">
+                
+                <tr>
+                    <td class="tg-yq5v" colspan="15">RESERVATION DETAILS</td>
+                </tr>
+                <tr>
+                    <td class="tg-uzvj" colspan="6">Reference No</td>
+                    <td class="tg-lboi" colspan="9" style="text-align: center;">' . $reference_no . '</td>
+                </tr>
+                <tr>
+                    <td class="tg-uzvj" colspan="6">Status</td>
+                    <td class="tg-lboi" colspan="9" style="text-align: center;">' . $status . '</td>
+                </tr>
+                <tr>
+                    <td class="tg-7btt" colspan="6">Arrival Date</td>
+                    <td class="tg-0pky" colspan="9" style="text-align: center;">' . date_format($temp_arrival_date, "M d, Y") . '</td>
+                </tr>
+                <tr>
+                    <td class="tg-7btt" colspan="6">Departure Date</td>
+                    <td class="tg-0pky" colspan="9" style="text-align: center;">' . date_format($temp_departure_date, "M d, Y") . '</td>
+                </tr>
+                <tr>
+                    <td class="tg-7btt" colspan="6">Guest Count</td>
+                    <td class="tg-0pky" colspan="9" style="text-align: center;">' . $guest_count . '</td>
+                </tr>
+                <tr>
+                    <th class="tg-9wq8" colspan="15">GUEST DETAILS</th>
+                </tr>
+                <tr>
+                    <td class="tg-uzvj" colspan="6">Full Name</td>
+                    <td class="tg-lboi" colspan="9" style="text-align: center;">' . $full_name . '</td>
+                </tr>
+                <tr>
+                    <td class="tg-uzvj" colspan="6">Address</td>
+                    <td class="tg-lboi" colspan="9" style="text-align: center;">' . $address . '</td>
+                </tr>
+                <tr>
+                    <td class="tg-uzvj" colspan="6">Contact Number</td>
+                    <td class="tg-lboi" colspan="9" style="text-align: center;">' . $contact_number . '</td>
+                </tr>
+                <tr>
+                    <td class="tg-uzvj" colspan="6">Email</td>
+                    <td class="tg-lboi" colspan="9" style="text-align: center;">' . $email . '</td>
+                </tr>
             
-            $room_id = $room_reservation["room_id"];
-            $room_quantity = $room_reservation["quantity"];
-            $rooms_reserved[$room_id] = $room_quantity; 
-            $quantity += $room_quantity;
-            $total_price = $room_reservation["peak_rate"] * $room_reservation["quantity"];
+        ';
+
+        $room_reservation_details_query = "SELECT * FROM reservation RES
+        INNER JOIN guest G ON G.id = RES.guest_id
+        INNER JOIN booking_rooms BR ON RES.id = BR.reservation_id
+        INNER JOIN rooms R ON BR.room_id = R.Id
+        WHERE RES.reference_no = '$reference_no'";
+
+        $room_reservation_details_result = mysqli_query($db, $room_reservation_details_query);
+        $rooms_reserved = array();
+        $quantity = 0;
+
+        if($room_reservation_details_result) {
 
             $html .= '
                 <tr>
-                    <td class="tg-0pky" colspan="11" style="text-align: center;">' . $room_reservation["type"] . '</td>
-                    <td class="tg-0pky" colspan="4" style="text-align: center;">' . $room_reservation["quantity"] . '</td>
+                    <td class="tg-8nlf" colspan="15">ROOM DETAILS</td>
+                </tr>
+                <tr>
+                    <td class="tg-7btt" colspan="11">Room Name</td>
+                    <td class="tg-7btt" colspan="4">Qty</td>
+                    
                 </tr>
             ';
-            // <td class="tg-0pky" colspan="4" style="text-align: center;">' . number_format($room_reservation["peak_rate"]) . '</td>
-            $overall_total_price += $total_price;
+            // <td class="tg-7btt" colspan="4">Amount</td>
+
+            while($room_reservation = mysqli_fetch_assoc($room_reservation_details_result)) {
+                
+                $room_id = $room_reservation["room_id"];
+                $room_quantity = $room_reservation["quantity"];
+                $rooms_reserved[$room_id] = $room_quantity; 
+                $quantity += $room_quantity;
+                
+
+                $room_rate = 0;
+                if($is_peak_rate == 0) {
+
+                    $room_rate = $room_reservation["off_peak_rate"]; 
+
+                } else if($is_peak_rate == 1) {
+
+                    $room_rate = $room_reservation["peak_rate"];
+
+                }
+                $total_price = $room_rate * $room_reservation["quantity"];
+
+                $html .= '
+                    <tr>
+                        <td class="tg-0pky" colspan="11" style="text-align: center;">' . $room_reservation["type"] . '</td>
+                        <td class="tg-0pky" colspan="4" style="text-align: center;">' . $room_reservation["quantity"] . '</td>
+                    </tr>
+                ';
+                // <td class="tg-0pky" colspan="4" style="text-align: center;">' . number_format($room_reservation["peak_rate"]) . '</td>
+                $overall_total_price += $total_price;
+            }
+
         }
 
+        $html .= '
+        
+        </table>
+        <br>
+        <br>
+        <br>
+        
+        ';
+    
     }
+
+    
 
     // $extra_list_query = "SELECT * FROM billing_extras BE INNER JOIN extras E ON BE.expense_id = E.Id WHERE reference_no='$reference_no'";
     // $extra_list_result = mysqli_query($db, $extra_list_query);
@@ -375,10 +417,7 @@ if(mysqli_num_rows($reservation_details_result) > 0) {
 
     $html .= '
             
-        </table>
-        <br>
-        <br>
-        <br>
+       
 
         <div>
             <p style="font-family: Arial;"><b>PRINTED BY: </b> ' . $user . '</p>
@@ -389,9 +428,9 @@ if(mysqli_num_rows($reservation_details_result) > 0) {
 } else {
 
     $_SESSION['msg'] = 'No Data Exist';
-    $_SESSION['alert'] = 'alert alert-success';
+    $_SESSION['alert'] = 'alert alert-warning';
 
-    header("location: ../../admin/reports/guest_report.php"); 
+    header("location: ../../admin/reports/check_in_report.php"); 
     
 }
 
