@@ -137,7 +137,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 $room_rate = $room["peak_rate"];
                             }
 
-                            $amount = $quantity * $room["peak_rate"];
+                            $amount = $quantity * $room_rate;
 
                             $table_data .= '
                                 <tr>
@@ -204,6 +204,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </table>
                 ';
 
+                $reservation_link_upload = "http://localhost/coralview/view_reservation.php?reference_no=" . $reference_no ."";
+
                 $room_details = '
 
                     <table class="tg">
@@ -217,7 +219,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </table>
                 ';
 
-                
                 $reservation_message = '
                     <style>
 
@@ -303,8 +304,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <hr>
 
                         <p>Please click the <a href="http://localhost/coralview/confirm_reservation.php?reference_no=' . $reference_no . '">link</a> to acknowledge your reservation.</p>
+
+                        <p>For paying for reservation balance, please click the link <a href="' . $reservation_link_upload .'">here</a>.
+                        
                     </div>
                 ';
+                
 
                 $mail = new PHPMailer(true);
 
