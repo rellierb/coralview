@@ -27,17 +27,17 @@ function check_peak_rate($date_reserved) {
 
     $date = date("Y-m-d", strtotime($date_reserved));
 
-    $off_peak_date_start_1 = date("Y-m-d", strtotime("01/02/2019"));
-    $off_peak_date_end_1 = date("Y-m-d", strtotime("03/11/2019"));
+    $off_peak_date_start_1 = date("Y-m-d", strtotime("01/02/2020"));
+    $off_peak_date_end_1 = date("Y-m-d", strtotime("03/11/2020"));
 
-    $off_peak_date_start_2 = date("Y-m-d", strtotime("07/18/2019"));
-    $off_peak_date_end_2 = date("Y-m-d", strtotime("11/19/2019"));
+    $off_peak_date_start_2 = date("Y-m-d", strtotime("07/18/2020"));
+    $off_peak_date_end_2 = date("Y-m-d", strtotime("11/19/2020"));
 
-    $peak_date_start_1 = date("Y-m-d", strtotime("03/12/2019"));
-    $peak_date_end_1 = date("Y-m-d", strtotime("07/17/2019"));
+    $peak_date_start_1 = date("Y-m-d", strtotime("03/12/2020"));
+    $peak_date_end_1 = date("Y-m-d", strtotime("07/17/2020"));
 
-    $peak_date_start_2 = date("Y-m-d", strtotime("11/20/2019"));
-    $peak_date_end_2 = date("Y-m-d", strtotime("01/01/2020"));
+    $peak_date_start_2 = date("Y-m-d", strtotime("11/20/2020"));
+    $peak_date_end_2 = date("Y-m-d", strtotime("01/01/2021"));
 
     $type_of_rate = "";
     
@@ -112,6 +112,35 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $booking_room_result = mysqli_query($db, $booking_room_query);
 
                 $is_success_or_failed = '';
+
+                /* 
+                 * Update room status
+                 */
+
+                $select_rooms_available = "SELECT room_number FROM rooms_status WHERE room_id=$room_id AND status='AVAILABLE'";
+                $select_rooms_available_result = mysqli_query($db, $select_rooms_available);
+                
+                $counter = 0;
+                while($rooms_available = mysqli_fetch_assoc($select_rooms_available_result)) {
+                    
+                    $room_number = $rooms_available["room_number"];
+                    
+                    $room_status_query = "UPDATE rooms_status SET status='OCCUPIED' WHERE room_number='$room_number'";
+                    echo $room_status_query;
+
+                    $room_status_result = mysqli_query($db, $room_status_query);
+
+                    $counter += 1;
+
+                    if($counter == $quantity) {
+                        break;
+                    }    
+                }
+                
+
+                /* 
+                 * Update room ending
+                 */
 
                 if(!$booking_room_result) {
 
@@ -316,27 +345,27 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                   $attachment = "../../assets/files/house-rules.docx";
 
                 try {
-                    $message = $reservation_message;
-                    $mail->SMTPDebug = 1;
-                    $mail->isSMTP();
-                    $mail->Host = 'smtp.gmail.com';
-                    $mail->SMTPAuth = true;
-                    $mail->Username = 'coralviewthesis@gmail.com';  // Fill this up
-                    $mail->Password = 'Qwerty1234@1234';  // Fill this up
-                    $mail->SMTPSecure = 'tls';
-                    $mail->Port = 587;
+                    // $message = $reservation_message;
+                    // $mail->SMTPDebug = 1;
+                    // $mail->isSMTP();
+                    // $mail->Host = 'smtp.gmail.com';
+                    // $mail->SMTPAuth = true;
+                    // $mail->Username = 'coralviewthesis@gmail.com';  // Fill this up // 
+                    // $mail->Password = 'Qwerty1234@1234';  // Fill this up // 
+                    // $mail->SMTPSecure = 'tls';
+                    // $mail->Port = 587;
 
-                    // add attachment
-                    $mail->addAttachment($attachment, 'House Rules.docx');
+                    // // add attachment
+                    // $mail->addAttachment($attachment, 'House Rules.docx');
 
-                    $mail->setFrom('coralviewthesis@gmail.com');
-                    $mail->isHTML(true);
-                    $mail->addAddress($email);
-                    $mail->Subject = 'Coralview Reservation';
-                    $mail->Body = $message;
-                    $mail->send();
+                    // $mail->setFrom('coralviewthesis@gmail.com');
+                    // $mail->isHTML(true);
+                    // $mail->addAddress($email);
+                    // $mail->Subject = 'Coralview Reservation';
+                    // $mail->Body = $message;
+                    // $mail->send();
 
-                    echo  '<script>window.location.assign("../../success_confirmation.php")</script>';
+                    // echo  '<script>window.location.assign("../../success_confirmation.php")</script>';
 
                 } catch (Exception $e) {
                     $_SESSION['email_error_msg'] = "There\'s an error processing your request";
