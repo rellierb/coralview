@@ -32,31 +32,22 @@ $db = connect_to_db();
                     
                     <div class="card" style="height: 60vh;">
                         <div class="card-body">
-                            <h4 class="text-center text-info">RECEPTIONIST REPORT</h4>
+                            <h4 class="text-center text-info">SUMMARY REPORT</h4>
                             
                             <div class="row justify-content-md-center">
                                 <div class="col-4">
 
-                                    <form action="../../functions/admin/reports_receptionist.php" method="POST">
+                                    <form action="../../functions/admin/report_summary.php" method="POST">
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col">
-                                                    <label for="">Date of Reservation (From)</label>
-                                                    <input type="text" class="form-control datetimepicker" name="date_reservation_from" id="dateFrom">
-                                                </div>
-                                                <div class="col">
-                                                    <label for="">Date of Reservation (To)</label>
-                                                    <input type="text" class="form-control datetimepicker" name="date_reservation_to" id="dateTo">
+                                                    <label for="">Date of Transaction</label>
+                                                    <input type="text" class="form-control datetimepicker" name="date_transaction" id="dateFrom">
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="form-group">
-                                            <label for="">Reservation Status</label>
-                                        </div>
-
-            
-
+                                    
                                         <!-- <div class="form-group">
                                             <label for="">First Name</label>
                                             <input type="text" class="form-control" name="first_name" id="">

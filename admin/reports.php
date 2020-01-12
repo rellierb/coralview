@@ -46,6 +46,7 @@ $db = connect_to_db();
                                     <a href="reports/reservation_report.php" style="margin-bottom: 30px;" class="btn btn-outline-info btn-block btn-lg">Reservation Report</a>
                                     <a href="reports/check_in_report.php" style="margin-bottom: 30px;" class="btn btn-outline-info btn-block btn-lg">Check-in Report</a>
                                     <a href="reports/billing_report.php" style="margin-bottom: 30px;" class="btn btn-outline-info btn-block btn-lg">Billing Report</a>
+                                    <a href="reports/summary_report.php" style="margin-bottom: 30px;" class="btn btn-outline-info btn-block btn-lg">Summary Report</a>
                                 </div>
                             </div>
                         </div>
