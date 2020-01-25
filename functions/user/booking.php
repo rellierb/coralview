@@ -126,7 +126,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $room_number = $rooms_available["room_number"];
                     
                     $room_status_query = "UPDATE rooms_status SET status='OCCUPIED' WHERE room_number='$room_number'";
-                    echo $room_status_query;
 
                     $room_status_result = mysqli_query($db, $room_status_query);
 
@@ -345,27 +344,27 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                   $attachment = "../../assets/files/house-rules.docx";
 
                 try {
-                    // $message = $reservation_message;
-                    // $mail->SMTPDebug = 1;
-                    // $mail->isSMTP();
-                    // $mail->Host = 'smtp.gmail.com';
-                    // $mail->SMTPAuth = true;
-                    // $mail->Username = 'coralviewthesis@gmail.com';  // Fill this up // 
-                    // $mail->Password = 'Qwerty1234@1234';  // Fill this up // 
-                    // $mail->SMTPSecure = 'tls';
-                    // $mail->Port = 587;
+                    $message = $reservation_message;
+                    $mail->SMTPDebug = 1;
+                    $mail->isSMTP();
+                    $mail->Host = 'smtp.gmail.com';
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'coralviewthesis@gmail.com';  // Fill this up // 
+                    $mail->Password = 'Qwerty1234@1234';  // Fill this up // 
+                    $mail->SMTPSecure = 'tls';
+                    $mail->Port = 587;
 
-                    // // add attachment
-                    // $mail->addAttachment($attachment, 'House Rules.docx');
+                    // add attachment
+                    $mail->addAttachment($attachment, 'House Rules.docx');
 
-                    // $mail->setFrom('coralviewthesis@gmail.com');
-                    // $mail->isHTML(true);
-                    // $mail->addAddress($email);
-                    // $mail->Subject = 'Coralview Reservation';
-                    // $mail->Body = $message;
-                    // $mail->send();
+                    $mail->setFrom('coralviewthesis@gmail.com');
+                    $mail->isHTML(true);
+                    $mail->addAddress($email);
+                    $mail->Subject = 'Coralview Reservation';
+                    $mail->Body = $message;
+                    $mail->send();
 
-                    // echo  '<script>window.location.assign("../../success_confirmation.php")</script>';
+                    echo  '<script>window.location.assign("../../success_confirmation.php")</script>';
 
                 } catch (Exception $e) {
                     $_SESSION['email_error_msg'] = "There\'s an error processing your request";
