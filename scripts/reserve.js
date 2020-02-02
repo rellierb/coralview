@@ -199,7 +199,7 @@ $(document).ready(function(){
                 let roomIdQuery = 'select[data-room-id*="' + roomId + '"]'
                 let selectTag = document.querySelector(roomIdQuery);
                 let numberOfRooms = selectTag.value;
-
+                console.log('test');
                 if (numberOfRooms == '0') {
                     toastr.error('Please select a room');
                 } else {
@@ -227,11 +227,14 @@ $(document).ready(function(){
                         inputRoomsReserved.value = JSON.stringify(JSON.stringify(toStore));
                         forCheckingRoomCapacity = toStore;
                         
+                        console.log({room_reserved: JSON.stringify(parsedStorage) })
+
                         $.ajax({
                             type: 'POST',
                             url: '/coralview/functions/user/store_room.php',
-                            data: {room_reserved: JSON.stringify(toStore) },
+                            data: {room_reserved: JSON.stringify(parsedStorage) },
                             success: function(data) {
+                                console.log(data)
                                 toastr.success('Room successfully selected!');            
                                 disableNextButton();
                                 attachRemoveButton(roomId);
@@ -359,10 +362,13 @@ $(document).ready(function(){
 
             if(/[^a-zA-Z\-\/]/.test(firstName)) {
                 toastr.error('First name contains special Characters or Numbers');
+                localStorage.setItem('firstNameValidation', true)
             } else if (firstName === '') {
                 toastr.error('First name field is empty');
+                localStorage.setItem('firstNameValidation', true)
             } else {
                 completeValidated = true;
+                localStorage.setItem('firstNameValidation', false)
             }
             disableSubmitButton();
         });
@@ -375,8 +381,12 @@ $(document).ready(function(){
 
             if(/[^a-zA-Z\-\/]/.test(lastName)) {
                 toastr.error('Last name contains special Characters or Numbers');
+                localStorage.setItem('lastNameValidation', true);
             } else if (lastName === '') {
                 toastr.error('Last name field is empty');
+                localStorage.setItem('lastNameValidation', true);
+            } else {
+                localStorage.setItem('lastNameValidation', false);
             }
             disableSubmitButton();
         });
@@ -391,9 +401,13 @@ $(document).ready(function(){
             
             if(!/^(09|\+639)\d{9}$/.test(contactNumber) || (contactNumbereLength >= 8 && contactNumbereLength <= 10) || (contactNumbereLength > 11)) {
                 toastr.error('Contact number format is invalid');
+                localStorage.setItem('contactNumberValidation', true)
             } else if (contactNumber === '') {
                 toastr.error('Contact number field is empty');
-            } 
+                localStorage.setItem('contactNumberValidation', true)
+            } else {
+                localStorage.setItem('contactNumberValidation', false)
+            }
             disableSubmitButton();
         });
     }
@@ -407,8 +421,12 @@ $(document).ready(function(){
 
             if(emailAddress === '') {
                 toastr.error('Email address field is empty');
+                localStorage.setItem('emailValidation', true)
             } else if (!emailFieldValidator.test(emailAddress)) {
                 toastr.error('Email address format is invalid');
+                localStorage.setItem('emailValidation', true)
+            } else {
+                localStorage.setItem('emailValidation', false)
             }
             disableSubmitButton();
         });
@@ -421,7 +439,10 @@ $(document).ready(function(){
 
             if(address === '') {
                 toastr.error('Address field is empty');
-            } 
+                localStorage.setItem('addressValidation', true)
+            } else {
+                localStorage.setItem('addressValidation', false)
+            }
             disableSubmitButton();
 
         });
@@ -480,9 +501,20 @@ function disableSubmitButton() {
     }
 
     if(returnValue) {
-        if(isSubmitReservationBtn) {
+        var firstNameValidation = localStorage.getItem('firstNameValidation') === 'true'
+        var lastNameValidation = localStorage.getItem('lastNameValidation') === 'true'
+        var emailNameValidation = localStorage.getItem('contactNumberValidation') === 'true'
+        var contactNumberValidation = localStorage.getItem('emailValidation') === 'true'
+        var addressValidation = localStorage.getItem('addressValidation') === 'true'
+
+        if(firstNameValidation || lastNameValidation || emailNameValidation || contactNumberValidation || addressValidation) {
+            submitReservationBtn.disabled = true;
+        } else {
             submitReservationBtn.disabled = false;
         }
+
+    } else {
+        submitReservationBtn.disabled = true;
     }
 
 }

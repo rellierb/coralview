@@ -38,12 +38,22 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             header('location: ../../admin/accept.php?reference_no='. $dp_reference_no . '');
         }
 
+        $required_down_payment = $_POST["down_payment_required"];
+        $down_payment_input = $_POST["down_payment_amount"];
+    
+        if($required_down_payment < $down_payment_input || $required_down_payment > $down_payment_input) {
+            $_SESSION['msg'] = "INVALID AMOUNT IN DOWN PAYMENT AMOUNT";
+            $_SESSION['alert'] = "alert alert-danger";
+            header('location: ../../admin/accept.php?reference_no='. $dp_reference_no . '');
+        }
+
+
     }
 
-    $insert_to_downpayment = "
-        INSERT INTO downpayment (reference_no, amount, description, time_stamp)
-        VALUES ('$dp_reference_no' , '$dp_amount', '$dp_description' , NOW())
-    ";
+    // $insert_to_downpayment = "
+    //     INSERT INTO downpayment (reference_no, amount, description, time_stamp)
+    //     VALUES ('$dp_reference_no' , '$dp_amount', '$dp_description' , NOW())
+    // ";
 
     $insert_to_downpayment_result = mysqli_query($db, $insert_to_downpayment);
 
@@ -160,7 +170,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 $mail->Host = 'smtp.gmail.com';
                                 $mail->SMTPAuth = true;
                                 $mail->Username = 'coralviewthesis@gmail.com';  // Fill this up
-                                $mail->Password = 'Qwerty1234@1234';  // Fill this up
+                                $mail->Password = 'Coralbeach@123;';  // Fill this up
                                 $mail->SMTPSecure = 'tls';
                                 $mail->Port = 587;
                                 $mail->setFrom('coralviewthesis@gmail.com');

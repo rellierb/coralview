@@ -95,7 +95,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $mail->Host = 'smtp.gmail.com';
                     $mail->SMTPAuth = true;
                     $mail->Username = 'coralviewthesis@gmail.com';  // Fill this up
-                    $mail->Password = 'Qwerty1234@1234';  // Fill this up
+                    $mail->Password = 'Coralbeach@123;';  // Fill this up
                     $mail->SMTPSecure = 'tls';
                     $mail->Port = 587;
 

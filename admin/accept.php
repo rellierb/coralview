@@ -369,7 +369,9 @@ $payment_photo = '';
                                     <h5 class="text-center text-info mt-3">Downpayment Details</h5>
                                 
                                     <input type="hidden" name="down_payment_reference_no" value="<?php echo $reference_no; ?>">
-                                    <input type="hidden" name="down_payment_total_amount" value="<?php echo $total_price; ?>">
+                                    <input type="hidden" name="down_payment_total_amount" value="<?php echo $overall_total_price; ?>">
+                                    <input type="hidden" name="down_payment_required" value="<?php echo $required_down_payment; ?>">
+
                                     <?php
                                     
                                     $disabled = '';

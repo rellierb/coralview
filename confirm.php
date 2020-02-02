@@ -58,7 +58,7 @@ if(isset($_REQUEST["address"])) {
 }
 
 if(isset($_REQUEST["rooms_reserved"])) {
-    $rooms_reserved = $_REQUEST["rooms_reserved"];
+    $rooms_reserved = $_SESSION["rooms_reserved"];
 }
 
 $room_html = '';
@@ -187,7 +187,7 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today <= $off_peak_date_en
 
                     <?php
                     
-                    $reserved_rooms = json_decode(json_decode($rooms_reserved));
+                    $reserved_rooms = json_decode($rooms_reserved);
                     $total_amount = 0;
 
                     foreach($reserved_rooms as $test) {

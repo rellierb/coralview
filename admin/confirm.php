@@ -56,7 +56,7 @@ if(isset($_REQUEST["address"])) {
 }
 
 if(isset($_REQUEST["rooms_reserved"])) {
-    $rooms_reserved = $_REQUEST["rooms_reserved"];
+    $rooms_reserved = $_SESSION["rooms_reserved"];
 }
 
 ?>
