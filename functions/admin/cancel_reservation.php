@@ -68,11 +68,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $mail->isSMTP();
                             $mail->Host = 'smtp.gmail.com';
                             $mail->SMTPAuth = true;
-                            $mail->Username = 'rellierb.bugbounty.1@gmail.com';  // Fill this up // 
-                            $mail->Password = 'r31113b@l@g@T;';  // Fill this up //
+                            $mail->Username = '';  // Fill this up // 
+                            $mail->Password = ';';  // Fill this up //
                             $mail->SMTPSecure = 'tls';
                             $mail->Port = 587;
-                            $mail->setFrom('rellierb.bugbounty.1@gmail.com');
+                            $mail->setFrom('');
                             $mail->isHTML(true);
                             $mail->addAddress($guest_email);
                             $mail->Subject = 'Coralview Reservation Accepted';
