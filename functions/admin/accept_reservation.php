@@ -10,6 +10,7 @@ require('../../composer/vendor/autoload.php');
 
 $db = connect_to_db();
 
+
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if(isset($_POST["down_payment_reference_no"])) {
@@ -94,8 +95,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                             // SEND EMAIL TO CLIENT
 
                             $link = 'http://localhost/coralview/confirm_reservation.php?reference_no=' . $dp_reference_no . '';
-                            echo $link;
-
+                            
                             $reservationMessage = '
                                 <style>
 
@@ -169,11 +169,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 $mail->isSMTP();
                                 $mail->Host = 'smtp.gmail.com';
                                 $mail->SMTPAuth = true;
-                                $mail->Username = 'coralviewthesis@gmail.com';  // Fill this up
-                                $mail->Password = 'Coralbeach@123;';  // Fill this up
+                                $mail->Username = 'rellierb.bugbounty.1@gmail.com';  // Fill this up // 
+                                $mail->Password = 'r31113b@l@g@T';  // Fill this up // 
                                 $mail->SMTPSecure = 'tls';
                                 $mail->Port = 587;
-                                $mail->setFrom('coralviewthesis@gmail.com');
+                                $mail->setFrom('rellierb.bugbounty.1@gmail.com');
                                 $mail->isHTML(true);
                                 $mail->addAddress($guest_email);
                                 $mail->Subject = 'Coralview Reservation Accepted';

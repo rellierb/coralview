@@ -454,6 +454,7 @@ $is_peak_rate = 0;
                                 }
                                 // $overall_total_price += $add_fees_amount;
                                 $discounted_price -= $downpayment_amount;
+                                $total_amount_rooms_extras = $overall_total_price + $overall_total_extra;
                                 
                                 echo '
                                     <table class="table table-bordered">
@@ -468,6 +469,10 @@ $is_peak_rate = 0;
                                         <tr>
                                             <th scope="col" class="text-center">TOTAL AMOUNT (EXTRAS)</th>
                                             <td class="text-center">' . number_format($overall_total_extra, 2)  .  '</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col" class="text-center">TOTAL AMOUNT (ROOMS AND EXTRAS)</th>
+                                            <td class="text-center">' . number_format($total_amount_rooms_extras, 2) .  '</td>
                                         </tr>
                                         <tr>
                                             <th scope="col" class="text-center">DOWNPAYMENT</th>

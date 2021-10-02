@@ -93,14 +93,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $mail->isSMTP();
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'coralviewthesis@gmail.com';  // Fill this up
-                $mail->Password = 'Qwerty1234@1234';  // Fill this up
+                $mail->Username = 'rellierb.bugbounty.1@gmail.com';  // Fill this up // 
+                $mail->Password = 'r31113b@l@g@T';  // Fill this up // 
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
-                $mail->setFrom('coralviewthesis@gmail.com');
+                $mail->setFrom('rellierb.bugbounty.1@gmail.com');
                 $mail->isHTML(true);
-                $mail->addAddress('coralviewthesis@gmail.com');
+                $mail->addAddress('rellierb.bugbounty.1@gmail.com');
                 $mail->Subject = 'Coralview Beach Resort Payment Reservation';
                 $mail->Body = $message;
                 $mail->send();
@@ -120,7 +120,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['alert'] = "alert alert-success";
 
         } else if($file_path == 0) {
-            header("location: ../../view_reservation.php?reference_no='$reference_no'");
+            header("location: ../../view_reservation.php?reference_no=" . $reference_no ."");
         } 
 
     } else {
@@ -128,7 +128,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['message'] = "There's an error processing your request";
         $_SESSION['alert'] = "alert alert-danger";
 
-        header("location: ../../view_reservation.php?reference_no='$reference_no'");
+        header("location: ../../view_reservation.php?reference_no=" . $reference_no ."");
 
     }
 

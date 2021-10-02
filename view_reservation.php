@@ -166,6 +166,10 @@ $is_peak_rate = 0;
                         <hr />
                         <table style="width: 60%; margin: 0 auto;" class="table table-bordered">
                             <tr>
+                                <th style="width: 30%;" class="text-right pr-4 pb-3"><b>RESERVATION DETAILS</b></th>
+                                <td style="width: 70%;" class="pb-3 pl-4">' . $reservation["reference_no"] . '</td>
+                            </tr>
+                            <tr>
                                 <th style="width: 30%;" class="text-right pr-4 pb-3"><b>CHECK-IN DATE</b></th>
                                 <td style="width: 70%;" class="pb-3 pl-4">' . date_format(new Datetime($reservation["check_in_date"]), "m-d-Y")  . '</td>
                             </tr>

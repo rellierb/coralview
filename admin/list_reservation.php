@@ -75,8 +75,11 @@ $db = connect_to_db();
                                                     case "CANCELLED":
                                                         $reservation_class = "badge-warning";                                                        
                                                         break;
+                                                    case "FOR CHECK OUT":
+                                                        $reservation_class = "badge-light";
+                                                        break;
                                                     case "COMPLETE":
-                                                        $reservation_class = "badge-success";                                                        
+                                                        $reservation_class = "badge-success";                                                                  
                                                         break;
                                                     default:
                                                         $reservation_class = "";
@@ -126,11 +129,9 @@ $db = connect_to_db();
                                 </tbody>
                             </table> 
 
-                        
                         </div>
                     </div>
-                    
-  
+                      
                 </div>
             </div>
 

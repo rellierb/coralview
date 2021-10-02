@@ -236,10 +236,12 @@ $is_peak_rate = 0;
                                                     ';
                                                     $total_room_amount += $total_price;
                                                     $overall_total_price += $total_price;
+                                                    
                                                 }
                                                 
 
                                                 echo '</table>';
+                                               
                                             }
                                             ?>
                                         
@@ -429,14 +431,15 @@ $is_peak_rate = 0;
                                                              
                                                 } 
 
-                                                // $overall_total_price += $expense_total;
+                                                //$overall_total_price += $expense_total;
+                                                
 
                                                 echo '</table>';
                                             }else {
 
                                                 echo '<h4 class="text-center text-warning">No Extras</h4>';
                                             }
-
+                                            
                                             ?>    
 
                                         </div>
@@ -535,9 +538,6 @@ $is_peak_rate = 0;
                                             $check_discount_result = mysqli_query($db, $check_discount_query);
                                             $discount_price = 0;
 
-
-
-
                                             if(mysqli_num_rows($check_discount_result) > 0) {
                                                 echo '<table class="table table-bordered">';
                                                 echo '<thead><th class="text-center" scope="col">Discount</th><th class="text-center" scope="col">Amount</th><thead>';
@@ -573,7 +573,7 @@ $is_peak_rate = 0;
                                             
                                             <?php
                                             
-                                           
+                                            
                                             $billing_query = "SELECT * FROM billing WHERE reference_no='$reference_no'";
                                             $billing_result = mysqli_query($db, $billing_query);
                                             $balance = $overall_total_price;
@@ -633,6 +633,7 @@ $is_peak_rate = 0;
                                             $discounted_price -= $downpayment_amount;
 
                                             $price_add_extra = $discounted_price + $expense_total;
+                                            $total_amount_rooms_extras = $overall_total_price + $expense_total;
                                             // echo $balance;
                                             echo '
                                                 <table class="table table-bordered">
@@ -647,6 +648,10 @@ $is_peak_rate = 0;
                                                     <tr>
                                                         <th scope="col" class="text-center">TOTAL AMOUNT (EXTRAS)</th>
                                                         <td class="text-center">' . number_format($expense_total, 2)  .  '</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="col" class="text-center">TOTAL AMOUNT (ROOMS AND EXTRAS)</th>
+                                                        <td class="text-center">' . number_format($total_amount_rooms_extras, 2) .  '</td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="col" class="text-center">DOWNPAYMENT</th>

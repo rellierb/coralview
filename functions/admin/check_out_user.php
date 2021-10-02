@@ -94,12 +94,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $mail->isSMTP();
                     $mail->Host = 'smtp.gmail.com';
                     $mail->SMTPAuth = true;
-                    $mail->Username = 'coralviewthesis@gmail.com';  // Fill this up
-                    $mail->Password = 'Coralbeach@123;';  // Fill this up
+                    $mail->Username = 'rellierb.bugbounty.1@gmail.com';  // Fill this up // 
+                    $mail->Password = 'r31113b@l@g@T';  // Fill this up //
                     $mail->SMTPSecure = 'tls';
                     $mail->Port = 587;
 
-                    $mail->setFrom('coralviewthesis@gmail.com');
+                    $mail->setFrom('rellierb.bugbounty.1@gmail.com');
                     $mail->isHTML(true);
                     $mail->addAddress($email);
                     $mail->Subject = 'Coralview Beach Resort Thank you Message';

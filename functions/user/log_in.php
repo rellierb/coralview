@@ -16,8 +16,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $account_password = trim($_POST['account_password']);
     }
 
-    $query = "SELECT * FROM users WHERE Email='$account_email' AND Password=SHA1('$account_password')";
+    $query = "SELECT * FROM users WHERE Email='$account_email' AND Password='$account_password'";
     $result = mysqli_query($db, $query);
+
+    echo $query;
 
     if(mysqli_num_rows($result) == 1) {
         

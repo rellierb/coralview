@@ -27,17 +27,17 @@ function check_peak_rate($date_reserved) {
 
     $date = date("Y-m-d", strtotime($date_reserved));
 
-    $off_peak_date_start_1 = date("Y-m-d", strtotime("01/02/2020"));
-    $off_peak_date_end_1 = date("Y-m-d", strtotime("03/11/2020"));
+    $off_peak_date_start_1 = date("Y-m-d", strtotime("01/02/2021"));
+    $off_peak_date_end_1 = date("Y-m-d", strtotime("03/11/2021"));
 
-    $off_peak_date_start_2 = date("Y-m-d", strtotime("07/18/2020"));
-    $off_peak_date_end_2 = date("Y-m-d", strtotime("11/19/2020"));
+    $off_peak_date_start_2 = date("Y-m-d", strtotime("07/18/2021"));
+    $off_peak_date_end_2 = date("Y-m-d", strtotime("11/19/2021"));
 
-    $peak_date_start_1 = date("Y-m-d", strtotime("03/12/2020"));
-    $peak_date_end_1 = date("Y-m-d", strtotime("07/17/2020"));
+    $peak_date_start_1 = date("Y-m-d", strtotime("03/12/2021"));
+    $peak_date_end_1 = date("Y-m-d", strtotime("07/17/2021"));
 
-    $peak_date_start_2 = date("Y-m-d", strtotime("11/20/2020"));
-    $peak_date_end_2 = date("Y-m-d", strtotime("01/01/2021"));
+    $peak_date_start_2 = date("Y-m-d", strtotime("11/20/2021"));
+    $peak_date_end_2 = date("Y-m-d", strtotime("01/01/2022"));
 
     $type_of_rate = "";
     
@@ -91,6 +91,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $reservation_insert_query = "INSERT INTO reservation(guest_id, reference_no, status, payment, check_in_date, check_out_date, adult_count, kids_count, is_peak_rate, date_created)";
         $reservation_insert_query .= " VALUES ('$guest_id', '$reference_no', 'PENDING', '$payment', STR_TO_DATE('$arrival_date', '%m/%d/%Y'), STR_TO_DATE('$departure_date', '%m/%d/%Y'), '$adult_count', '$kids_count', $is_peak_rate, NOW())";
+
         $reservation_result = mysqli_query($db, $reservation_insert_query);
 
         if($reservation_result) {
@@ -348,15 +349,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $mail->isSMTP();
                     $mail->Host = 'smtp.gmail.com';
                     $mail->SMTPAuth = true;
-                    $mail->Username = 'coralviewthesis@gmail.com';  // Fill this up // 
-                    $mail->Password = 'Coralbeach@123;';  // Fill this up // 
+                    $mail->Username = 'rellierb.bugbounty.1@gmail.com';  // Fill this up // 
+                    $mail->Password = 'r31113b@l@g@T';  // Fill this up // 
                     $mail->SMTPSecure = 'tls';
                     $mail->Port = 587;
 
                     // add attachment
                     $mail->addAttachment($attachment, 'House Rules.docx');
 
-                    $mail->setFrom('coralviewthesis@gmail.com');
+                    $mail->setFrom('rellierb.bugbounty.1@gmail.com');
                     $mail->isHTML(true);
                     $mail->addAddress($email);
                     $mail->Subject = 'Coralview Reservation';

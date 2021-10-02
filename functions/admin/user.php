@@ -43,7 +43,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $insert_query = "
             INSERT INTO users (FullName, UserName, Password, Email, Type, PhoneNumber)
-            VALUES ('$user_full_name', '$user_name', SHA1('$user_password'), '$user_email', '$user_type', '$user_phone_number')
+            VALUES ('$user_full_name', '$user_name', '$user_password', '$user_email', '$user_type', '$user_phone_number')
         ";
     
         $insert_result = mysqli_query($db, $insert_query); 

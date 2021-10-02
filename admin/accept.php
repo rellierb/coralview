@@ -416,10 +416,6 @@ $payment_photo = '';
 
                             </div>
                         </div>
-
-
-
-
                     </div>
                 </div>
 
