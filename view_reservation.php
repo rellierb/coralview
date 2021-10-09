@@ -40,6 +40,7 @@ $room_html = '';
 $payment_photo = '';
 $is_peak_rate = 0;
 
+
 ?>
     
     <div class="container">
@@ -139,7 +140,7 @@ $is_peak_rate = 0;
                     $dateDiff = date_diff(date_create($reservation["check_in_date"]), date_create($reservation["check_out_date"]));
                     $diff = $dateDiff->format('%d');
                     $payment_photo = $reservation["payment_path"];
-                    
+                    $date_now = new DateTime();
 
                     $html .= '
                         <table style="width: 60%; margin: 0 auto;" class="table table-bordered">
@@ -189,8 +190,12 @@ $is_peak_rate = 0;
 
                         <br>
 
+                        <button type="button" class="btn btn-secondary float-right mr-2" data-toggle="modal" data-target="#orderFood">Order Food</button>
                     ';
+
                 }
+
+               
 
                 $html .= '
                         </div>
@@ -369,6 +374,7 @@ $is_peak_rate = 0;
 
 include('common/cancel_reservation_modal.php');
 include('common/upload_payment_modal.php');
+include('common/order_food.php');
 include('common/footer.php');
 
 unset($_SESSION["alert"]);

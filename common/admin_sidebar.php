@@ -69,6 +69,12 @@
                 </a>
             </li>
             <li>
+                <a href="/coralview/admin/maintenance/food_order.php">
+                    <!-- <i class="nc-icon nc-bell-55"></i> -->
+                    <p class="coralview-blue">Food Order</p>
+                </a>
+            </li>
+            <li>
                 <a href="/coralview/admin/list_reservation.php">
                     <!-- <i class="nc-icon nc-pin-3"></i> -->
                     <p class="coralview-blue">List of Reservations</p>

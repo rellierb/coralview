@@ -61,6 +61,7 @@ $is_peak_rate = 0;
                             <div class="row">
                                 <div class="col-12"> 
                                     <button type="submit" class="btn btn-primary float-right" id="">DOWNLOAD CHECK-IN VOUCHER</button>
+                                    
                                 </div>
                             </div>
                             <!-- dlCheckInVoucher -->
@@ -80,7 +81,7 @@ $is_peak_rate = 0;
                                     if($reservation_details_result) {
                                         echo '
                                         <div class="row">
-                                            <div class="col">
+                                            <div class="col-12">
                                         ';
 
                                         while($reservation = mysqli_fetch_assoc($reservation_details_result)) {
@@ -113,27 +114,37 @@ $is_peak_rate = 0;
                                                 <br />
 
                                                 <h5 class="text-center mt-3 text-info">BOOKING DETAILS</h5>
-                                                <table class="table table-bordered">
-                                                    <tr>
-                                                        <th class="pr-3 pb-3">REFERENCE CODE</th>
-                                                        <td class="pb-3 pl-4" id="referenceCode">' . $reservation["reference_no"] . '</td>
-                                                        <th class="pr-3 pb-3"><b>STATUS</b></th>
-                                                        <td class="pb-3 pl-4">' . $reservation["status"] . '</td>
-                                                        <th class="pr-3 pb-3"><b>GUEST/S NUMBER </b></th>
-                                                        <td class="pb-3 pl-4"><span>Adult: ' . $reservation["adult_count"] .  '</span> <span>Kids: ' . $reservation["kids_count"] . '</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="pr-3 pb-3"><b>CHECK-IN DATE</b></th>
-                                                        <td class="pb-3 pl-4">' . date_format(new Datetime($reservation["check_in_date"]), "m-d-Y")  . '</td>
-                                                        <th class="pr-3 pb-3"><b>CHECK-OUT DATE</b></th>
-                                                        <td class="pb-3 pl-4">' . date_format(new Datetime($reservation["check_out_date"]), "m-d-Y") . '</td>
-                                                        <th class="pr-3 pb-3"><b>NIGHT/S </b></th>
-                                                        <td class="pb-3 pl-4">' . $diff . '</td>
-                                                        1000000
-                                                    </tr>
-                                                   
-                                                </table>
-
+                                                <div class="row">    
+                                                    <div class="col-9">
+                                                        <table class="table table-bordered">
+                                                            <tr>
+                                                                <th class="pr-3 pb-3">REFERENCE CODE</th>
+                                                                <td class="pb-3 pl-4" id="referenceCode">' . $reservation["reference_no"] . '</td>
+                                                                <th class="pr-3 pb-3"><b>STATUS</b></th>
+                                                                <td class="pb-3 pl-4">' . $reservation["status"] . '</td>
+                                                                <th class="pr-3 pb-3"><b>GUEST/S NUMBER </b></th>
+                                                                <td class="pb-3 pl-4"><span>Adult: ' . $reservation["adult_count"] .  '</span> <span>Kids: ' . $reservation["kids_count"] . '</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="pr-3 pb-3"><b>CHECK-IN DATE</b></th>
+                                                                <td class="pb-3 pl-4">' . date_format(new Datetime($reservation["check_in_date"]), "m-d-Y")  . '</td>
+                                                                <th class="pr-3 pb-3"><b>CHECK-OUT DATE</b></th>
+                                                                <td class="pb-3 pl-4">' . date_format(new Datetime($reservation["check_out_date"]), "m-d-Y") . '</td>
+                                                                <th class="pr-3 pb-3"><b>NIGHT/S </b></th>
+                                                                <td class="pb-3 pl-4">' . $diff . '</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <input type="hidden" value="' . date_format(new Datetime($reservation["check_out_date"]), "m-d-Y"). '" id="checkOutDate" />
+                                                        <h6 class="text-center mb-3">Extend Checkout Date</h6>
+                                                        <div style="display: block;margin: 0 auto; ">
+                                                        <div class="datepicker-here" data-language="en" id="extendDepartureDate"></div>
+                                                        </div>
+                                                          
+                                                        <button type="button" class="btn btn-info float-right" id="btnExtendCheckOutDate">SUBMIT</button>
+                                                    </div>
+                                                </div>
                                                 <br>
 
                                             ';
@@ -243,36 +254,62 @@ $is_peak_rate = 0;
 
                                     <h5 class="text-center mt-3 text-info">ASSIGNED ROOM/S</h5>
                                     
-                                    <?php
-                                    
-                                    $assigned_room_query = "SELECT * FROM check_in_rooms CIR
-                                        INNER JOIN rooms_status RS ON CIR.room_number = RS.room_number
-                                        INNER JOIN rooms R ON RS.room_id = R.id
-                                        WHERE CIR.reference_no='$reference_no'";
-                                    $assigned_room_result = mysqli_query($db, $assigned_room_query);
-                                   
-                                    if(mysqli_num_rows($assigned_room_result)  > 0) {
+                                    <div class="row">
 
-                                        echo '<table class="table table-bordered">';
-                                        echo '
-                                            <tr>
-                                                <th scope="col" class="text-center">ROOM NUMBER</th>
-                                                <th scope="col" class="text-center">ROOM NAME</th>
-                                            </tr>
-                                        ';
-                                        while($assigned_room = mysqli_fetch_assoc($assigned_room_result)) {
-                                            echo '
-                                            <tr> 
-                                                <td class="text-center">' . $assigned_room['room_number'] . '</td>
-                                                <td class="text-center">' . $assigned_room['type'] . '</td>              
-                                            </tr>
-                                            ';
-                                        }
+                                        <div class="col-12">
 
-                                        echo '</table>';
-                                    }
+                                            <?php
+                                            
+                                            $assigned_room_query = "SELECT * FROM check_in_rooms CIR
+                                                INNER JOIN rooms_status RS ON CIR.room_number = RS.room_number
+                                                INNER JOIN rooms R ON RS.room_id = R.id
+                                                WHERE CIR.reference_no='$reference_no'";
+                                            $assigned_room_result = mysqli_query($db, $assigned_room_query);
+                                        
+                                            if(mysqli_num_rows($assigned_room_result)  > 0) {
+
+                                                echo '<table class="table table-bordered">';
+                                                echo '
+                                                    <tr>
+                                                        <th scope="col" class="text-center">ROOM NUMBER</th>
+                                                        <th scope="col" class="text-center">ROOM NAME</th>
+                                                        <th scope="col" class="text-center">TRANSFER ROOM NAME</th>
+                                                    </tr>
+                                                ';
+                                                while($assigned_room = mysqli_fetch_assoc($assigned_room_result)) {
+                                                    echo '
+                                                    <tr> 
+                                                        <td class="text-center">' . $assigned_room['room_number'] . '</td>
+                                                        <td class="text-center">' . $assigned_room['type'] . '</td>              
+                                                    ';
+
+                                                    $room_id = $assigned_room['room_id'];
+
+                                                    $get_rooms_query = "SELECT * FROM rooms_status WHERE room_id='$room_id' AND status='AVAILABLE'";
+                                                    $get_rooms_result = mysqli_query($db, $get_rooms_query);
+
+                                                    echo '<td><div class="row"><div class="col-8"><select class="form-control mr-2" id="select-room-' . $room_id . '">';
+                                                    while($available_room = mysqli_fetch_assoc($get_rooms_result)) {   
+                                                        echo '<option value="' . $available_room['room_number'] . '"> ' . $available_room['room_number'] . '</option>';
+                                                    }
+                                                    echo '</select></div><button type="button" class="btn btn-primary update-room" onclick="transferRoom(' . $room_id . ', \'' . $assigned_room['room_number'] . '\');">Update Room</button></td></div>';
+                                                    echo '</tr>';
+                                                }
+
+                                                
+                                                
+
+                                                echo '</table>';
+                                            }
+                                            
+                                            ?>
+
+                                        </div>
+                                        
+                                    </div>
+
                                     
-                                    ?>
+                                    
                                     <br>
                                     <h5 class="text-center mt-3 text-info">EXTRAS</h5>
 
@@ -365,6 +402,7 @@ $is_peak_rate = 0;
                                         </div>
                                     </div>
                                 </div>
+                               
 
                                     <h5 class="text-center mt-3 text-info">PAYMENT DETAILS</h5>
                                     
