@@ -61,6 +61,8 @@ if(isset($_REQUEST["rooms_reserved"])) {
     $rooms_reserved = $_SESSION["rooms_reserved"];
 }
 
+
+
 $room_html = '';
 
 $date_today = date("Y-m-d");
@@ -88,7 +90,7 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today <= $off_peak_date_en
 
 ?>
 
-    <form action="/coralview/functions/user/booking.php" method="POST">
+    <form action="functions/user/booking.php" method="POST">
     
         <div class="container">
         
@@ -106,7 +108,7 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today <= $off_peak_date_en
             <div class="row">
                 <div class="col">
 
-                    <a href="/coralview/reserve.php#step-1" class="btn btn-primary">Back</a>
+                    <a href="reserve.php#step-1" class="btn btn-primary">Back</a>
 
                     <h2 class="text-center mt-3 coralview-blue">Reservation Summary</h2>
                     <hr />

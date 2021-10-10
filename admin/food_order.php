@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-include('../../common/header.php');
-require('../../functions/assets/connection.php');
+include('../common/admin_header_maint.php');
+require('../functions/assets/connection.php');
 
 $db = connect_to_db();
 
@@ -78,8 +78,8 @@ $db = connect_to_db();
 
 <?php
 
-include('../../common/order_food.php');
-include('../../common/footer.php');
+include('../common/order_food.php');
+include('../../common/admin_footer_maint.php');
 unset($_SESSION['alert']);
 unset($_SESSION['msg']);
 

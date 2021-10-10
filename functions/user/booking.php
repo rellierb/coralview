@@ -12,7 +12,7 @@ $db = connect_to_db();
 
 function generate_reference_no() {
 
-    $ref_number = "CRLVW-";
+    $ref_number = "KLIR-";
 	$source = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 
 		'B', 'C', 'D', 'E', 'F');
 	for($i = 1; $i <= 7; $i++) {
@@ -272,7 +272,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </style>
 
                     <div style="width: 100%;">
-                        <h1>CORALVIEW BEACH RESORT</h1>
+                        <h1>KLIR WATER RESORT</h1>
                         <p>Thank you for booking with us! Please see details below for reference and attached filed for the resort house rules.</p>
                         ' . $reservation_details . '
                         <br>
@@ -341,7 +341,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 $mail = new PHPMailer(true);
 
-                  $attachment = "../../assets/files/house-rules.docx";
+                //   $attachment = "../../assets/files/house-rules.docx";
 
                 try {
                     $message = $reservation_message;
@@ -349,18 +349,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $mail->isSMTP();
                     $mail->Host = 'smtp.gmail.com';
                     $mail->SMTPAuth = true;
-                    $mail->Username = '';  // Fill this up // 
-                    $mail->Password = '';  // Fill this up // 
+                    $mail->Username = 'klir.waterresort@gmail.com';  // Fill this up // 
+                    $mail->Password = '!2klirwaterresort';  // Fill this up // 
                     $mail->SMTPSecure = 'tls';
                     $mail->Port = 587;
 
                     // add attachment
-                    $mail->addAttachment($attachment, 'House Rules.docx');
+                    // $mail->addAttachment($attachment, 'House Rules.docx');
 
-                    $mail->setFrom('');
+                    $mail->setFrom('klir.waterresort@gmail.com');
                     $mail->isHTML(true);
                     $mail->addAddress($email);
-                    $mail->Subject = 'Coralview Reservation';
+                    $mail->Subject = 'Klir Water Resort Reservation';
                     $mail->Body = $message;
                     $mail->send();
 

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include('../common/header.php');
+include('../common/admin_header.php');
 require('../functions/assets/connection.php');
 
 $db = connect_to_db();
@@ -295,7 +295,7 @@ $payment_photo = '';
 
 <?php
 
-include('../common/footer.php');
+include('../common/admin_footer.php');
 unset($_SESSION['msg']);
 unset($_SESSION['alert']);
 

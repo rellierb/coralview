@@ -2,7 +2,7 @@
 
 session_start();
 
-include('../common/header.php');
+include('../common/admin_header.php');
 require('../functions/assets/connection.php');
 
 $db = connect_to_db();
@@ -234,7 +234,7 @@ if(isset($_REQUEST["rooms_reserved"])) {
 <?php
 
 
-include('../common/footer.php');
+include('../common/admin_footer.php');
 
 
 ?>

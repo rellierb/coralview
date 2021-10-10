@@ -11,7 +11,7 @@
             </div>
         </a>
         <a href="http://www.creative-tim.com" class="simple-text logo-normal coralview-blue">
-            CoralView
+            KLIR WATER RESORT
             <!-- <div class="logo-image-big">
             <img src="../assets/img/logo-big.png">
             </div> -->
@@ -44,44 +44,44 @@
 
         <ul class="nav">
             <li>
-                <a href="/coralview/admin/walk_in_reservation.php">
+                <a href="../admin/walk_in_reservation.php">
                     <!-- <i class="nc-icon nc-single-02"></i> -->
                     <p class="coralview-blue">Walk-in Reservation</p>
                 </a>
             </li>
 
             <li>
-                <a href="/coralview/admin/check_in.php">
+                <a href="../admin/check_in.php">
                     <!-- <i class="nc-icon nc-single-02"></i> -->
                     <p class="coralview-blue">Check-in</p>
                 </a>
             </li>
             <li>
-                <a href="/coralview/admin/check_out.php">
+                <a href="../admin/check_out.php">
                     <!-- <i class="nc-icon nc-single-02"></i> -->
                     <p class="coralview-blue">Check-out</p>
                 </a>
             </li>
             <li>
-                <a href="/coralview/admin/maintenance/room_number.php">
+                <a href="../admin/maintenance/room_number.php">
                     <!-- <i class="nc-icon nc-bell-55"></i> -->
                     <p class="coralview-blue">Room Availability</p>
                 </a>
             </li>
             <li>
-                <a href="/coralview/admin/maintenance/food_order.php">
+                <a href="../../admin/maintenance/food_order.php">
                     <!-- <i class="nc-icon nc-bell-55"></i> -->
                     <p class="coralview-blue">Food Order</p>
                 </a>
             </li>
             <li>
-                <a href="/coralview/admin/list_reservation.php">
+                <a href="../admin/list_reservation.php">
                     <!-- <i class="nc-icon nc-pin-3"></i> -->
                     <p class="coralview-blue">List of Reservations</p>
                 </a>
             </li>
             <li>
-                <a href="/coralview/admin/reports.php">
+                <a href="../admin/reports.php">
                     <!-- <i class="nc-icon nc-pin-3"></i> -->
                     <p class="coralview-blue">Reports Generation</p>
                 </a>
@@ -98,17 +98,17 @@
                     echo '
                         
                         <li>
-                            <a href="/coralview/admin/maintenance/room.php">
+                            <a href="../admin/room.php">
                                 <p class="coralview-blue">Room Maintenance</p>
                             </a>
                         </li>
                         <li>
-                            <a href="/coralview/admin/maintenance/user.php">
+                            <a href="../admin/user.php">
                                 <p class="coralview-blue">User Maintenance</p>
                             </a>
                         </li>
                         <li>
-                            <a href="/coralview/admin/maintenance/extras.php">
+                            <a href="../admin/extras.php">
                                 <p class="coralview-blue">Extra Maintenance</p>
                             </a>
                         </li>

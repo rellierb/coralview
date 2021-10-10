@@ -1,14 +1,15 @@
-let extendDepartureDate = $('#extendDepartureDate').datepicker().data('datepicker');
-let checkOutDate = document.getElementById('checkOutDate').value;
-let newCheckOutDate = new Date(checkOutDate)
-let disabledDate = newCheckOutDate.setDate(newCheckOutDate.getDate() + 1)
 
-
-extendDepartureDate.update('minDate', newCheckOutDate); 
-
-let btnExtendCheckOutDate = document.getElementById('btnExtendCheckOutDate');
 
 if(document.body.contains(document.getElementById('btnExtendCheckOutDate'))) {
+
+    let extendDepartureDate = $('#extendDepartureDate').datepicker().data('datepicker');
+    let checkOutDate = document.getElementById('checkOutDate').value;
+    let newCheckOutDate = new Date(checkOutDate)
+    let disabledDate = newCheckOutDate.setDate(newCheckOutDate.getDate() + 1)
+
+    extendDepartureDate.update('minDate', newCheckOutDate); 
+
+    let btnExtendCheckOutDate = document.getElementById('btnExtendCheckOutDate');
 
     btnExtendCheckOutDate.addEventListener('click', function() {
 

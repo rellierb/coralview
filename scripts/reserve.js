@@ -199,7 +199,8 @@ $(document).ready(function(){
                 let roomIdQuery = 'select[data-room-id*="' + roomId + '"]'
                 let selectTag = document.querySelector(roomIdQuery);
                 let numberOfRooms = selectTag.value;
-                console.log('test');
+                
+                
                 if (numberOfRooms == '0') {
                     toastr.error('Please select a room');
                 } else {
@@ -689,6 +690,7 @@ function attachRoomList(list) {
                             }
                         })
 
+                    
                         
                         
                     } else {
@@ -699,7 +701,8 @@ function attachRoomList(list) {
                         inputRoomsReserved.value = JSON.stringify(toStore);
                         checkCapacity(toStore);
                     }                     
-
+                    
+                    console.log(roomsAndCountReserved)
                     
                 }
             });

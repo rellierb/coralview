@@ -68,14 +68,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $mail->isSMTP();
                             $mail->Host = 'smtp.gmail.com';
                             $mail->SMTPAuth = true;
-                            $mail->Username = '';  // Fill this up // 
-                            $mail->Password = ';';  // Fill this up //
+                            $mail->Username = 'klir.waterresort@gmail.com';  // Fill this up // 
+                            $mail->Password = '!2klirwaterresort';  // Fill this up // 
                             $mail->SMTPSecure = 'tls';
                             $mail->Port = 587;
                             $mail->setFrom('');
                             $mail->isHTML(true);
                             $mail->addAddress($guest_email);
-                            $mail->Subject = 'Coralview Reservation Accepted';
+                            $mail->Subject = 'Klir Water Resort Reservation Accepted';
                             $mail->Body = $message;
                             $mail->send();
                             $_SESSION['msg'] = "Reservation is successfully tag as Cancelled";

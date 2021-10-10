@@ -1,7 +1,7 @@
 <?php
 
 
-include('../common/header.php');
+include('../common/admin_header.php');
 
 
 ?>
@@ -289,7 +289,7 @@ include('../common/header.php');
 <?php
 
 
-include('../common/footer.php');
+include('../common/admin_footer.php');
 
 
 ?>

@@ -11,16 +11,16 @@ include('common/navbar.php');
             <div>
                 <h2 class="text-center coralview-orange mt-5 mb-5">About Us</h2>
                 <hr>
-                <h1 class="text-center coralview-blue">CORALVIEW BEACH RESORT</h1>
+                <h1 class="text-center coralview-blue">KLIR WATERPARK RESORT</h1>
                 <hr>
 
                 <div class="card">
                     <div class="card-body">
-                        <img src="/coralview/assets/images/about-us.jpeg" style="width: 100%; height: 800px; border-radius: 0px;">    
+                        <img src="assets/images/klir pool.jpg" style="width: 100%; height: 800px; border-radius: 0px;">    
                     </div>
                     <div class="card-header">
                         <p class="m-5 text-center">
-                            Coralview Beach Resort is a private beach resort located on the shores of Morong, Bataan situated on 2.7 hectares of white sandy beach. The resort is named after the coral that serve as natural breakwater for the area. Started on 2005 as a family rest house with just 4 guestrooms and a residential area, inquiries from the public has driven the resort to expand to more than 91 guestrooms and suites.
+                        Klir Waterpark Resort owned and developed by KLIR Construkt, a construction company that decided to develop a parcel of land and turn it into one of the most advance Waterpark Resort in the Philippines. The design and concept of the resort came from the different creative minds of engineers and family members of KLIR Construkt. The “NATURE GET AWAY" of Klir is perfect for those people who want to escape the busy areas of Metro and take a peak of worry free haven to unwind and relax without the stress of traveling too far.<br><br> It is of pride by KLIR Construct to develop a getaway which shall make you and your families visit memorable. In Klir Waterpark Resort we always want your stay be meaningful.
                         </p>
 
                         <div class="row mb-5">

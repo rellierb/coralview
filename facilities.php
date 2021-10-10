@@ -17,57 +17,52 @@ include('common/navbar.php');
 
                     <div class="card-header">
 
-                    <div class="row mt-3 ">
+                    <div class="row mt-3 justify-content-center">
+                        <div class="col-6">
+                            <div>
+                                <img style="border-radius: 0px;" class="img-no-padding img-responsive" src="assets/images/pool.jpeg">
+                                <h4 class="title text-center coralview-blue">Swimming Pool</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
                         <div class="col-4">
                             <div>
-                                <img style="border-radius: 0px;" class="img-no-padding img-responsive" src="/coralview/assets/images/facilities-1.jpeg">
-                                <h4 class="title text-center coralview-blue">Billiard Table</h4>
+                                <img style="border-radius: 0px;" class="img-no-padding img-responsive" src="assets/images/trellis-garden-area.jpg">
+                                <h4 class="title text-center coralview-blue">Cottages</h4>
                             </div>
                             <div> 
-                                <img style="border-radius: 0px;" class="img-no-padding img-responsive" src="/coralview/assets/images/facilities-2.jpeg">
-                                <h4 class="title text-center coralview-blue">Obstacle Course</h4>
+                                <img style="border-radius: 0px;" class="img-no-padding img-responsive" src="assets/images/148355651.jpg">
+                                <h4 class="title text-center coralview-blue">Pavilion</h4>
                             </div>
-                            <div>
-                                <img style="border-radius: 0px;" class="img-no-padding img-responsive" src="/coralview/assets/images/facilities-3.jpeg">
-                                <h4 class="title text-center coralview-blue">Kayak</h4>
-                            </div>
+                            
                         </div>
                         <div class="col-4">
                             <div>
-                                <img style="border-radius: 0px;" class="img-no-padding img-responsive" src="/coralview/assets/images/facilities-4.jpeg">
-                                <h4 class="title text-center coralview-blue">Multipurpose Hall</h4>
+                                <img style="border-radius: 0px;" class="img-no-padding img-responsive" src="assets/images/deluxe twin bed.jpg">
+                                <h4 class="title text-center coralview-blue">Rooms</h4>
                             </div>
                             <div>
-                                <img style="border-radius: 0px;" class="img-no-padding img-responsive" src="/coralview/assets/images/facilities-10.jpeg">
-                                <h4 class="title text-center coralview-blue">Kids Play Area</h4>
-                            </div>
-                            <div>
-                                <img style="border-radius: 0px;" class="img-no-padding img-responsive" src="/coralview/assets/images/facilities-6.jpeg">
-                                <h4 class="title text-center coralview-blue">Volleyball</h4>              
+                                <img style="border-radius: 0px;" class="img-no-padding img-responsive" src="assets/images/unnamed.jpg">
+                                <h4 class="title text-center coralview-blue">Function Area</h4>
                             </div>
                         </div>
                         <div class="col-4">
-                            <div>
-                                <img style="border-radius: 0px;" class="img-no-padding img-responsive" src="/coralview/assets/images/facilities-11.jpeg">
-                                <h4 class="title text-center coralview-blue"> Full-size Basketball Court</h4>
-                            </div>      
-                            <div>
-                                <img style="border-radius: 0px;" class="img-no-padding img-responsive" src="/coralview/assets/images/facilities-8.jpeg">
-                                <h4 class="title text-center coralview-blue">Cabana</h4>
+                        <div>
+                                <img style="border-radius: 0px;" class="img-no-padding img-responsive" src="assets/images/team.jpg">
+                                <h4 class="title text-center coralview-blue">Team Building</h4>
                             </div>
                             <div>
-                                <img style="border-radius: 0px;" class="img-no-padding img-responsive" src="/coralview/assets/images/facilities-9.jpeg">
-                                <h4 class="title text-center coralview-blue">Ping pong Table</h4>
-                            </div>
+                                <img style="border-radius: 0px;" class="img-no-padding img-responsive" src="assets/images/Klir Seminar Venue 1.jpg">
+                                <h4 class="title text-center coralview-blue">Seminar</h4>
+                            </div>  
                         </div>
-
                     </div>
 
                     <div class="row mb-5 justify-content-center">
                         <div class="col-6">
-                            <div>
-                                <img style="border-radius: 0px;" class="img-no-padding img-responsive" src="/coralview/assets/images/facilities-7.jpeg">
-                                <h4 class="title text-center coralview-blue">Full service restaurant and snack bar</h4>
+                            <img style="border-radius: 0px;" class="img-no-padding img-responsive" src="assets/images/resto.jpg">
+                                <h4 class="title text-center coralview-blue">Restaurant</h4>
                             </div>
                         </div>
                     </div>

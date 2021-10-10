@@ -7,17 +7,17 @@ require('functions/assets/connection.php');
 
 $db = connect_to_db();
 
-$off_peak_date_start_1 = date("F d, Y", strtotime("01/02/2019"));
-$off_peak_date_end_1 = date("F d, Y", strtotime("03/11/2019"));
+$off_peak_date_start_1 = date("F d, Y", strtotime("01/02/2021"));
+$off_peak_date_end_1 = date("F d, Y", strtotime("03/11/2021"));
 
-$off_peak_date_start_2 = date("F d, Y", strtotime("07/18/2019"));
-$off_peak_date_end_2 = date("F d, Y", strtotime("11/19/2019"));
+$off_peak_date_start_2 = date("F d, Y", strtotime("07/18/2021"));
+$off_peak_date_end_2 = date("F d, Y", strtotime("11/19/2021"));
 
-$peak_date_start_1 = date("F d, Y", strtotime("03/12/2019"));
-$peak_date_end_1 = date("F d, Y", strtotime("07/17/2019"));
+$peak_date_start_1 = date("F d, Y", strtotime("03/12/2021"));
+$peak_date_end_1 = date("F d, Y", strtotime("07/17/2021"));
 
-$peak_date_start_2 = date("F d, Y", strtotime("11/20/2019"));
-$peak_date_end_2 = date("F d, Y", strtotime("01/01/2020"));
+$peak_date_start_2 = date("F d, Y", strtotime("11/20/2021"));
+$peak_date_end_2 = date("F d, Y", strtotime("01/01/2022"));
 
 
 ?>

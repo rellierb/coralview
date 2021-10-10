@@ -46,15 +46,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'coralviewthesis@gmail.com';  // Fill this up
-            $mail->Password = 'Coralbeach@123;';  // Fill this up
+            $mail->Username = 'klir.waterresort@gmail.com';  // Fill this up // 
+            $mail->Password = '!2klirwaterresort';  // Fill this up // 
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 
-            $mail->setFrom('coralviewthesis@gmail.com');
+            $mail->setFrom('klir.waterresort@gmail.com');
             $mail->isHTML(true);
-            $mail->addAddress('coralviewthesis@gmail.com');
-            $mail->Subject = 'Coralview Beach Resort Cancelled Reservation';
+            $mail->addAddress('klir.waterresort@gmail.com');
+            $mail->Subject = 'Klir Water Resort Cancelled Reservation';
             $mail->Body = $message;
             $mail->send();
 

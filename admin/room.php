@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-include('../../common/header.php');
-require('../../functions/assets/connection.php');
+include('../common/admin_header.php');
+require('../functions/assets/connection.php');
 
 $db = connect_to_db();
 
@@ -25,7 +25,7 @@ if(isset($_GET['edit'])) {
 
 ?>
 
-    <?php include('../../common/admin_sidebar.php') ?>
+    <?php include('../common/admin_sidebar.php') ?>
 
     <div class="main-panel">
     
@@ -85,7 +85,7 @@ if(isset($_GET['edit'])) {
                     <div class="card">
 
                         <div class="card-body">
-                            <form action="../../functions/admin/rooms/insert_room.php" method="POST" enctype="multipart/form-data">
+                            <form action=".../functions/admin/rooms/insert_room.php" method="POST" enctype="multipart/form-data">
 
                                 <div class="row">
                                     <div class="col-4">
@@ -173,17 +173,15 @@ if(isset($_GET['edit'])) {
                                     while($room = mysqli_fetch_assoc($result)) {
                                         echo '
                                             <tr>
-                                                <td><img src="' . $room['image'] . '"></img></td>
+                                                <td><img src="../' . $room['image'] . '"></img></td>
                                                 <td>' . $room['number'] . '</td>
                                                 <td>' . $room['type'] . '</td>
                                                 <td style="width: 8%;">' . $room['peak_rate'] . '</td>
                                                 <td style="width: 8%;">' . $room['off_peak_rate'] . '</td>
                                                 <td>' . $room['description'] . '</td>
                                                 <td class="text-center" style="width: 15%;">
-                                                    <form action="../../functions/admin/rooms/insert_room.php" method="POST">
-                                                        <a href="/coralview/admin/maintenance/room.php?edit=' . $room['Id'] . '"class="btn btn-info" value="' . $room['Id'] . '" >Edit</a>
-                                                        <button class="btn btn-danger" value="' . $room['Id'] . '" name="delete_room">Delete</button>
-                                                    </form>
+                                                    <a href="../../admin/maintenance/room.php?edit=' . $room['Id'] . '"class="btn btn-info" value="' . $room['Id'] . '" >Edit</a>
+                                                    <button class="btn btn-danger" value="' . $room['Id'] . '" name="delete_room">Delete</button>
                                                 </td>
                                             </tr>
                                         ';
@@ -207,7 +205,7 @@ if(isset($_GET['edit'])) {
 
 <?php
 
-include('../../common/footer.php');
+include('../common/admin_footer.php');
 unset($_SESSION["alert"]);
 unset($_SESSION["msg"]);
 

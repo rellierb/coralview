@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-transparent mb-0">
   <div class="container">
     <div class="navbar-brand">
-      <img src="/coralview/assets/images/coralview-logo.jpg" alt="" style="width: 150px; heigh: 150px;">
+      <img src="assets/images/logo.png" alt="" style="width: 150px; heigh: 150px;">
     </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>

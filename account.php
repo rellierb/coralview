@@ -33,7 +33,7 @@ $db = connect_to_db();
                     <h2 class="text-center coralview-blue">Account Log in</h2>
                 </div>
                 <div class="card-body">
-                    <form action="/coralview/functions/user/log_in.php" method="POST">
+                    <form action="functions/user/log_in.php" method="POST">
                         <div class="form-group">
                             <label for="">Account Email</label>
                             <input type="text" name="account_email" class="form-control" id="">

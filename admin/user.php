@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-include('../../common/header.php');
-require('../../functions/assets/connection.php');
+include('../common/admin_header.php');
+require('../functions/assets/connection.php');
 
 $db = connect_to_db();
 
@@ -30,7 +30,7 @@ if(isset($_GET['edit'])) {
 
 ?>
 
-    <?php include('../../common/admin_sidebar.php') ?>
+    <?php include('../common/admin_sidebar.php') ?>
 
     <div class="main-panel">
     
@@ -152,7 +152,7 @@ if(isset($_GET['edit'])) {
 
 <?php
 
-include('../../common/footer.php');
+include('../common/admin_footer.php');
 unset($_SESSION["alert"]);
 unset($_SESSION["msg"]);
 

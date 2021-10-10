@@ -11,7 +11,7 @@
   </div> -->
 
   <div style="margin: 0 auto;">
-    <img src="/coralview/assets/images/coralview-logo.jpg" alt="" style="width: 150px; heigh: 150px; display: block; margin-left: auto; margin-right: auto;">
+    <img src="assets/images/logo.png" alt="" style="width: 150px; heigh: 150px; display: block; margin-left: auto; margin-right: auto;">
   </div>
 
 </nav>

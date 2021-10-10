@@ -204,7 +204,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </style>
 
                 <div style="width: 100%;">
-                    <h1>CORALVIEW  RESORT</h1>
+                    <h1>KLIR WATER  RESORT</h1>
                     <p>Thank you for booking with us!</p>
                     ' . $reservation_details . '
                     <br>
@@ -222,14 +222,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $mail->isSMTP();
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'coralviewthesis@gmail.com';  // Fill this up
-                $mail->Password = 'Qwerty1234%';  // Fill this up
-                $mail->SMTPSecure = 'tls';
+                $mail->Username = 'klir.waterresort@gmail.com';  // Fill this up // 
+                $mail->Password = '!2klirwaterresort';  // Fill this up // 
                 $mail->Port = 587;
-                $mail->setFrom('coralviewthesis@gmail.com');
+                $mail->setFrom('klir.waterresort@gmail.com');
                 $mail->isHTML(true);
                 $mail->addAddress($email);
-                $mail->Subject = 'Coralview Beach Resort Reservation';
+                $mail->Subject = 'Klir Water Resort Reservation';
                 $mail->Body = $message;
                 $mail->send();
 

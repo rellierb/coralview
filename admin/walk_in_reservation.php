@@ -1,23 +1,23 @@
 <?php
 session_start();
 
-include('../common/header.php');
+include('../common/admin_header.php');
 require('../functions/assets/connection.php');
 
 $db = connect_to_db();
 $date_today = date("Y-m-d");
 
-$off_peak_date_start_1 = strtotime("Y-m-d", strtotime("01/02/2019"));
-$off_peak_date_end_1 = strtotime("Y-m-d", strtotime("03/11/2019"));
+$off_peak_date_start_1 = strtotime("Y-m-d", strtotime("01/02/2021"));
+$off_peak_date_end_1 = strtotime("Y-m-d", strtotime("03/11/2021"));
 
-$off_peak_date_start_2 = strtotime("Y-m-d", strtotime("07/18/2019"));
-$off_peak_date_end_2 = strtotime("Y-m-d", strtotime("11/19/2019"));
+$off_peak_date_start_2 = strtotime("Y-m-d", strtotime("07/18/2021"));
+$off_peak_date_end_2 = strtotime("Y-m-d", strtotime("11/19/2021"));
 
-$peak_date_start_1 = strtotime("Y-m-d", strtotime("03/12/2019"));
-$peak_date_end_1 = strtotime("Y-m-d", strtotime("07/17/2019"));
+$peak_date_start_1 = strtotime("Y-m-d", strtotime("03/12/2021"));
+$peak_date_end_1 = strtotime("Y-m-d", strtotime("07/17/2021"));
 
-$peak_date_start_2 = strtotime("Y-m-d", strtotime("11/20/2019"));
-$peak_date_end_2 = strtotime("Y-m-d", strtotime("01/01/2020"));
+$peak_date_start_2 = strtotime("Y-m-d", strtotime("11/20/2021"));
+$peak_date_end_2 = strtotime("Y-m-d", strtotime("01/01/2022"));
 
 $type_of_rate = "";
 
@@ -282,7 +282,7 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today >= $off_peak_date_st
 
 <?php
 
-include('../common/footer.php');
+include('../common/admin_footer.php');
 unset($_SESSION["alert"]);
 unset($_SESSION["msg"]);
 unset($_SESSION["empty_description"]);

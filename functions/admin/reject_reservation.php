@@ -56,7 +56,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </style>
 
                             <div style="width: 100%;">
-                                <h1>CORALVIEW  RESORT</h1>
+                                <h1>Klir Water Resort</h1>
                                 <p>We regret to inform you that we are unable to accommodate your booking request at this time. Thank you for your consideration.</p>
                             </div>
                         ';
@@ -68,14 +68,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $mail->isSMTP();
                             $mail->Host = 'smtp.gmail.com';
                             $mail->SMTPAuth = true;
-                            $mail->Username = '';  // Fill this up // 
-                            $mail->Password = '';  // Fill this up // 
+                            $mail->Username = 'klir.waterresort@gmail.com';  // Fill this up // 
+                            $mail->Password = '!2klirwaterresort';  // Fill this up // 
                             $mail->SMTPSecure = 'tls';
                             $mail->Port = 587;
-                            $mail->setFrom('coralviewthesis@gmail.com');
+                            $mail->setFrom('klir.waterresort@gmail.com');
                             $mail->isHTML(true);
                             $mail->addAddress($guest_email);
-                            $mail->Subject = 'Coralview Reservation Rejected';
+                            $mail->Subject = 'Klir Water Resort Reservation Rejected';
                             $mail->Body = $message;
                             $mail->send();
                             $_SESSION['msg'] = "Reservation is successfully tag as Rejected";

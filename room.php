@@ -47,7 +47,7 @@ if(isset($_REQUEST["room_id"])) {
                                         <div class="row">
                                         
                                             <div class="col-6">
-                                                <img style="border-radius: 0px;" src="/coralview/uploads/rooms/deluxe.jpg" alt="">
+                                                <img style="border-radius: 0px;" src="uploads/rooms/deluxe.jpg" alt="">
                                             </div>
 
                                             <div class="col-6">
