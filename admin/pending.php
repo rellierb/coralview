@@ -309,7 +309,7 @@ $payment_photo = '';
                                     <h5 class="text-center mt-3 text-info">Deposit Slip Payment</h5>
                                     
                                     <?php
-                                    
+
                                         echo '
                                         
                                         <div style="text-align: center;">

@@ -1,8 +1,5 @@
 
-    <!-- <script src="/coralview/resources/jquery/jquery.min.js"> </script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
-    <!-- <script src="/coralview/resources/paperkit/assets/js/jquery-ui-1.12.1.custom.min.js" type="text/javascript"></script> -->
     <script src="resources/paperkit/assets/js/plugins/moment.min.js"></script>
     <script src="resources/bootstrap/bootstrap.min.js"></script>
     <script src="resources/paperkit/assets/js/paper-kit.min.js"></script>

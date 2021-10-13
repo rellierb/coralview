@@ -53,7 +53,7 @@ if(isset($_GET['edit'])) {
                 <div class="col-3">
                     <div class="card">
                         <div class="card-body">
-                            <form action="../../functions/admin/user.php" method="POST">
+                            <form action="../functions/admin/user.php" method="POST">
                                 <input type="hidden" name="user_id" value="<?php if(isset($id)) { echo $id; } ?>"  />
                                 <div class="form-group">
                                     <label for="">Full Name</label>
@@ -127,10 +127,9 @@ if(isset($_GET['edit'])) {
                                                 <td>' . $user['Email'] . '</td>
                                                 <td>' . $user['Type'] . '</td>
                                                 <td>' . $user['PhoneNumber'] . '</td>
-                                                <td class="text-center" style="width: 17%;">
-                                                    
-                                                    <form action="../../functions/admin/user.php" method="POST">
-                                                        <a href="/coralview/admin/maintenance/user.php?edit=' . $user['id'] . '"class="btn btn-info" value="' . $user['id'] . '" >Edit</a>
+                                                <td class="text-center" style="width: 17%;">        
+                                                    <form action="../functions/admin/user.php" method="POST">
+                                                        <a href="user.php?edit=' . $user['id'] . '"class="btn btn-info" value="' . $user['id'] . '" >Edit</a>
                                                         <button class="btn btn-danger" value="' . $user['id'] . '" name="delete_user">Delete</button>
                                                     </form>
                                                 </td>

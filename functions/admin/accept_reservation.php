@@ -20,7 +20,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     if(empty($_POST["down_payment_amount"]) && empty($_POST["down_payment_description"])) {
         $_SESSION['msg'] = "DESCRIPTION AND AMOUNT IN DOWNPAYMENT DETAILS IS EMPTY";
         $_SESSION['alert'] = "alert alert-danger";
-        header('location: ../../admin/accept.php?reference_no='. $dp_reference_no . '');
+        header('location: ../admin/accept.php?reference_no='. $dp_reference_no . '');
     } else {
 
         if(!empty($_POST["down_payment_description"])) {
@@ -28,7 +28,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $_SESSION['msg'] = "DESCRIPTION IN DOWNPAYMENT DETAILS IS EMPTY";
             $_SESSION['alert'] = "alert alert-danger";
-            header('location: ../../admin/accept.php?reference_no='. $dp_reference_no . '');
+            header('location: ../admin/accept.php?reference_no='. $dp_reference_no . '');
         }
 
         if(!empty($_POST["down_payment_amount"])) {
@@ -36,7 +36,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $_SESSION['msg'] = "AMOUNT IN DOWNPAYMENT DETAILS IS EMPTY";
             $_SESSION['alert'] = "alert alert-danger";
-            header('location: ../../admin/accept.php?reference_no='. $dp_reference_no . '');
+            header('location: ../admin/accept.php?reference_no='. $dp_reference_no . '');
         }
 
         $required_down_payment = $_POST["down_payment_required"];
@@ -45,27 +45,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         if($required_down_payment < $down_payment_input || $required_down_payment > $down_payment_input) {
             $_SESSION['msg'] = "INVALID AMOUNT IN DOWN PAYMENT AMOUNT";
             $_SESSION['alert'] = "alert alert-danger";
-            header('location: ../../admin/accept.php?reference_no='. $dp_reference_no . '');
+            header('location: ../admin/accept.php?reference_no='. $dp_reference_no . '');
         }
 
 
     }
 
-    // $insert_to_downpayment = "
-    //     INSERT INTO downpayment (reference_no, amount, description, time_stamp)
-    //     VALUES ('$dp_reference_no' , '$dp_amount', '$dp_description' , NOW())
-    // ";
+    $insert_to_downpayment = "
+        INSERT INTO downpayment (reference_no, amount, description, time_stamp)
+        VALUES ('$dp_reference_no' , '$dp_amount', '$dp_description' , NOW())
+    ";
 
     $insert_to_downpayment_result = mysqli_query($db, $insert_to_downpayment);
 
     if($insert_to_downpayment_result) {
-
-        // $insert_to_downpayment = "
-        //     INSERT INTO downpayment (reference_no, amount, time_stamp)
-        //     VALUES ('$dp_reference_no', '$dp_amount', NOW())
-        // ";
-
-        // $insert_to_downpayment_result = mysqli_query($db, $insert_to_downpayment);
 
         // Update status of reservation to Check-in
         $room_status_query = "UPDATE reservation SET status='FOR CHECK IN' WHERE reference_no='$dp_reference_no'";
@@ -173,7 +166,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 $mail->Password = '!2klirwaterresort';  // Fill this up // 
                                 $mail->SMTPSecure = 'tls';
                                 $mail->Port = 587;
-                                $mail->setFrom('');
+                                $mail->setFrom('klir.waterresort@gmail.com');
                                 $mail->isHTML(true);
                                 $mail->addAddress($guest_email);
                                 $mail->Subject = 'KLIR WATER RESORT Reservation Accepted';
@@ -189,7 +182,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 $_SESSION['alert'] = "alert alert-danger";
                                 echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
                             }
-
 
                         }
 

@@ -11,7 +11,7 @@ $db = connect_to_db();
 
 function uploadRoom($fileToUpload) {
     
-    $target_dir = "/coralview/uploads/payment/";
+    $target_dir = "../uploads/payment/";
 
     $target_file = $_SERVER['DOCUMENT_ROOT'] . $target_dir . basename($fileToUpload);
 
@@ -98,7 +98,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
-                $mail->setFrom('');
+                $mail->setFrom('klir.waterresort@gmail.com');
                 $mail->isHTML(true);
                 $mail->addAddress('');
                 $mail->Subject = 'Klir Water Resort Payment Reservation';

@@ -317,6 +317,8 @@ $is_peak_rate = 0;
 
                 if($payment_photo != "0") {
 
+                    $trim_photo_link = str_replace("../", "", $payment_photo);
+
                     echo '
             
                     <br>
@@ -324,7 +326,7 @@ $is_peak_rate = 0;
                     <hr />
                     
                     ';
-                    echo '<div style="text-align: center;"><img style="width: 50%; height: 25%;" src="' . $payment_photo .   '"></img></div>';
+                    echo '<div style="text-align: center;"><img style="width: 50%; height: 25%;" src="' . $trim_photo_link .   '"></img></div>';
                     echo '
                         <br>
                         <div class="text-center">

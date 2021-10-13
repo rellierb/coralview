@@ -63,13 +63,13 @@
                 </a>
             </li>
             <li>
-                <a href="../admin/maintenance/room_number.php">
+                <a href="../admin/room_number.php">
                     <!-- <i class="nc-icon nc-bell-55"></i> -->
                     <p class="coralview-blue">Room Availability</p>
                 </a>
             </li>
             <li>
-                <a href="../../admin/maintenance/food_order.php">
+                <a href="../admin/food_order.php">
                     <!-- <i class="nc-icon nc-bell-55"></i> -->
                     <p class="coralview-blue">Food Order</p>
                 </a>

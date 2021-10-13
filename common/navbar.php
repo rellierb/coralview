@@ -9,28 +9,28 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" style="font-family: 'Montserrat'; font-size: 1em; color: #47A9DF;" href="index.php">Home</a>
+          <a class="nav-link" style="font-family: 'Montserrat'; font-size: 1em; color: #000;" href="index.php">Home</a>
         </li>
         <li class="nav-item nav-li">
-          <a class="nav-link" style="font-family: 'Montserrat'; font-size: 1em; color: #47A9DF;" href="about_us.php">About Us</a>
+          <a class="nav-link" style="font-family: 'Montserrat'; font-size: 1em; color: #000;" href="about_us.php">About Us</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" style="font-family: 'Montserrat'; font-size: 1em; color: #47A9DF;" href="facilities.php">Facilities</a>
+          <a class="nav-link" style="font-family: 'Montserrat'; font-size: 1em; color: #000;" href="facilities.php">Facilities</a>
         </li>
         <li class="nav-item nav-li">
-          <a class="nav-link" style="font-family: 'Montserrat'; font-size: 1em; color: #47A9DF;" href="rooms.php">Rooms</a>
+          <a class="nav-link" style="font-family: 'Montserrat'; font-size: 1em; color: #000;" href="rooms.php">Rooms</a>
         </li>
         <li class="nav-item nav-li">
-          <a class="nav-link" style="font-family: 'Montserrat'; font-size: 1em; color: #47A9DF;" href="contact_us.php">Contact Us</a>
+          <a class="nav-link" style="font-family: 'Montserrat'; font-size: 1em; color: #000;" href="contact_us.php">Contact Us</a>
         </li>
         <li class="nav-item nav-li">
-          <a class="btn btn-primary animated bounce" href="reserve.php" style="font-family: 'Montserrat'; font-size: 1em; background-color: #F7CF32; color: #47A9DF;" href="reserve.php">BOOK ONLINE</a>
+          <a class="btn btn-primary animated bounce" href="reserve.php" style="font-family: 'Montserrat'; font-size: 1em; background-color: #F7CF32; color: #000;" href="reserve.php">BOOK ONLINE</a>
         </li>
         <li class="nav-item nav-li">
-          <a class="nav-link" style="font-family: 'Montserrat'; font-size: 1em; color: #47A9DF;" href="insert_reservation.php">Reservation</a>
+          <a class="nav-link" style="font-family: 'Montserrat'; font-size: 1em; color: #000;" href="insert_reservation.php">Reservation</a>
         </li>
         <li class="nav-item nav-li">
-          <a class="nav-link" style="font-family: 'Montserrat'; font-size: 1em; color: #47A9DF;" href="account.php">Account</a>
+          <a class="nav-link" style="font-family: 'Montserrat'; font-size: 1em; color: #000;" href="account.php">Account</a>
         </li>
       </ul>
     </div>

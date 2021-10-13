@@ -52,7 +52,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['msg'] = "User is successfully Added";
             $_SESSION['alert'] = "alert alert-success";
 
-            header("location: ../../admin/maintenance/user.php");
+            header("location: ../../admin/user.php");
         } else {
             echo "Error: " . $insert_query . "<br>" . mysqli_error($db);
         }
@@ -83,7 +83,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->close();
         $db->close();
 
-        header("location: ../../admin/maintenance/user.php");
+        header("location: ../../admin/user.php");
     }
 
 
@@ -97,7 +97,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['msg'] = "User is successfully Edited";
             $_SESSION['alert'] = "alert alert-info";
 
-            header("location: ../../admin/maintenance/user.php");    
+            header("location: ../../admin/user.php");    
         } else {
             echo "Error: " . $update_query . "<br>" . mysqli_error($db);
         }
