@@ -55,7 +55,7 @@ if($reservation_details_result) {
             </style>
             <table class="tg" style="width: 100%;">
             <tr>
-                <th class="tg-vcon" colspan="14">CORALVIEW RESORT<br></th>
+                <th class="tg-vcon" colspan="14">KLIR WATER RESORT<br></th>
             </tr>
             <tr>
                 <td class="tg-f7f6" colspan="14" style="text-align: center;">CHECK IN VOUCHER</td>
@@ -65,11 +65,11 @@ if($reservation_details_result) {
                 <td class="tg-c3ow" colspan="9" style="text-align: center;">' . $reservation["reference_no"] . '</td>
             </tr>
             <tr>
-                <td class="tg-ho3n" colspan="5">CHECK-IN</td>
+                <td class="tg-9wq8" colspan="5">CHECK-IN</td>
                 <td class="tg-0pky" colspan="9" style="text-align: center;">' . $formatted_check_in_date . '</td>
             </tr>
             <tr>
-                <td class="tg-ho3n" colspan="5">CHECK-OUT</td>
+                <td class="tg-9wq8" colspan="5">CHECK-OUT</td>
                 <td class="tg-0pky" colspan="9" style="text-align: center;">' . $formatted_check_out_date . '</td>
             </tr>
             <tr>

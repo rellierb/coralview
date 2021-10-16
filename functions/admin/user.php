@@ -36,6 +36,32 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     /*
+        DELETE USER
+    */
+
+    if($_POST['delete_user'] != 0) {
+
+        $id = $_POST['delete_user'];
+
+        $delete_query = "DELETE FROM users WHERE id = ? ";
+
+        echo $delete_query;
+        echo $id;
+
+        $stmt = $db->prepare($delete_query);
+        $stmt->bind_param('i', $id);
+        if($stmt->execute()) {
+            $_SESSION['msg'] = "User is successfully deleted";
+            $_SESSION['alert'] = "alert alert-danger";
+        }
+        
+        $stmt->close();
+        $db->close();
+
+        header("location: ../../admin/user.php");
+    }
+
+    /*
         CREATE USER
     */
 
@@ -60,31 +86,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
 
-    /*
-        DELETE USER
-    */
-
-    if(isset($_POST['delete_user'])) {
-
-        $id = $_POST['delete_user'];
-
-        $delete_query = "DELETE FROM users WHERE id = ? ";
-
-        echo $delete_query;
-        echo $id;
-
-        $stmt = $db->prepare($delete_query);
-        $stmt->bind_param('i', $id);
-        if($stmt->execute()) {
-            $_SESSION['msg'] = "User is successfully deleted";
-            $_SESSION['alert'] = "alert alert-danger";
-        }
-        
-        $stmt->close();
-        $db->close();
-
-        header("location: ../../admin/user.php");
-    }
+ 
 
 
     if(isset($_POST['edit_user'])) {

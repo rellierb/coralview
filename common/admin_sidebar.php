@@ -83,11 +83,9 @@
             <li>
                 <a href="../admin/reports.php">
                     <!-- <i class="nc-icon nc-pin-3"></i> -->
-                    <p class="coralview-blue">Reports Generation</p>
+                    <p class="coralview-blue">Reports Generation</p> 
                 </a>
             </li>
-
-
 
             <?php
             
@@ -126,9 +124,7 @@
         </ul>
 
         <div style="margin-right: 15px; margin-left: 15px; position: relative; top: 40%;">
-            <hr>
-            <a href="" class="btn btn-primary btn-link btn-block">Log out</a>
-            <hr>
+          
         </div>
 
         

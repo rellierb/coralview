@@ -545,10 +545,9 @@ $is_peak_rate = 0;
 
                                     <div style="width: 57%;  float: right; margin-left: 15px; font-family: Arial;">
 
-                                        <h3 style="text-align: center;">CORALVIEW BEACH RESORT</h3>         
-                                        <h5 style="text-align: center;">OWNED AND OPERATED BY: CJ MORONG INC.</h5>
-                                        <h6 style="text-align: center;">Sitio Panibatuhan, Poblacion, Morong, Bataan</h6>
-                                        <h6 style="text-align: center;">VAT Reg. TIN 008-854-530-000</h6>
+                                        <h3 style="text-align: center;">KLIR WATER PARK RESORT</h3>         
+                                        <h5 style="text-align: center;">Centro Property Management System Corporation DBA Klir Waterpark Resort</h5>
+                                        <h6 style="text-align: center;">Near Sta. Rita Exit, Kabilang Bakood, Guiguinto Bulacan, Philippines</h6>
 
 
                                         <div >
@@ -567,10 +566,6 @@ $is_peak_rate = 0;
                                             <h6>the sum of <b><u><?php echo number_format($net_amount, 2); ?></u></b> pesos </h6>
                                             <h6>(P <b><u><?php echo number_format($net_amount, 2); ?></u></b> ) in partial / full payment for _____ </h6>
                                             <br>
-                                            <span>RDO 20 OCN 4AU0001460621</span><br>
-                                            <span>100 Bkits. 50x2 000001-005000</span><br>
-                                            <span>Date Issued: 02-27-2015</span><br>
-                                            <span>Valid Until: 02-26-2020</span><br>
                                         </div>
 
                                         <div style="display: block; float: right; margin-left: 40%;">

@@ -290,7 +290,7 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today <= $off_peak_date_en
                     
                     ';
 
-                    $deadline = Date('F d, o', strtotime("+3 days"));
+                    $deadline = Date('F d, o', strtotime("+15 days"));
 
                     $payment_html .= '
                     

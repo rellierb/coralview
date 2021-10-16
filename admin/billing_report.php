@@ -2,14 +2,14 @@
 
 session_start();
 
-include('../../common/header.php');
-require('../../functions/assets/connection.php');
+include('../common/admin_header.php');
+require('../functions/assets/connection.php');
 
 $db = connect_to_db();
 
 ?>
 
-    <?php include('../../common/admin_sidebar.php') ?>
+    <?php include('../common/admin_sidebar.php') ?>
    
     <div class="main-panel">
         <div class="container-fluid">
@@ -32,14 +32,14 @@ $db = connect_to_db();
                     
                     <div class="card" style="height: 60vh;">
                         <div class="card-body">
-                            <h4 class="text-center text-info">Check-in Report</h4>
+                            <h4 class="text-center text-info">Billing Report</h4>
                             
                             <div class="row justify-content-md-center">
                                 <div class="col-4">
 
-                                    <form action="../../functions/admin/reports_checkedin.php" method="POST">
+                                    <form action="../functions/admin/reports_billing.php" method="POST">
 
-                                        <span class="text-success">Reservation Status: <span>CHECKED-IN</span></span>
+                                        <span class="text-success">Reservation Status: <span>COMPLETE</span></span>
                                         <br>
                                         <br>
                                         <div class="form-group">
@@ -55,15 +55,17 @@ $db = connect_to_db();
                                             </div>
                                         </div>
 
+
                                         <a class="btn btn-outline-default btn-block" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                                             Filter
                                         </a>
                                         <div class="collapse" id="collapseExample">
                                             <div class="card card-body">
-                                                <label for="">Referecen No.</label>
+                                                <label for="">Reference No.</label>
                                                 <input type="text" class="form-control" name="reference_no">
                                             </div>
                                         </div>
+
 
 
                                         <!-- <div class="form-group">
@@ -71,24 +73,19 @@ $db = connect_to_db();
                                             <select class="form-control" name="reference_no" >
                                             <?php
                                                 
-                                                // $room_query = "SELECT reference_no, id FROM reservation WHERE status='CHECKED IN'";
-                                                // $room_result = mysqli_query($db, $room_query); 
+                                                $room_query = "SELECT reference_no, id FROM reservation";
+                                                $room_result = mysqli_query($db, $room_query); 
                                                 
-                                                // if(mysqli_num_rows($room_result) > 0) {                                                    
+                                                if(mysqli_num_rows($room_result) > 0) {                                                    
 
-                                                //     while($room = mysqli_fetch_assoc($room_result)) {
-                                                //         echo '<option value="' . $room['reference_no'] . '">' . $room['reference_no'] . '</option>';
-                                                //     }
+                                                    while($room = mysqli_fetch_assoc($room_result)) {
+                                                        echo '<option value="' . $room['reference_no'] . '">' . $room['reference_no'] . '</option>';
+                                                    }
 
-                                                //     echo '</select>';
-
-                                                // } else {
-
-
-                                                // }
+                                                } 
 
                                             ?>
-                                            
+                                            </select>
                                         </div> -->
                                         
                                         <!-- <div class="form-group">
@@ -121,7 +118,7 @@ $db = connect_to_db();
 
 <?php
 
-include('../../common/footer.php');    
+include('../common/admin_footer.php');    
 unset($_SESSION["alert"]);
 unset($_SESSION["msg"]);
 

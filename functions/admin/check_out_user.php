@@ -99,7 +99,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $mail->SMTPSecure = 'tls';
                     $mail->Port = 587;
 
-                    $mail->setFrom('');
+                    $mail->setFrom('klir.waterresort@gmail.com');
                     $mail->isHTML(true);
                     $mail->addAddress($email);
                     $mail->Subject = 'Klir Water Resort Thank you Message';

@@ -472,7 +472,7 @@ $is_peak_rate = 0;
                                                         <div class="form-group row">
                                                             <p for="inputEmail3" class="col-sm-6 col-form-label text-right">'. $discount["name"] .'</p>
                                                             <div class="col-sm-3">
-                                                                <input type="number" id="seniorDiscount" data-discount="' . $discount["Id"] .'" data-discount-amount="' . $discount["amount"] . '"  placeholder="Quantity" class="form-control" min="0" max="">
+                                                                <input type="number" disabled value="1" id="seniorDiscount" data-discount="' . $discount["Id"] .'" data-discount-amount="' . $discount["amount"] . '"  placeholder="Quantity" class="form-control" min="0" max="">
                                                             </div>
                                                         </div>
                                                     ';

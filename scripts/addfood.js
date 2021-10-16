@@ -8,7 +8,7 @@ if(document.body.contains(document.getElementById('addFoodRequest'))) {
     addFoodRequest.addEventListener('click', function() {
 
         let subject = foodOrderSubj.value;
-        let description = foodOrderSubj.value;
+        let description = foodOrderDesc.value;
         let code = referenceCode.value;
         
         if(subject === '' || description === '') {

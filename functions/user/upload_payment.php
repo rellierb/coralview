@@ -100,7 +100,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 $mail->setFrom('klir.waterresort@gmail.com');
                 $mail->isHTML(true);
-                $mail->addAddress('');
+                $mail->addAddress('klir.waterresort@gmail.com');
                 $mail->Subject = 'Klir Water Resort Payment Reservation';
                 $mail->Body = $message;
                 $mail->send();

@@ -20,6 +20,7 @@ if(isset($_GET['edit'])) {
     $peak_rate = $record_result['peak_rate'];
     $off_peak_rate = $record_result['off_peak_rate'];
     $description = $record_result['description'];
+    $image = $record_result['image'];
     $edit_state = true;
 }
 
@@ -85,15 +86,15 @@ if(isset($_GET['edit'])) {
                     <div class="card">
 
                         <div class="card-body">
-                            <form action=".../functions/admin/rooms/insert_room.php" method="POST" enctype="multipart/form-data">
+                            <form action="../functions/admin/insert_room.php" method="POST" enctype="multipart/form-data">
 
                                 <div class="row">
                                     <div class="col-4">
                                         <input type="hidden" name="room_id" value="<?php if(isset($id)) { echo $id; } ?>"  />
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <label for="">Number</label>
                                             <input type="text" name="room_number" class="form-control" id="" value="<?php if(isset($number)) { echo $number;  } ?>">
-                                        </div>
+                                        </div> -->
                                         <div class="form-group">
                                             <label for="">Type</label>
                                             <input type="text" name="room_type" class="form-control" id="" value="<?php if(isset($type)) { echo $type; } ?>">
@@ -119,7 +120,8 @@ if(isset($_GET['edit'])) {
 
                                         <label for="image">Image</label>
                                         <input type="file" name="room_image" class="form-control-file" accept="image/png, image/jpeg">
-                                
+                                        <input type="hidden" name="room_image_hidden" value="<?php if(isset($image)) { echo $image; } ?>"  />    
+                                        
                                     </div>
 
                                 </div>
@@ -131,7 +133,7 @@ if(isset($_GET['edit'])) {
                                         <?php 
                                         
                                         if($edit_state == true) {
-                                            echo '<input type="submit" name="edit_room" class="btn btn-primary" value="Save">';
+                                            echo '<input type="submit" name="edit_room" class="btn btn-primary" value="Submit">';
                                         } else {
                                             echo '<input type="submit" name="enter_room" class="btn btn-primary" value="Save">';
                                         }
@@ -156,7 +158,6 @@ if(isset($_GET['edit'])) {
                                 <thead>
                                     <tr>
                                         <th class="text-center" scope="col">Image</th>
-                                        <th class="text-center" scope="col">Number</th>
                                         <th class="text-center" scope="col">Type</th>
                                         <th class="text-center" scope="col">Peak Rate</th>
                                         <th class="text-center" scope="col">Off-peak Rate</th>
@@ -173,15 +174,16 @@ if(isset($_GET['edit'])) {
                                     while($room = mysqli_fetch_assoc($result)) {
                                         echo '
                                             <tr>
-                                                <td><img src="../' . $room['image'] . '"></img></td>
-                                                <td>' . $room['number'] . '</td>
+                                                <td><img src="../uploads/rooms/' . $room['image'] . '"></img></td>
                                                 <td>' . $room['type'] . '</td>
                                                 <td style="width: 8%;">' . $room['peak_rate'] . '</td>
                                                 <td style="width: 8%;">' . $room['off_peak_rate'] . '</td>
                                                 <td>' . $room['description'] . '</td>
                                                 <td class="text-center" style="width: 15%;">
-                                                    <a href="../../admin/maintenance/room.php?edit=' . $room['Id'] . '"class="btn btn-info" value="' . $room['Id'] . '" >Edit</a>
-                                                    <button class="btn btn-danger" value="' . $room['Id'] . '" name="delete_room">Delete</button>
+                                                    <form action="../functions/admin/insert_room.php" method="POST">
+                                                        <a href="room.php?edit=' . $room['Id'] . '"class="btn btn-info" value="' . $room['Id'] . '" >Edit</a>
+                                                        <button class="btn btn-danger" value="' . $room['Id'] . '" name="delete_room" >Delete</button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                         ';
@@ -208,5 +210,11 @@ if(isset($_GET['edit'])) {
 include('../common/admin_footer.php');
 unset($_SESSION["alert"]);
 unset($_SESSION["msg"]);
+unset($_SESSION["alertType"]);
+unset($_SESSION["fileType"]);
+unset($_SESSION["fileExists"]);
+unset($_SESSION["fileSize"]);
+unset($_SESSION["fileImage"]);
+unset($_SESSION["fileError"]);
 
 ?>

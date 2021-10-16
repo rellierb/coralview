@@ -476,7 +476,7 @@ $html_to_print = '
 $mpdf->WriteHTML($html_to_print);
 $mpdf->Output('receipt.pdf', 'D');
 
-// echo $html;
+echo $html_to_print;
 // $dompdf = new Dompdf();
 // $dompdf->loadHtml($html);
 // $dompdf->setPaper('A4', 'landscape');

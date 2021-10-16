@@ -56,7 +56,11 @@ function uploadRoom($fileToUpload) {
     return $path_to_return;
 }
 
+echo 'Hello World';
 
+// $file_path = uploadRoom($_FILES["room_image"]["name"]);
+// echo $file_path;
+// header("location: ../../../admin/room.php");
 
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -67,37 +71,37 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     */
 
 
-    if(isset($_POST["room_number"])) {
-        $room_number = mysqli_real_escape_string($db, trim($_POST['room_number']));
-    }
+    // if(isset($_POST["room_number"])) {
+    //     $room_number = mysqli_real_escape_string($db, trim($_POST['room_number']));
+    // }
 
-    if(isset($_POST["room_type"])) {
-        $room_type = mysqli_real_escape_string($db, trim($_POST['room_type']));
-    }
+    // if(isset($_POST["room_type"])) {
+    //     $room_type = mysqli_real_escape_string($db, trim($_POST['room_type']));
+    // }
 
-    if(isset($_POST["room_peak_rate"])) {
-        $room_peak_rate = mysqli_real_escape_string($db, trim($_POST['room_peak_rate']));
-    }
+    // if(isset($_POST["room_peak_rate"])) {
+    //     $room_peak_rate = mysqli_real_escape_string($db, trim($_POST['room_peak_rate']));
+    // }
 
-    if(isset($_POST["room_off_peak_rate"])) {
-        $room_off_peak_rate = mysqli_real_escape_string($db, trim($_POST['room_off_peak_rate']));
-    }
+    // if(isset($_POST["room_off_peak_rate"])) {
+    //     $room_off_peak_rate = mysqli_real_escape_string($db, trim($_POST['room_off_peak_rate']));
+    // }
 
-    if(isset($_POST["room_description"])) {
-        $room_description = mysqli_real_escape_string($db, trim($_POST['room_description']));
-    }
+    // if(isset($_POST["room_description"])) {
+    //     $room_description = mysqli_real_escape_string($db, trim($_POST['room_description']));
+    // }
 
-    $file_path = uploadRoom($_FILES["room_image"]["name"]);
-    if(uploadRoom($_FILES["room_image"]["name"]) !== "error") {
-        $room_image = substr_replace($file_path, "../..", 0, 5); 
-    }
+    // $file_path = uploadRoom($_FILES["room_image"]["name"]);
+    // if(uploadRoom($_FILES["room_image"]["name"]) !== "error") {
+    //     $room_image = substr_replace($file_path, "../..", 0, 5); 
+    // }
 
-    echo $room_image;
+    // echo $room_image;
 
-    /*
-        CREATE ROOM
-    */
-    echo $_POST['enter_room'];
+    // /*
+    //     CREATE ROOM
+    // */
+    // echo $_POST['enter_room'];
 
     // if(isset($_POST['enter_room'])) {
 
@@ -112,7 +116,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     //         $_SESSION['msg'] = "Room is successfully Added";
     //         $_SESSION['alert'] = "alert alert-success";
 
-    //         header("location: ../../../admin/maintenance/room.php");
+    //         header("location: ../../../admin/room.php");
     //     } else {
     //         echo "Error: " . $insert_query . "<br>" . mysqli_error($db);
     //     }
@@ -120,9 +124,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     // }
 
 
-    // /*
-    //     DELETE ROOM
-    // */
+    // // /*
+    // //     DELETE ROOM
+    // // */
 
     // if(isset($_POST['delete_room'])) {
 
@@ -140,10 +144,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     //     $stmt->close();
     //     $db->close();
 
-    //     header("location: ../../../admin/maintenance/room.php");
+    //     header("location: ../../../admin/room.php");
     // }
 
-    // var_dump(_POST['edit_room'])
+    // // var_dump(_POST['edit_room'])
 
     // if(isset($_POST['edit_room'])) {
 
@@ -156,7 +160,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     //         $_SESSION['msg'] = "Room is successfully Edited";
     //         $_SESSION['alert'] = "alert alert-info";
 
-    //         header("location: ../../../admin/maintenance/room.php");
+    //         header("location: ../../../admin/room.php");
     //     } else {
     //         echo "Error: " . $update_query . "<br>" . mysqli_error($db);
     //     }
@@ -164,5 +168,3 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     // }
     
 }
-
-

@@ -40,13 +40,13 @@ $db = connect_to_db();
                         <div class="card-body">
                             <div class="row justify-content-center">
                                 <div class="col-6">
-                                    <a href="reports/guest_report.php" style="margin-bottom: 30px;" class="btn btn-outline-info btn-block btn-lg">Guest Report</a>
-                                    <!-- <a href="reports/receptionist_report.php" style="margin-bottom: 30px;" class="btn btn-outline-info btn-block btn-lg">Receptionist Report</a> -->
-                                    <a href="reports/room_report.php" style="margin-bottom: 30px;" class="btn btn-outline-info btn-block btn-lg">Room Report</a>
-                                    <a href="reports/reservation_report.php" style="margin-bottom: 30px;" class="btn btn-outline-info btn-block btn-lg">Reservation Report</a>
-                                    <a href="reports/check_in_report.php" style="margin-bottom: 30px;" class="btn btn-outline-info btn-block btn-lg">Check-in Report</a>
-                                    <a href="reports/billing_report.php" style="margin-bottom: 30px;" class="btn btn-outline-info btn-block btn-lg">Billing Report</a>
-                                    <a href="reports/summary_report.php" style="margin-bottom: 30px;" class="btn btn-outline-info btn-block btn-lg">Summary Report</a>
+                                    <a href="guest_report.php" style="margin-bottom: 30px;" class="btn btn-outline-info btn-block btn-lg">Guest Report</a>
+                                    <!-- <a href="receptionist_report.php" style="margin-bottom: 30px;" class="btn btn-outline-info btn-block btn-lg">Receptionist Report</a> -->
+                                    <a href="room_report.php" style="margin-bottom: 30px;" class="btn btn-outline-info btn-block btn-lg">Room Report</a>
+                                    <a href="reservation_report.php" style="margin-bottom: 30px;" class="btn btn-outline-info btn-block btn-lg">Reservation Report</a>
+                                    <a href="check_in_report.php" style="margin-bottom: 30px;" class="btn btn-outline-info btn-block btn-lg">Check-in Report</a>
+                                    <a href="billing_report.php" style="margin-bottom: 30px;" class="btn btn-outline-info btn-block btn-lg">Billing Report</a>
+                                    <a href="summary_report.php" style="margin-bottom: 30px;" class="btn btn-outline-info btn-block btn-lg">Summary Report</a>
                                 </div>
                             </div>
                         </div>

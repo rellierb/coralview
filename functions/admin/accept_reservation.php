@@ -176,7 +176,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 $_SESSION['msg'] = "RESERVATION IS SUCCESSFULLY TAG AS ACCEPTED";
                                 $_SESSION['alert'] = "alert alert-success";
                                 
-                                echo  '<script>window.location.assign("../../admin/accept.php?reference_no='. $dp_reference_no . '")</script>';
+                                echo  '<script>window.location.assign("../admin/accept.php?reference_no='. $dp_reference_no . '")</script>';
                             } catch (Exception $e) {
                                 $_SESSION['msg'] = "There\'s an error processing your request";
                                 $_SESSION['alert'] = "alert alert-danger";
@@ -198,7 +198,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $_SESSION['msg'] = "Cannot process reservation";
         $_SESSION['alert'] = "alert alert-danger";
-        header('Location: ../../admin/accept.php?reference_no='. $dp_reference_no . '');
+        header('Location: ../admin/accept.php?reference_no='. $dp_reference_no . '');
 
     }
     

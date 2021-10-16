@@ -48,7 +48,7 @@ if(isset($_GET['edit'])) {
                 <div class="col-3">
                     <div class="card">
                         <div class="card-body">
-                            <form action="../../functions/admin/extras.php" method="POST">
+                            <form action="../functions/admin/extras.php" method="POST">
                                 <input type="hidden" name="extra_id" value="<?php if(isset($id)) { echo $id; } ?>"  />
 
                                 <div class="form-group">
@@ -57,7 +57,7 @@ if(isset($_GET['edit'])) {
                                 </div>
                                 <div class="form-group">
                                     <label for="">Price</label>
-                                    <input type="text" name="extra_price" class="form-control" id="" value="<?php if(isset($price)) { echo $price; } ?>">
+                                    <input type="number" min="0" name="extra_price" class="form-control" id="" value="<?php if(isset($price)) { echo $price; } ?>">
                                 </div>
                                 
                                 <?php 
@@ -100,8 +100,8 @@ if(isset($_GET['edit'])) {
                                                 <td class="text-center">' . number_format($extras['price'], 2)  . '</td>
                                                 <td class="text-center" style="width: 17%;">
                                                     
-                                                    <form action="../../functions/admin/extras.php" method="POST">
-                                                        <a href="admin/maintenance/extras.php?edit=' . $extras['Id'] . '"class="btn btn-info" value="' . $extras['Id'] . '" >Edit</a>
+                                                    <form action="../functions/admin/extras.php" method="POST">
+                                                        <a href="extras.php?edit=' . $extras['Id'] . '"class="btn btn-info" value="' . $extras['Id'] . '" >Edit</a>
                                                         <button class="btn btn-danger" value="' . $extras['Id'] . '" name="delete_extra">Delete</button>
                                                     </form>
                                                 </td>

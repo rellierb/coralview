@@ -48,6 +48,14 @@
             "hideMethod": "fadeOut"
         }
 
+        $('#dateFrom').datepicker({
+            format: 'mm-dd-yyyy'
+        });
+
+        $('#dateTo').datepicker({
+            format: 'mm-dd-yyyy'
+        });
+
     </script>
 
 </body>

@@ -2,14 +2,14 @@
 
 session_start();
 
-include('../../common/header.php');
-require('../../functions/assets/connection.php');
+include('../common/admin_header.php');
+require('../functions/assets/connection.php');
 
 $db = connect_to_db();
 
 ?>
 
-    <?php include('../../common/admin_sidebar.php') ?>
+    <?php include('../common/admin_sidebar.php') ?>
    
     <div class="main-panel">
         <div class="container-fluid">
@@ -32,26 +32,25 @@ $db = connect_to_db();
                     
                     <div class="card" style="height: 60vh;">
                         <div class="card-body">
-                            <h4 class="text-center text-info">ROOM REPORTS</h4>
+                            <h4 class="text-center text-info">GUEST REPORT</h4>
                             
                             <div class="row justify-content-md-center">
                                 <div class="col-4">
 
-                                    <form action="../../functions/admin/reports_room.php" method="POST">
+                                    <form action="../functions/admin/reports_guest.php" method="POST">
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col">
                                                     <label for="">Date of Reservation (From)</label>
-                                                    <input type="text" class="form-control datetimepicker" name="date_reservation_from" id="dateFrom">
+                                                    <input type="text" class="form-control datetimepicker" name="date_reservation_from" data-language='en' id="dateFrom">
                                                 </div>
                                                 <div class="col">
                                                     <label for="">Date of Reservation (To)</label>
-                                                    <input type="text" class="form-control datetimepicker" name="date_reservation_to" id="dateTo">
+                                                    <input type="text" class="form-control datetimepicker" name="date_reservation_to" data-language='en' id="dateTo">
                                                 </div>
                                             </div>
                                         </div>
-
-
+                                        
                                         <a class="btn btn-outline-default btn-block" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                                             Filter
                                         </a>
@@ -59,38 +58,21 @@ $db = connect_to_db();
                                             <div class="card card-body">
 
                                                 <div class="form-group">
-                                                    <label for="">ROOM NAME</label>
-                                                    <select class="form-control" name="room_name">
-                                                    <?php
-                                                        
-                                                        $room_query = "SELECT type, Id FROM rooms";
-                                                        $room_result = mysqli_query($db, $room_query); 
-                                                        
-                                                        if(mysqli_num_rows($room_result) > 0) {
-                                                            echo '<option value="">All Rooms</option>';
-                                                            while($room = mysqli_fetch_assoc($room_result)) {
-                                                                echo '<option value="' . $room['Id'] . '">' . $room['type'] . '</option>';
-                                                            }
-
-                                                        } 
-
-                                                    ?>
-                                                    </select>
+                                                    <label for="">First Name</label>
+                                                    <input type="text" class="form-control" name="first_name" id="">
                                                 </div>
+
                                                 <div class="form-group">
-                                                    <label for="">ROOM STATUS</label>
-                                                    <select class="form-control" id="" name="room_availability">
-                                                        <option value="">All Status</option>
-                                                        <option value="AVAILABLE">AVAILABLE</option>
-                                                        <option value="OCCUPIED">OCCUPIED</option>
-                                                        <option value="FOR REPAIR">FOR REPAIR</option>                                                
-                                                    </select>
+                                                    <label for="">Last Name</label>
+                                                    <input type="text" class="form-control" name="last_name" id="">
                                                 </div>
+        
+
 
                                             </div>
                                         </div>
 
-                                        
+                                                                                
                                         <br>
                                         <button type="submit" class="btn btn-primary btn-block">Generate Report</button>
                                     </form>
@@ -111,7 +93,7 @@ $db = connect_to_db();
 
 <?php
 
-include('../../common/footer.php');    
+include('../common/admin_footer.php');    
 unset($_SESSION["alert"]);
 unset($_SESSION["msg"]);
 

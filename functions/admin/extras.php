@@ -36,7 +36,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['msg'] = "Extra is successfully Added";
             $_SESSION['alert'] = "alert alert-success";
 
-            header("location: ../../admin/maintenance/extras.php");
+            header("location: ../../admin/extras.php");
         } else {
             echo "Error: " . $insert_query . "<br>" . mysqli_error($db);
         }
@@ -60,10 +60,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['alert'] = "alert alert-danger";
         }
         
-        // $stmt->close();
-        // $db->close();
+        $stmt->close();
+        $db->close();
 
-        // header("location: ../../admin/maintenance/extras.php");
+        header("location: ../../admin/extras.php");
     }
 
     if(isset($_POST['edit_extra'])) {
@@ -76,7 +76,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['msg'] = "Extra is successfully Edited";
             $_SESSION['alert'] = "alert alert-info";
 
-            header("location: ../../admin/maintenance/extras.php");    
+            header("location: ../../admin/extras.php");    
         } else {
             echo "Error: " . $update_query . "<br>" . mysqli_error($db);
         }

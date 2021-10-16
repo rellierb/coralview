@@ -49,7 +49,7 @@ $(document).ready(function(){
                 let newDate = new Date(departureDate);
                 let minDepartureDate = newDate.setDate(departureDate.getDate() + 1);
                 let anotherDate = new Date(minDepartureDate);                        
-                departureDateData.update('minDate', anotherDate);            
+                departureDateData.update('minDate', anotherDate);
                 toastr.success('Arrival Date successfully selected!');
             }
         });

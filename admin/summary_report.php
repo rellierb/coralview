@@ -2,14 +2,14 @@
 
 session_start();
 
-include('../../common/header.php');
-require('../../functions/assets/connection.php');
+include('../common/admin_header.php');
+require('../functions/assets/connection.php');
 
 $db = connect_to_db();
 
 ?>
 
-    <?php include('../../common/admin_sidebar.php') ?>
+    <?php include('../common/admin_sidebar.php') ?>
    
     <div class="main-panel">
         <div class="container-fluid">
@@ -37,7 +37,7 @@ $db = connect_to_db();
                             <div class="row justify-content-md-center">
                                 <div class="col-4">
 
-                                    <form action="../../functions/admin/report_summary.php" method="POST">
+                                    <form action="../functions/admin/report_summary.php" method="POST">
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col">
@@ -78,7 +78,7 @@ $db = connect_to_db();
 
 <?php
 
-include('../../common/footer.php');    
+include('../common/admin_footer.php');    
 unset($_SESSION["alert"]);
 unset($_SESSION["msg"]);
 

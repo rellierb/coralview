@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include('../common/admin_header_maint.php');
+include('../common/admin_header.php');
 require('../functions/assets/connection.php');
 
 $db = connect_to_db();
@@ -9,7 +9,7 @@ $db = connect_to_db();
 
 ?>
 
-    <?php include('../../common/admin_sidebar.php') ?>
+    <?php include('../common/admin_sidebar.php') ?>
 
     <div class="main-panel">
         <div class="container-fluid">
@@ -79,7 +79,7 @@ $db = connect_to_db();
 <?php
 
 include('../common/order_food.php');
-include('../../common/admin_footer_maint.php');
+include('../common/admin_footer.php');
 unset($_SESSION['alert']);
 unset($_SESSION['msg']);
 
