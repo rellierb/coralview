@@ -232,7 +232,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </table>
                 ';
 
-                $reservation_link_upload = "http://localhost/coralview/view_reservation.php?reference_no=" . $reference_no ."";
+                $reservation_link_upload = "http://localhost/klir/view_reservation.php?reference_no=" . $reference_no ."";
 
                 $room_details = '
 
@@ -331,7 +331,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </ul>
                         <hr>
 
-                        <p>Please click the <a href="http://localhost/coralview/confirm_reservation.php?reference_no=' . $reference_no . '">link</a> to acknowledge your reservation.</p>
+                        <p>Please click the <a href="http://localhost/klir/confirm_reservation.php?reference_no=' . $reference_no . '">link</a> to acknowledge your reservation.</p>
 
                         <p>For paying for reservation balance, please click the link <a href="' . $reservation_link_upload .'">here</a>.
                         

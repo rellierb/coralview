@@ -1,5 +1,5 @@
 <?php
-
+ob_start();
 session_start();
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -61,13 +61,11 @@ $is_peak_rate = 0;
 $html = '';
 
 
-
 if(mysqli_num_rows($reservation_details_result) > 0) {
 
     $html = '
     <div style="text-align: center;">
-        <img src="/coralview/assets/images/coralview-logo.jpg"  />
-        <h1 style="font-family: Arial;">CHECKED-IN RESERVATION REPORT</h1>
+        <h1 style="font-family: Arial;">REPORT SUMMARY</h1>
     </div>
     ';
     
@@ -225,17 +223,19 @@ if(mysqli_num_rows($reservation_details_result) > 0) {
         </div>
     ';
 
+
+    $mpdf->WriteHTML($html);
+    $mpdf->Output('summary_report.pdf', 'D');
+    ob_end_flush();
+
 } else {
 
     $_SESSION['msg'] = 'No Data Exist';
     $_SESSION['alert'] = 'alert alert-warning';
 
-    header("location: ../../admin/reports/summary_report.php"); 
+    header("location: ../../admin/summary_report.php"); 
     
 }
-
-$mpdf->WriteHTML($html);
-$mpdf->Output('summary_report.pdf', 'D');
 
 
 

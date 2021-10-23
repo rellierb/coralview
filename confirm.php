@@ -62,7 +62,6 @@ if(isset($_REQUEST["rooms_reserved"])) {
 }
 
 
-
 $room_html = '';
 
 $date_today = date("Y-m-d");

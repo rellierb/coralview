@@ -33,7 +33,7 @@ try {
     print "Creating an mPDF object failed with" . $e->getMessage();
 }
 
-print 'Folder is writable: '.(is_writable('/opt/lampp/htdocs/coralview/functions/admin') ? 'yes' : 'no').'<br />';
+// print 'Folder is writable: '.(is_writable('/opt/lampp/htdocs/coralview/functions/admin') ? 'yes' : 'no').'<br />';
 
 $db = connect_to_db();
 
@@ -316,9 +316,12 @@ if(mysqli_num_rows($check_discount_result) > 0) {
    
     while($discount = mysqli_fetch_assoc($check_discount_result)) {
         
+        if($discount["quantity"] != 0) {
+
+
         $discount_amount = $discount["amount"];
         $comp_discount = $overall_total_price / $guest_count;
-       
+        
         if($discount_amount < 1) {
             $temp_discount_price = $comp_discount * $discount_amount;
             $discount_price += $temp_discount_price;
@@ -334,6 +337,8 @@ if(mysqli_num_rows($check_discount_result) > 0) {
             </tr>
         
         ';
+        }
+
 
 
         // $html .= '
@@ -468,10 +473,8 @@ $html_to_print = '
 ';
 
 
-echo strval($html_to_print);
-
-// $mpdf->WriteHTML($html_to_print);
-// $mpdf->Output('receipt.pdf', 'D');
+$mpdf->WriteHTML(strval($html_to_print));
+$mpdf->Output('receipt.pdf', 'D');
 
 // // $test =''
 

@@ -1,5 +1,5 @@
 <?php
-
+ob_start();
 session_start();
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -25,7 +25,7 @@ try {
     print "Creating an mPDF object failed with" . $e->getMessage();
 }
 
-print 'Folder is writable: '.(is_writable('/opt/lampp/htdocs/coralview/functions/admin') ? 'yes' : 'no').'<br />';
+// print 'Folder is writable: '.(is_writable('/opt/lampp/htdocs/coralview/functions/admin') ? 'yes' : 'no').'<br />';
 
 $db = connect_to_db();
 
@@ -39,10 +39,12 @@ if(isset($_POST["first_name"])) {
 
 if(isset($_POST["date_reservation_from"])) {
     $date_reservation_from = mysqli_real_escape_string($db, trim($_POST['date_reservation_from']));
+    $format_date_reservation_from = date_format(date_create($date_reservation_from), "Y/m/d");
 }
 
 if(isset($_POST["date_reservation_to"])) {
     $date_reservation_to = mysqli_real_escape_string($db, trim($_POST['date_reservation_to']));
+    $format_date_reservation_to = date_format(date_create($date_reservation_to), "Y/m/d");
 }
 
 $reference_no = '';
@@ -58,12 +60,12 @@ $guest_count = 0;
 // echo $date_reservation_from;
 // echo $date_reservation_to;
 
-$find_ref_no = "SELECT reference_no FROM reservation WHERE date_created BETWEEN '$date_reservation_from' AND '$date_reservation_to'";
+$find_ref_no = "SELECT reference_no FROM reservation WHERE date_created BETWEEN '$format_date_reservation_from' AND '$format_date_reservation_to'";
 
 if(!empty($first_name) && !empty($last_name)) {
 
     $find_guest_id = "SELECT id FROM guest WHERE first_name LIKE '%$first_name%' AND last_name LIKE '%$last_name%'";
-
+    
     $find_guest_id_result = mysqli_query($db, $find_guest_id);
     
     if(mysqli_num_rows($find_guest_id_result) > 0) {
@@ -71,7 +73,8 @@ if(!empty($first_name) && !empty($last_name)) {
         while($guest = mysqli_fetch_assoc($find_guest_id_result)) {
             $guest_id = $guest['id'];
     
-            $find_ref_no = "SELECT reference_no FROM reservation WHERE guest_id='$guest_id' AND date_created BETWEEN '$date_reservation_from' AND '$date_reservation_to'";
+            $find_ref_no = "SELECT reference_no FROM reservation WHERE guest_id='$guest_id' AND date_created BETWEEN '$format_date_reservation_from' AND '$format_date_reservation_to'";
+
             $find_ref_no_result = mysqli_query($db, $find_ref_no);
     
             if(mysqli_num_rows($find_ref_no_result) > 0) {
@@ -431,10 +434,11 @@ if(!empty($first_name) && !empty($last_name)) {
                         </div>
                     ';
     
-                                    
+                    // echo $html;     
                     $mpdf->WriteHTML($html);
                     $mpdf->Output('guests_reports.pdf', 'D');
-    
+                    ob_end_flush();
+
                 }
             
             } else {
@@ -450,21 +454,20 @@ if(!empty($first_name) && !empty($last_name)) {
         $_SESSION['msg'] = 'No Data Exist';
         $_SESSION['alert'] = 'alert alert-warning';
     
-        header("location: ../../admin/reports/guest_report.php"); 
+        header("location: ../../admin/guest_report.php"); 
     
     }
 
 
 } else if (empty($first_name) && empty($last_name)) {
 
-    $find_ref_no = "SELECT reference_no FROM reservation WHERE date_created BETWEEN '$date_reservation_from' AND '$date_reservation_to'";
+    $find_ref_no = "SELECT reference_no FROM reservation WHERE date_created BETWEEN '$format_date_reservation_from' AND '$format_date_reservation_to'";
     $find_ref_no_result = mysqli_query($db, $find_ref_no);
 
     if(mysqli_num_rows($find_ref_no_result) > 0) {
 
         $html .= '
                 <div style="text-align: center;">
-                    <img src="/coralview/assets/images/coralview-logo.jpg"  />
                     <h1 style="font-family: Arial;">GUEST/S REPORT</h1>
                 </div>
         ';
@@ -476,6 +479,8 @@ if(!empty($first_name) && !empty($last_name)) {
             $reservation_details_query = "SELECT * FROM reservation RES
             INNER JOIN guest G ON G.id = RES.guest_id
             WHERE RES.reference_no = '$reference_no'";
+
+            echo $reservation_details_query;
 
             $reservation_details_result = mysqli_query($db, $reservation_details_query);
 
@@ -511,9 +516,6 @@ if(!empty($first_name) && !empty($last_name)) {
             
 
             $html .= '
-
-                
-
                 <br>
 
                 <style type="text/css">
@@ -830,15 +832,17 @@ if(!empty($first_name) && !empty($last_name)) {
         
         ';
 
+        echo $html;
         $mpdf->WriteHTML($html);
         $mpdf->Output('guests_reports.pdf', 'D');
+        ob_end_flush();
 
     } else {
 
         $_SESSION['msg'] = 'No Data Exist';
         $_SESSION['alert'] = 'alert alert-warning';
     
-        header("location: ../../admin/reports/guest_report.php"); 
+        header("location: ../../admin/guest_report.php"); 
     
     }
 

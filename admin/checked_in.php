@@ -172,7 +172,7 @@ $is_peak_rate = 0;
                                             
                                                 <div style="text-align: center;">
                                                 
-                                                    <img src="' . $payment_photo . '" style="width: 50%; height: 50%;" />
+                                                    <img src="../uploads/payment/' . $payment_photo . '" style="width: 50%; height: 50%;" />
                                                 
                                                 </div>
                                                 

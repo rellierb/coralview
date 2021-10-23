@@ -20,7 +20,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     if(empty($_POST["down_payment_amount"]) && empty($_POST["down_payment_description"])) {
         $_SESSION['msg'] = "DESCRIPTION AND AMOUNT IN DOWNPAYMENT DETAILS IS EMPTY";
         $_SESSION['alert'] = "alert alert-danger";
-        header('location: ../admin/accept.php?reference_no='. $dp_reference_no . '');
+        header('location: ../../admin/accept.php?reference_no='. $dp_reference_no . '');
     } else {
 
         if(!empty($_POST["down_payment_description"])) {
@@ -28,7 +28,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $_SESSION['msg'] = "DESCRIPTION IN DOWNPAYMENT DETAILS IS EMPTY";
             $_SESSION['alert'] = "alert alert-danger";
-            header('location: ../admin/accept.php?reference_no='. $dp_reference_no . '');
+            header('location: ../../admin/accept.php?reference_no='. $dp_reference_no . '');
         }
 
         if(!empty($_POST["down_payment_amount"])) {
@@ -36,17 +36,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $_SESSION['msg'] = "AMOUNT IN DOWNPAYMENT DETAILS IS EMPTY";
             $_SESSION['alert'] = "alert alert-danger";
-            header('location: ../admin/accept.php?reference_no='. $dp_reference_no . '');
+            header('location: ../../admin/accept.php?reference_no='. $dp_reference_no . '');
         }
 
         $required_down_payment = $_POST["down_payment_required"];
         $down_payment_input = $_POST["down_payment_amount"];
-    
-        if($required_down_payment < $down_payment_input || $required_down_payment > $down_payment_input) {
+        $total_price = $_POST["total_price"];
+
+        if($down_payment_input < $required_down_payment || $down_payment_input > $total_price) {
             $_SESSION['msg'] = "INVALID AMOUNT IN DOWN PAYMENT AMOUNT";
             $_SESSION['alert'] = "alert alert-danger";
-            header('location: ../admin/accept.php?reference_no='. $dp_reference_no . '');
-        }
+            header('location: ../../admin/accept.php?reference_no='. $dp_reference_no . '');
+        } 
 
 
     }
@@ -87,7 +88,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                             // SEND EMAIL TO CLIENT
 
-                            $link = 'http://localhost/coralview/confirm_reservation.php?reference_no=' . $dp_reference_no . '';
+                            $link = 'http://localhost/klir/confirm_reservation.php?reference_no=' . $dp_reference_no . '';
                             
                             $reservationMessage = '
                                 <style>
@@ -176,7 +177,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 $_SESSION['msg'] = "RESERVATION IS SUCCESSFULLY TAG AS ACCEPTED";
                                 $_SESSION['alert'] = "alert alert-success";
                                 
-                                echo  '<script>window.location.assign("../admin/accept.php?reference_no='. $dp_reference_no . '")</script>';
+                                echo  '<script>window.location.assign("../../admin/accept.php?reference_no='. $dp_reference_no . '")</script>';
                             } catch (Exception $e) {
                                 $_SESSION['msg'] = "There\'s an error processing your request";
                                 $_SESSION['alert'] = "alert alert-danger";

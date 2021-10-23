@@ -1,5 +1,5 @@
 <?php
-
+ob_start();
 session_start();
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -35,23 +35,25 @@ if(isset($_POST["reference_no"])) {
 
 if(isset($_POST["date_reservation_from"])) {
     $date_reservation_from = mysqli_real_escape_string($db, trim($_POST['date_reservation_from']));
+    $format_date_reservation_from = date_format(date_create($date_reservation_from), "Y/m/d");
 }
 
 if(isset($_POST["date_reservation_to"])) {
     $date_reservation_to = mysqli_real_escape_string($db, trim($_POST['date_reservation_to']));
+    $format_date_reservation_to = date_format(date_create($date_reservation_to), "Y/m/d");
 }
 
 if(!empty($reference_no)) {
 
     $reservation_details_query = "SELECT * FROM reservation RES
     INNER JOIN guest G ON G.id = RES.guest_id
-    WHERE RES.reference_no = '$main_reference_no' AND RES.date_created BETWEEN '$date_reservation_from' AND '$date_reservation_to' AND RES.status='COMPLETE'";
+    WHERE RES.reference_no = '$main_reference_no' AND RES.date_created BETWEEN '$format_date_reservation_from' AND '$format_date_reservation_to' AND RES.status='COMPLETE'";
 
 } else if(empty($reference_no)) {
 
     $reservation_details_query = "SELECT * FROM reservation RES
     INNER JOIN guest G ON G.id = RES.guest_id
-    WHERE RES.date_created BETWEEN '$date_reservation_from' AND '$date_reservation_to' AND RES.status='COMPLETE'";
+    WHERE RES.date_created BETWEEN '$format_date_reservation_from' AND '$format_date_reservation_to' AND RES.status='COMPLETE'";
 
 }
 
@@ -65,7 +67,6 @@ if(mysqli_num_rows($reservation_details_result) > 0) {
     $html = '
     
     <div style="text-align: center;">
-        <img src="/coralview/assets/images/coralview-logo.jpg"  />
         <h1 style="font-family: Arial;">RESERVATION REPORT</h1>
     </div>
         
@@ -421,15 +422,16 @@ if(mysqli_num_rows($reservation_details_result) > 0) {
 
     echo $html;
 
-    // $mpdf->WriteHTML($html);
-    // $mpdf->Output('billing_reports.pdf', 'D');
-
+    $mpdf->WriteHTML($html);
+    $mpdf->Output('billing_reports.pdf', 'D');
+    ob_end_flush();
+    
 } else {
 
     $_SESSION['msg'] = 'No Data Exist';
     $_SESSION['alert'] = 'alert alert-warning';
 
-    header("location: ../../admin/reports/guest_report.php"); 
+    header("location: ../../admin/guest_report.php"); 
     
 }
 

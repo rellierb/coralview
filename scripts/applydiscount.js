@@ -19,9 +19,8 @@ if(document.body.contains(document.getElementById('btnApplyDiscount'))) {
             let discountId = element.getAttribute('data-discount');
             let quantity = element.value;
             let referenceCode = document.getElementById('referenceCode').innerText;
-            
 
-            if(quantity !== '' && quantity !== 0) {
+            if(quantity !== '' && quantity !== '0') {
 
                 $.ajax({
                     type: 'POST',

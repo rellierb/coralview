@@ -15,7 +15,7 @@ if(document.body.contains(document.getElementById('btnExtendCheckOutDate'))) {
 
         let code = referenceCode.innerText;
         let dateSelected = extendDepartureDate.lastSelectedDate;
-        let date = dateSelected.toISOString().slice(0, 10);
+        let date = moment(dateSelected).format("YYYY-MM-DD");
 
         $.ajax({
             type: 'POST',

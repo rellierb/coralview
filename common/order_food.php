@@ -17,7 +17,6 @@
                 if($_SESSION['account_type'] == "Administrator" || $_SESSION['account_type'] == "Receptionist") { 
                     echo '<input type="text" class="form-control mb-3" id="referenceCode" placeholder="Reference No" name="reference_no" />';
 
-                    
                 } else {
                     echo '<input type="hidden" id="referenceCode" name="reference_no" value="' . $_SESSION["reference_no"] .'" />';
 

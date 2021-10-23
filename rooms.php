@@ -70,7 +70,7 @@ $peak_date_end_2 = date("F d, Y", strtotime("01/01/2022"));
                             echo '
                             <div class="col-6">
                                 <div class="card">
-                                    <img style="border-radius: 0;" class="card-img-top" src="' . $room['image'] . '" alt="Card image cap">
+                                    <img style="border-radius: 0;" class="card-img-top" src="uploads/rooms/' . $room['image'] . '" alt="Card image cap">
                                     <div class="card-header">
                                         <h5 class="coralview-blue">' . $room['type'] . '</h5>
                                     </div>

@@ -157,7 +157,7 @@ $is_peak_rate = 0;
                                                 <h5 class="text-center mt-3 text-info">DEPOSIT SLIP PAYMENT</h5>
                                                 <div style="text-align: center;">
                                                 
-                                                    <img src="' . $payment_photo . '" style="width: 50%; height: 50%;" />
+                                                    <img src="../uploads/payment/' . $payment_photo . '" style="width: 50%; height: 50%;" />
                                                 
                                                 </div>
                                             ';

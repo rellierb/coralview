@@ -309,17 +309,25 @@ $payment_photo = '';
                                     <h5 class="text-center mt-3 text-info">Deposit Slip Payment</h5>
                                     
                                     <?php
+                                        
+                                        if($payment_photo == '') {
+                                            echo '<p class="text-center mt-3 text-info">No Deposit Slip Payment uploaded</p>';
+                                        } else {
 
-                                        echo '
-                                        
-                                        <div style="text-align: center;">
-                                        
-                                            <img src="' . $payment_photo . '" style="width: 50%; height: 50%;" />
-                                        
-                                        </div>
-                                        
-                                        
-                                        ';
+
+                                            echo '
+                                            
+                                            <div style="text-align: center;">
+                                            
+                                                <img src="../uploads/payment/' . $payment_photo . '" style="width: 50%; height: 50%;" />
+                                            
+                                            </div>
+                                            
+                                            
+                                            ';
+
+
+                                        }
                                     
                                     ?>
 

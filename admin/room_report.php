@@ -26,7 +26,7 @@ $db = connect_to_db();
             }
             
             ?>
-
+            
             <div class="row">
                 <div class="col">
                     

@@ -322,14 +322,14 @@ $payment_photo = '';
 
                                                 <div style="text-align: center;">
                                                 
-                                                    <img src="' . $payment_photo . '" style="width: 50%; height: 50%;" />
+                                                    <img src="../uploads/payment/' . $payment_photo . '" style="width: 50%; height: 50%;" />
                                                 
                                                 </div>
                                             
                                             
                                             ';
 
-                                        }
+                                        } 
 
                                         
                                     
@@ -371,6 +371,7 @@ $payment_photo = '';
                                     <input type="hidden" name="down_payment_reference_no" value="<?php echo $reference_no; ?>">
                                     <input type="hidden" name="down_payment_total_amount" value="<?php echo $overall_total_price; ?>">
                                     <input type="hidden" name="down_payment_required" value="<?php echo $required_down_payment; ?>">
+                                    <input type="hidden" name="total_price" value="<?php echo $overall_total_price; ?>">
 
                                     <?php
                                     

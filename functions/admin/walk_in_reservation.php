@@ -240,7 +240,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     ' . $room_details . '
                     <br>
                     ' . $payment_note . '
-                    <p>Please click the <a href="http://localhost/coralview/confirm_reservation.php?refence_no=' . $reference_no . '">link</a> to acknowledge your reservation.</p>
+                    <p>Please click the <a href="http://localhost/klir/confirm_reservation.php?refence_no=' . $reference_no . '">link</a> to acknowledge your reservation.</p>
                 </div>
             ';
 

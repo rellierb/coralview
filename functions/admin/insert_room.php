@@ -13,7 +13,7 @@ echo isset($_POST['edit_room']);
 echo $_FILES["room_image"]["name"];
 
 function uploadRoom($fileToUpload) {
-
+    
     $target_dir = "";
     $temp_target_dir = "/coralview/uploads/rooms/" . $target_dir;
     $target_file = $_SERVER['DOCUMENT_ROOT'] . $temp_target_dir . basename($fileToUpload);

@@ -24,7 +24,7 @@ $db = connect_to_db();
                     </div>
                 ';
             }
-            
+        
             ?>
 
             <div class="row">
@@ -66,8 +66,6 @@ $db = connect_to_db();
                                                     <label for="">Last Name</label>
                                                     <input type="text" class="form-control" name="last_name" id="">
                                                 </div>
-        
-
 
                                             </div>
                                         </div>

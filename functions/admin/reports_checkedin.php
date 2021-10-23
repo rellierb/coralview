@@ -1,5 +1,5 @@
 <?php
-
+ob_start();
 session_start();
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -31,10 +31,12 @@ $db = connect_to_db();
 
 if(isset($_POST["date_reservation_from"])) {
     $date_reservation_from = mysqli_real_escape_string($db, trim($_POST['date_reservation_from']));
+    $format_date_reservation_from = date_format(date_create($date_reservation_from), "Y/m/d");
 }
 
 if(isset($_POST["date_reservation_to"])) {
     $date_reservation_to = mysqli_real_escape_string($db, trim($_POST['date_reservation_to']));
+    $format_date_reservation_to = date_format(date_create($date_reservation_to), "Y/m/d");
 }
 
 
@@ -46,15 +48,17 @@ if(!empty($reference_no)) {
 
     $reservation_details_query = "SELECT * FROM reservation RES
     INNER JOIN guest G ON G.id = RES.guest_id
-    WHERE RES.date_created BETWEEN '$date_reservation_from' AND '$date_reservation_to' AND RES.status='CHECKED IN' AND RES.reference_no='$reference_no'";
+    WHERE RES.date_created BETWEEN '$format_date_reservation_from' AND '$format_date_reservation_to' AND RES.status='CHECKED IN' AND RES.reference_no='$reference_no'";
 
 
 } else if(empty($reference_no)) {
 
     $reservation_details_query = "SELECT * FROM reservation RES
     INNER JOIN guest G ON G.id = RES.guest_id
-    WHERE RES.date_created BETWEEN '$date_reservation_from' AND '$date_reservation_to' AND RES.status='CHECKED IN' ";
+    WHERE RES.status='CHECKED IN' AND RES.date_created BETWEEN '$format_date_reservation_from' AND '$format_date_reservation_to'  ";
 }
+
+echo $reservation_details_query;
 
 
 $guest_count = 0;
@@ -77,7 +81,6 @@ if(mysqli_num_rows($reservation_details_result) > 0) {
 
     $html = '
     <div style="text-align: center;">
-        <img src="/coralview/assets/images/coralview-logo.jpg"  />
         <h1 style="font-family: Arial;">CHECKED-IN RESERVATION REPORT</h1>
     </div>
     ';
@@ -416,26 +419,25 @@ if(mysqli_num_rows($reservation_details_result) > 0) {
     //         </tr>
 
     $html .= '
-            
-       
-
         <div>
             <p style="font-family: Arial;"><b>PRINTED BY: </b> ' . $user . '</p>
             <p style="font-family: Arial;"><b>DATE PRINTED: </b> ' . $date . ' </p>
         </div>
     ';
 
+    // echo $html;
+    $mpdf->WriteHTML($html);
+    $mpdf->Output('checkedin_reports.pdf', 'D');
+    ob_end_flush();
+
 } else {
 
     $_SESSION['msg'] = 'No Data Exist';
     $_SESSION['alert'] = 'alert alert-warning';
 
-    header("location: ../../admin/reports/check_in_report.php"); 
+    header("location: ../../admin/check_in_report.php"); 
     
 }
-
-$mpdf->WriteHTML($html);
-$mpdf->Output('checkedin_reports.pdf', 'D');
 
 
 

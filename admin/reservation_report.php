@@ -42,11 +42,11 @@ $db = connect_to_db();
                                             <div class="row">
                                                 <div class="col">
                                                     <label for="">Date of Reservation (From)</label>
-                                                    <input type="text" class="form-control datetimepicker" name="date_reservation_from" id="dateFrom">
+                                                    <input type="text" class="form-control datetimepicker" name="date_reservation_from" data-language='en' id="dateFrom">
                                                 </div>
                                                 <div class="col">
                                                     <label for="">Date of Reservation (To)</label>
-                                                    <input type="text" class="form-control datetimepicker" name="date_reservation_to" id="dateTo">
+                                                    <input type="text" class="form-control datetimepicker" name="date_reservation_to" data-language='en' id="dateTo">
                                                 </div>
                                             </div>
                                         </div>

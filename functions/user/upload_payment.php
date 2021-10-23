@@ -11,10 +11,10 @@ $db = connect_to_db();
 
 function uploadRoom($fileToUpload) {
     
-    $target_dir = "../uploads/payment/";
-
-    $target_file = $_SERVER['DOCUMENT_ROOT'] . $target_dir . basename($fileToUpload);
-
+    $target_dir = "";
+    $temp_target_dir = "/coralview/uploads/payment/" . $target_dir;
+    $target_file = $_SERVER['DOCUMENT_ROOT'] . $temp_target_dir . basename($fileToUpload);
+    
     $path_to_return = $target_dir . basename($fileToUpload);
 
     $uploadOk = 1;

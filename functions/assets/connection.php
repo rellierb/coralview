@@ -3,7 +3,7 @@
 function connect_to_db() {
     static $conneciton;
     $server = 'localhost';
-    $db_name = 'coral_view';
+    $db_name = 'klir';
     $password = '';
     $username = 'root';
 

@@ -12,17 +12,17 @@ $db = connect_to_db();
 // PEAK RATE - march 12 - july 17, 2019 nov 2019 - jan 1, 2020
 $date_today = date("Y-m-d");
 
-$off_peak_date_start_1 = date("Y-m-d", strtotime("01/02/2020"));
-$off_peak_date_end_1 = date("Y-m-d", strtotime("03/11/2020"));
+$off_peak_date_start_1 = date("Y-m-d", strtotime("01/02/2021"));
+$off_peak_date_end_1 = date("Y-m-d", strtotime("03/11/2021"));
 
-$off_peak_date_start_2 = date("Y-m-d", strtotime("07/18/2020"));
-$off_peak_date_end_2 = date("Y-m-d", strtotime("11/19/2020"));
+$off_peak_date_start_2 = date("Y-m-d", strtotime("07/18/2021"));
+$off_peak_date_end_2 = date("Y-m-d", strtotime("11/19/2021"));
 
-$peak_date_start_1 = date("Y-m-d", strtotime("03/12/2020"));
+$peak_date_start_1 = date("Y-m-d", strtotime("03/12/2021"));
 $peak_date_end_1 = date("Y-m-d", strtotime("07/17/2019"));
 
-$peak_date_start_2 = date("Y-m-d", strtotime("11/20/2020"));
-$peak_date_end_2 = date("Y-m-d", strtotime("01/01/2021"));
+$peak_date_start_2 = date("Y-m-d", strtotime("11/20/2021"));
+$peak_date_end_2 = date("Y-m-d", strtotime("01/01/2022"));
 
 $type_of_rate = "";
 
@@ -117,6 +117,7 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today <= $off_peak_date_en
                                     <div class="col-12">
                                         <?php
 
+
                                         if($type_of_rate == "OFF-PEAK") {
                                             echo '<h5 class="text-center text-info">Room prices is OFF-PEAK rate.</h5>';
                                             $off_peak_rate_class = "coralview-blue font-weight-bolder";
@@ -144,7 +145,7 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today <= $off_peak_date_en
                                                     <div class="card-body">
                                                         <div class="row">
                                                             <div class="col-3">
-                                                                <img src="' . $room['image'] . '" style="border-radius: 0; width: 100%;">
+                                                                <img src="uploads/rooms/' . $room['image'] . '" style="border-radius: 0; width: 100%;">
                                                             </div>
                                                             <div class="col-5">
                                                                 <p>Room capacity: ' . $room['capacity'] . '<p>

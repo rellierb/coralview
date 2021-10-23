@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+    resetRoomsAndCountReserved();
+
     $('#roomStatusTable').DataTable();
     $('#reservationCheckIn').DataTable();
 
@@ -50,6 +52,9 @@ $(document).ready(function(){
                 let minDepartureDate = newDate.setDate(departureDate.getDate() + 1);
                 let anotherDate = new Date(minDepartureDate);                        
                 departureDateData.update('minDate', anotherDate);
+                
+
+
                 toastr.success('Arrival Date successfully selected!');
             }
         });
@@ -211,7 +216,8 @@ $(document).ready(function(){
                     toStore.push(objToPush);
 
                     var roomAndCountStorage = localStorage.getItem('roomsAndCountReserved');
-                    
+                    console.log(roomAndCountStorage)
+                    console.log(roomAndCountStorage !== null)
                     if(roomAndCountStorage !== null) {
                         
                         var parsedStorage = JSON.parse(roomAndCountStorage);
@@ -249,12 +255,27 @@ $(document).ready(function(){
                         
                         
                     } else {
-                        toastr.success('Room successfully selected!');            
-                        attachRemoveButton(roomId);
+                                                     
                         localStorage.setItem('roomsAndCountReserved', JSON.stringify(toStore));
-                        disableNextButton();
                         inputRoomsReserved.value = JSON.stringify(toStore);
-                        checkCapacity(toStore);
+                        console.log(toStore);
+                        
+                        $.ajax({
+                            type: 'POST',
+                            url: '/coralview/functions/user/store_room.php',
+                            data: {room_reserved: JSON.stringify(toStore) },
+                            success: function(data) {
+                                console.log(data)
+                                toastr.success('Room successfully selected!');            
+                                disableNextButton();
+                                attachRemoveButton(roomId);
+                                checkCapacity(toStore);
+                            },
+                            error: function(data) {
+                                console.log(data);
+                            }
+                        })
+
                     }                     
 
                     
@@ -804,7 +825,10 @@ function checkCapacity(roomsReserved) {
         }
     })
 
+}
 
-    
+function resetRoomsAndCountReserved() {
+
+    localStorage.removeItem('roomsAndCountReserved');
 
 }

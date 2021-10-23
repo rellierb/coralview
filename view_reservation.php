@@ -315,18 +315,18 @@ $is_peak_rate = 0;
             
             if($payment_photo != '') {
 
+                echo '
+            
+                <br>
+                <h5 class="text-center mt-3 text-info mt-3">Deposit Slip Details</h5>
+                <hr />
+                
+                ';
                 if($payment_photo != "0") {
 
-                    $trim_photo_link = str_replace("../", "", $payment_photo);
 
-                    echo '
-            
-                    <br>
-                    <h5 class="text-center mt-3 text-info mt-3">Deposit Slip Details</h5>
-                    <hr />
                     
-                    ';
-                    echo '<div style="text-align: center;"><img style="width: 50%; height: 25%;" src="' . $trim_photo_link .   '"></img></div>';
+                    echo '<div style="text-align: center;"><img style="width: 50%; height: 25%;" src="uploads/payment/' . $payment_photo .   '"></img></div>';
                     echo '
                         <br>
                         <div class="text-center">
@@ -335,6 +335,15 @@ $is_peak_rate = 0;
                         </div>
                     ';
 
+                } else {
+                    
+                    echo '
+            
+                        <br>
+                            <p class="text-center mt-3 text-info mt-3">No Payment Image uploaded</p>
+                        <hr />
+                
+                    ';
                 }
             
             }   
