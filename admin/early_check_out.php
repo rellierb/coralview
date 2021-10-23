@@ -455,7 +455,7 @@ $payment_photo = '';
                                 }
                                 // $overall_total_price += $add_fees_amount;
                                 $discounted_price -= $downpayment_amount;
-                                
+
                                 echo '
                                     <table class="table table-bordered">
                                         <tr>
@@ -537,8 +537,8 @@ $payment_photo = '';
                                 <div class="col">
 
                                     <?php
-
-                                    if($discounted_price != 0) {
+                                    
+                                    if(number_format($discounted_price, 2) != 0) {
                                         $disabled = "disabled";
                                     } else {
                                         $disabled = '';

@@ -160,7 +160,7 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today >= $off_peak_date_st
                                                         <div class="card-body">
                                                             <div class="row">
                                                                 <div class="col-3">
-                                                                    <img src="' . $room['image'] . '" style="border-radius: 0; width: 100%;">
+                                                                    <img src="../uploads/rooms/' . $room['image'] . '" style="border-radius: 0; width: 100%;">
                                                                 </div>
                                                                 <div class="col-5">
                                                                     ' . $room['inclusions'] . '
@@ -178,6 +178,7 @@ if((($date_today >= $off_peak_date_start_1) && ($date_today >= $off_peak_date_st
                                                     echo '
                                                                 </select>
                                                                 <a href="#" data-room-select="' . $room['room_id'] . '" class="btn btn-primary btn-block mt-3">Select</a>
+                                                                <div data-room-remove="' . $room['room_id'] . '">
                                                                 </div>
                                                             </div>
                                                         </div>

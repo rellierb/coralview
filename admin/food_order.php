@@ -65,8 +65,6 @@ $db = connect_to_db();
                         </table>
                     </div>
 
-                    
-
                 </div>
             </div>
 

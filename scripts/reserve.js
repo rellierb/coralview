@@ -714,7 +714,7 @@ function attachRoomList(list) {
 function attachRemoveButton(roomId) {
 
     let id = roomId;
-
+    console.log(id)
     let divToAttach = document.querySelector('div[data-room-remove*="' + id + '"]');
 
     let buttonToAttach = '<button type="button" class="btn btn-danger btn-block" data-remove-button="' + roomId +'">Remove</button>';

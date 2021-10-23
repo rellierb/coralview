@@ -1,10 +1,10 @@
 <?php
 
 session_start();
-
+ob_start();
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-use Dompdf\Dompdf;
+// use Dompdf\Dompdf;
 use Mpdf\Mpdf;
 
 // require_once 'dompdf/lib/html5lib/Parser.php';
@@ -19,7 +19,7 @@ require_once('../../composer/vendor/autoload.php');
 // require_once __DIR__ . '/vendor/autoload.php';
 
 var_dump(__DIR__);
-// $mpdf = new \Mpdf\Mpdf();
+$mpdf = new \Mpdf\Mpdf();
 
 try {
     $mpdf = new \Mpdf\Mpdf([
@@ -37,9 +37,9 @@ print 'Folder is writable: '.(is_writable('/opt/lampp/htdocs/coralview/functions
 
 $db = connect_to_db();
 
-$content_html = '';
+$content_html = null;
 
-$html = '';
+$html = null;
 $overall_total_extra = 0;
 $overall_total_price = 0;
 $guest_count = 0;
@@ -108,10 +108,9 @@ $html .= '
         <div style="text-align: center;">
             <h1>OFFICIAL RECEIPT</h1>
             <address style="width: 100%;">
-                <p>CORALVIEW BEACH RESORT</p>
-                <p>POBLACION, MORONG, BATAAN, PHILIPPINES</p>
-                <p>+632-782-2881</p>
-                <p>+632-782-2883</p>
+                <p>KLIR WATER PARK RESORT</p>
+                <p>Centro Property Management System Corporation DBA Klir Waterpark Resort</p>
+                <p>Near Sta. Rita Exit, Kabilang Bakood, Guiguinto Bulacan, Philippines</p>
             </address>
         </div>
         <article>
@@ -145,49 +144,49 @@ if($reservation_details_result) {
 }
 $temp_arrival_date = date_create($arrival_date);
 $temp_departure_date = date_create($departure_date);
-$html .= '
-    <h1>Customer</h1>
-    <address>
-        <p>' . $full_name . ' </p>
-    </address>
-    <table class="meta">
-        <tr>
-            <th><span>REFERENCE NO</span></th>
-            <td><span>' . $reference_no .'</span></td>
-        </tr>
-        <tr>
-            <th><span>Address</span></th>
-            <td>' . $address . '</td>
-        </tr>
-        <tr>
-            <th><span>Date</span></th>
-            <td><span>' . date("F m, Y h:i:s A") . '</span></td>
-        </tr>
-        <tr>
-            <th><span>Arrival Date</span></th>
-            <td><span>' . date_format($temp_arrival_date, "M d, Y"). '</span></td>
-        </tr>
-        <tr>
-            <th><span>Departure Date</span></th>
-            <td><span>' . date_format($temp_departure_date, "M d, Y") . '</span></td>
-        </tr>
-        <tr>
-            <th><span>Night/s of Stay</span></th>
-            <td><span>' . $nights_of_stay  . '</span></td>
-        </tr>
-    </table>
-    <table class="inventory">
-        <thead>
-            <tr>
+// $html .= '
+//     <h1>Customer</h1>
+//     <address>
+//         <p>' . $full_name . ' </p>
+//     </address>
+//     <table class="meta">
+//         <tr>
+//             <th><span>REFERENCE NO</span></th>
+//             <td><span>' . $reference_no .'</span></td>
+//         </tr>
+//         <tr>
+//             <th><span>Address</span></th>
+//             <td>' . $address . '</td>
+//         </tr>
+//         <tr>
+//             <th><span>Date</span></th>
+//             <td><span>' . date("F m, Y h:i:s A") . '</span></td>
+//         </tr>
+//         <tr>
+//             <th><span>Arrival Date</span></th>
+//             <td><span>' . date_format($temp_arrival_date, "M d, Y"). '</span></td>
+//         </tr>
+//         <tr>
+//             <th><span>Departure Date</span></th>
+//             <td><span>' . date_format($temp_departure_date, "M d, Y") . '</span></td>
+//         </tr>
+//         <tr>
+//             <th><span>Night/s of Stay</span></th>
+//             <td><span>' . $nights_of_stay  . '</span></td>
+//         </tr>
+//     </table>
+//     <table class="inventory">
+//         <thead>
+//             <tr>
                 
-                <th><span>Description</span></th>
-                <th><span>Rate</span></th>
-                <th><span>Quantity</span></th>
-                <th><span>Price</span></th>
-            </tr>
-        </thead>
-        <tbody>
-';
+//                 <th><span>Description</span></th>
+//                 <th><span>Rate</span></th>
+//                 <th><span>Quantity</span></th>
+//                 <th><span>Price</span></th>
+//             </tr>
+//         </thead>
+//         <tbody>
+// ';
 
 $room_reservation_details_query = "SELECT * FROM reservation RES
 INNER JOIN guest G ON G.id = RES.guest_id
@@ -220,9 +219,9 @@ if($room_reservation_details_result) {
 
         $content_html = '
         
-            <tr>
+            <tr>                
                 <td class="tg-cly1" colspan="5">' . $room_reservation["type"] . ' (' . $room_quantity . ')</td>
-                <td style="text-align: center;" class="tg-0lax" colspan="5">' . number_format($total_price, 2) . '</td>
+                <td style="text-align: center;" class="tg-0lax" colspan="5">' . strval(number_format($total_price, 2)) . '</td>
             </tr>
         
         ';
@@ -258,7 +257,7 @@ if(mysqli_num_rows($extra_list_result) > 0) {
                                                         
             <tr>
                 <td class="tg-cly1" colspan="5">' . $extra["description"] . ' (' . $extra["quantity"] . ')</td>
-                <td style="text-align: center;" class="tg-0lax" colspan="5">' . number_format($total_extra, 2) . '</td>
+                <td style="text-align: center;" class="tg-0lax" colspan="5">' . strval(number_format($total_extra, 2)) . '</td>
             </tr>
         
         ';
@@ -289,7 +288,7 @@ if(mysqli_num_rows($add_fees_result) > 0) {
                                                         
             <tr>
                 <td class="tg-cly1" colspan="5">' . $fees["description"] . '</td>
-                <td style="text-align: center;" class="tg-0lax" colspan="5">' . number_format($fees["amount"], 2) . '</td>
+                <td style="text-align: center;" class="tg-0lax" colspan="5">' . strval(number_format($fees["amount"], 2)) . '</td>
             </tr>
         
         ';
@@ -331,7 +330,7 @@ if(mysqli_num_rows($check_discount_result) > 0) {
                                                         
             <tr>
                 <td class="tg-cly1" colspan="5">' . $discount["name"] . ' (' . $change_to_percent . ')</td>
-                <td style="text-align: center;" class="tg-0lax" colspan="5">(' . number_format($discount_price, 2) . ')</td>
+                <td style="text-align: center;" class="tg-0lax" colspan="5">(' .strval(number_format($discount_price, 2))  . ')</td>
             </tr>
         
         ';
@@ -352,19 +351,19 @@ if(mysqli_num_rows($check_discount_result) > 0) {
 }
 
 
-$html .= '
-                </tbody>
-            </table>
+// $html .= '
+//                 </tbody>
+//             </table>
         
-            <table class="balance">
-                <tr>
-                    <th><span>Total</span></th>
-                    <td><span data-prefix>PHP </span><span>' . number_format($net_amount, 2) . '</span></td>
-                </tr>
-            </table>
-        </article>
-    </div>
-';
+//             <table class="balance">
+//                 <tr>
+//                     <th><span>Total</span></th>
+//                     <td><span data-prefix>PHP </span><span>' . number_format($net_amount, 2) . '</span></td>
+//                 </tr>
+//             </table>
+//         </article>
+//     </div>
+// ';
 
 
 $overall_total_amount = $TOTAL_PRICE;
@@ -396,23 +395,23 @@ $html_to_print = '
                 ' . $content_html . '
                 <tr>
                     <td class="tg-0lax" colspan="5">VATABLE SALES</td>
-                    <td style="text-align: center;"  class="tg-0lax" colspan="5">' . number_format($overall_total_amount, 2) . '</td>
+                    <td style="text-align: center;"  class="tg-0lax" colspan="5">' . strval(number_format($overall_total_amount, 2)) . '</td>
                 </tr>
                 <tr>
                     <td class="tg-0lax" colspan="5">VAT-EXEMPT SALES</td>
-                    <td style="text-align: center;" class="tg-0lax" colspan="5">' . number_format($vatable_amount, 2)  . '</td>
+                    <td style="text-align: center;" class="tg-0lax" colspan="5">' . strval(number_format($vatable_amount, 2))  . '</td>
                 </tr>
                 <tr>
                     <td class="tg-0lax" colspan="5">ZERO RATED SALES</td>
-                    <td style="text-align: center;"  class="tg-0lax" colspan="5">' . number_format(0, 2) . '</td>
+                    <td style="text-align: center;"  class="tg-0lax" colspan="5">' . strval(number_format(0, 2)) . '</td>
                 </tr>
                 <tr>
                     <td class="tg-0lax" colspan="5">VAT Amount</td>
-                    <td style="text-align: center;" class="tg-0lax" colspan="5">' . number_format($vat, 2) . '</td>
+                    <td style="text-align: center;" class="tg-0lax" colspan="5">' . strval(number_format($vat, 2))  . '</td>
                 </tr>
                 <tr>
                     <td class="tg-0lax" colspan="5">TOTAL AMOUNT DUE</td>
-                    <td style="text-align: center;"  class="tg-0lax" colspan="5">' . number_format($net_amount, 2) . '</td>
+                    <td style="text-align: center;"  class="tg-0lax" colspan="5">' . strval(number_format($net_amount, 2))  . '</td>
                 </tr>
                 <tr>
                     <td class="tg-0lax" colspan="5"><span style="font-weight:bold">Form of Payment</span></td>
@@ -429,10 +428,9 @@ $html_to_print = '
 
         <div style="width: 57%;  float: right; margin-left: 15px; font-family: Arial;">
 
-            <h3 style="text-align: center;">CORALVIEW BEACH RESORT</h3>         
-            <h5 style="text-align: center;">OWNED AND OPERATED BY: CJ MORONG INC.</h5>
-            <h6 style="text-align: center;">Sitio Panibatuhan, Poblacion, Morong, Bataan</h6>
-            <h6 style="text-align: center;">VAT Reg. TIN 008-854-530-000</h6>
+            <h3 style="text-align: center;">KLIR WATER PARK RESORT</h3>         
+            <h5 style="text-align: center;">Centro Property Management System Corporation DBA Klir Waterpark Resort</h5>
+            <h6 style="text-align: center;">Near Sta. Rita Exit, Kabilang Bakood, Guiguinto Bulacan, Philippines</h6>
 
 
             <div >
@@ -448,13 +446,9 @@ $html_to_print = '
                 <h6>Received from <b><u>' . $full_name . '</u></b> With TIN _____ </h6>
                 <h6>and Address at <b><u>' . $address . '</u></b> </h6>
                 <h6>engaged in the business style of _____ </h6>
-                <h6>the sum of <b><u>' . number_format($net_amount, 2) . '</u></b>  pesos </h6>
-                <h6>(P ' . number_format($net_amount, 2) .' ) in partial / full payment for _____ </h6>
+                <h6>the sum of <b><u>' . strval(number_format($net_amount, 2))  . '</u></b>  pesos </h6>
+                <h6>(P ' . strval(number_format($net_amount, 2)) .' ) in partial / full payment for _____ </h6>
                 <br>
-                <span>RDO 20 OCN 4AU0001460621</span><br>
-                <span>100 Bkits. 50x2 000001-005000</span><br>
-                <span>Date Issued: 02-27-2015</span><br>
-                <span>Valid Until: 02-26-2020</span><br>
             </div>
 
             <div style="display: block; float: right; margin-left: 40%;">
@@ -473,12 +467,17 @@ $html_to_print = '
 
 ';
 
-$mpdf->WriteHTML($html_to_print);
-$mpdf->Output('receipt.pdf', 'D');
 
-echo $html_to_print;
+echo strval($html_to_print);
+
+// $mpdf->WriteHTML($html_to_print);
+// $mpdf->Output('receipt.pdf', 'D');
+
+// // $test =''
+
 // $dompdf = new Dompdf();
-// $dompdf->loadHtml($html);
+// $dompdf->loadHtml($html_to_print);
 // $dompdf->setPaper('A4', 'landscape');
 // $dompdf->render();
-// $dompdf->stream();
+// ob_end_clean();
+// $dompdf->stream('receipt');

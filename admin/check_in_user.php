@@ -147,20 +147,22 @@ $is_peak_rate = 0;
                                     ?>
 
                                     <br>
-                                    <h5 class="text-center mt-3 text-info">DEPOSIT SLIP PAYMENT</h5>
+                                    
                                     
                                     <?php
-                                    
-                                        echo '
+
+                                        if($payment_type != 'WALK-IN / CASH') {
+                                            
+                                            echo '
+                                                <h5 class="text-center mt-3 text-info">DEPOSIT SLIP PAYMENT</h5>
+                                                <div style="text-align: center;">
+                                                
+                                                    <img src="' . $payment_photo . '" style="width: 50%; height: 50%;" />
+                                                
+                                                </div>
+                                            ';
                                         
-                                        <div style="text-align: center;">
-                                        
-                                            <img src="' . $payment_photo . '" style="width: 50%; height: 50%;" />
-                                        
-                                        </div>
-                                        
-                                        
-                                        ';
+                                        }
                                     
                                     ?>
 
@@ -472,7 +474,7 @@ $is_peak_rate = 0;
                                                         <div class="form-group row">
                                                             <p for="inputEmail3" class="col-sm-6 col-form-label text-right">'. $discount["name"] .'</p>
                                                             <div class="col-sm-3">
-                                                                <input type="number" disabled value="1" id="seniorDiscount" data-discount="' . $discount["Id"] .'" data-discount-amount="' . $discount["amount"] . '"  placeholder="Quantity" class="form-control" min="0" max="">
+                                                                <input type="number" value="1" id="seniorDiscount" data-discount="' . $discount["Id"] .'" data-discount-amount="' . $discount["amount"] . '"  placeholder="Quantity" class="form-control" min="0" max="">
                                                             </div>
                                                         </div>
                                                     ';

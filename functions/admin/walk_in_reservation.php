@@ -12,7 +12,7 @@ $db = connect_to_db();
 
 function generate_reference_no() {
 
-    $ref_number = "CRLVW-";
+    $ref_number = "KLIR-";
 	$source = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 
 		'B', 'C', 'D', 'E', 'F');
 	for($i = 1; $i <= 7; $i++) {
@@ -21,6 +21,34 @@ function generate_reference_no() {
     }
 
     return $ref_number;
+}
+
+function check_peak_rate($date_reserved) {
+
+    $date = date("Y-m-d", strtotime($date_reserved));
+
+    $off_peak_date_start_1 = date("Y-m-d", strtotime("01/02/2021"));
+    $off_peak_date_end_1 = date("Y-m-d", strtotime("03/11/2021"));
+
+    $off_peak_date_start_2 = date("Y-m-d", strtotime("07/18/2021"));
+    $off_peak_date_end_2 = date("Y-m-d", strtotime("11/19/2021"));
+
+    $peak_date_start_1 = date("Y-m-d", strtotime("03/12/2021"));
+    $peak_date_end_1 = date("Y-m-d", strtotime("07/17/2021"));
+
+    $peak_date_start_2 = date("Y-m-d", strtotime("11/20/2021"));
+    $peak_date_end_2 = date("Y-m-d", strtotime("01/01/2022"));
+
+    $type_of_rate = "";
+    
+    if((($date >= $off_peak_date_start_1) && ($date <= $off_peak_date_end_1)) || (($date >= $off_peak_date_start_2) && ($date <= $off_peak_date_end_2))) {
+        $type_of_rate = 0;
+    } else if((($date >= $peak_date_start_1) && ($date <= $peak_date_end_1)) || (($date >= $peak_date_start_2) && ($date <= $peak_date_end_2))) {
+        $type_of_rate = 1;
+    }
+
+    return $type_of_rate;
+
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -53,6 +81,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $departure_date = mysqli_real_escape_string($db, trim($_POST['departure_date']));
         $adult_count = mysqli_real_escape_string($db, trim($_POST['adult_count']));
         $kids_count = mysqli_real_escape_string($db, trim($_POST['kids_count']));
+        $is_peak_rate = check_peak_rate($arrival_date);
 
         // p_total_amount
         // $total_amount = mysqli_real_escape_string($db, trim($_POST['p_total_amount']));
@@ -61,8 +90,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
          * Insert RESERVATION details 
          */
 
-        $reservation_insert_query = "INSERT INTO reservation(guest_id, reference_no, status, payment, check_in_date, check_out_date, adult_count, kids_count, date_created)";
-        $reservation_insert_query .= " VALUES ('$guest_id', '$reference_no', 'FOR CHECK IN', '$payment', STR_TO_DATE('$arrival_date', '%m/%d/%Y'), STR_TO_DATE('$departure_date', '%m/%d/%Y'), '$adult_count', '$kids_count', NOW())";
+        $reservation_insert_query = "INSERT INTO reservation(guest_id, reference_no, status, payment, check_in_date, check_out_date, adult_count, kids_count, is_peak_rate, date_created)";
+        $reservation_insert_query .= " VALUES ('$guest_id', '$reference_no', 'FOR CHECK IN', '$payment', STR_TO_DATE('$arrival_date', '%m/%d/%Y'), STR_TO_DATE('$departure_date', '%m/%d/%Y'), '$adult_count', '$kids_count', $is_peak_rate, NOW())";
         $reservation_result = mysqli_query($db, $reservation_insert_query);
 
         if($reservation_result) {
